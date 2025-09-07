@@ -101,6 +101,15 @@
                             <h2 class="text-2xl sm:text-3xl font-semibold text-gray-700">Správa nemovitostí</h2>
                             <button id="add-property-btn" class="btn btn-primary w-full sm:w-auto"><i class="fas fa-plus mr-2"></i>Přidat nemovitost</button>
                         </header>
+
+                        <!-- Country Tabs for Property List -->
+                        <div class="mb-4 border-b border-gray-200">
+                            <nav class="flex -mb-px" id="property-country-tabs">
+                                <button type="button" data-country="bulharsko" class="tab-button active" style="padding: 10px;">Bulharsko</button>
+                                <button type="button" data-country="spanelsko" class="tab-button">Španělsko</button>
+                            </nav>
+                        </div>
+                        
                         <div class="bg-white shadow-md rounded overflow-x-auto">
                             <table class="min-w-full leading-normal">
                                 <thead>
@@ -115,6 +124,7 @@
                                     </tr>
                                 </thead>
                                 <tbody id="properties-table-body" style="text-align: center;">
+                                </tbody>
                             </table>
                         </div>
                     </div>
@@ -288,8 +298,8 @@
                                 </div>
                                 <div class="mb-4 border-b border-gray-200">
                                     <nav class="flex -mb-px" id="page-lang-tabs">
-                                        <button type="button" data-lang="cz" class="tab-button active">Čeština</button>
-                                        <button type="button" data-lang="en" class="tab-button">Angličtina</button>
+                                        <button type="button" data-lang="cz" class="tab-button active" style="padding-right: 8px;">Čeština</button>
+                                        <button type="button" data-lang="en" class="tab-button" style="padding-right: 8px;">Angličtina</button>
                                         <button type="button" data-lang="de" class="tab-button">Němčina</button>
                                     </nav>
                                 </div>
@@ -356,52 +366,55 @@
                               <h3 class="text-xl font-bold mb-4">Globální nastavení</h3>
                               <form id="global-settings-form">
                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        <div>
+                                            <h4 class="text-lg font-semibold text-gray-700 mb-2">Kontakt 1</h4>
+                                            <label for="setting-contact1-name" class="block text-gray-700 font-bold mb-2">Jméno</label>
+                                            <input type="text" id="setting-contact1-name" class="input-field mb-4">
+                                            <label for="setting-contact1-phone" class="block text-gray-700 font-bold mb-2">Telefon 1</label>
+                                            <input type="text" id="setting-contact1-phone" class="input-field mb-4">
+                                            <label for="setting-contact1-phone2" class="block text-gray-700 font-bold mb-2">Telefon 2</label>
+                                            <input type="text" id="setting-contact1-phone2" class="input-field mb-4">
+                                            <label for="setting-contact1-email" class="block text-gray-700 font-bold mb-2">Email</label>
+                                            <input type="text" id="setting-contact1-email" class="input-field">
+                                        </div>
                                          <div>
-                                              <h4 class="text-lg font-semibold text-gray-700 mb-2">Kontakt 1</h4>
-                                              <label for="setting-contact1-name" class="block text-gray-700 font-bold mb-2">Jméno</label>
-                                              <input type="text" id="setting-contact1-name" class="input-field mb-4">
-                                              <label for="setting-contact1-phone" class="block text-gray-700 font-bold mb-2">Telefon 1</label>
-                                              <input type="text" id="setting-contact1-phone" class="input-field mb-4">
-                                              <label for="setting-contact1-phone2" class="block text-gray-700 font-bold mb-2">Telefon 2</label>
-                                              <input type="text" id="setting-contact1-phone2" class="input-field mb-4">
-                                              <label for="setting-contact1-email" class="block text-gray-700 font-bold mb-2">Email</label>
-                                              <input type="text" id="setting-contact1-email" class="input-field">
-                                         </div>
-                                          <div>
-                                              <h4 class="text-lg font-semibold text-gray-700 mb-2">Kontakt 2</h4>
-                                              <label for="setting-contact2-name" class="block text-gray-700 font-bold mb-2">Jméno</label>
-                                              <input type="text" id="setting-contact2-name" class="input-field mb-4">
-                                              <label for="setting-contact2-phone" class="block text-gray-700 font-bold mb-2">Telefon 1</label>
-                                              <input type="text" id="setting-contact2-phone" class="input-field mb-4">
-                                              <label for="setting-contact2-phone2" class="block text-gray-700 font-bold mb-2">Telefon 2</label>
-                                              <input type="text" id="setting-contact2-phone2" class="input-field mb-4">
-                                              <label for="setting-contact2-email" class="block text-gray-700 font-bold mb-2">Email</label>
-                                              <input type="text" id="setting-contact2-email" class="input-field">
-                                         </div>
+                                            <h4 class="text-lg font-semibold text-gray-700 mb-2">Kontakt 2</h4>
+                                            <label for="setting-contact2-name" class="block text-gray-700 font-bold mb-2">Jméno</label>
+                                            <input type="text" id="setting-contact2-name" class="input-field mb-4">
+                                            <label for="setting-contact2-phone" class="block text-gray-700 font-bold mb-2">Telefon 1</label>
+                                            <input type="text" id="setting-contact2-phone" class="input-field mb-4">
+                                            <label for="setting-contact2-phone2" class="block text-gray-700 font-bold mb-2">Telefon 2</label>
+                                            <input type="text" id="setting-contact2-phone2" class="input-field mb-4">
+                                            <label for="setting-contact2-email" class="block text-gray-700 font-bold mb-2">Email</label>
+                                            <input type="text" id="setting-contact2-email" class="input-field">
+                                        </div>
                                    </div>
-                                   <div class="mt-6 flex justify-end">
-                                        <button type="submit" class="btn btn-primary">Uložit globální kontakty</button>
-                                   </div>
+                                  <div class="mt-6 flex justify-end">
+                                       <button type="submit" class="btn btn-primary">Uložit globální kontakty</button>
+                                  </div>
                               </form>
                               <hr class="my-6">
                               <h3 class="text-xl font-bold mb-4">Správa Vlastností (globální)</h3>
-                              <div id="features-settings-list" class="mb-4 space-y-2"></div>
+                              <div id="features-settings-list" class="mb-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2"></div>
                               <form id="add-feature-form" class="space-y-4 p-4 border rounded-md">
                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                                         <div>
-                                             <label for="new-feature-cz-input" class="block text-sm font-medium text-gray-700">Název CZ</label>
-                                             <input type="text" id="new-feature-cz-input" class="input-field mt-1">
+                                            <label for="new-feature-cz-input" class="block text-sm font-medium text-gray-700">Název CZ</label>
+                                            <input type="text" id="new-feature-cz-input" class="input-field mt-1">
                                         </div>
                                         <div>
-                                             <label for="new-feature-en-input" class="block text-sm font-medium text-gray-700">Název EN</label>
-                                             <input type="text" id="new-feature-en-input" class="input-field mt-1">
+                                            <label for="new-feature-en-input" class="block text-sm font-medium text-gray-700">Název EN</label>
+                                            <input type="text" id="new-feature-en-input" class="input-field mt-1">
                                         </div>
                                         <div>
-                                             <label for="new-feature-de-input" class="block text-sm font-medium text-gray-700">Název DE</label>
-                                             <input type="text" id="new-feature-de-input" class="input-field mt-1">
+                                            <label for="new-feature-de-input" class="block text-sm font-medium text-gray-700">Název DE</label>
+                                            <input type="text" id="new-feature-de-input" class="input-field mt-1">
                                         </div>
                                    </div>
-                                   <button id="add-feature-btn" type="submit" class="btn btn-primary w-full md:w-auto">Přidat vlastnost</button>
+                                   <div class="flex gap-2 mt-4">
+                                        <button id="add-feature-btn" type="submit" class="btn btn-primary w-full md:w-auto">Přidat vlastnost</button>
+                                        <button id="cancel-edit-feature-btn" type="button" class="btn btn-secondary hidden">Zrušit úpravu</button>
+                                   </div>
                               </form>
                          </div>
 
@@ -430,7 +443,7 @@
         import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
         import { 
             getFirestore, collection, doc, getDoc, getDocs, addDoc, setDoc, updateDoc, deleteDoc, 
-            query, orderBy, limit, serverTimestamp, arrayUnion, arrayRemove 
+            query, where, orderBy, limit, serverTimestamp, arrayUnion, arrayRemove 
         } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
         import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-storage.js";
 
@@ -469,6 +482,8 @@
         let filesToUpload = [];
         let existingImageUrls = [];
         let currentSettingsCountry = 'bulharsko';
+        let currentPropertyListCountry = 'bulharsko';
+        let currentEditFeature = null;
 
         // --- UI Element Selectors ---
         const loginScreen = document.getElementById('login-screen');
@@ -529,9 +544,9 @@
         function setEditorContent(editorId, content) {
              const editor = tinymce.get(editorId);
              if (editor) {
-                   editor.setContent(content || '');
+                 editor.setContent(content || '');
              } else {
-                   console.warn(`Editor with ID ${editorId} not found.`);
+                 console.warn(`Editor with ID ${editorId} not found.`);
              }
         }
 
@@ -564,23 +579,29 @@
                 let displayHtml;
 
                 if (type === 'features-settings' || type === 'types' || type === 'rooms') {
+                    const editButtonHtml = type === 'features-settings' 
+                        ? `<button class="edit-setting-item-btn text-blue-600 hover:text-blue-900 mr-3" data-type="${dataType}" data-key="${item.key}"><i class="fas fa-pencil-alt"></i></button>`
+                        : '';
                      displayHtml = `
-                          <div class="bg-gray-100 p-3 rounded">
-                               <div class="flex justify-between items-center">
-                                    <strong class="text-gray-800">${item.name_cz || '(Chybí český název)'}</strong>
-                                    <button class="delete-setting-item-btn text-red-500 hover:text-red-700" data-type="${dataType}" data-key="${item.key}">&times;</button>
-                               </div>
-                               <div class="text-sm text-gray-600 mt-1 grid grid-cols-2 gap-x-4">
-                                    <span><strong>EN:</strong> ${item.name_en || '<em>-</em>'}</span>
-                                    <span><strong>DE:</strong> ${item.name_de || '<em>-</em>'}</span>
-                               </div>
-                          </div>`;
+                         <div class="flex justify-between items-center bg-gray-100 p-2 rounded text-sm">
+                            <div class="flex-grow mr-4">
+                                 <strong class="text-gray-800">${item.name_cz || '(Chybí český název)'}</strong>
+                                 <div class="text-gray-500">
+                                     <span class="mr-3">EN: ${item.name_en || '-'}</span>
+                                     <span>DE: ${item.name_de || '-'}</span>
+                                 </div>
+                             </div>
+                             <div class="flex-shrink-0 flex items-center">
+                                ${editButtonHtml}
+                                 <button class="delete-setting-item-btn text-red-500 hover:text-red-700" data-type="${dataType}" data-key="${item.key}"><i class="fas fa-trash-alt"></i></button>
+                             </div>
+                         </div>`;
                 } else { // For locations
                     displayHtml = `
-                          <div class="flex justify-between items-center bg-gray-100 p-2 rounded">
-                               <span><strong>${item.name_cz}</strong></span>
-                               <button class="delete-setting-item-btn text-red-500 hover:text-red-700" data-type="${dataType}" data-key="${item.key}">&times;</button>
-                          </div>`;
+                         <div class="flex justify-between items-center bg-gray-100 p-2 rounded">
+                             <span><strong>${item.name_cz}</strong></span>
+                             <button class="delete-setting-item-btn text-red-500 hover:text-red-700" data-type="${dataType}" data-key="${item.key}"><i class="fas fa-trash-alt"></i></button>
+                         </div>`;
                 }
                 container.innerHTML += displayHtml;
             });
@@ -639,7 +660,7 @@
                     loginScreen.classList.add('hidden');
                     dashboard.classList.remove('hidden');
                     showView('propertyList', 'properties');
-                    loadProperties();
+                    loadProperties(currentPropertyListCountry);
                 } else {
                     adminLoginError.textContent = "Přístup odepřen. Tento účet nemá oprávnění administrátora.";
                     adminLoginError.classList.remove('hidden');
@@ -658,7 +679,7 @@
         // --- Sidebar Navigation ---
         sidebarButtons.properties.addEventListener('click', () => {
             showView('propertyList', 'properties');
-            loadProperties();
+            loadProperties(currentPropertyListCountry);
         });
 
         sidebarButtons.pages.addEventListener('click', () => {
@@ -680,25 +701,42 @@
         // --- Property Management ---
         const propertyForm = document.getElementById('property-form');
         const propertiesTableBody = document.getElementById('properties-table-body');
+        const propertyCountryTabs = document.getElementById('property-country-tabs');
         
-        async function loadProperties() {
+        propertyCountryTabs.addEventListener('click', (e) => {
+            if (e.target.tagName === 'BUTTON') {
+                currentPropertyListCountry = e.target.dataset.country;
+                propertyCountryTabs.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
+                e.target.classList.add('active');
+                loadProperties(currentPropertyListCountry);
+            }
+        });
+        
+        async function loadProperties(country) {
             try {
                 const propertiesRef = collection(db, 'properties');
-                const q = query(propertiesRef, orderBy('createdAt', 'desc'));
+                const q = query(propertiesRef, where('country', '==', country));
                 const querySnapshot = await getDocs(q);
                 
+                let properties = [];
+                querySnapshot.forEach(doc => {
+                    properties.push({ id: doc.id, ...doc.data() });
+                });
+
+                // Sort manually to avoid composite indexes
+                properties.sort((a, b) => (b.createdAt?.toMillis() || 0) - (a.createdAt?.toMillis() || 0));
+
                 propertiesTableBody.innerHTML = '';
-                if (querySnapshot.empty) {
+                if (properties.length === 0) {
                     propertiesTableBody.innerHTML = '<tr><td colspan="7" class="table-cell text-center">Nebyly nalezeny žádné nemovitosti.</td></tr>';
                     return;
                 }
-                querySnapshot.forEach(doc => {
-                    const prop = doc.data();
+                properties.forEach(prop => {
                     const firstImage = prop.images && prop.images.length > 0 ? prop.images[0] : 'https://placehold.co/100x60/eee/ccc?text=Foto';
                     const createdAt = prop.createdAt ? prop.createdAt.toDate().toLocaleDateString('cs-CZ') : 'N/A';
                     const statusClass = prop.status === 'Aktivní' ? 'active' : 'inactive';
                     const row = `
-                        <tr id="${doc.id}">
+                        <tr id="${prop.id}">
                             <td class="table-cell font-mono">${prop.offerId || 'N/A'}</td>
                             <td class="table-cell"><img src="${firstImage}" alt="Foto nemovitosti" class="w-24 h-16 object-cover rounded mx-auto"></td>
                             <td class="table-cell">
@@ -708,11 +746,11 @@
                             <td class="table-cell text-red-600 font-bold">€${Number(prop.price).toLocaleString('de-DE')}</td>
                             <td class="table-cell">${createdAt}</td>
                             <td class="table-cell">
-                                <span class="status-toggle ${statusClass}" data-id="${doc.id}">${prop.status || 'Neaktivní'}</span>
+                                <span class="status-toggle ${statusClass}" data-id="${prop.id}">${prop.status || 'Neaktivní'}</span>
                             </td>
                             <td class="table-cell">
-                                <button class="edit-property-btn text-blue-600 hover:text-blue-900 mr-4" data-id="${doc.id}"><i class="fas fa-pencil-alt"></i></button>
-                                <button class="delete-property-btn text-red-600 hover:text-red-900" data-id="${doc.id}"><i class="fas fa-trash-alt"></i></button>
+                                <button class="edit-property-btn text-blue-600 hover:text-blue-900 mr-4" data-id="${prop.id}"><i class="fas fa-pencil-alt"></i></button>
+                                <button class="delete-property-btn text-red-600 hover:text-red-900" data-id="${prop.id}"><i class="fas fa-trash-alt"></i></button>
                             </td>
                         </tr>`;
                     propertiesTableBody.innerHTML += row;
@@ -802,7 +840,7 @@
                 }
                 
                 showView('propertyList', 'properties');
-                loadProperties();
+                loadProperties(currentPropertyListCountry);
             } catch (error) {
                 handleFirestoreError(error, 'Ukládání nemovitosti');
             } finally {
@@ -821,7 +859,7 @@
                 const newStatus = currentStatus === 'Aktivní' ? 'Neaktivní' : 'Aktivní';
                 try {
                     await updateDoc(doc(db, 'properties', id), { status: newStatus });
-                    loadProperties();
+                    loadProperties(currentPropertyListCountry);
                 } catch (error) {
                     handleFirestoreError(error, 'Změna stavu nemovitosti');
                 }
@@ -1151,12 +1189,12 @@
 
         function createSingleLangInputForm(type, label) {
              return `
-                <form id="add-${type}-form" class="p-4 border rounded-md">
+                 <form id="add-${type}-form" class="p-4 border rounded-md">
                      <div class="flex gap-2">
-                          <input type="text" id="new-${type}-cz-input" placeholder="Přidat ${label}" class="input-field">
-                          <button type="submit" class="btn btn-primary whitespace-nowrap add-setting-item-btn" data-type="${type}s">Přidat</button>
+                         <input type="text" id="new-${type}-cz-input" placeholder="Přidat ${label}" class="input-field">
+                         <button type="submit" class="btn btn-primary whitespace-nowrap add-setting-item-btn" data-type="${type}s">Přidat</button>
                      </div>
-                </form>
+                 </form>
             `;
         }
 
@@ -1168,19 +1206,19 @@
             return `
                 <form id="add-${type}-form" class="space-y-4 p-4 border rounded-md">
                      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                          <div>
-                               <label for="new-${type}-cz-input" class="block text-sm font-medium text-gray-700">Název CZ</label>
-                               <input type="text" id="new-${type}-cz-input" class="input-field mt-1">
-                          </div>
-                          <div>
-                               <label for="new-${type}-en-input" class="block text-sm font-medium text-gray-700">Název EN</label>
-                               <input type="text" id="new-${type}-en-input" class="input-field mt-1">
-                          </div>
-                          <div>
-                               <label for="new-${type}-de-input" class="block text-sm font-medium text-gray-700">Název DE</label>
-                               <input type="text" id="new-${type}-de-input" class="input-field mt-1">
-                          </div>
-                     </div>
+                         <div>
+                             <label for="new-${type}-cz-input" class="block text-sm font-medium text-gray-700">Název CZ</label>
+                             <input type="text" id="new-${type}-cz-input" class="input-field mt-1">
+                         </div>
+                         <div>
+                             <label for="new-${type}-en-input" class="block text-sm font-medium text-gray-700">Název EN</label>
+                             <input type="text" id="new-${type}-en-input" class="input-field mt-1">
+                         </div>
+                         <div>
+                             <label for="new-${type}-de-input" class="block text-sm font-medium text-gray-700">Název DE</label>
+                             <input type="text" id="new-${type}-de-input" class="input-field mt-1">
+                         </div>
+                    </div>
                      <button type="submit" class="btn btn-primary w-full md:w-auto add-setting-item-btn" data-type="${type}s">Přidat ${typeLabels[type]}</button>
                 </form>
             `;
@@ -1328,20 +1366,33 @@
             }
         });
 
-        document.getElementById('add-feature-form').addEventListener('submit', async (e) => {
+        const addFeatureForm = document.getElementById('add-feature-form');
+        const addFeatureBtn = document.getElementById('add-feature-btn');
+        const cancelEditFeatureBtn = document.getElementById('cancel-edit-feature-btn');
+
+        function resetAddFeatureForm() {
+            addFeatureForm.reset();
+            currentEditFeature = null;
+            addFeatureBtn.textContent = 'Přidat vlastnost';
+            cancelEditFeatureBtn.classList.add('hidden');
+        }
+
+        cancelEditFeatureBtn.addEventListener('click', resetAddFeatureForm);
+
+        addFeatureForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const button = e.target.querySelector('button[type="submit"]');
             const czInput = document.getElementById('new-feature-cz-input');
             const enInput = document.getElementById('new-feature-en-input');
             const deInput = document.getElementById('new-feature-de-input');
-
             const czName = czInput.value.trim();
+
             if (!czName) {
                 alert('Český název je povinný.');
                 return;
             }
 
-            const newFeature = {
+            const newFeatureData = {
                 key: slugify(czName),
                 name_cz: czName,
                 name_en: enInput.value.trim(),
@@ -1349,26 +1400,63 @@
             };
 
             button.disabled = true;
-            button.textContent = 'Přidávám...';
+            const settingsDocRef = doc(db, 'settings', 'global');
 
             try {
-                await setDoc(doc(db, 'settings', 'global'), {
-                    features: arrayUnion(newFeature)
-                }, { merge: true });
-                
-                e.target.reset();
+                if (currentEditFeature) { // UPDATE LOGIC
+                    button.textContent = 'Ukládám...';
+                    const docSnap = await getDoc(settingsDocRef);
+                    if (docSnap.exists()) {
+                        let features = docSnap.data().features || [];
+                        const featureIndex = features.findIndex(f => f.key === currentEditFeature.key);
+                        
+                        if (featureIndex > -1) {
+                             features[featureIndex] = newFeatureData;
+                        } else {
+                            features.push(newFeatureData);
+                        }
+                        await updateDoc(settingsDocRef, { features: features });
+                    }
+                } else { // ADD LOGIC
+                    button.textContent = 'Přidávám...';
+                    await updateDoc(settingsDocRef, {
+                        features: arrayUnion(newFeatureData)
+                    });
+                }
+                resetAddFeatureForm();
                 await loadGlobalSettings();
             } catch (error) {
-                handleFirestoreError(error, 'Přidání vlastnosti');
+                handleFirestoreError(error, currentEditFeature ? 'Úprava vlastnosti' : 'Přidání vlastnosti');
             } finally {
                 button.disabled = false;
-                button.textContent = 'Přidat vlastnost';
+                resetAddFeatureForm();
             }
         });
 
         document.getElementById('settings-view').addEventListener('click', async (e) => {
             const button = e.target.closest('button');
             if (!button) return;
+
+            if (button.classList.contains('edit-setting-item-btn')) {
+                e.preventDefault();
+                const key = button.dataset.key;
+                const settingsDocRef = doc(db, 'settings', 'global');
+                const docSnap = await getDoc(settingsDocRef);
+                if (docSnap.exists()) {
+                    const features = docSnap.data().features || [];
+                    const featureToEdit = features.find(f => f.key === key);
+                    if (featureToEdit) {
+                        currentEditFeature = featureToEdit;
+                        document.getElementById('new-feature-cz-input').value = featureToEdit.name_cz || '';
+                        document.getElementById('new-feature-en-input').value = featureToEdit.name_en || '';
+                        document.getElementById('new-feature-de-input').value = featureToEdit.name_de || '';
+                        addFeatureBtn.textContent = 'Uložit změny';
+                        cancelEditFeatureBtn.classList.remove('hidden');
+                        addFeatureForm.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }
+                return;
+            }
 
             if (button.closest('form')?.id === `${currentSettingsCountry}-settings-form`) {
                 e.preventDefault();
@@ -1453,20 +1541,15 @@
 
                         const data = docSnap.data();
                         let items = data[arrayName] || [];
-                        
-                        const newItems = items.filter(item => {
-                            if (typeof item === 'object' && item !== null) {
-                                return item.key !== key;
-                            }
-                            if (typeof item === 'string') {
-                                return slugify(item) !== key;
-                            }
-                            return true;
+                        const itemToRemove = items.find(item => {
+                            if (typeof item === 'object' && item !== null) return item.key === key;
+                            if (typeof item === 'string') return slugify(item) === key;
+                            return false;
                         });
 
-                        await updateDoc(docRef, {
-                            [arrayName]: newItems
-                        });
+                        if (itemToRemove) {
+                             await updateDoc(docRef, { [arrayName]: arrayRemove(itemToRemove) });
+                        }
                         
                         if (isGlobal) await loadGlobalSettings();
                         else await loadAndRenderCountrySettings();
@@ -1541,7 +1624,7 @@
                 const settingsDocSnap = await getDoc(settingsDocRef);
                 
                 if (!settingsDocSnap.exists()) { 
-                     Object.values(selects).forEach(s => s.innerHTML = '<option value="">Žádná data pro tuto zemi</option>');
+                    Object.values(selects).forEach(s => s.innerHTML = '<option value="">Žádná data pro tuto zemi</option>');
                      return;
                 }
                 const settings = settingsDocSnap.data();
@@ -1635,3 +1718,4 @@
     </script>
 </body>
 </html>
+
