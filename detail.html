@@ -35,8 +35,8 @@
         .property-description h2 { font-size: 1.875rem; }
         .property-description h3 { font-size: 1.5rem; }
         .property-description p { margin-bottom: 1.25em; line-height: 1.75; }
-        .property-description ul { list-style-position: inside; list-style-type: disc; margin-bottom: 1.25em; padding-left: 1.5rem; }
-        .property-description li { margin-bottom: 0.5em; }
+        .property-description ul { list-style-position: inside; margin-bottom: 1.25em; }
+        .property-description li { margin-bottom: 0.5em; text-indent: -1.5em; padding-left: 1.5em; }
         .property-description a { color: #dd6822; text-decoration: underline; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes slideIn { from { transform: translateY(-30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
@@ -74,7 +74,6 @@
             font-size: clamp(12px, 3vw, 18px);
         }
 
-        /* --- START OF CHANGES: Flag Styles --- */
         .lang-link img {
             opacity: 0.7;
             transition: all 0.2s ease-in-out;
@@ -89,7 +88,6 @@
             transform: scale(1.1);
             box-shadow: 0 0 0 2px #dd6822;
         }
-        /* --- END OF CHANGES --- */
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800 flex flex-col min-h-screen">
@@ -98,7 +96,6 @@
         <div class="container mx-auto px-4">
             <div class="flex justify-between items-center py-3 border-b">
                 <div class="flex items-center space-x-4">
-                    <!-- --- START OF CHANGES: Language Switcher --- -->
                     <div id="lang-switcher" class="flex space-x-2">
                         <a href="#" data-lang="cz" class="lang-link">
                             <img src="https://flagcdn.com/w40/cz.png" alt="Čeština" class="w-8 h-6 object-cover">
@@ -110,7 +107,6 @@
                             <img src="https://flagcdn.com/w40/de.png" alt="Deutsch" class="w-8 h-6 object-cover">
                         </a>
                     </div>
-                    <!-- --- END OF CHANGES --- -->
                     <a href="index.html" class="text-xl md:text-2xl font-bold text-gray-800 tracking-wider">HORIZON ESTATES</a>
                 </div>
                 <div class="flex items-center space-x-4">
@@ -126,7 +122,7 @@
                 </div>
             </div>
             <div class="hidden lg:flex justify-between items-center py-3" id="desktop-menu">
-                 <nav class="flex items-center space-x-6">
+                <nav class="flex items-center space-x-6">
                     <a href="spanelsko.html" id="nav-spanelsko" class="font-semibold pb-1 hover:text-primary">Španělsko</a>
                     <a href="bulharsko.html" id="nav-bulharsko" class="font-semibold pb-1 hover:text-primary">Bulharsko</a>
                 </nav>
@@ -177,18 +173,20 @@
                 <div class="lg:col-span-2">
                     <div class="image-gallery">
                         <div class="main-image-container relative mb-4 cursor-pointer group">
-                            <div id="main-image-wrapper" class="watermark-container">
-                                <img id="mainImage" src="https://placehold.co/800x600/e2e8f0/4a5568?text=Na%C4%8D%C3%ADt%C3%A1m..." alt="Hlavní fotka nemovitosti" class="w-full h-auto object-cover rounded-lg shadow-md transition-opacity duration-300">
+                            <div id="main-image-wrapper" class="watermark-container w-full h-96 md:h-[500px] rounded-lg shadow-md overflow-hidden bg-gray-100">
+                                <img id="mainImage" src="https://placehold.co/800x600/e2e8f0/4a5568?text=Na%C4%8D%C3%ADt%C3%A1m..." alt="Hlavní fotka nemovitosti" class="w-full h-full object-cover transition-opacity duration-300">
                             </div>
                             <button id="mainPrevBtn" class="main-image-nav absolute top-1/2 -translate-y-1/2 left-3 bg-black bg-opacity-40 text-white rounded-full w-10 h-10 text-2xl opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">&#10094;</button>
                             <button id="mainNextBtn" class="main-image-nav absolute top-1/2 -translate-y-1/2 right-3 bg-black bg-opacity-40 text-white rounded-full w-10 h-10 text-2xl opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">&#10095;</button>
                         </div>
-                        <div class="flex items-center justify-center">
-                            <button id="thumbPrevBtn" class="p-2 text-gray-600 hover:text-black disabled:opacity-40 disabled:cursor-not-allowed"><i class="fas fa-chevron-left"></i></button>
-                            <div class="flex-grow overflow-hidden">
-                                <div id="thumbnailContainer" class="flex items-center space-x-3 transition-transform duration-300 ease-in-out"></div>
+
+                        <div id="thumbnail-slider" class="relative pr-12 hidden overflow-hidden">
+                            <div id="thumbnail-wrapper" class="overflow-hidden mx-auto" style="width: 2950px;">
+                                <div id="thumbnailContainer" class="flex items-center space-x-3 transition-transform duration-300 ease-in-out">
+                                    </div>
                             </div>
-                            <button id="thumbNextBtn" class="p-2 text-gray-600 hover:text-black disabled:opacity-40 disabled:cursor-not-allowed"><i class="fas fa-chevron-right"></i></button>
+                            <button id="thumbPrevBtn" class="absolute top-1/2 left-0 -translate-y-1/2 p-2 text-gray-800 bg-white/70 rounded-full shadow-md hover:bg-white disabled:opacity-40 disabled:cursor-not-allowed z-10"><i class="fas fa-chevron-left"></i></button>
+                            <button id="thumbNextBtn" class="absolute top-1/2 right-0 -translate-y-1/2 p-2 text-gray-800 bg-white/70 rounded-full shadow-md hover:bg-white disabled:opacity-40 disabled:cursor-not-allowed z-10"><i class="fas fa-chevron-right"></i></button>
                         </div>
                     </div>
                 </div>
@@ -201,7 +199,7 @@
                             <ul id="main-features-list" class="space-y-2 text-lg"></ul>
                             <hr class="my-4">
                             <h4 id="features-title" class="font-bold text-md text-gray-800">Vybavení:</h4>
-                            <ul id="features-list" class="grid grid-cols-2 gap-x-4 gap-y-2 text-sm"></ul>
+                            <ul id="features-list" class="grid grid-cols-1 gap-y-2 text-sm"></ul>
                         </div>
                         <div class="contact-buttons space-y-3">
                             <button id="inquiryBtn" class="w-full bg-primary text-white font-bold py-3 px-4 rounded-md hover:bg-primary-dark transition"><i class="fas fa-envelope mr-2"></i> Poslat dotaz</button>
@@ -235,7 +233,6 @@
         <div id="site-footer" class="container mx-auto px-4 py-6 flex flex-wrap justify-between items-center text-sm text-gray-600 gap-6"></div>
     </footer>
 
-    <!-- Modals -->
     <div id="inquiryModal" class="fixed inset-0 bg-black bg-opacity-50 z-[60] hidden items-center justify-center p-4 modal-fade-in">
         <div class="bg-white rounded-lg shadow-2xl w-full max-w-lg p-8 modal-slide-in">
              <div class="flex justify-between items-center mb-4">
@@ -244,6 +241,7 @@
             </div>
             <form class="space-y-4" action="https://formsubmit.co/nesvarba.martin@seznam.cz" method="POST">
                 <input type="hidden" name="_subject" id="inquirySubject">
+                <input type="hidden" name="_next" value="https://bulharsko-realestate.web.app/index.html">
                 <div><label for="inquiry-name" id="inquiry-modal-name" class="block font-medium">Vaše jméno</label><input type="text" id="inquiry-name" name="name" required class="w-full p-2 border rounded-md mt-1"></div>
                 <div><label for="inquiry-email" id="inquiry-modal-email" class="block font-medium">Váš e-mail</label><input type="email" id="inquiry-email" name="email" required class="w-full p-2 border rounded-md mt-1"></div>
                 <div><label for="inquiry-phone" id="inquiry-modal-phone" class="block font-medium">Telefon (nepovinné)</label><input type="tel" id="inquiry-phone" name="phone" class="w-full p-2 border rounded-md mt-1"></div>
@@ -314,6 +312,7 @@
                 <button class="close-btn text-3xl text-gray-400 hover:text-gray-700">&times;</button>
             </div>
             <form class="space-y-4" action="https://formsubmit.co/nesvarba.martin@seznam.cz" method="POST">
+                <input type="hidden" name="_next" value="https://bulharsko-realestate.web.app/index.html">
                 <div><label for="name" id="contact-modal-name-main" class="block font-medium">Vaše jméno</label><input type="text" id="name" name="name" required class="w-full p-2 border rounded-md mt-1"></div>
                 <div><label for="email" id="contact-modal-email-main" class="block font-medium">Váš e-mail</label><input type="email" id="email" name="email" required class="w-full p-2 border rounded-md mt-1"></div>
                 <div><label for="phone" id="contact-modal-phone-main" class="block font-medium">Telefon (nepovinné)</label><input type="tel" id="phone" name="phone" class="w-full p-2 border rounded-md mt-1"></div>
@@ -445,18 +444,21 @@
              document.querySelectorAll('a[href*=".html"]').forEach(link => {
                 if (!link.classList.contains('lang-link')) {
                     try {
-                        const url = new URL(link.getAttribute('href'), window.location.href);
+                        const url = new URL(link.href, window.location.href);
                         url.searchParams.set('lang', currentLang);
-                        link.href = url.href;
+                        if (currentProperty && currentProperty.country) {
+                             url.searchParams.set('country', currentProperty.country);
+                        }
+                        link.href = url.toString();
                     } catch (e) {
-                        console.error(`Could not process URL for link: ${link.getAttribute('href')}`, e);
+                        // console.error(`Could not process URL for link: ${link.getAttribute('href')}`, e);
                     }
                 }
             });
         };
 
         let currentProperty = null, galleryImages = [], activeImageIndex = 0, thumbnailStartIndex = 0, userFavorites = [];
-        const thumbnailsToShow = 4;
+        const thumbnailsToShow = 3;
         const mainImage = document.getElementById('mainImage'), thumbnailContainer = document.getElementById('thumbnailContainer'), lightbox = document.getElementById('lightbox'), lightboxImage = document.getElementById('lightbox-image');
 
         const updateMainImage = (index) => {
@@ -468,20 +470,39 @@
                 mainImage.alt = galleryImages[index].alt;
                 mainImage.style.opacity = '1';
             }, 150);
-            if (index < thumbnailStartIndex) thumbnailStartIndex = index;
-            else if (index >= thumbnailStartIndex + thumbnailsToShow) thumbnailStartIndex = index - thumbnailsToShow + 1;
+            if (index < thumbnailStartIndex) {
+                thumbnailStartIndex = index;
+            } else if (index >= thumbnailStartIndex + thumbnailsToShow) {
+                thumbnailStartIndex = index - thumbnailsToShow + 1;
+            }
             slideThumbnails();
             highlightActiveThumbnail();
         };
 
-        const highlightActiveThumbnail = () => document.querySelectorAll('.thumbnail-image').forEach((thumb, idx) => thumb.classList.toggle('active', idx === activeImageIndex));
+        const highlightActiveThumbnail = () => {
+            document.querySelectorAll('.thumbnail-image').forEach((thumb, idx) => {
+                thumb.classList.toggle('active', idx === activeImageIndex);
+            });
+        };
+        
         const slideThumbnails = () => {
-            const thumbWidth = thumbnailContainer.querySelector('img')?.offsetWidth + 12 || 92;
+            const firstThumb = thumbnailContainer.querySelector('img');
+            if (!firstThumb) return;
+            const thumbWidth = 224 + 12; // w-56 is 224px, space-x-3 is 12px
             const offset = -thumbnailStartIndex * thumbWidth;
             thumbnailContainer.style.transform = `translateX(${offset}px)`;
             updateNavButtons();
         };
+        
         const setupGallery = (watermarkText) => {
+            const slider = document.getElementById('thumbnail-slider');
+            if (galleryImages.length > 1) {
+                if(slider) slider.classList.remove('hidden');
+            } else {
+                if (slider) slider.style.display = 'none';
+                return;
+            }
+
             thumbnailContainer.innerHTML = '';
             galleryImages.forEach((img, i) => {
                 const wrapper = document.createElement('div');
@@ -491,21 +512,58 @@
                 const thumb = document.createElement('img');
                 thumb.src = img.src;
                 thumb.alt = `Náhled - ${img.alt}`;
-                thumb.className = 'thumbnail-image w-20 h-20 object-cover rounded-md cursor-pointer border-4 border-transparent hover:border-primary/50 transition-all duration-200 flex-shrink-0';
+                thumb.className = 'thumbnail-image w-56 h-36 object-cover rounded-md cursor-pointer border-4 border-transparent hover:border-primary/50 transition-all duration-200 flex-shrink-0';
                 thumb.onclick = () => updateMainImage(i);
                 
                 wrapper.appendChild(thumb);
                 thumbnailContainer.appendChild(wrapper);
             });
-            slideThumbnails();
-            highlightActiveThumbnail();
+
+            const firstImage = thumbnailContainer.querySelector('img');
+            if (firstImage) {
+                const initSlider = () => {
+                      const thumbWidth = 2088; // w-56
+                      const gapWidth = 12; // space-x-3
+                      const thumbnailsToShow = 3;
+                      const containerWidth = (thumbWidth * thumbnailsToShow) + (gapWidth * (thumbnailsToShow - 1));
+                      const overflowContainer = document.getElementById('thumbnail-wrapper');
+                      if(overflowContainer) {
+                          overflowContainer.style.width = `${containerWidth}px`;
+                      }
+                      slideThumbnails();
+                      highlightActiveThumbnail();
+                };
+
+                if (firstImage.complete && firstImage.naturalWidth > 0) {
+                    initSlider();
+                } else {
+                    firstImage.onload = initSlider;
+                }
+            }
         };
+
         const updateNavButtons = () => {
-            document.getElementById('thumbPrevBtn').disabled = thumbnailStartIndex === 0;
-            document.getElementById('thumbNextBtn').disabled = thumbnailStartIndex + thumbnailsToShow >= galleryImages.length;
             const showMainButtons = galleryImages.length > 1;
-            document.getElementById('mainPrevBtn').style.display = showMainButtons ? 'flex' : 'none';
-            document.getElementById('mainNextBtn').style.display = showMainButtons ? 'flex' : 'none';
+            const mainPrevBtn = document.getElementById('mainPrevBtn');
+            const mainNextBtn = document.getElementById('mainNextBtn');
+            if(mainPrevBtn) mainPrevBtn.style.display = showMainButtons ? 'flex' : 'none';
+            if(mainNextBtn) mainNextBtn.style.display = showMainButtons ? 'flex' : 'none';
+
+            const thumbSlider = document.getElementById('thumbnail-slider');
+            if (thumbSlider && galleryImages.length > thumbnailsToShow) {
+                const prevBtn = thumbSlider.querySelector('#thumbPrevBtn');
+                if(prevBtn) prevBtn.disabled = thumbnailStartIndex === 0;
+
+                const nextBtn = thumbSlider.querySelector('#thumbNextBtn');
+                if(nextBtn) nextBtn.disabled = thumbnailStartIndex + thumbnailsToShow >= galleryImages.length;
+
+            } else if (thumbSlider) {
+                 const prevBtn = thumbSlider.querySelector('#thumbPrevBtn');
+                 if(prevBtn) prevBtn.style.display = 'none';
+
+                 const nextBtn = thumbSlider.querySelector('#thumbNextBtn');
+                 if(nextBtn) nextBtn.style.display = 'none';
+            }
         };
         
         const setupSeoTags = async (property) => {
@@ -556,12 +614,14 @@
 
                 let watermarkText = '';
                 if (currentProperty.country === 'bulharsko') {
-                    watermarkText = 'BULHARSKO-NEMOVITOSTI';
+                    watermarkText = 'HORIZON-ESTATES';
                 } else if (currentProperty.country === 'spanelsko') {
-                    watermarkText = 'ŠPANĚLSKO-NEMOVITOSTI';
+                    watermarkText = 'HORIZON-ESTATES';
                 }
                 document.getElementById('main-image-wrapper').dataset.watermark = watermarkText;
-                document.getElementById('lightbox-wrapper').dataset.watermark = watermarkText;
+                
+                const lightboxWrapper = document.getElementById('lightbox-wrapper');
+                if(lightboxWrapper) lightboxWrapper.dataset.watermark = watermarkText;
 
                 document.title = `${title} | Horizon Estates`;
                 document.getElementById('property-title').textContent = title || 'N/A';
@@ -576,6 +636,8 @@
                     const countryName = translations[currentLang][`nav-${currentProperty.country}`] || currentProperty.country;
                     breadcrumbCountry.textContent = countryName;
                     breadcrumbCountry.href = `${currentProperty.country}.html?lang=${currentLang}`;
+                    document.getElementById(`nav-${currentProperty.country}`)?.classList.add('nav-link-active');
+                    document.getElementById(`nav-mobil-${currentProperty.country}`)?.classList.add('nav-link-active');
                 }
 
                 const mainFeaturesList = document.getElementById('main-features-list');
@@ -595,16 +657,18 @@
 
                 if (currentProperty.images?.length) {
                     galleryImages = currentProperty.images.map(url => ({ src: url, alt: `Foto - ${title}` }));
-                    setupGallery(watermarkText);
                     updateMainImage(0);
+                    setupGallery(watermarkText);
                 } else {
                     mainImage.src = 'https://placehold.co/800x600?text=Foto+není+k+dispozici';
                     document.querySelector('.image-gallery').innerHTML = '';
                 }
 
                 if (currentProperty.mapLink) {
-                    document.getElementById('map-container').innerHTML = `<iframe src="${currentProperty.mapLink}" class="w-full h-96 border-0 rounded-lg" allowfullscreen="" loading="lazy"></iframe>`;
-                    document.getElementById('map-section').style.display = 'block';
+                    const mapContainer = document.getElementById('map-container');
+                    const mapSection = document.getElementById('map-section');
+                    if(mapContainer) mapContainer.innerHTML = `<iframe src="${currentProperty.mapLink}" class="w-full h-96 border-0 rounded-lg" allowfullscreen="" loading="lazy"></iframe>`;
+                    if(mapSection) mapSection.style.display = 'block';
                 }
 
                 loadSimilarProperties(currentProperty);
@@ -636,11 +700,11 @@
                     const title = prop[`title_${currentLang}`] || prop.title_cz;
                     similarContainer.innerHTML += `
                         <a href="detail.html?id=${doc.id}&lang=${currentLang}" class="block bg-white rounded-lg shadow-md overflow-hidden transform hover:-translate-y-1 transition">
-                            <div class="watermark-container similar-watermark-container">
+                            <div class="watermark-container similar-watermark-container" data-watermark="${watermarkText}">
                                 <img src="${prop.images?.[0] || 'https://placehold.co/300x200'}" alt="${title}" class="w-full h-40 object-cover">
                             </div>
                             <div class="p-4">
-                                <h3 class="font-bold truncate">${title}</h3>
+                                <h3 class="font-bold">${title}</h3>
                                 <p class="text-primary font-semibold">€${prop.price.toLocaleString()}</p>
                             </div>
                         </a>`;
@@ -650,8 +714,8 @@
         };
 
         const modals = { contact: document.getElementById('contactModal'), auth: document.getElementById('authModal'), favorites: document.getElementById('favoritesModal'), inquiry: document.getElementById('inquiryModal'), share: document.getElementById('shareModal') };
-        const openModal = (modal) => modal.style.display = 'flex';
-        const closeModal = (modal) => modal.style.display = 'none';
+        const openModal = (modal) => { if(modal) modal.style.display = 'flex'; };
+        const closeModal = (modal) => { if(modal) modal.style.display = 'none'; };
 
         const setupActionButtons = () => {
             document.getElementById('inquiryBtn')?.addEventListener('click', () => {
@@ -684,30 +748,58 @@
 
         async function loadSettings(pageCountry) {
             try {
+                let countrySettings = {};
+                let globalSettings = {};
+
+                // Fetch country-specific settings if country is specified in URL
                 if (pageCountry) {
                     const countrySettingsDoc = await getDoc(doc(db, 'settings', pageCountry));
                     if (countrySettingsDoc.exists()) {
-                         const { infoMenu = [], servicesMenu = [] } = countrySettingsDoc.data();
-                         const infoHtml = infoMenu.map(item => `<a href="page.html?slug=${item.slug}&lang=${currentLang}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">${item.title}</a>`).join('');
-                         const servicesHtml = servicesMenu.map(item => `<a href="page.html?slug=${item.slug}&lang=${currentLang}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">${item.title}</a>`).join('');
-                         document.getElementById('info-menu-container-desktop').innerHTML = infoHtml;
-                         document.getElementById('services-menu-container-desktop').innerHTML = servicesHtml;
-                         document.getElementById('info-menu-container-mobile').innerHTML = infoMenu.map(item => `<a href="page.html?slug=${item.slug}&lang=${currentLang}" class="block py-1 text-gray-700 hover:text-primary">${item.title}</a>`).join('');
-                         document.getElementById('services-menu-container-mobile').innerHTML = servicesMenu.map(item => `<a href="page.html?slug=${item.slug}&lang=${currentLang}" class="block py-1 text-gray-700 hover:text-primary">${item.title}</a>`).join('');
+                        countrySettings = countrySettingsDoc.data();
                     }
                 }
+
+                // Fetch global settings
                 const globalSettingsDoc = await getDoc(doc(db, 'settings', 'global'));
-                if (!globalSettingsDoc.exists()) return;
-                const settings = globalSettingsDoc.data();
-                let footerHTML = `<div class="text-center lg:text-left"><p>&copy; ${new Date().getFullYear()} Nesvarba. Všechna práva vyhrazena.</p></div>`;
+                if (globalSettingsDoc.exists()){
+                     globalSettings = globalSettingsDoc.data();
+                }
+                
+                const logoText = countrySettings.logoText || globalSettings.logoText || 'HORIZON ESTATES';
+                document.querySelector('header .font-bold.text-gray-800').textContent = logoText;
+
+                // Menu Logic: fetch from both, then create links with context
+                const countries = ['spanelsko', 'bulharsko'];
+                let allInfoItems = [], allServicesItems = [];
+
+                for (const country of countries) {
+                    const countrySettingsDoc = await getDoc(doc(db, 'settings', country));
+                    if (countrySettingsDoc.exists()) {
+                        const { infoMenu = [], servicesMenu = [] } = countrySettingsDoc.data();
+                        allInfoItems.push(...infoMenu.map(item => ({...item, country})));
+                        allServicesItems.push(...servicesMenu.map(item => ({...item, country})));
+                    }
+                }
+                
+                const uniqueInfo = Array.from(new Map(allInfoItems.map(item => [item.slug, item])).values());
+                const uniqueServices = Array.from(new Map(allServicesItems.map(item => [item.slug, item])).values());
+                
+                const infoHtml = uniqueInfo.map(item => `<a href="page.html?slug=${item.slug}&lang=${currentLang}&country=${item.country}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">${item.title}</a>`).join('');
+                const servicesHtml = uniqueServices.map(item => `<a href="page.html?slug=${item.slug}&lang=${currentLang}&country=${item.country}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">${item.title}</a>`).join('');
+                document.getElementById('info-menu-container-desktop').innerHTML = infoHtml;
+                document.getElementById('services-menu-container-desktop').innerHTML = servicesHtml;
+                document.getElementById('info-menu-container-mobile').innerHTML = uniqueInfo.map(item => `<a href="page.html?slug=${item.slug}&lang=${currentLang}&country=${item.country}" class="block py-1 text-gray-700 hover:text-primary">${item.title}</a>`).join('');
+                document.getElementById('services-menu-container-mobile').innerHTML = uniqueServices.map(item => `<a href="page.html?slug=${item.slug}&lang=${currentLang}&country=${item.country}" class="block py-1 text-gray-700 hover:text-primary">${item.title}</a>`).join('');
+
+                let footerHTML = `<div class="text-center lg:text-left"><p>&copy; ${new Date().getFullYear()} ${logoText}. Všechna práva vyhrazena.</p></div>`;
                 const contactsHTML = [];
                 for (let i = 1; i <= 4; i++) {
-                    if (settings[`contact${i}_name`]) {
+                    if (globalSettings[`contact${i}_name`]) {
                         contactsHTML.push(`
                             <div class="text-center">
-                                <p class="font-semibold">${settings[`contact${i}_name`]}</p>
-                                ${settings[`contact${i}_phone`] ? `<a href="tel:${settings[`contact${i}_phone`].replace(/\s/g, '')}" class="block hover:text-primary">${settings[`contact${i}_phone`]}</a>` : ''}
-                                ${settings[`contact${i}_email`] ? `<a href="mailto:${settings[`contact${i}_email`]}" class="block hover:text-primary">${settings[`contact${i}_email`]}</a>` : ''}
+                                <p class="font-semibold">${globalSettings[`contact${i}_name`]}</p>
+                                ${globalSettings[`contact${i}_phone`] ? `<a href="tel:${globalSettings[`contact${i}_phone`].replace(/\s/g, '')}" class="block hover:text-primary">${globalSettings[`contact${i}_phone`]}</a>` : ''}
+                                ${globalSettings[`contact${i}_email`] ? `<a href="mailto:${globalSettings[`contact${i}_email`]}" class="block hover:text-primary">${globalSettings[`contact${i}_email`]}</a>` : ''}
                             </div>`);
                     }
                 }
@@ -735,105 +827,152 @@
             }
         });
 
-        document.getElementById('loginForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const email = e.target['login-email'].value, password = e.target['login-password'].value;
-            const errorEl = document.getElementById('loginError');
-            hideError(errorEl);
-            signInWithEmailAndPassword(auth, email, password).catch(() => showError(errorEl, 'Nesprávný e-mail nebo heslo.'));
-        });
-
-        document.getElementById('registerForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const email = e.target['register-email'].value, password = e.target['register-password'].value;
-            const errorEl = document.getElementById('registerError');
-            hideError(errorEl);
-            createUserWithEmailAndPassword(auth, email, password).catch(err => showError(errorEl, 'Chyba registrace: ' + err.message));
-        });
-
-        document.getElementById('logoutIcon').addEventListener('click', () => signOut(auth));
-
-        favoritesIconEl.addEventListener('click', async () => {
-            const listEl = document.getElementById('favorites-list');
-            listEl.innerHTML = '<p>Načítání oblíbených...</p>';
-            openModal(modals.favorites);
-            if (userFavorites.length === 0) {
-                listEl.innerHTML = '<p>Zatím nemáte žádné oblíbené nemovitosti.</p>';
-                return;
-            }
-            const promises = userFavorites.map(id => getDoc(doc(db, 'properties', id)));
-            const favDocs = await Promise.all(promises);
-            listEl.innerHTML = '';
-            favDocs.forEach(doc => {
-                if (!doc.exists()) return;
-                const prop = doc.data();
-                const item = document.createElement('div');
-                item.className = 'favorite-item flex items-center gap-4 py-3 border-b';
-                item.innerHTML = `
-                    <img src="${prop.images?.[0] || 'https://placehold.co/150x100'}" class="w-32 h-20 object-cover rounded-md">
-                    <div class="flex-grow">
-                        <h4 class="font-bold">${prop[`title_${currentLang}`] || prop.title_cz}</h4>
-                        <p class="text-primary font-semibold">€${prop.price.toLocaleString()}</p>
-                        <a href="detail.html?id=${doc.id}&lang=${currentLang}" class="text-sm text-gray-500 hover:underline">Zobrazit detail</a>
-                    </div>
-                    <button class="remove-favorite text-gray-400 hover:text-red-500 text-xl" data-id="${doc.id}"><i class="fas fa-trash-alt"></i></button>
-                `;
-                listEl.appendChild(item);
+        const loginForm = document.getElementById('loginForm');
+        if (loginForm) {
+            loginForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const email = e.target['login-email'].value, password = e.target['login-password'].value;
+                const errorEl = document.getElementById('loginError');
+                hideError(errorEl);
+                signInWithEmailAndPassword(auth, email, password).catch(() => showError(errorEl, 'Nesprávný e-mail nebo heslo.'));
             });
-        });
+        }
         
-        document.getElementById('favorites-list').addEventListener('click', async (e) => {
-            const removeBtn = e.target.closest('.remove-favorite');
-            if (removeBtn) {
-                const propertyId = removeBtn.dataset.id;
-                const user = auth.currentUser;
-                if (user) {
-                    const userRef = doc(db, 'users', user.uid);
-                    const updatedFavorites = userFavorites.filter(id => id !== propertyId);
-                    await setDoc(userRef, { favorites: updatedFavorites }, { merge: true });
-                    userFavorites = updatedFavorites;
-                    removeBtn.closest('.favorite-item').remove();
+        const registerForm = document.getElementById('registerForm');
+        if (registerForm) {
+            registerForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const email = e.target['register-email'].value, password = e.target['register-password'].value;
+                const errorEl = document.getElementById('registerError');
+                hideError(errorEl);
+                createUserWithEmailAndPassword(auth, email, password).catch(err => showError(errorEl, 'Chyba registrace: ' + err.message));
+            });
+        }
+        
+        const logoutIcon = document.getElementById('logoutIcon');
+        if(logoutIcon) logoutIcon.addEventListener('click', () => signOut(auth));
+
+        if(favoritesIconEl) {
+            favoritesIconEl.addEventListener('click', async () => {
+                const listEl = document.getElementById('favorites-list');
+                listEl.innerHTML = '<p>Načítání oblíbených...</p>';
+                openModal(modals.favorites);
+                if (userFavorites.length === 0) {
+                    listEl.innerHTML = '<p>Zatím nemáte žádné oblíbené nemovitosti.</p>';
+                    return;
                 }
-            }
-        });
+                const promises = userFavorites.map(id => getDoc(doc(db, 'properties', id)));
+                const favDocs = await Promise.all(promises);
+                listEl.innerHTML = '';
+                favDocs.forEach(doc => {
+                    if (!doc.exists()) return;
+                    const prop = doc.data();
+                    const item = document.createElement('div');
+                    item.className = 'favorite-item flex items-center gap-4 py-3 border-b';
+                    item.innerHTML = `
+                        <img src="${prop.images?.[0] || 'https://placehold.co/150x100'}" class="w-32 h-20 object-cover rounded-md">
+                        <div class="flex-grow">
+                            <h4 class="font-bold">${prop[`title_${currentLang}`] || prop.title_cz}</h4>
+                            <p class="text-primary font-semibold">€${prop.price.toLocaleString()}</p>
+                            <a href="detail.html?id=${doc.id}&lang=${currentLang}" class="text-sm text-gray-500 hover:underline">Zobrazit detail</a>
+                        </div>
+                        <button class="remove-favorite text-gray-400 hover:text-red-500 text-xl" data-id="${doc.id}"><i class="fas fa-trash-alt"></i></button>
+                    `;
+                    listEl.appendChild(item);
+                });
+            });
+        }
+        
+        const favList = document.getElementById('favorites-list');
+        if (favList) {
+            favList.addEventListener('click', async (e) => {
+                const removeBtn = e.target.closest('.remove-favorite');
+                if (removeBtn) {
+                    const propertyId = removeBtn.dataset.id;
+                    const user = auth.currentUser;
+                    if (user) {
+                        const userRef = doc(db, 'users', user.uid);
+                        const updatedFavorites = userFavorites.filter(id => id !== propertyId);
+                        await setDoc(userRef, { favorites: updatedFavorites }, { merge: true });
+                        userFavorites = updatedFavorites;
+                        removeBtn.closest('.favorite-item').remove();
+                    }
+                }
+            });
+        }
 
         document.addEventListener('DOMContentLoaded', () => {
             loadPropertyDetails();
             setActiveLangLink();
             translatePage();
             
-            document.getElementById('mobile-menu-button').addEventListener('click', () => document.getElementById('mobile-menu').classList.toggle('hidden'));
-            document.getElementById('contactLink').onclick = (e) => { e.preventDefault(); openModal(modals.contact); };
-            document.getElementById('contactLinkMobile').onclick = (e) => { e.preventDefault(); openModal(modals.contact); document.getElementById('mobile-menu').classList.add('hidden'); };
-            document.getElementById('loginIcon').onclick = () => openModal(modals.auth);
+            document.getElementById('mobile-menu-button')?.addEventListener('click', () => document.getElementById('mobile-menu')?.classList.toggle('hidden'));
+            
+            const contactLink = document.getElementById('contactLink');
+            if (contactLink) contactLink.onclick = (e) => { e.preventDefault(); openModal(modals.contact); };
+            
+            const contactLinkMobile = document.getElementById('contactLinkMobile');
+            if (contactLinkMobile) contactLinkMobile.onclick = (e) => { e.preventDefault(); openModal(modals.contact); document.getElementById('mobile-menu')?.classList.add('hidden'); };
+
+            const loginIcon = document.getElementById('loginIcon');
+            if (loginIcon) loginIcon.onclick = () => openModal(modals.auth);
+
             document.querySelectorAll('.close-btn').forEach(btn => btn.onclick = () => Object.values(modals).forEach(closeModal));
-            window.onclick = (e) => { if (Object.values(modals).includes(e.target)) Object.values(modals).forEach(closeModal); };
-            document.getElementById('showRegister').addEventListener('click', () => {
+            
+            window.onclick = (e) => { if (Object.values(modals).some(modal => modal && modal === e.target)) Object.values(modals).forEach(closeModal); };
+
+            const showRegister = document.getElementById('showRegister');
+            if (showRegister) showRegister.addEventListener('click', () => {
                 document.getElementById('loginFormContainer').style.display = 'none';
                 document.getElementById('registerFormContainer').style.display = 'block';
             });
-            document.getElementById('showLogin').addEventListener('click', () => {
+            
+            const showLogin = document.getElementById('showLogin');
+            if (showLogin) showLogin.addEventListener('click', () => {
                 document.getElementById('registerFormContainer').style.display = 'none';
                 document.getElementById('loginFormContainer').style.display = 'block';
             });
-            document.getElementById('thumbPrevBtn').addEventListener('click', () => { if (thumbnailStartIndex > 0) { thumbnailStartIndex--; slideThumbnails(); } });
-            document.getElementById('thumbNextBtn').addEventListener('click', () => { if (thumbnailStartIndex + thumbnailsToShow < galleryImages.length) { thumbnailStartIndex++; slideThumbnails(); } });
-            document.getElementById('mainPrevBtn').addEventListener('click', (e) => { e.stopPropagation(); updateMainImage((activeImageIndex - 1 + galleryImages.length) % galleryImages.length); });
-            document.getElementById('mainNextBtn').addEventListener('click', (e) => { e.stopPropagation(); updateMainImage((activeImageIndex + 1) % galleryImages.length); });
-            mainImage.parentElement.parentElement.addEventListener('click', () => {
-                if(galleryImages.length > 0) {
-                    lightboxImage.src = galleryImages[activeImageIndex].src;
-                    lightbox.style.display = 'flex';
+
+            const thumbPrevBtn = document.getElementById('thumbPrevBtn');
+            if (thumbPrevBtn) thumbPrevBtn.addEventListener('click', () => { if (thumbnailStartIndex > 0) { thumbnailStartIndex--; slideThumbnails(); } });
+
+            const thumbNextBtn = document.getElementById('thumbNextBtn');
+            if (thumbNextBtn) thumbNextBtn.addEventListener('click', () => { if (thumbnailStartIndex + thumbnailsToShow < galleryImages.length) { thumbnailStartIndex++; slideThumbnails(); } });
+            
+            const mainPrevBtn = document.getElementById('mainPrevBtn');
+            if (mainPrevBtn) mainPrevBtn.addEventListener('click', (e) => { e.stopPropagation(); updateMainImage((activeImageIndex - 1 + galleryImages.length) % galleryImages.length); });
+
+            const mainNextBtn = document.getElementById('mainNextBtn');
+            if (mainNextBtn) mainNextBtn.addEventListener('click', (e) => { e.stopPropagation(); updateMainImage((activeImageIndex + 1) % galleryImages.length); });
+            
+            const mainImageContainer = document.getElementById('main-image-wrapper');
+            if (mainImageContainer) {
+                mainImageContainer.addEventListener('click', () => {
+                    if (galleryImages.length > 0) {
+                        lightboxImage.src = galleryImages[activeImageIndex].src;
+                        openModal(lightbox);
+                    }
+                });
+            }
+
+            if (lightbox) {
+                const lightboxCloseButton = lightbox.querySelector('.close-btn');
+                if (lightboxCloseButton) {
+                    lightboxCloseButton.addEventListener('click', () => closeModal(lightbox));
                 }
-            });
-            lightbox.querySelector('.close-btn').addEventListener('click', () => lightbox.style.display = 'none');
-            const changeLightboxImage = (dir) => {
-                const newIndex = (activeImageIndex + dir + galleryImages.length) % galleryImages.length;
-                updateMainImage(newIndex);
-                lightboxImage.src = galleryImages[newIndex].src;
-            };
-            lightbox.querySelector('.prev').addEventListener('click', () => changeLightboxImage(-1));
-            lightbox.querySelector('.next').addEventListener('click', () => changeLightboxImage(1));
+                
+                const changeLightboxImage = (dir) => {
+                    const newIndex = (activeImageIndex + dir + galleryImages.length) % galleryImages.length;
+                    updateMainImage(newIndex);
+                    lightboxImage.src = galleryImages[newIndex].src;
+                };
+
+                const lightboxPrev = lightbox.querySelector('.prev');
+                if(lightboxPrev) lightboxPrev.addEventListener('click', () => changeLightboxImage(-1));
+
+                const lightboxNext = lightbox.querySelector('.next');
+                if(lightboxNext) lightboxNext.addEventListener('click', () => changeLightboxImage(1));
+            }
         });
     </script>
 </body>
