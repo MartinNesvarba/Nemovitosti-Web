@@ -34,7 +34,6 @@
         .modal-fade-in { animation: fadeIn 0.3s ease-out; }
         .modal-slide-in { animation: slideIn 0.3s ease-out; }
         
-        /* --- START OF CHANGES: Flag Styles --- */
         .lang-link img {
             opacity: 0.7;
             transition: all 0.2s ease-in-out;
@@ -49,7 +48,6 @@
             transform: scale(1.1);
             box-shadow: 0 0 0 2px #dd6822;
         }
-        /* --- END OF CHANGES --- */
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800 flex flex-col min-h-screen">
@@ -58,7 +56,6 @@
         <div class="container mx-auto px-4">
             <div class="flex justify-between items-center py-3 border-b">
                 <div class="flex items-center space-x-4">
-                    <!-- --- START OF CHANGES: Language Switcher --- -->
                     <div id="lang-switcher" class="flex space-x-2">
                         <a href="spanelsko.html?lang=cz" data-lang="cz" class="lang-link">
                             <img src="https://flagcdn.com/w40/cz.png" alt="Čeština" class="w-8 h-6 object-cover">
@@ -70,7 +67,6 @@
                             <img src="https://flagcdn.com/w40/de.png" alt="Deutsch" class="w-8 h-6 object-cover">
                         </a>
                     </div>
-                    <!-- --- END OF CHANGES --- -->
                     <a href="index.html" class="text-xl md:text-2xl font-bold text-gray-800 tracking-wider">HORIZON ESTATES</a>
                 </div>
                 <div class="flex items-center space-x-4">
@@ -285,6 +281,9 @@
                 "filter-price-label": "Cena (€)",
                 "filter-submit-btn": "Vyhledat",
                 "filter-all": "Všechny",
+                "offerIdPlaceholder": "Zadejte číslo",
+                "priceFromPlaceholder": "Od",
+                "priceToPlaceholder": "Do",
                 // Main Content
                 "main-title": "Nemovitosti ve Španělsku",
                 "main-subtitle": "Váš nový domov pod sluncem na pobřeží Costa Blanca.",
@@ -314,6 +313,10 @@
                 "register-modal-submit": "Zaregistrovat se",
                 "register-modal-login-prompt": "Máte již účet? <a>Přihlaste se</a>",
                 "favorites-modal-title": "Moje oblíbené nemovitosti",
+                "cardOfferId": "Č. nabídky",
+                "cardRooms": "Dispozice",
+                "cardArea": "Plocha",
+                "cardViewDetail": "Zobrazit detail"
             },
             en: {
                 "nav-spanelsko": "Spain",
@@ -330,6 +333,9 @@
                 "filter-price-label": "Price (€)",
                 "filter-submit-btn": "Search",
                 "filter-all": "All",
+                "offerIdPlaceholder": "Enter number",
+                "priceFromPlaceholder": "From",
+                "priceToPlaceholder": "To",
                 "main-title": "Properties in Spain",
                 "main-subtitle": "Your new home under the sun on the Costa Blanca.",
                 "offer-type-sale": "For Sale",
@@ -356,6 +362,10 @@
                 "register-modal-submit": "Register",
                 "register-modal-login-prompt": "Already have an account? <a>Log In</a>",
                 "favorites-modal-title": "My Favorite Properties",
+                "cardOfferId": "Offer No.",
+                "cardRooms": "Layout",
+                "cardArea": "Area",
+                "cardViewDetail": "View Detail"
             },
             de: {
                 "nav-spanelsko": "Spanien",
@@ -372,6 +382,9 @@
                 "filter-price-label": "Preis (€)",
                 "filter-submit-btn": "Suchen",
                 "filter-all": "Alle",
+                "offerIdPlaceholder": "Nummer eingeben",
+                "priceFromPlaceholder": "Von",
+                "priceToPlaceholder": "Bis",
                 "main-title": "Immobilien in Spanien",
                 "main-subtitle": "Ihr neues Zuhause unter der Sonne an der Costa Blanca.",
                 "offer-type-sale": "Zum Verkauf",
@@ -398,6 +411,10 @@
                 "register-modal-submit": "Registrieren",
                 "register-modal-login-prompt": "Haben Sie bereits ein Konto? <a>Anmelden</a>",
                 "favorites-modal-title": "Meine Lieblingsimmobilien",
+                "cardOfferId": "Angebots-Nr.",
+                "cardRooms": "Aufteilung",
+                "cardArea": "Fläche",
+                "cardViewDetail": "Details anzeigen"
             }
         };
 
@@ -412,13 +429,17 @@
                         const linkText = langDict[key].match(/<a>(.*?)<\/a>/)[1];
                         const fullText = langDict[key].replace(/<a>.*?<\/a>/, `<a class="font-semibold text-primary hover:underline cursor-pointer">${linkText}</a>`);
                         element.innerHTML = fullText;
-                    } else if (element.tagName === 'INPUT' && element.placeholder) {
+                    } else if (element.tagName === 'INPUT' && element.hasAttribute('placeholder')) {
                         element.placeholder = langDict[key];
-                    } else if (element.tagName === 'SPAN' || element.tagName === 'A' || element.tagName === 'BUTTON' || element.tagName === 'H1' || element.tagName === 'H2' || element.tagName === 'H3' || element.tagName === 'P' || element.tagName === 'LABEL' || element.tagName === 'OPTION') {
+                    } else if (['SPAN', 'A', 'BUTTON', 'H1', 'H2', 'H3', 'P', 'LABEL', 'OPTION'].includes(element.tagName)) {
                          element.textContent = langDict[key];
                     }
                 }
             });
+            document.getElementById('offer-id-filter').placeholder = langDict['offerIdPlaceholder'] || 'Zadejte číslo';
+            document.getElementById('cena-od').placeholder = langDict['priceFromPlaceholder'] || 'Od';
+            document.getElementById('cena-do').placeholder = langDict['priceToPlaceholder'] || 'Do';
+            
             document.querySelector('#fact-1 span').textContent = langDict['fact-1'];
             document.querySelector('#fact-2 span').textContent = langDict['fact-2'];
             document.querySelector('#fact-3 span').textContent = langDict['fact-3'];
@@ -435,13 +456,9 @@
             document.querySelectorAll('a[href*=".html"]').forEach(link => {
                 if (!link.classList.contains('lang-link')) {
                     try {
-                        // Construct a full URL from the link's href attribute and the current page's URL
                         const url = new URL(link.getAttribute('href'), window.location.href);
-                        
-                        // Set the language parameter
                         url.searchParams.set('lang', currentLang);
-                        
-                        // Update the link's href
+                        url.searchParams.set('country', pageCountry);
                         link.href = url.href;
                     } catch (e) {
                         console.error(`Could not process URL for link: ${link.getAttribute('href')}`, e);
@@ -487,13 +504,13 @@
                     <i class="fas fa-heart favorite-icon absolute top-4 right-4 text-2xl cursor-pointer ${isFavorite ? 'text-red-500' : 'text-white'} drop-shadow-lg transition-colors"></i>
                     <img src="${firstImage}" alt="Foto: ${title}" class="w-full h-56 object-cover">
                     <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2 truncate">${title}</h3>
+                        <h3 class="text-xl font-bold mb-2">${title}</h3>
                         <p class="text-2xl font-bold text-primary mb-4">€${prop.price.toLocaleString()}</p>
                         <div class="text-sm text-gray-600 space-y-1 mb-4">
-                            <p>Č. nabídky: <strong>${prop.offerId || 'N/A'}</strong> | Dispozice: <strong>${prop.rooms || 'N/A'}</strong></p>
-                            <p>${prop.area ? `Plocha: <strong>${prop.area} m²</strong>` : ''}</p>
+                            <p>${translations[currentLang]['cardOfferId'] || 'Č. nabídky'}: <strong>${prop.offerId || 'N/A'}</strong> | ${translations[currentLang]['cardRooms'] || 'Dispozice'}: <strong>${prop.rooms || 'N/A'}</strong></p>
+                            <p>${prop.area ? `${translations[currentLang]['cardArea'] || 'Plocha'}: <strong>${prop.area} m²</strong>` : ''}</p>
                         </div>
-                        <a href="detail.html?id=${prop.id}&lang=${currentLang}" class="inline-block w-full text-center bg-gray-800 text-white font-semibold py-2 px-4 rounded-md hover:bg-gray-700 transition">Zobrazit detail</a>
+                        <a href="detail.html?id=${prop.id}&lang=${currentLang}" class="inline-block w-full text-center bg-gray-800 text-white font-semibold py-2 px-4 rounded-md hover:bg-gray-700 transition">${translations[currentLang]['cardViewDetail'] || 'Zobrazit detail'}</a>
                     </div>
                 `;
                 propertiesContainer.appendChild(card);
@@ -549,11 +566,11 @@
                 let results = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
                 filteredProperties = results.filter(p => {
                     return (!filters.location || p.location === filters.location) &&
-                           (!filters.type || p.type === filters.type) &&
-                           (!filters.rooms || p.rooms === filters.rooms) &&
-                           (!filters.priceFrom || p.price >= filters.priceFrom) &&
-                           (!filters.priceTo || p.price <= filters.priceTo) &&
-                           (!filters.offerId || p.offerId == filters.offerId);
+                                (!filters.type || p.type === filters.type) &&
+                                (!filters.rooms || p.rooms === filters.rooms) &&
+                                (!filters.priceFrom || p.price >= filters.priceFrom) &&
+                                (!filters.priceTo || p.price <= filters.priceTo) &&
+                                (!filters.offerId || p.offerId == filters.offerId);
                 });
                 sortProperties();
             } catch (error) {
@@ -738,7 +755,10 @@
                 const propertyId = removeBtn.dataset.id;
                 const user = auth.currentUser;
                 if (user) {
-                    await toggleFavorite(user.uid, propertyId);
+                    const userRef = doc(db, 'users', user.uid);
+                    const updatedFavorites = userFavorites.filter(id => id !== propertyId);
+                    await setDoc(userRef, { favorites: updatedFavorites }, { merge: true });
+                    userFavorites = updatedFavorites;
                     removeBtn.closest('.favorite-item').remove();
                     const cardIcon = propertiesContainer.querySelector(`[data-property-id="${propertyId}"] .favorite-icon`);
                     if (cardIcon) {
@@ -751,36 +771,44 @@
 
         const loadSettings = async () => {
             try {
+                let countrySettings = {};
+                let globalSettings = {};
+
                 const countrySettingsDoc = await getDoc(doc(db, 'settings', pageCountry));
                 if (countrySettingsDoc.exists()) {
-                     const { infoMenu = [], servicesMenu = [] } = countrySettingsDoc.data();
-                     const infoHtml = infoMenu.map(item => `<a href="page.html?slug=${item.slug}&lang=${currentLang}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">${item.title}</a>`).join('');
-                     const servicesHtml = servicesMenu.map(item => `<a href="page.html?slug=${item.slug}&lang=${currentLang}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">${item.title}</a>`).join('');
-                     document.getElementById('info-menu-container-desktop').innerHTML = infoHtml;
-                     document.getElementById('services-menu-container-desktop').innerHTML = servicesHtml;
-                     document.getElementById('info-menu-container-mobile').innerHTML = infoMenu.map(item => `<a href="page.html?slug=${item.slug}&lang=${currentLang}" class="block py-1 text-gray-700 hover:text-primary">${item.title}</a>`).join('');
-                     document.getElementById('services-menu-container-mobile').innerHTML = servicesMenu.map(item => `<a href="page.html?slug=${item.slug}&lang=${currentLang}" class="block py-1 text-gray-700 hover:text-primary">${item.title}</a>`).join('');
+                    countrySettings = countrySettingsDoc.data();
+                    const { infoMenu = [], servicesMenu = [] } = countrySettings;
+                    const infoHtml = infoMenu.map(item => `<a href="page.html?slug=${item.slug}&lang=${currentLang}&country=${pageCountry}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">${item.title}</a>`).join('');
+                    const servicesHtml = servicesMenu.map(item => `<a href="page.html?slug=${item.slug}&lang=${currentLang}&country=${pageCountry}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">${item.title}</a>`).join('');
+                    document.getElementById('info-menu-container-desktop').innerHTML = infoHtml;
+                    document.getElementById('services-menu-container-desktop').innerHTML = servicesHtml;
+                    document.getElementById('info-menu-container-mobile').innerHTML = infoMenu.map(item => `<a href="page.html?slug=${item.slug}&lang=${currentLang}&country=${pageCountry}" class="block py-1 text-gray-700 hover:text-primary">${item.title}</a>`).join('');
+                    document.getElementById('services-menu-container-mobile').innerHTML = servicesMenu.map(item => `<a href="page.html?slug=${item.slug}&lang=${currentLang}&country=${pageCountry}" class="block py-1 text-gray-700 hover:text-primary">${item.title}</a>`).join('');
                 }
 
                 const globalSettingsDoc = await getDoc(doc(db, 'settings', 'global'));
                 if (globalSettingsDoc.exists()) {
-                    const settings = globalSettingsDoc.data();
-                    let footerHTML = `<div class="text-center lg:text-left"><p>&copy; ${new Date().getFullYear()} Nesvarba. Všechna práva vyhrazena.</p></div>`;
-                    const contactsHTML = [];
-                    for (let i = 1; i <= 4; i++) {
-                        if (settings[`contact${i}_name`]) {
-                            contactsHTML.push(`
-                                <div class="text-center">
-                                    <p class="font-semibold">${settings[`contact${i}_name`]}</p>
-                                    ${settings[`contact${i}_phone`] ? `<a href="tel:${settings[`contact${i}_phone`].replace(/\s/g, '')}" class="block hover:text-primary">${settings[`contact${i}_phone`]}</a>` : ''}
-                                    ${settings[`contact${i}_email`] ? `<a href="mailto:${settings[`contact${i}_email`]}" class="block hover:text-primary">${settings[`contact${i}_email`]}</a>` : ''}
-                                </div>
-                            `);
-                        }
-                    }
-                    footerHTML += `<div class="flex flex-wrap justify-center lg:justify-end gap-6">${contactsHTML.join('')}</div>`;
-                    document.getElementById('site-footer').innerHTML = footerHTML;
+                    globalSettings = globalSettingsDoc.data();
                 }
+
+                const logoText = countrySettings.logoText || globalSettings.logoText || 'HORIZON ESTATES';
+                document.querySelector('header .font-bold.text-gray-800').textContent = logoText;
+
+                const contactsHTML = [];
+                for (let i = 1; i <= 4; i++) {
+                    if (globalSettings[`contact${i}_name`]) {
+                        contactsHTML.push(`
+                            <div class="text-center">
+                                <p class="font-semibold">${globalSettings[`contact${i}_name`]}</p>
+                                ${globalSettings[`contact${i}_phone`] ? `<a href="tel:${globalSettings[`contact${i}_phone`].replace(/\s/g, '')}" class="block hover:text-primary">${globalSettings[`contact${i}_phone`]}</a>` : ''}
+                                ${globalSettings[`contact${i}_email`] ? `<a href="mailto:${globalSettings[`contact${i}_email`]}" class="block hover:text-primary">${globalSettings[`contact${i}_email`]}</a>` : ''}
+                            </div>
+                        `);
+                    }
+                }
+                let footerHTML = `<div class="text-center lg:text-left"><p>&copy; ${new Date().getFullYear()} ${logoText}. Všechna práva vyhrazena.</p></div>`;
+                footerHTML += `<div class="flex flex-wrap justify-center lg:justify-end gap-6">${contactsHTML.join('')}</div>`;
+                document.getElementById('site-footer').innerHTML = footerHTML;
             } catch (error) {
                 console.error("Error loading settings:", error);
             }
@@ -813,3 +841,4 @@
     </script>
 </body>
 </html>
+
