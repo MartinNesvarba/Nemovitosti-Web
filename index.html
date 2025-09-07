@@ -4,178 +4,202 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Španělsko & Bulharsko | Apartmány a Vily</title>
-    <!-- Připojení Tailwind CSS pro moderní a responzivní design -->
+    <!-- Connecting Tailwind CSS for a modern and responsive design -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Připojení Google Fonts pro elegantní písmo -->
+    <!-- Connecting Google Fonts for an elegant font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        /* Vlastní styl pro lepší vizuální efekty */
+        /* Custom styles for better visual effects */
         body {
             font-family: 'Inter', sans-serif;
         }
         .text-shadow {
             text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
         }
-        /* Přechodový efekt pro pozadí */
+        /* Transition effect for the background */
         .bg-half {
-            transition: filter 0.3s ease-in-out;
+            transition: filter 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        /* Ztmavení pozadí při najetí myší na druhou polovinu */
-        .group:hover .group-hover\:filter-brightness-50 {
+        /* Darken the other half on hover */
+        .group:hover .bg-spain:not(:hover) {
+             filter: brightness(0.5);
+        }
+        .group:hover .bg-bulgaria:not(:hover) {
             filter: brightness(0.5);
-        }
-        .group:hover .group-hover\:scale-105 {
-            transform: scale(1.05);
         }
         .lang-btn {
             cursor: pointer;
             opacity: 0.7;
             transition: all 0.2s ease-in-out;
+            border-radius: 9999px; /* Make flags circular */
+            box-shadow: 0 0 0 2px rgba(255, 255, 255, 0); /* Initial transparent ring */
         }
-        .lang-btn:hover, .lang-btn.active {
+        .lang-btn:hover {
             opacity: 1;
             transform: scale(1.1);
+        }
+        .lang-btn.active {
+            opacity: 1;
+            transform: scale(1.1);
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.9); /* White ring for active language */
         }
     </style>
 </head>
 <body class="bg-gray-900 text-white">
 
-    <!-- Hlavní kontejner, který se stará o rozložení -->
+    <!-- Main container that handles the layout -->
     <main class="relative min-h-screen flex flex-col md:flex-row group overflow-hidden">
 
-        <!-- Levá polovina - Španělsko -->
-        <section 
-            class="w-full md:w-1/2 min-h-[50vh] md:min-h-screen bg-cover bg-center relative bg-half group-hover:filter-brightness-50" 
-            style="background-image: url(španělsko.png);"
-            aria-label="Pohled na španělskou vilu s bazénem">
-            <!-- Poloprůhledné překrytí pro lepší čitelnost textu -->
+        <!-- Left half - Spain -->
+        <section
+            class="w-full md:w-1/2 min-h-[50vh] md:min-h-screen bg-cover bg-center relative bg-half bg-spain"
+            style="background-image: url('https://images.unsplash.com/photo-1564013799919-ab600027ffc6?q=80&w=2070&auto=format&fit=crop');"
+            aria-label="View of a Spanish villa with a pool">
+            <!-- Semi-transparent overlay for better text readability -->
             <div class="absolute inset-0 bg-black bg-opacity-40"></div>
         </section>
 
-        <!-- Pravá polovina - Bulharsko -->
-        <section 
-            class="w-full md:w-1/2 min-h-[50vh] md:min-h-screen bg-cover bg-center relative bg-half group-hover:filter-brightness-50" 
-            style="background-image: url(Bulharsko.png);"
-            aria-label="Pohled na pláž v Bulharsku při západu slunce">
+        <!-- Right half - Bulgaria -->
+        <section
+            class="w-full md:w-1/2 min-h-[50vh] md:min-h-screen bg-cover bg-center relative bg-half bg-bulgaria"
+            style="background-image: url('https://images.unsplash.com/photo-1629833296062-857c4f4b971a?q=80&w=2070&auto=format&fit=crop');"
+            aria-label="View of a beach in Bulgaria at sunset">
             <div class="absolute inset-0 bg-black bg-opacity-40"></div>
         </section>
 
-        <!-- Centrální obsah s nadpisem a tlačítky -->
+        <!-- Central content with heading and buttons -->
         <div class="absolute top-0 left-0 w-full h-full z-10 flex flex-col items-center justify-center p-4">
-            
-            <!-- Navigace v horní části - Přepínač jazyků -->
+
+            <!-- Top navigation - Language switcher -->
             <nav class="absolute top-5 right-5 flex items-center gap-4">
-                <img src="https://flagcdn.com/w40/cz.png" alt="Čeština" data-lang="cz" class="lang-btn w-8 h-auto active" style=".h-auto {height: 25px;};">
-                <img src="https://flagcdn.com/w40/gb.png" alt="English" data-lang="en" class="lang-btn w-8 h-auto active" style=".h-auto {height: 25px;};">
-                <img src="https://flagcdn.com/w40/de.png" alt="Deutsch" data-lang="de" class="lang-btn w-8 h-auto active" style=".h-auto {height: 25px;};">
+                <img src="https://flagcdn.com/w40/cz.png" alt="Čeština" data-lang="cz" class="lang-btn w-8 h-8 object-cover">
+                <img src="https://flagcdn.com/w40/gb.png" alt="English" data-lang="en" class="lang-btn w-8 h-8 object-cover">
+                <img src="https://flagcdn.com/w40/de.png" alt="Deutsch" data-lang="de" class="lang-btn w-8 h-8 object-cover">
             </nav>
 
             <div class="text-center flex flex-col items-center">
                 <h1 id="main-headline" class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-8 text-shadow uppercase tracking-wider">
-                    <!-- Text bude vložen z JS -->
+                    <!-- Text will be inserted from JS -->
                 </h1>
                 <p id="sub-headline" class="text-lg md:text-xl text-gray-200 mb-12 max-w-2xl text-shadow">
-                    <!-- Text bude vložen z JS -->
+                    <!-- Text will be inserted from JS -->
                 </p>
-                
-                <!-- Kontejner pro tlačítka -->
+
+                <!-- Button container -->
                 <div class="flex flex-col md:flex-row gap-4 w-full sm:w-auto">
-                    <a id="spain-button" href="spanelsko.html" class="bg-white text-gray-900 font-bold text-lg py-3 px-8 rounded-lg hover:bg-gray-200 transition-all duration-300 transform hover:scale-105 shadow-lg">
-                        <!-- Text bude vložen z JS -->
+                    <a id="spain-button" href="spanelsko.html" class="bg-transparent border-2 border-white text-white font-bold text-lg py-3 px-8 rounded-lg hover:bg-white hover:text-gray-900 transition-all duration-300 transform hover:scale-105 shadow-lg">
+                        <!-- Text will be inserted from JS -->
                     </a>
                     <a id="bulgaria-button" href="bulharsko.html" class="bg-transparent border-2 border-white text-white font-bold text-lg py-3 px-8 rounded-lg hover:bg-white hover:text-gray-900 transition-all duration-300 transform hover:scale-105 shadow-lg">
-                        <!-- Text bude vložen z JS -->
+                        <!-- Text will be inserted from JS -->
                     </a>
                 </div>
             </div>
         </div>
     </main>
+    
+    <!-- Using latest modular Firebase SDK for future data loading -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getFirestore } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
-    <!-- Firebase SDK - pro budoucí načítání dat -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Firebase konfigurace (stejná jako v admin panelu)
-            const firebaseConfig = {
-                apiKey: "AIzaSyAi_ugQSDUjk4y8ne4zpAyTbzNrf96SWDc",
-                authDomain: "login-40bf8.firebaseapp.com",
-                projectId: "login-40bf8",
-                storageBucket: "gs://login-40bf8.firebasestorage.app",
-                messagingSenderId: "932200625165",
-                appId: "1:932200625165:web:422564c4f9c3f9fbead144"
-            };
-
-            // Inicializace Firebase (pokud ještě není)
-            if (!firebase.apps.length) {
-                firebase.initializeApp(firebaseConfig);
+        // --- Translations Data Structure ---
+        const translations = {
+            cz: {
+                title: "Španělsko & Bulharsko | Apartmány a Vily",
+                mainHeadline: "Vaše dovolená snů",
+                subHeadline: "Objevte exkluzivní vily ve Španělsku a moderní apartmány v Bulharsku.",
+                spainButton: "Vily ve Španělsku",
+                bulgariaButton: "Apartmány v Bulharsku"
+            },
+            en: {
+                title: "Spain & Bulgaria | Apartments and Villas",
+                mainHeadline: "Your Dream Holiday",
+                subHeadline: "Discover exclusive villas in Spain and modern apartments in Bulgaria.",
+                spainButton: "Villas in Spain",
+                bulgariaButton: "Apartments in Bulgaria"
+            },
+            de: {
+                title: "Spanien & Bulgarien | Ferienwohnungen und Villen",
+                mainHeadline: "Ihr Traumurlaub",
+                subHeadline: "Entdecken Sie exklusive Villen in Spanien und moderne Apartments in Bulgarien.",
+                spainButton: "Villen in Spanien",
+                bulgariaButton: "Wohnungen in Bulgarien"
             }
-            const db = firebase.firestore();
+        };
 
-            // Datová struktura pro překlady
-            const translations = {
-                cz: {
-                    title: "Španělsko & Bulharsko | Apartmány a Vily",
-                    mainHeadline: "Vaše dovolená snů",
-                    subHeadline: "Objevte exkluzivní vily ve Španělsku a moderní apartmány v Bulharsku.",
-                    spainButton: "Vily ve Španělsku",
-                    bulgariaButton: "Apartmány v Bulharsku"
-                },
-                en: {
-                    title: "Spain & Bulgaria | Apartments and Villas",
-                    mainHeadline: "Your Dream Holiday",
-                    subHeadline: "Discover exclusive villas in Spain and modern apartments in Bulgaria.",
-                    spainButton: "Villas in Spain",
-                    bulgariaButton: "Apartments in Bulgaria"
-                },
-                de: {
-                    title: "Spanien & Bulgarien | Ferienwohnungen und Villen",
-                    mainHeadline: "Ihr Traumurlaub",
-                    subHeadline: "Entdecken Sie exklusive Villen in Spanien und moderne Apartments in Bulgarien.",
-                    spainButton: "Villen in Spanien",
-                    bulgariaButton: "Wohnungen in Bulgarien"
-                }
-            };
+        // --- DOM Elements ---
+        const elements = {
+            mainHeadline: document.getElementById('main-headline'),
+            subHeadline: document.getElementById('sub-headline'),
+            spainButton: document.getElementById('spain-button'),
+            bulgariaButton: document.getElementById('bulgaria-button')
+        };
+        const langButtons = document.querySelectorAll('.lang-btn');
 
-            // Elementy, které se budou překládat
-            const elements = {
-                mainHeadline: document.getElementById('main-headline'),
-                subHeadline: document.getElementById('sub-headline'),
-                spainButton: document.getElementById('spain-button'),
-                bulgariaButton: document.getElementById('bulgaria-button')
-            };
+        // --- Functions ---
+        
+        // Function to update content based on the selected language
+        function updateContent(lang) {
+            if (!translations[lang]) {
+                console.warn(`Translation for language "${lang}" not found.`);
+                lang = 'cz'; // Fallback to Czech
+            }
+            
+            // Update page title
+            document.title = translations[lang].title;
 
-            const langButtons = document.querySelectorAll('.lang-btn');
+            // Update page texts
+            elements.mainHeadline.textContent = translations[lang].mainHeadline;
+            elements.subHeadline.textContent = translations[lang].subHeadline;
+            elements.spainButton.textContent = translations[lang].spainButton;
+            elements.bulgariaButton.textContent = translations[lang].bulgariaButton;
+            
+            // Update the links to carry the language parameter
+            elements.spainButton.href = `spanelsko.html?lang=${lang}`;
+            elements.bulgariaButton.href = `bulharsko.html?lang=${lang}`;
 
-            // Funkce pro aktualizaci obsahu podle jazyka
-            function updateContent(lang) {
-                if (!translations[lang]) {
-                    console.warn(`Překlad pro jazyk "${lang}" nebyl nalezen.`);
-                    return;
-                }
+            // Save the selected language
+            localStorage.setItem('preferredLanguage', lang);
+
+            // Visually highlight the active language
+            langButtons.forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.lang === lang);
+            });
+        }
+        
+        // Function to initialize Firebase connection
+        async function initializeFirebase() {
+            try {
+                // These global variables are provided by the environment.
+                const firebaseConfig = typeof __firebase_config !== 'undefined' 
+                    ? JSON.parse(__firebase_config) 
+                    : { apiKey: "YOUR_API_KEY", authDomain: "YOUR_AUTH_DOMAIN", projectId: "YOUR_PROJECT_ID" }; // Fallback for local dev
+
+                const app = initializeApp(firebaseConfig);
+                const db = getFirestore(app);
+                const auth = getAuth(app);
                 
-                // Aktualizace titulku stránky
-                document.title = translations[lang].title;
+                // Firebase Authentication
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    await signInWithCustomToken(auth, __initial_auth_token);
+                } else {
+                    await signInAnonymously(auth);
+                }
+                console.log('Firebase auth successful. User UID:', auth.currentUser?.uid);
 
-                // Aktualizace textů na stránce
-                elements.mainHeadline.textContent = translations[lang].mainHeadline;
-                elements.subHeadline.textContent = translations[lang].subHeadline;
-                elements.spainButton.textContent = translations[lang].spainButton;
-                elements.bulgariaButton.textContent = translations[lang].bulgariaButton;
-
-                // Uložení vybraného jazyka
-                localStorage.setItem('preferredLanguage', lang);
-
-                // Vizuální zvýraznění aktivního jazyka
-                langButtons.forEach(btn => {
-                    btn.classList.toggle('active', btn.dataset.lang === lang);
-                });
+            } catch (error) {
+                console.error("Firebase initialization failed:", error);
             }
-
-            // Přidání event listenerů na tlačítka pro změnu jazyka
+        }
+        
+        // Run the main logic after the DOM is fully loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Initialize UI first ---
+            // Add event listeners to language buttons
             langButtons.forEach(button => {
                 button.addEventListener('click', (e) => {
                     const selectedLang = e.target.dataset.lang;
@@ -183,12 +207,19 @@
                 });
             });
 
-            // Načtení preferovaného jazyka z localStorage nebo nastavení výchozího
-            const savedLang = localStorage.getItem('preferredLanguage') || 'cz';
-            updateContent(savedLang);
+            // Determine language: 1. URL param, 2. localStorage, 3. default 'cz'
+            const urlParams = new URLSearchParams(window.location.search);
+            const langFromUrl = urlParams.get('lang');
+            const savedLang = localStorage.getItem('preferredLanguage');
+            const initialLang = langFromUrl || savedLang || 'cz';
+            
+            updateContent(initialLang);
+            
+            // --- Then initialize Firebase in the background ---
+            initializeFirebase();
         });
-    </script>
 
+    </script>
 </body>
 </html>
 
