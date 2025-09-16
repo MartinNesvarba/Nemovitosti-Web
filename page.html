@@ -4,14 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Horizon Estates</title>
-    <!-- SEO: Přidán meta tag pro popis stránky -->
-    <meta name="description" id="meta-description" content="Informace o našich službách, o nás a další užitečné články pro zájemce o nemovitosti ve Španělsku a Bulharsku.">
+    <!-- SEO: Přidán meta tag pro popis stránky (bude vyplněn dynamicky) -->
+    <meta name="description" id="meta-description" content="Informace od Horizon Estates. Přečtěte si více o našich službách a nabídkách nemovitostí ve Španělsku a Bulharsku.">
     <meta name="keywords" id="meta-keywords" content="nemovitosti, reality, zahraničí, investice">
     
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Optimalizace načítání písem a ikon -->
+    <!-- Optimalizace: Asynchronní načítání písem a ikon -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -20,6 +17,8 @@
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     </noscript>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
 
     <style>
         body {
@@ -92,7 +91,6 @@
                             <i class="fas fa-sign-out-alt text-xl cursor-pointer hover:text-red-500" id="logoutIcon" title="Odhlásit se"></i>
                         </div>
                     </div>
-                    <!-- Přístupnost: Přidán aria-label pro screen readery -->
                     <button id="mobile-menu-button" class="lg:hidden text-2xl" aria-label="Otevřít menu"><i class="fas fa-bars"></i></button>
                 </div>
             </div>
@@ -359,8 +357,8 @@
                     
                     document.title = `${title} | Horizon Estates`;
                     contentContainer.innerHTML = `<div class="content-from-db">${content}</div>`;
-                    
-                    // SEO: Dynamically set meta description
+
+                    // SEO: Dynamicky nastaví meta description
                     const metaDescriptionTag = document.getElementById('meta-description');
                     metaDescriptionTag.setAttribute('content', content.replace(/<[^>]*>/g, '').substring(0, 155));
 
@@ -428,6 +426,8 @@
             createUserWithEmailAndPassword(auth, email, password).catch(err => showError(errorEl, 'Chyba registrace: ' + err.message));
         });
 
+        document.getElementById('logoutIcon').addEventListener('click', () => signOut(auth));
+        
         const setupAuthFormToggle = () => {
             const showRegisterBtn = document.getElementById('showRegister');
             const showLoginBtn = document.getElementById('showLogin');
@@ -445,8 +445,6 @@
             }
         };
 
-        document.getElementById('logoutIcon').addEventListener('click', () => signOut(auth));
-        
         favoritesIconEl.addEventListener('click', async () => {
             const listEl = document.getElementById('favorites-list');
             listEl.innerHTML = '<p>Načítání oblíbených...</p>';
@@ -537,8 +535,9 @@
             loadSettings();
             setActiveLangLink();
             translatePage();
+            setupAuthFormToggle();
         });
-
+        
         document.querySelectorAll('#lang-switcher .lang-link').forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
@@ -551,3 +550,4 @@
     </script>
 </body>
 </html>
+
