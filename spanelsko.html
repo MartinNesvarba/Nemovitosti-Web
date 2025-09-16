@@ -4,15 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Horizon Estates - Nemovitosti ve Španělsku</title>
+    <!-- SEO: Přidán meta tag pro popis stránky -->
+    <meta name="description" content="Prodej a pronájem exkluzivních vil a apartmánů ve Španělsku. Objevte svůj nový domov pod sluncem na pobřeží Costa Blanca.">
     <meta name="keywords" id="meta-keywords" content="nemovitosti španělsko, reality španělsko, apartmány španělsko, dům u moře">
     
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+    <!-- Optimalizace: Asynchronní načítání písem a ikon, aby neblokovaly vykreslování -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    </noscript>
+    
+    <!-- Optimalizace: Přednačtení hlavního obrázku (LCP) -->
+    <link rel="preload" as="image" href="https://images.pexels.com/photos/1732414/pexels-photo-1732414.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
 
     <style>
         body {
@@ -48,6 +57,13 @@
             transform: scale(1.1);
             box-shadow: 0 0 0 2px #dd6822;
         }
+         /* Přístupnost: Zvýšení kontrastu pro tlačítka nabídek */
+         .offer-type-btn {
+            color: #374151; /* Tmavší šedá pro lepší čitelnost */
+        }
+        .offer-type-btn.active {
+            color: #ffffff; /* Bílá na tmavém pozadí je v pořádku */
+        }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800 flex flex-col min-h-screen">
@@ -57,13 +73,13 @@
             <div class="flex justify-between items-center py-3 border-b">
                 <div class="flex items-center space-x-4">
                     <div id="lang-switcher" class="flex space-x-2">
-                        <a href="spanelsko.html?lang=cz" data-lang="cz" class="lang-link">
+                        <a href="#" data-lang="cz" class="lang-link">
                             <img src="https://flagcdn.com/w40/cz.png" alt="Čeština" class="w-8 h-6 object-cover">
                         </a>
-                        <a href="spanelsko.html?lang=en" data-lang="en" class="lang-link">
+                        <a href="#" data-lang="en" class="lang-link">
                             <img src="https://flagcdn.com/w40/gb.png" alt="English" class="w-8 h-6 object-cover">
                         </a>
-                        <a href="spanelsko.html?lang=de" data-lang="de" class="lang-link">
+                        <a href="#" data-lang="de" class="lang-link">
                             <img src="https://flagcdn.com/w40/de.png" alt="Deutsch" class="w-8 h-6 object-cover">
                         </a>
                     </div>
@@ -78,7 +94,7 @@
                             <i class="fas fa-sign-out-alt text-xl cursor-pointer hover:text-red-500" id="logoutIcon" title="Odhlásit se"></i>
                         </div>
                     </div>
-                    <button id="mobile-menu-button" class="lg:hidden text-2xl"><i class="fas fa-bars"></i></button>
+                    <button id="mobile-menu-button" class="lg:hidden text-2xl" aria-label="Otevřít menu"><i class="fas fa-bars"></i></button>
                 </div>
             </div>
             <div class="hidden lg:flex justify-between items-center py-3" id="desktop-menu">
@@ -165,10 +181,10 @@
                     <div class="flex items-center space-x-2">
                         <label for="sort-by" id="sort-by-label" class="text-sm font-medium">Seřadit podle:</label>
                         <select id="sort-by" class="p-2 border rounded-md text-sm focus:ring-2 focus:ring-primary focus:border-primary transition">
+                            <option id="sort-date-desc" value="date-desc">Data (od nejnovější)</option>
                             <option id="sort-offer-desc" value="offerId-desc">Číslo nabídky (sestupně)</option>
                             <option id="sort-price-asc" value="price-asc">Ceny (od nejlevnější)</option>
                             <option id="sort-price-desc" value="price-desc">Ceny (od nejdražší)</option>
-                            <option id="sort-date-desc" value="date-desc">Data (od nejnovější)</option>
                         </select>
                     </div>
                 </div>
@@ -195,7 +211,7 @@
         <div class="bg-white rounded-lg shadow-2xl w-full max-w-lg p-8 modal-slide-in">
             <div class="flex justify-between items-center mb-4">
                 <h2 id="contact-modal-title" class="text-2xl font-bold">Kontaktní formulář</h2>
-                <button class="close-btn text-3xl text-gray-400 hover:text-gray-700">&times;</button>
+                <button class="close-btn text-3xl text-gray-400 hover:text-gray-700" aria-label="Zavřít okno">&times;</button>
             </div>
             <form class="space-y-4" action="https://formsubmit.co/nesvarba.martin@seznam.cz" method="POST">
                 <div><label for="name" id="contact-modal-name" class="block font-medium">Vaše jméno</label><input type="text" id="name" name="name" required class="w-full p-2 border rounded-md mt-1"></div>
@@ -208,7 +224,7 @@
     </div>
     <div id="authModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center p-4 modal-fade-in">
         <div class="bg-white rounded-lg shadow-2xl w-full max-w-md p-8 modal-slide-in">
-            <div class="text-right"><button class="close-btn text-3xl text-gray-400 hover:text-gray-700 -mt-4">&times;</button></div>
+            <div class="text-right"><button class="close-btn text-3xl text-gray-400 hover:text-gray-700 -mt-4" aria-label="Zavřít okno">&times;</button></div>
             <div id="loginFormContainer">
                 <h2 id="login-modal-title" class="text-2xl font-bold text-center mb-6">Přihlášení</h2>
                 <form id="loginForm" class="space-y-4">
@@ -235,13 +251,14 @@
         <div class="bg-white rounded-lg shadow-2xl w-full max-w-3xl p-8 modal-slide-in">
              <div class="flex justify-between items-center mb-6">
                 <h2 id="favorites-modal-title" class="text-2xl font-bold">Moje oblíbené nemovitosti</h2>
-                <button class="close-btn text-3xl text-gray-400 hover:text-gray-700">&times;</button>
+                <button class="close-btn text-3xl text-gray-400 hover:text-gray-700" aria-label="Zavřít okno">&times;</button>
             </div>
             <div id="favorites-list" class="max-h-[60vh] overflow-y-auto pr-2"></div>
         </div>
     </div>
 
-    <script type="module">
+    <!-- Optimalizace: Odložení načítání skriptu pomocí 'defer' -->
+    <script type="module" defer>
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
         import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
         import { getFirestore, collection, doc, getDoc, getDocs, query, where, setDoc } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
@@ -426,13 +443,17 @@
                 const key = element.id;
                 if (langDict[key]) {
                     if (key.includes('-prompt')) {
-                        const linkText = langDict[key].match(/<a>(.*?)<\/a>/)[1];
-                        const fullText = langDict[key].replace(/<a>.*?<\/a>/, `<a class="font-semibold text-primary hover:underline cursor-pointer">${linkText}</a>`);
+                        const linkId = (key === 'login-modal-register-prompt') ? 'showRegister' : 'showLogin';
+                        const linkText = langDict[key].match(/<a>(.*?)<\/a>/)?.[1] || '';
+                        const linkHTML = `<a id="${linkId}" class="font-semibold text-primary hover:underline cursor-pointer">${linkText}</a>`;
+                        const fullText = langDict[key].replace(/<a>.*?<\/a>/, linkHTML);
                         element.innerHTML = fullText;
                     } else if (element.tagName === 'INPUT' && element.hasAttribute('placeholder')) {
-                        element.placeholder = langDict[key];
-                    } else if (['SPAN', 'A', 'BUTTON', 'H1', 'H2', 'H3', 'P', 'LABEL', 'OPTION'].includes(element.tagName)) {
-                         element.textContent = langDict[key];
+                         element.placeholder = langDict[key];
+                    } else if (['SPAN', 'A', 'BUTTON', 'H1', 'H2', 'H3', 'P', 'LABEL'].includes(element.tagName) && !element.dataset.offerType) {
+                        element.textContent = langDict[key];
+                    } else if (element.tagName === 'OPTION' && element.id) {
+                         element.textContent = langDict[element.id];
                     }
                 }
             });
@@ -440,9 +461,12 @@
             document.getElementById('cena-od').placeholder = langDict['priceFromPlaceholder'] || 'Od';
             document.getElementById('cena-do').placeholder = langDict['priceToPlaceholder'] || 'Do';
             
+            document.querySelectorAll('.offer-type-btn').forEach(btn => btn.textContent = langDict[btn.id] || btn.textContent);
+
             document.querySelector('#fact-1 span').textContent = langDict['fact-1'];
             document.querySelector('#fact-2 span').textContent = langDict['fact-2'];
             document.querySelector('#fact-3 span').textContent = langDict['fact-3'];
+            setupAuthFormToggle();
         };
 
         const setActiveLangLink = () => {
@@ -502,7 +526,7 @@
                 card.dataset.propertyId = prop.id;
                 card.innerHTML = `
                     <i class="fas fa-heart favorite-icon absolute top-4 right-4 text-2xl cursor-pointer ${isFavorite ? 'text-red-500' : 'text-white'} drop-shadow-lg transition-colors"></i>
-                    <img src="${firstImage}" alt="Foto: ${title}" class="w-full h-56 object-cover">
+                    <img src="${firstImage}" alt="Foto: ${title}" class="w-full h-56 object-cover" loading="lazy" width="600" height="400">
                     <div class="p-6">
                         <h3 class="text-xl font-bold mb-2">${title}</h3>
                         <p class="text-2xl font-bold text-primary mb-4">€${prop.price.toLocaleString()}</p>
@@ -566,11 +590,11 @@
                 let results = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
                 filteredProperties = results.filter(p => {
                     return (!filters.location || p.location === filters.location) &&
-                                (!filters.type || p.type === filters.type) &&
-                                (!filters.rooms || p.rooms === filters.rooms) &&
-                                (!filters.priceFrom || p.price >= filters.priceFrom) &&
-                                (!filters.priceTo || p.price <= filters.priceTo) &&
-                                (!filters.offerId || p.offerId == filters.offerId);
+                           (!filters.type || p.type === filters.type) &&
+                           (!filters.rooms || p.rooms === filters.rooms) &&
+                           (!filters.priceFrom || p.price >= filters.priceFrom) &&
+                           (!filters.priceTo || p.price <= filters.priceTo) &&
+                           (!filters.offerId || p.offerId == filters.offerId);
                 });
                 sortProperties();
             } catch (error) {
@@ -655,6 +679,25 @@
         const loginIconEl = document.getElementById('loginIcon'), userInfoEl = document.getElementById('userInfo'), userEmailSpan = document.getElementById('userEmail'), favoritesIconEl = document.getElementById('favoritesIcon'), loginForm = document.getElementById('loginForm'), registerForm = document.getElementById('registerForm');
         const showError = (el, msg) => { el.textContent = msg; el.style.display = 'block'; };
         const hideError = (el) => el.style.display = 'none';
+
+        const setupAuthFormToggle = () => {
+            const showRegisterBtn = document.getElementById('showRegister');
+            const showLoginBtn = document.getElementById('showLogin');
+
+            if (showRegisterBtn) {
+                showRegisterBtn.addEventListener('click', () => {
+                    document.getElementById('loginFormContainer').style.display = 'none';
+                    document.getElementById('registerFormContainer').style.display = 'block';
+                });
+            }
+            
+            if (showLoginBtn) {
+                showLoginBtn.addEventListener('click', () => {
+                    document.getElementById('registerFormContainer').style.display = 'none';
+                    document.getElementById('loginFormContainer').style.display = 'block';
+                });
+            }
+        };
         
         onAuthStateChanged(auth, async user => {
             if (user) {
@@ -689,14 +732,6 @@
         });
 
         document.getElementById('logoutIcon').addEventListener('click', () => signOut(auth));
-        document.getElementById('showRegister').addEventListener('click', () => {
-            document.getElementById('loginFormContainer').style.display = 'none';
-            document.getElementById('registerFormContainer').style.display = 'block';
-        });
-        document.getElementById('showLogin').addEventListener('click', () => {
-            document.getElementById('registerFormContainer').style.display = 'none';
-            document.getElementById('loginFormContainer').style.display = 'block';
-        });
         
         const toggleFavorite = async (userId, propertyId) => {
             const userRef = doc(db, 'users', userId);
@@ -755,10 +790,7 @@
                 const propertyId = removeBtn.dataset.id;
                 const user = auth.currentUser;
                 if (user) {
-                    const userRef = doc(db, 'users', user.uid);
-                    const updatedFavorites = userFavorites.filter(id => id !== propertyId);
-                    await setDoc(userRef, { favorites: updatedFavorites }, { merge: true });
-                    userFavorites = updatedFavorites;
+                    await toggleFavorite(user.uid, propertyId);
                     removeBtn.closest('.favorite-item').remove();
                     const cardIcon = propertiesContainer.querySelector(`[data-property-id="${propertyId}"] .favorite-icon`);
                     if (cardIcon) {
@@ -809,11 +841,12 @@
                 let footerHTML = `<div class="text-center lg:text-left"><p>&copy; ${new Date().getFullYear()} ${logoText}. Všechna práva vyhrazena.</p></div>`;
                 footerHTML += `<div class="flex flex-wrap justify-center lg:justify-end gap-6">${contactsHTML.join('')}</div>`;
                 document.getElementById('site-footer').innerHTML = footerHTML;
+
             } catch (error) {
                 console.error("Error loading settings:", error);
             }
         };
-        
+
         const loadGlobalTags = async () => {
             try {
                 const globalSettingsDoc = await getDoc(doc(db, 'settings', 'global'));
@@ -837,8 +870,20 @@
             loadFilterOptions();
             loadSettings();
             loadGlobalTags();
+            setupAuthFormToggle();
         });
+        
+        document.querySelectorAll('#lang-switcher .lang-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const lang = e.currentTarget.dataset.lang;
+                // Simply reload the page with the new lang parameter
+                const url = new URL(window.location);
+                url.searchParams.set('lang', lang);
+                window.location.href = url.toString();
+            });
+        });
+
     </script>
 </body>
 </html>
-
