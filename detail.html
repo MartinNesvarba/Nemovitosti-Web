@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detail nemovitosti</title>
-    <!-- SEO: Přidán meta tag pro popis stránky -->
+    <!-- SEO: Přidán meta tag pro popis stránky (bude vyplněn dynamicky) -->
     <meta name="description" id="meta-description" content="Prozkoumejte detailní informace o této nemovitosti, včetně fotografií, popisu a vybavení.">
     <meta name="keywords" id="meta-keywords" content="nemovitosti, reality, zahraničí, investice">
     
@@ -330,7 +330,7 @@
         </div>
     </div>
 
-    <!-- Optimalizace: Odložení načítání skriptu, aby neblokoval vykreslování stránky -->
+    <!-- Optimalizace: Odložení načítání skriptu pomocí 'defer' -->
     <script type="module" defer>
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
         import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
