@@ -4,25 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Španělsko & Bulharsko | Apartmány a Vily</title>
-    <!-- Connecting Tailwind CSS for a modern and responsive design -->
+    <!-- SEO: Přidán meta tag pro popis stránky -->
+    <meta name="description" content="Objevte exkluzivní vily ve Španělsku a moderní apartmány v Bulharsku. Váš nový domov nebo investice na dosah.">
+    <meta name="keywords" id="meta-keywords" content="nemovitosti, reality, zahraničí, investice">
+
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Connecting Google Fonts for an elegant font -->
+    
+    <!-- Optimalizace: Asynchronní načítání písem, aby neblokovalo vykreslování -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap"></noscript>
+    
+    <!-- Optimalizace: Přednačtení klíčových obrázků na pozadí -->
+    <link rel="preload" as="image" href="španělsko.png">
+    <link rel="preload" as="image" href="Bulharsko.png">
+
     <style>
-        /* Custom styles for better visual effects */
         body {
             font-family: 'Inter', sans-serif;
         }
         .text-shadow {
             text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
         }
-        /* Transition effect for the background */
         .bg-half {
             transition: filter 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        /* Darken the other half on hover */
         .group:hover .bg-spain:not(:hover) {
              filter: brightness(0.5);
         }
@@ -33,7 +41,7 @@
             cursor: pointer;
             opacity: 0.7;
             transition: all 0.2s ease-in-out;
-            border-radius: 9999px; /* Make flags circular */
+            border-radius: 0.25rem; /* OPRAVA: Změněno z kruhu na zaoblený čtverec */
             box-shadow: 0 0 0 2px rgba(255, 255, 255, 0); /* Initial transparent ring */
         }
         .lang-btn:hover {
@@ -49,63 +57,53 @@
 </head>
 <body class="bg-gray-900 text-white">
 
-    <!-- Main container that handles the layout -->
     <main class="relative min-h-screen flex flex-col md:flex-row group overflow-hidden">
 
-        <!-- Left half - Spain -->
+        <!-- Levá polovina - Španělsko -->
+        <!-- Doporučení: Nahraďte 'španělsko.png' optimalizovaným obrázkem (např. WebP) s menší velikostí souboru pro rychlejší načítání. -->
         <section
             class="w-full md:w-1/2 min-h-[50vh] md:min-h-screen bg-cover bg-center relative bg-half bg-spain"
             style="background-image: url(španělsko.png);"
-            <!-- Semi-transparent overlay for better text readability -->
+            aria-label="Pohled na pobřeží a vily ve Španělsku">
             <div class="absolute inset-0 bg-black bg-opacity-40"></div>
         </section>
 
-        <!-- Right half - Bulgaria -->
+        <!-- Pravá polovina - Bulharsko -->
+        <!-- Doporučení: Nahraďte 'Bulharsko.png' optimalizovaným obrázkem (např. WebP) s menší velikostí souboru pro rychlejší načítání. -->
         <section
             class="w-full md:w-1/2 min-h-[50vh] md:min-h-screen bg-cover bg-center relative bg-half bg-bulgaria"
             style="background-image: url(Bulharsko.png);"
-            aria-label="View of a beach in Bulgaria at sunset">
+            aria-label="Pohled na pláž v Bulharsku při západu slunce">
             <div class="absolute inset-0 bg-black bg-opacity-40"></div>
         </section>
 
-        <!-- Central content with heading and buttons -->
         <div class="absolute top-0 left-0 w-full h-full z-10 flex flex-col items-center justify-center p-4">
 
-            <!-- Top navigation - Language switcher -->
             <nav class="absolute top-5 right-5 flex items-center gap-4">
-                <img src="https://flagcdn.com/w40/cz.png" alt="Čeština" data-lang="cz" class="lang-btn w-8 h-8 object-cover">
-                <img src="https://flagcdn.com/w40/gb.png" alt="English" data-lang="en" class="lang-btn w-8 h-8 object-cover">
-                <img src="https://flagcdn.com/w40/de.png" alt="Deutsch" data-lang="de" class="lang-btn w-8 h-8 object-cover">
+                <!-- Přístupnost: Přidány aria-label pro screen readery -->
+                <button data-lang="cz" class="lang-btn" aria-label="Změnit jazyk na češtinu"><img src="https://flagcdn.com/w40/cz.png" alt="Čeština" class="w-8 h-8 object-cover pointer-events-none"></button>
+                <button data-lang="en" class="lang-btn" aria-label="Change language to English"><img src="https://flagcdn.com/w40/gb.png" alt="English" class="w-8 h-8 object-cover pointer-events-none"></button>
+                <button data-lang="de" class="lang-btn" aria-label="Sprache auf Deutsch ändern"><img src="https://flagcdn.com/w40/de.png" alt="Deutsch" class="w-8 h-8 object-cover pointer-events-none"></button>
             </nav>
 
             <div class="text-center flex flex-col items-center">
-                <h1 id="main-headline" class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-8 text-shadow uppercase tracking-wider">
-                    <!-- Text will be inserted from JS -->
-                </h1>
-                <p id="sub-headline" class="text-lg md:text-xl text-gray-200 mb-12 max-w-2xl text-shadow">
-                    <!-- Text will be inserted from JS -->
-                </p>
+                <h1 id="main-headline" class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-8 text-shadow uppercase tracking-wider"></h1>
+                <p id="sub-headline" class="text-lg md:text-xl text-gray-200 mb-12 max-w-2xl text-shadow"></p>
 
-                <!-- Button container -->
                 <div class="flex flex-col md:flex-row gap-4 w-full sm:w-auto">
-                    <a id="spain-button" href="spanelsko.html" class="bg-transparent border-2 border-white text-white font-bold text-lg py-3 px-8 rounded-lg hover:bg-white hover:text-gray-900 transition-all duration-300 transform hover:scale-105 shadow-lg">
-                        <!-- Text will be inserted from JS -->
-                    </a>
-                    <a id="bulgaria-button" href="bulharsko.html" class="bg-transparent border-2 border-white text-white font-bold text-lg py-3 px-8 rounded-lg hover:bg-white hover:text-gray-900 transition-all duration-300 transform hover:scale-105 shadow-lg">
-                        <!-- Text will be inserted from JS -->
-                    </a>
+                    <a id="spain-button" href="spanelsko.html" class="bg-transparent border-2 border-white text-white font-bold text-lg py-3 px-8 rounded-lg hover:bg-white hover:text-gray-900 transition-all duration-300 transform hover:scale-105 shadow-lg"></a>
+                    <a id="bulgaria-button" href="bulharsko.html" class="bg-transparent border-2 border-white text-white font-bold text-lg py-3 px-8 rounded-lg hover:bg-white hover:text-gray-900 transition-all duration-300 transform hover:scale-105 shadow-lg"></a>
                 </div>
             </div>
         </div>
     </main>
     
-    <!-- Using latest modular Firebase SDK for future data loading -->
-    <script type="module">
+    <!-- Optimalizace: Odložení načítání skriptu pomocí 'defer' -->
+    <script type="module" defer>
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getFirestore } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
         import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
-        // --- Translations Data Structure ---
         const translations = {
             cz: {
                 title: "Španělsko & Bulharsko | Apartmány a Vily",
@@ -130,7 +128,6 @@
             }
         };
 
-        // --- DOM Elements ---
         const elements = {
             mainHeadline: document.getElementById('main-headline'),
             subHeadline: document.getElementById('sub-headline'),
@@ -139,50 +136,38 @@
         };
         const langButtons = document.querySelectorAll('.lang-btn');
 
-        // --- Functions ---
-        
-        // Function to update content based on the selected language
         function updateContent(lang) {
             if (!translations[lang]) {
                 console.warn(`Translation for language "${lang}" not found.`);
-                lang = 'cz'; // Fallback to Czech
+                lang = 'cz'; // Fallback
             }
             
-            // Update page title
             document.title = translations[lang].title;
-
-            // Update page texts
             elements.mainHeadline.textContent = translations[lang].mainHeadline;
             elements.subHeadline.textContent = translations[lang].subHeadline;
             elements.spainButton.textContent = translations[lang].spainButton;
             elements.bulgariaButton.textContent = translations[lang].bulgariaButton;
             
-            // Update the links to carry the language parameter
             elements.spainButton.href = `spanelsko.html?lang=${lang}`;
             elements.bulgariaButton.href = `bulharsko.html?lang=${lang}`;
 
-            // Save the selected language
             localStorage.setItem('preferredLanguage', lang);
 
-            // Visually highlight the active language
             langButtons.forEach(btn => {
                 btn.classList.toggle('active', btn.dataset.lang === lang);
             });
         }
         
-        // Function to initialize Firebase connection
         async function initializeFirebase() {
             try {
-                // These global variables are provided by the environment.
                 const firebaseConfig = typeof __firebase_config !== 'undefined' 
                     ? JSON.parse(__firebase_config) 
-                    : { apiKey: "YOUR_API_KEY", authDomain: "YOUR_AUTH_DOMAIN", projectId: "YOUR_PROJECT_ID" }; // Fallback for local dev
+                    : { apiKey: "YOUR_API_KEY", authDomain: "YOUR_AUTH_DOMAIN", projectId: "YOUR_PROJECT_ID" }; // Fallback
 
                 const app = initializeApp(firebaseConfig);
                 const db = getFirestore(app);
                 const auth = getAuth(app);
                 
-                // Firebase Authentication
                 if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
                     await signInWithCustomToken(auth, __initial_auth_token);
                 } else {
@@ -195,18 +180,14 @@
             }
         }
         
-        // Run the main logic after the DOM is fully loaded
         document.addEventListener('DOMContentLoaded', () => {
-            // --- Initialize UI first ---
-            // Add event listeners to language buttons
             langButtons.forEach(button => {
                 button.addEventListener('click', (e) => {
-                    const selectedLang = e.target.dataset.lang;
+                    const selectedLang = e.currentTarget.dataset.lang;
                     updateContent(selectedLang);
                 });
             });
 
-            // Determine language: 1. URL param, 2. localStorage, 3. default 'cz'
             const urlParams = new URLSearchParams(window.location.search);
             const langFromUrl = urlParams.get('lang');
             const savedLang = localStorage.getItem('preferredLanguage');
@@ -214,13 +195,10 @@
             
             updateContent(initialLang);
             
-            // --- Then initialize Firebase in the background ---
             initializeFirebase();
         });
 
     </script>
 </body>
 </html>
-
-
 
