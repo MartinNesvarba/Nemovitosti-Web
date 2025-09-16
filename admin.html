@@ -29,6 +29,7 @@
             .status-toggle { @apply cursor-pointer font-bold py-1 px-3 rounded-full text-xs; }
             .status-toggle.active { @apply bg-green-100 text-green-800; }
             .status-toggle.inactive { @apply bg-red-100 text-red-800; }
+            .drop-zone-active { @apply border-blue-500 bg-blue-50; }
         }
         
         /* Custom styles for UI elements */
@@ -239,7 +240,16 @@
                                 </div>
                                 <div class="mt-6">
                                     <label class="block text-gray-700 font-bold mb-2">Fotografie</label>
-                                    <input type="file" id="image-upload" multiple accept="image/*" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                                    <!-- NEW: Drag and Drop Zone -->
+                                    <div id="image-drop-zone" class="relative border-2 border-dashed border-gray-300 rounded-lg p-6 text-center cursor-pointer transition-colors duration-200 hover:border-blue-500">
+                                        <div class="flex flex-col items-center justify-center pointer-events-none">
+                                            <i class="fas fa-cloud-upload-alt text-4xl text-gray-400 mb-3"></i>
+                                            <p class="text-gray-500">Přetáhněte soubory sem nebo <span class="font-semibold text-blue-600">klikněte pro výběr</span></p>
+                                            <p class="text-xs text-gray-400 mt-1">Podporované formáty: JPG, PNG, WEBP atd.</p>
+                                        </div>
+                                        <input type="file" id="image-upload" multiple accept="image/*" class="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer">
+                                    </div>
+                                    <!-- END: Drag and Drop Zone -->
                                     <div id="image-preview-container" class="image-preview-container"></div>
                                     <div id="upload-progress" class="hidden mt-4">
                                         <p id="upload-status" class="font-semibold">Nahrávám obrázky...</p>
@@ -421,8 +431,8 @@
                         <!-- Country Specific Settings -->
                         <div class="mb-4 border-b border-gray-200">
                              <nav class="flex -mb-px" id="settings-tabs">
-                                 <button type="button" data-country="bulharsko" class="tab-button active" style="padding-right: 15px;">Bulharsko</button>
-                                 <button type="button" data-country="spanelsko" class="tab-button">Španělsko</button>
+                                  <button type="button" data-country="bulharsko" class="tab-button active" style="padding-right: 15px;">Bulharsko</button>
+                                  <button type="button" data-country="spanelsko" class="tab-button">Španělsko</button>
                              </nav>
                         </div>
 
@@ -452,7 +462,7 @@
             apiKey: "AIzaSyAi_ugQSDUjk4y8ne4zpAyTbzNrf96SWDc",
             authDomain: "login-40bf8.firebaseapp.com",
             projectId: "login-40bf8",
-            storageBucket: "gs://login-40bf8.firebasestorage.app", // Corrected storage bucket URL
+            storageBucket: "gs://login-40bf8.appspot.com", // Corrected storage bucket URL
             messagingSenderId: "932200625165",
             appId: "1:932200625165:web:422564c4f9c3f9fbead144"
         };
@@ -648,6 +658,17 @@
             const email = document.getElementById('admin-username').value;
             const password = document.getElementById('admin-password').value;
             adminLoginError.classList.add('hidden');
+
+            // --- SECURITY ENHANCEMENT ---
+            // IMPORTANT: Replace with your actual admin email address.
+            const allowedAdminEmail = "xfiretin@gmail.com";
+
+            if (email.toLowerCase() !== allowedAdminEmail.toLowerCase()) {
+                adminLoginError.textContent = "Přístup odepřen. Tento účet nemá oprávnění k přihlášení.";
+                adminLoginError.classList.remove('hidden');
+                return; // Stop the login process if the email does not match.
+            }
+            // --- END OF SECURITY ENHANCEMENT ---
 
             try {
                 const userCredential = await signInWithEmailAndPassword(auth, email, password);
@@ -924,11 +945,45 @@
             }
         });
 
-        // --- Image Handling ---
-        document.getElementById('image-upload').addEventListener('change', (e) => {
+        // --- Image Handling with Drag and Drop ---
+        const dropZone = document.getElementById('image-drop-zone');
+        const fileInput = document.getElementById('image-upload');
+
+        // Handle file selection from input click
+        fileInput.addEventListener('change', (e) => {
             filesToUpload.push(...e.target.files);
             previewImages();
+            // Reset input so the same file can be selected again
+            fileInput.value = ''; 
         });
+
+        // Drag and Drop event listeners
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault(); // Prevent default browser behavior
+            dropZone.classList.add('drop-zone-active');
+        });
+
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.classList.remove('drop-zone-active');
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault(); // Prevent default browser behavior
+            dropZone.classList.remove('drop-zone-active');
+            
+            const droppedFiles = e.dataTransfer.files;
+            if (droppedFiles.length > 0) {
+                // Filter to only accept image files from the dropped files
+                const imageFiles = Array.from(droppedFiles).filter(file => file.type.startsWith('image/'));
+                if (imageFiles.length > 0) {
+                    filesToUpload.push(...imageFiles);
+                    previewImages();
+                } else {
+                    alert('Některé přetažené soubory nebyly obrázky a byly ignorovány.');
+                }
+            }
+        });
+
 
         function previewImages() {
             const container = document.getElementById('image-preview-container');
@@ -1178,12 +1233,12 @@
 
         function createSingleLangInputForm(type, label) {
              return `
-                 <form id="add-${type}-form" class="p-4 border rounded-md">
-                     <div class="flex gap-2">
-                         <input type="text" id="new-${type}-cz-input" placeholder="Přidat ${label}" class="input-field">
-                         <button type="submit" class="btn btn-primary whitespace-nowrap add-setting-item-btn" data-type="${type}s">Přidat</button>
-                     </div>
-                 </form>
+                  <form id="add-${type}-form" class="p-4 border rounded-md">
+                       <div class="flex gap-2">
+                            <input type="text" id="new-${type}-cz-input" placeholder="Přidat ${label}" class="input-field">
+                            <button type="submit" class="btn btn-primary whitespace-nowrap add-setting-item-btn" data-type="${type}s">Přidat</button>
+                       </div>
+                  </form>
             `;
         }
 
@@ -1193,23 +1248,23 @@
                 room: "novou dispozici"
             };
             return `
-                 <form id="add-${type}-form" class="space-y-4 p-4 border rounded-md">
-                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                         <div>
-                             <label for="new-${type}-cz-input" class="block text-sm font-medium text-gray-700">Název CZ</label>
-                             <input type="text" id="new-${type}-cz-input" class="input-field mt-1">
-                         </div>
-                         <div>
-                             <label for="new-${type}-en-input" class="block text-sm font-medium text-gray-700">Název EN</label>
-                             <input type="text" id="new-${type}-en-input" class="input-field mt-1">
-                         </div>
-                         <div>
-                             <label for="new-${type}-de-input" class="block text-sm font-medium text-gray-700">Název DE</label>
-                             <input type="text" id="new-${type}-de-input" class="input-field mt-1">
-                         </div>
-                    </div>
-                     <button type="submit" class="btn btn-primary w-full md:w-auto add-setting-item-btn" data-type="${type}s">Přidat ${typeLabels[type]}</button>
-                 </form>
+                  <form id="add-${type}-form" class="space-y-4 p-4 border rounded-md">
+                       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div>
+                                <label for="new-${type}-cz-input" class="block text-sm font-medium text-gray-700">Název CZ</label>
+                                <input type="text" id="new-${type}-cz-input" class="input-field mt-1">
+                            </div>
+                            <div>
+                                <label for="new-${type}-en-input" class="block text-sm font-medium text-gray-700">Název EN</label>
+                                <input type="text" id="new-${type}-en-input" class="input-field mt-1">
+                            </div>
+                            <div>
+                                <label for="new-${type}-de-input" class="block text-sm font-medium text-gray-700">Název DE</label>
+                                <input type="text" id="new-${type}-de-input" class="input-field mt-1">
+                            </div>
+                       </div>
+                       <button type="submit" class="btn btn-primary w-full md:w-auto add-setting-item-btn" data-type="${type}s">Přidat ${typeLabels[type]}</button>
+                  </form>
             `;
         }
 
@@ -1707,3 +1762,4 @@
     </script>
 </body>
 </html>
+
