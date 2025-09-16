@@ -812,13 +812,12 @@
                 document.querySelector('header .font-bold.text-gray-800').textContent = logoText;
 
                 const contactsHTML = [];
-                for (let i = 1; i <= 2; i++) {
+                for (let i = 1; i <= 4; i++) {
                     if (globalSettings[`contact${i}_name`]) {
                         contactsHTML.push(`
                             <div class="text-center">
                                 <p class="font-semibold">${globalSettings[`contact${i}_name`]}</p>
                                 ${globalSettings[`contact${i}_phone`] ? `<a href="tel:${globalSettings[`contact${i}_phone`].replace(/\s/g, '')}" class="block hover:text-primary">${globalSettings[`contact${i}_phone`]}</a>` : ''}
-                                ${globalSettings[`contact${i}_phone2`] ? `<a href="tel:${globalSettings[`contact${i}_phone2`].replace(/\s/g, '')}" class="block hover:text-primary">${globalSettings[`contact${i}_phone2`]}</a>` : ''}
                                 ${globalSettings[`contact${i}_email`] ? `<a href="mailto:${globalSettings[`contact${i}_email`]}" class="block hover:text-primary">${globalSettings[`contact${i}_email`]}</a>` : ''}
                             </div>
                         `);
@@ -856,15 +855,20 @@
             loadFilterOptions();
             loadSettings();
             loadGlobalTags();
+            setupAuthFormToggle();
         });
         
         document.querySelectorAll('#lang-switcher .lang-link').forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
                 const lang = e.currentTarget.dataset.lang;
-                setLang(lang);
+                const url = new URL(window.location);
+                url.searchParams.set('lang', lang);
+                window.location.href = url.toString();
             });
         });
+
     </script>
 </body>
 </html>
+
