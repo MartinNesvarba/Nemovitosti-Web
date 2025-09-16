@@ -17,12 +17,12 @@
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     </noscript>
-    
+
     <!-- Optimalizace: Přednačtení hlavního obrázku (LCP) -->
     <link rel="preload" as="image" href="https://images.pexels.com/photos/1732414/pexels-photo-1732414.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2">
-    
-    <script src="https://cdn.tailwindcss.com"></script>
 
+    <script src="https://cdn.tailwindcss.com"></script>
+    
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -877,7 +877,6 @@
             link.addEventListener('click', (e) => {
                 e.preventDefault();
                 const lang = e.currentTarget.dataset.lang;
-                // Simply reload the page with the new lang parameter
                 const url = new URL(window.location);
                 url.searchParams.set('lang', lang);
                 window.location.href = url.toString();
@@ -887,3 +886,4 @@
     </script>
 </body>
 </html>
+
