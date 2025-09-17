@@ -148,8 +148,9 @@
             elements.spainButton.textContent = translations[lang].spainButton;
             elements.bulgariaButton.textContent = translations[lang].bulgariaButton;
             
-            elements.spainButton.href = `spanelsko.html?lang=${lang}`;
-            elements.bulgariaButton.href = `bulharsko.html?lang=${lang}`;
+            // OPRAVENO ZDE: Odstraněna koncovka .html
+            elements.spainButton.href = `/spanelsko?lang=${lang}`;
+            elements.bulgariaButton.href = `/bulharsko?lang=${lang}`;
 
             localStorage.setItem('preferredLanguage', lang);
 
@@ -201,4 +202,3 @@
     </script>
 </body>
 </html>
-
