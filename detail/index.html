@@ -113,7 +113,7 @@
                             <img src="https://flagcdn.com/w40/de.png" alt="Deutsch" class="w-8 h-6 object-cover">
                         </a>
                     </div>
-                    <a href="index.html" class="text-xl md:text-2xl font-bold text-gray-800 tracking-wider">HORIZON ESTATES</a>
+                    <a href="/" class="text-xl md:text-2xl font-bold text-gray-800 tracking-wider">HORIZON ESTATES</a>
                 </div>
                 <div class="flex items-center space-x-4">
                     <div id="auth-controls">
@@ -130,8 +130,8 @@
             </div>
             <div class="hidden lg:flex justify-between items-center py-3" id="desktop-menu">
                 <nav class="flex items-center space-x-6">
-                    <a href="/spanelsko" id="nav-spanelsko" class="font-semibold pb-1 hover:text-primary">Španělsko</a>
-                    <a href="/bulharsko" id="nav-bulharsko" class="font-semibold pb-1 hover:text-primary">Bulharsko</a>
+                    <a href="/spanelsko/" id="nav-spanelsko" class="font-semibold pb-1 hover:text-primary">Španělsko</a>
+                    <a href="/bulharsko/" id="nav-bulharsko" class="font-semibold pb-1 hover:text-primary">Bulharsko</a>
                 </nav>
                 <nav class="flex items-center space-x-6" id="main-navigation">
                     <div class="relative group">
@@ -142,22 +142,22 @@
                         <button id="nav-sluzby" class="font-semibold hover:text-primary">Naše služby <i class="fas fa-chevron-down text-xs ml-1"></i></button>
                         <div class="absolute hidden group-hover:block bg-white shadow-lg rounded-md top-full pt-3 pb-2 w-52 z-50" id="services-menu-container-desktop"></div>
                     </div>
-                    <a href="/page" id="nav-onas" class="font-semibold hover:text-primary">O nás</a>
+                    <a href="/page/?slug=o-nas" id="nav-onas" class="font-semibold hover:text-primary">O nás</a>
                     <a href="#" id="contactLink" class="font-semibold hover:text-primary">Kontakt</a>
                 </nav>
             </div>
         </div>
         <div id="mobile-menu" class="hidden lg:hidden px-4 pb-4 border-t">
               <nav class="flex flex-col space-y-3 pt-4">
-                <a href="/spanelsko" id="nav-mobil-spanelsko" class="font-semibold pb-1 hover:text-primary">Španělsko</a>
-                <a href="/bulharsko" id="nav-mobil-bulharsko" class="font-semibold pb-1 hover:text-primary">Bulharsko</a>
+                <a href="/spanelsko/" id="nav-mobil-spanelsko" class="font-semibold pb-1 hover:text-primary">Španělsko</a>
+                <a href="/bulharsko/" id="nav-mobil-bulharsko" class="font-semibold pb-1 hover:text-primary">Bulharsko</a>
                 <hr>
                 <h3 id="nav-mobil-informace" class="font-bold pt-2">Informace</h3>
                 <div id="info-menu-container-mobile" class="flex flex-col space-y-2 pl-2"></div>
                 <h3 id="nav-mobil-sluzby" class="font-bold pt-2">Naše služby</h3>
                 <div id="services-menu-container-mobile" class="flex flex-col space-y-2 pl-2"></div>
                  <hr>
-                <a href="/page" id="nav-mobil-onas" class="font-semibold hover:text-primary">O nás</a>
+                <a href="/page/?slug=o-nas" id="nav-mobil-onas" class="font-semibold hover:text-primary">O nás</a>
                 <a href="#" id="contactLinkMobile" class="font-semibold hover:text-primary">Kontakt</a>
             </nav>
         </div>
@@ -166,7 +166,7 @@
     <main class="flex-grow container mx-auto px-4 py-8">
         <div class="bg-white p-6 md:p-8 rounded-lg shadow-lg max-w-6xl mx-auto">
             <div class="breadcrumb text-sm mb-6">
-                <a href="index.html" id="breadcrumb-home" class="text-primary hover:underline">Úvod</a> &gt; 
+                <a href="/" id="breadcrumb-home" class="text-primary hover:underline">Úvod</a> &gt; 
                 <a id="breadcrumb-country" href="#" class="text-primary hover:underline">...</a> &gt; 
                 <span id="property-title-breadcrumb" class="text-gray-500">Načítání...</span>
             </div>
@@ -249,7 +249,7 @@
             </div>
             <form class="space-y-4" action="https://formsubmit.co/nesvarba.martin@seznam.cz" method="POST">
                 <input type="hidden" name="_subject" id="inquirySubject">
-                <input type="hidden" name="_next" value="https://horizon-estates.eu/index.html?lang=cz&country=bulharsko">
+                <input type="hidden" name="_next" value="https://horizon-estates.eu/">
                 <div><label for="inquiry-name" id="inquiry-modal-name" class="block font-medium">Vaše jméno</label><input type="text" id="inquiry-name" name="name" required class="w-full p-2 border rounded-md mt-1"></div>
                 <div><label for="inquiry-email" id="inquiry-modal-email" class="block font-medium">Váš e-mail</label><input type="email" id="inquiry-email" name="email" required class="w-full p-2 border rounded-md mt-1"></div>
                 <div><label for="inquiry-phone" id="inquiry-modal-phone" class="block font-medium">Telefon (nepovinné)</label><input type="tel" id="inquiry-phone" name="phone" class="w-full p-2 border rounded-md mt-1"></div>
@@ -320,7 +320,7 @@
                 <button class="close-btn text-3xl text-gray-400 hover:text-gray-700" aria-label="Zavřít okno">&times;</button>
             </div>
             <form class="space-y-4" action="https://formsubmit.co/nesvarba.martin@seznam.cz" method="POST">
-                <input type="hidden" name="_next" value="https://horizon-estates.eu/index.html?lang=cz">
+                <input type="hidden" name="_next" value="https://horizon-estates.eu/">
                 <div><label for="name" id="contact-modal-name-main" class="block font-medium">Vaše jméno</label><input type="text" id="name" name="name" required class="w-full p-2 border rounded-md mt-1"></div>
                 <div><label for="email" id="contact-modal-email-main" class="block font-medium">Váš e-mail</label><input type="email" id="email" name="email" required class="w-full p-2 border rounded-md mt-1"></div>
                 <div><label for="phone" id="contact-modal-phone-main" class="block font-medium">Telefon (nepovinné)</label><input type="tel" id="phone" name="phone" class="w-full p-2 border rounded-md mt-1"></div>
@@ -478,20 +478,6 @@
                 link.classList.remove('active');
                 if (link.dataset.lang === currentLang) link.classList.add('active');
             });
-             document.querySelectorAll('a[href*=".html"]').forEach(link => {
-                if (!link.classList.contains('lang-link')) {
-                    try {
-                        const url = new URL(link.href, window.location.href);
-                        url.searchParams.set('lang', currentLang);
-                        if (currentProperty && currentProperty.country) {
-                             url.searchParams.set('country', currentProperty.country);
-                        }
-                        link.href = url.toString();
-                    } catch (e) {
-                        // console.error(`Could not process URL for link: ${link.getAttribute('href')}`, e);
-                    }
-                }
-            });
         };
 
         let currentProperty = null, galleryImages = [], activeImageIndex = 0, thumbnailStartIndex = 0, userFavorites = [];
@@ -563,16 +549,16 @@
             const firstImage = thumbnailContainer.querySelector('img');
             if (firstImage) {
                 const initSlider = () => {
-                      const thumbWidth = 2088; // w-56
-                      const gapWidth = 12; // space-x-3
-                      const thumbnailsToShow = 3;
-                      const containerWidth = (thumbWidth * thumbnailsToShow) + (gapWidth * (thumbnailsToShow - 1));
-                      const overflowContainer = document.getElementById('thumbnail-wrapper');
-                      if(overflowContainer) {
-                           overflowContainer.style.width = `${containerWidth}px`;
-                      }
-                      slideThumbnails();
-                      highlightActiveThumbnail();
+                        const thumbWidth = 2088; // w-56
+                        const gapWidth = 12; // space-x-3
+                        const thumbnailsToShow = 3;
+                        const containerWidth = (thumbWidth * thumbnailsToShow) + (gapWidth * (thumbnailsToShow - 1));
+                        const overflowContainer = document.getElementById('thumbnail-wrapper');
+                        if(overflowContainer) {
+                             overflowContainer.style.width = `${containerWidth}px`;
+                        }
+                        slideThumbnails();
+                        highlightActiveThumbnail();
                 };
 
                 if (firstImage.complete && firstImage.naturalWidth > 0) {
@@ -683,7 +669,8 @@
                 if (currentProperty.country) {
                     const countryName = translations[currentLang][`nav-${currentProperty.country}`] || currentProperty.country;
                     breadcrumbCountry.textContent = countryName;
-                    breadcrumbCountry.href = `${currentProperty.country}.html?lang=${currentLang}`;
+                    // OPRAVENO ZDE
+                    breadcrumbCountry.href = `/${currentProperty.country}/?lang=${currentLang}`;
                     document.getElementById(`nav-${currentProperty.country}`)?.classList.add('nav-link-active');
                     document.getElementById(`nav-mobil-${currentProperty.country}`)?.classList.add('nav-link-active');
                 }
@@ -747,7 +734,8 @@
                     const prop = doc.data();
                     const title = prop[`title_${currentLang}`] || prop.title_cz;
                     similarContainer.innerHTML += `
-                        <a href="detail.html?id=${doc.id}&lang=${currentLang}" class="block bg-white rounded-lg shadow-md overflow-hidden transform hover:-translate-y-1 transition">
+                        <!-- OPRAVENO ZDE -->
+                        <a href="/detail/?id=${doc.id}&lang=${currentLang}" class="block bg-white rounded-lg shadow-md overflow-hidden transform hover:-translate-y-1 transition">
                             <div class="watermark-container similar-watermark-container" data-watermark="${watermarkText}">
                                 <img src="${prop.images?.[0] || 'https://placehold.co/300x200'}" alt="${title}" class="w-full h-40 object-cover" loading="lazy" width="300" height="200">
                             </div>
@@ -832,12 +820,13 @@
                 const uniqueInfo = Array.from(new Map(allInfoItems.map(item => [item.slug, item])).values());
                 const uniqueServices = Array.from(new Map(allServicesItems.map(item => [item.slug, item])).values());
                 
-                const infoHtml = uniqueInfo.map(item => `<a href="page.html?slug=${item.slug}&lang=${currentLang}&country=${item.country}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">${item.title}</a>`).join('');
-                const servicesHtml = uniqueServices.map(item => `<a href="page.html?slug=${item.slug}&lang=${currentLang}&country=${item.country}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">${item.title}</a>`).join('');
+                // OPRAVENO ZDE
+                const infoHtml = uniqueInfo.map(item => `<a href="/page/?slug=${item.slug}&lang=${currentLang}&country=${item.country}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">${item.title}</a>`).join('');
+                const servicesHtml = uniqueServices.map(item => `<a href="/page/?slug=${item.slug}&lang=${currentLang}&country=${item.country}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">${item.title}</a>`).join('');
                 document.getElementById('info-menu-container-desktop').innerHTML = infoHtml;
                 document.getElementById('services-menu-container-desktop').innerHTML = servicesHtml;
-                document.getElementById('info-menu-container-mobile').innerHTML = uniqueInfo.map(item => `<a href="page.html?slug=${item.slug}&lang=${currentLang}&country=${item.country}" class="block py-1 text-gray-700 hover:text-primary">${item.title}</a>`).join('');
-                document.getElementById('services-menu-container-mobile').innerHTML = uniqueServices.map(item => `<a href="page.html?slug=${item.slug}&lang=${currentLang}&country=${item.country}" class="block py-1 text-gray-700 hover:text-primary">${item.title}</a>`).join('');
+                document.getElementById('info-menu-container-mobile').innerHTML = uniqueInfo.map(item => `<a href="/page/?slug=${item.slug}&lang=${currentLang}&country=${item.country}" class="block py-1 text-gray-700 hover:text-primary">${item.title}</a>`).join('');
+                document.getElementById('services-menu-container-mobile').innerHTML = uniqueServices.map(item => `<a href="/page/?slug=${item.slug}&lang=${currentLang}&country=${item.country}" class="block py-1 text-gray-700 hover:text-primary">${item.title}</a>`).join('');
 
                 let footerHTML = `<div class="text-center lg:text-left"><p>&copy; ${new Date().getFullYear()} ${logoText}. Všechna práva vyhrazena.</p></div>`;
                 const contactsHTML = [];
@@ -940,7 +929,8 @@
                         <div class="flex-grow">
                             <h4 class="font-bold">${prop[`title_${currentLang}`] || prop.title_cz}</h4>
                             <p class="text-primary font-semibold">€${prop.price.toLocaleString()}</p>
-                            <a href="detail.html?id=${doc.id}&lang=${currentLang}" class="text-sm text-gray-500 hover:underline">Zobrazit detail</a>
+                            <!-- OPRAVENO ZDE -->
+                            <a href="/detail/?id=${doc.id}&lang=${currentLang}" class="text-sm text-gray-500 hover:underline">Zobrazit detail</a>
                         </div>
                         <button class="remove-favorite text-gray-400 hover:text-red-500 text-xl" data-id="${doc.id}"><i class="fas fa-trash-alt"></i></button>
                     `;
