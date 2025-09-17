@@ -83,7 +83,8 @@
                             <img src="https://flagcdn.com/w40/de.png" alt="Deutsch" class="w-8 h-6 object-cover">
                         </a>
                     </div>
-                    <a href="index.html" class="text-xl md:text-2xl font-bold text-gray-800 tracking-wider">HORIZON ESTATES</a>
+                    <!-- OPRAVENO ZDE: Odkaz na hlavní stránku -->
+                    <a href="/" class="text-xl md:text-2xl font-bold text-gray-800 tracking-wider">HORIZON ESTATES</a>
                 </div>
                 <div class="flex items-center space-x-4">
                     <div id="auth-controls">
@@ -449,11 +450,11 @@
                         const fullText = langDict[key].replace(/<a>.*?<\/a>/, linkHTML);
                         element.innerHTML = fullText;
                     } else if (element.tagName === 'INPUT' && element.hasAttribute('placeholder')) {
-                         element.placeholder = langDict[key];
+                        element.placeholder = langDict[key];
                     } else if (['SPAN', 'A', 'BUTTON', 'H1', 'H2', 'H3', 'P', 'LABEL'].includes(element.tagName) && !element.dataset.offerType) {
                         element.textContent = langDict[key];
                     } else if (element.tagName === 'OPTION' && element.id) {
-                         element.textContent = langDict[element.id];
+                        element.textContent = langDict[element.id];
                     }
                 }
             });
@@ -476,21 +477,7 @@
                     link.classList.add('active');
                 }
             });
-            // Update nav links to carry over the lang parameter
-            document.querySelectorAll('a[href*=".html"]').forEach(link => {
-                if (!link.classList.contains('lang-link')) {
-                    try {
-                        const url = new URL(link.getAttribute('href'), window.location.href);
-                        url.searchParams.set('lang', currentLang);
-                        url.searchParams.set('country', pageCountry);
-                        link.href = url.href;
-                    } catch (e) {
-                        console.error(`Could not process URL for link: ${link.getAttribute('href')}`, e);
-                    }
-                }
-            });
         };
-
 
         // --- Globální proměnné ---
         let filteredProperties = [];
@@ -534,7 +521,8 @@
                             <p>${translations[currentLang]['cardOfferId'] || 'Č. nabídky'}: <strong>${prop.offerId || 'N/A'}</strong> | ${translations[currentLang]['cardRooms'] || 'Dispozice'}: <strong>${prop.rooms || 'N/A'}</strong></p>
                             <p>${prop.area ? `${translations[currentLang]['cardArea'] || 'Plocha'}: <strong>${prop.area} m²</strong>` : ''}</p>
                         </div>
-                        <a href="detail.html?id=${prop.id}&lang=${currentLang}" class="inline-block w-full text-center bg-gray-800 text-white font-semibold py-2 px-4 rounded-md hover:bg-gray-700 transition">${translations[currentLang]['cardViewDetail'] || 'Zobrazit detail'}</a>
+                        <!-- OPRAVENO ZDE: Odkaz na detail -->
+                        <a href="/detail/?id=${prop.id}&lang=${currentLang}" class="inline-block w-full text-center bg-gray-800 text-white font-semibold py-2 px-4 rounded-md hover:bg-gray-700 transition">${translations[currentLang]['cardViewDetail'] || 'Zobrazit detail'}</a>
                     </div>
                 `;
                 propertiesContainer.appendChild(card);
@@ -776,7 +764,8 @@
                     <div class="flex-grow">
                         <h4 class="font-bold">${prop[`title_${currentLang}`] || prop.title_cz}</h4>
                         <p class="text-primary font-semibold">€${prop.price.toLocaleString()}</p>
-                        <a href="detail.html?id=${doc.id}&lang=${currentLang}" class="text-sm text-gray-500 hover:underline">Zobrazit detail</a>
+                        <!-- OPRAVENO ZDE: Odkaz na detail v oblíbených -->
+                        <a href="/detail/?id=${doc.id}&lang=${currentLang}" class="text-sm text-gray-500 hover:underline">Zobrazit detail</a>
                     </div>
                     <button class="remove-favorite text-gray-400 hover:text-red-500 text-xl" data-id="${doc.id}"><i class="fas fa-trash-alt"></i></button>
                 `;
@@ -810,12 +799,13 @@
                 if (countrySettingsDoc.exists()) {
                     countrySettings = countrySettingsDoc.data();
                     const { infoMenu = [], servicesMenu = [] } = countrySettings;
-                    const infoHtml = infoMenu.map(item => `<a href="page.html?slug=${item.slug}&lang=${currentLang}&country=${pageCountry}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">${item.title}</a>`).join('');
-                    const servicesHtml = servicesMenu.map(item => `<a href="page.html?slug=${item.slug}&lang=${currentLang}&country=${pageCountry}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">${item.title}</a>`).join('');
+                    // OPRAVENO ZDE: Odkazy v menu
+                    const infoHtml = infoMenu.map(item => `<a href="/page/?slug=${item.slug}&lang=${currentLang}&country=${pageCountry}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">${item.title}</a>`).join('');
+                    const servicesHtml = servicesMenu.map(item => `<a href="/page/?slug=${item.slug}&lang=${currentLang}&country=${pageCountry}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">${item.title}</a>`).join('');
                     document.getElementById('info-menu-container-desktop').innerHTML = infoHtml;
                     document.getElementById('services-menu-container-desktop').innerHTML = servicesHtml;
-                    document.getElementById('info-menu-container-mobile').innerHTML = infoMenu.map(item => `<a href="page.html?slug=${item.slug}&lang=${currentLang}&country=${pageCountry}" class="block py-1 text-gray-700 hover:text-primary">${item.title}</a>`).join('');
-                    document.getElementById('services-menu-container-mobile').innerHTML = servicesMenu.map(item => `<a href="page.html?slug=${item.slug}&lang=${currentLang}&country=${pageCountry}" class="block py-1 text-gray-700 hover:text-primary">${item.title}</a>`).join('');
+                    document.getElementById('info-menu-container-mobile').innerHTML = infoMenu.map(item => `<a href="/page/?slug=${item.slug}&lang=${currentLang}&country=${pageCountry}" class="block py-1 text-gray-700 hover:text-primary">${item.title}</a>`).join('');
+                    document.getElementById('services-menu-container-mobile').innerHTML = servicesMenu.map(item => `<a href="/page/?slug=${item.slug}&lang=${currentLang}&country=${pageCountry}" class="block py-1 text-gray-700 hover:text-primary">${item.title}</a>`).join('');
                 }
 
                 const globalSettingsDoc = await getDoc(doc(db, 'settings', 'global'));
@@ -886,4 +876,3 @@
     </script>
 </body>
 </html>
-
