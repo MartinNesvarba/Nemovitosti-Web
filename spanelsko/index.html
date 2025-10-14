@@ -4,11 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Horizon Estates - Nemovitosti ve Španělsku</title>
-    <!-- SEO: Přidán meta tag pro popis stránky -->
     <meta name="description" content="Prodej a pronájem exkluzivních vil a apartmánů ve Španělsku. Objevte svůj nový domov pod sluncem na pobřeží Costa Blanca.">
     <meta name="keywords" id="meta-keywords" content="nemovitosti španělsko, reality španělsko, apartmány španělsko, dům u moře">
     
-    <!-- Optimalizace: Asynchronní načítání písem a ikon, aby neblokovaly vykreslování -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -18,7 +16,6 @@
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     </noscript>
 
-    <!-- Optimalizace: Přednačtení hlavního obrázku (LCP) -->
     <link rel="preload" as="image" href="https://images.pexels.com/photos/1732414/pexels-photo-1732414.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2">
 
     <script src="https://cdn.tailwindcss.com"></script>
@@ -83,7 +80,6 @@
                             <img src="https://flagcdn.com/w40/de.png" alt="Deutsch" class="w-8 h-6 object-cover">
                         </a>
                     </div>
-                    <!-- OPRAVENO ZDE: Odkaz na hlavní stránku -->
                     <a href="/" class="text-xl md:text-2xl font-bold text-gray-800 tracking-wider">HORIZON ESTATES</a>
                 </div>
                 <div class="flex items-center space-x-4">
@@ -112,7 +108,11 @@
                         <button id="nav-sluzby" class="font-semibold hover:text-primary">Naše služby <i class="fas fa-chevron-down text-xs ml-1"></i></button>
                         <div class="absolute hidden group-hover:block bg-white shadow-lg rounded-md top-full pt-3 pb-2 w-52 z-10" id="services-menu-container-desktop"></div>
                     </div>
-                    <a href="/page" id="nav-onas" class="font-semibold hover:text-primary">O nás</a>
+                    <div class="relative group">
+                        <button id="nav-ospanelsku" class="font-semibold hover:text-primary">O Španělsku <i class="fas fa-chevron-down text-xs ml-1"></i></button>
+                        <div class="absolute hidden group-hover:block bg-white shadow-lg rounded-md top-full pt-3 pb-2 w-52 z-10" id="ospanelsku-menu-container-desktop"></div>
+                    </div>
+                    <a href="/page/?slug=o-nas" id="nav-onas" class="font-semibold hover:text-primary">O nás</a>
                     <a href="#" id="contactLink" class="font-semibold hover:text-primary">Kontakt</a>
                 </nav>
             </div>
@@ -126,8 +126,10 @@
                 <div id="info-menu-container-mobile" class="flex flex-col space-y-2 pl-2"></div>
                 <h3 id="nav-mobil-sluzby" class="font-bold pt-2">Naše služby</h3>
                 <div id="services-menu-container-mobile" class="flex flex-col space-y-2 pl-2"></div>
-                 <hr>
-                <a href="/page" id="nav-mobil-onas" class="font-semibold hover:text-primary">O nás</a>
+                <h3 id="nav-mobil-ospanelsku" class="font-bold pt-2">O Španělsku</h3>
+                <div id="ospanelsku-menu-container-mobile" class="flex flex-col space-y-2 pl-2"></div>
+                <hr>
+                <a href="/page/?slug=o-nas" id="nav-mobil-onas" class="font-semibold hover:text-primary">O nás</a>
                 <a href="#" id="contactLinkMobile" class="font-semibold hover:text-primary">Kontakt</a>
             </nav>
         </div>
@@ -207,7 +209,6 @@
         <div id="site-footer" class="container mx-auto px-4 py-6 flex flex-wrap justify-between items-center text-sm text-gray-600 gap-6"></div>
     </footer>
 
-    <!-- Modals -->
     <div id="contactModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center p-4 modal-fade-in">
         <div class="bg-white rounded-lg shadow-2xl w-full max-w-lg p-8 modal-slide-in">
             <div class="flex justify-between items-center mb-4">
@@ -258,7 +259,6 @@
         </div>
     </div>
 
-    <!-- Optimalizace: Odložení načítání skriptu pomocí 'defer' -->
     <script type="module" defer>
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
         import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
@@ -277,7 +277,6 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // --- Language and Translations ---
         const urlParams = new URLSearchParams(window.location.search);
         const currentLang = urlParams.get('lang') || 'cz';
 
@@ -288,6 +287,7 @@
                 "nav-bulharsko": "Bulharsko",
                 "nav-informace": "Informace",
                 "nav-sluzby": "Naše služby",
+                "nav-ospanelsku": "O Španělsku",
                 "nav-onas": "O nás",
                 "contactLink": "Kontakt",
                 // Filters
@@ -341,6 +341,7 @@
                 "nav-bulharsko": "Bulgaria",
                 "nav-informace": "Information",
                 "nav-sluzby": "Our Services",
+                "nav-ospanelsku": "About Spain",
                 "nav-onas": "About Us",
                 "contactLink": "Contact",
                 "filter-title": "Quick Search",
@@ -390,6 +391,7 @@
                 "nav-bulharsko": "Bulgarien",
                 "nav-informace": "Informationen",
                 "nav-sluzby": "Unsere Dienstleistungen",
+                "nav-ospanelsku": "Über Spanien",
                 "nav-onas": "Über uns",
                 "contactLink": "Kontakt",
                 "filter-title": "Schnellsuche",
@@ -442,6 +444,8 @@
 
             document.querySelectorAll('[id]').forEach(element => {
                 const key = element.id;
+                const mobileKey = key.startsWith('nav-mobil-') ? key.replace('nav-mobil-', 'nav-') : null;
+
                 if (langDict[key]) {
                     if (key.includes('-prompt')) {
                         const linkId = (key === 'login-modal-register-prompt') ? 'showRegister' : 'showLogin';
@@ -456,6 +460,8 @@
                     } else if (element.tagName === 'OPTION' && element.id) {
                         element.textContent = langDict[element.id];
                     }
+                } else if (mobileKey && langDict[mobileKey]) {
+                     element.textContent = langDict[mobileKey];
                 }
             });
             document.getElementById('offer-id-filter').placeholder = langDict['offerIdPlaceholder'] || 'Zadejte číslo';
@@ -479,15 +485,11 @@
             });
         };
 
-        // --- Globální proměnné ---
-        let filteredProperties = [];
-        let userFavorites = [];
-        let currentPage = 1;
+        let filteredProperties = [], userFavorites = [], currentPage = 1;
         const propertiesPerPage = 9;
         let currentOfferType = 'prodej';
         const pageCountry = 'spanelsko';
 
-        // --- Elementy DOM ---
         const propertiesContainer = document.getElementById('properties-container');
         const paginationContainer = document.getElementById('pagination-container');
         const sortSelect = document.getElementById('sort-by');
@@ -521,7 +523,6 @@
                             <p>${translations[currentLang]['cardOfferId'] || 'Č. nabídky'}: <strong>${prop.offerId || 'N/A'}</strong> | ${translations[currentLang]['cardRooms'] || 'Dispozice'}: <strong>${prop.rooms || 'N/A'}</strong></p>
                             <p>${prop.area ? `${translations[currentLang]['cardArea'] || 'Plocha'}: <strong>${prop.area} m²</strong>` : ''}</p>
                         </div>
-                        <!-- OPRAVENO ZDE: Odkaz na detail -->
                         <a href="/detail/?id=${prop.id}&lang=${currentLang}" class="inline-block w-full text-center bg-gray-800 text-white font-semibold py-2 px-4 rounded-md hover:bg-gray-700 transition">${translations[currentLang]['cardViewDetail'] || 'Zobrazit detail'}</a>
                     </div>
                 `;
@@ -764,7 +765,6 @@
                     <div class="flex-grow">
                         <h4 class="font-bold">${prop[`title_${currentLang}`] || prop.title_cz}</h4>
                         <p class="text-primary font-semibold">€${prop.price.toLocaleString()}</p>
-                        <!-- OPRAVENO ZDE: Odkaz na detail v oblíbených -->
                         <a href="/detail/?id=${doc.id}&lang=${currentLang}" class="text-sm text-gray-500 hover:underline">Zobrazit detail</a>
                     </div>
                     <button class="remove-favorite text-gray-400 hover:text-red-500 text-xl" data-id="${doc.id}"><i class="fas fa-trash-alt"></i></button>
@@ -798,14 +798,19 @@
                 const countrySettingsDoc = await getDoc(doc(db, 'settings', pageCountry));
                 if (countrySettingsDoc.exists()) {
                     countrySettings = countrySettingsDoc.data();
-                    const { infoMenu = [], servicesMenu = [] } = countrySettings;
-                    // OPRAVENO ZDE: Odkazy v menu
+                    const { infoMenu = [], servicesMenu = [], spainMenu = [] } = countrySettings;
+                    
                     const infoHtml = infoMenu.map(item => `<a href="/page/?slug=${item.slug}&lang=${currentLang}&country=${pageCountry}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">${item.title}</a>`).join('');
                     const servicesHtml = servicesMenu.map(item => `<a href="/page/?slug=${item.slug}&lang=${currentLang}&country=${pageCountry}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">${item.title}</a>`).join('');
+                    const spainHtml = spainMenu.map(item => `<a href="/page/?slug=${item.slug}&lang=${currentLang}&country=${pageCountry}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">${item.title}</a>`).join('');
+
                     document.getElementById('info-menu-container-desktop').innerHTML = infoHtml;
                     document.getElementById('services-menu-container-desktop').innerHTML = servicesHtml;
+                    document.getElementById('ospanelsku-menu-container-desktop').innerHTML = spainHtml;
+
                     document.getElementById('info-menu-container-mobile').innerHTML = infoMenu.map(item => `<a href="/page/?slug=${item.slug}&lang=${currentLang}&country=${pageCountry}" class="block py-1 text-gray-700 hover:text-primary">${item.title}</a>`).join('');
                     document.getElementById('services-menu-container-mobile').innerHTML = servicesMenu.map(item => `<a href="/page/?slug=${item.slug}&lang=${currentLang}&country=${pageCountry}" class="block py-1 text-gray-700 hover:text-primary">${item.title}</a>`).join('');
+                    document.getElementById('ospanelsku-menu-container-mobile').innerHTML = spainMenu.map(item => `<a href="/page/?slug=${item.slug}&lang=${currentLang}&country=${pageCountry}" class="block py-1 text-gray-700 hover:text-primary">${item.title}</a>`).join('');
                 }
 
                 const globalSettingsDoc = await getDoc(doc(db, 'settings', 'global'));
