@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Horizon Estates - Nemovitosti v Bulharsku</title>
-    <meta name="keywords" id="meta-keywords" content="nemovitosti bulharsko, reality bulharsko, apartmány bulharsko, slunečné pobřeží">
+    <title>Detail nemovitosti</title>
+    <meta name="keywords" id="meta-keywords" content="nemovitosti, reality, zahraničí, investice">
     
     <script src="https://cdn.tailwindcss.com"></script>
     
@@ -26,19 +26,55 @@
         .text-primary { color: #dd6822; }
         .border-primary { border-color: #dd6822; }
         .hover\:bg-primary-dark:hover { background-color: #c55a1e; }
-        .bg-secondary { background-color: #4c18e1; }
         .nav-link-active { color: #dd6822; position: relative; }
         .nav-link-active::after { content: ''; position: absolute; width: 100%; height: 2px; bottom: -5px; left: 0; background-color: #dd6822; }
+        .thumbnail-image.active { border-color: #dd6822; box-shadow: 0 0 0 3px rgba(221, 104, 34, 0.5); }
+        .main-image-container:hover .main-image-nav { opacity: 1; }
+        .property-description h1, .property-description h2, .property-description h3 { font-weight: 700; margin-top: 1.5em; margin-bottom: 0.75em; }
+        .property-description h1 { font-size: 2.25rem; }
+        .property-description h2 { font-size: 1.875rem; }
+        .property-description h3 { font-size: 1.5rem; }
+        .property-description p { margin-bottom: 1.25em; line-height: 1.75; }
+        .property-description ul { list-style-position: inside; margin-bottom: 1.25em; }
+        .property-description li { margin-bottom: 0.5em; text-indent: -1.5em; padding-left: 1.5em; }
+        .property-description a { color: #dd6822; text-decoration: underline; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes slideIn { from { transform: translateY(-30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
         .modal-fade-in { animation: fadeIn 0.3s ease-out; }
         .modal-slide-in { animation: slideIn 0.3s ease-out; }
-        .lang-link.active img {
-            opacity: 1;
-            transform: scale(1.1);
-            box-shadow: 0 0 0 2px #dd6822;
+
+        .watermark-container {
+            position: relative;
+            display: inline-block;
+            line-height: 0; 
+            overflow: hidden;
         }
-         .lang-link img {
+        #main-image-wrapper, #lightbox-wrapper, .similar-watermark-container {
+            border-radius: 0.5rem;
+        }
+        .watermark-container::after {
+            content: attr(data-watermark);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-weight: 700;
+            font-size: clamp(16px, 5vw, 40px);
+            opacity: 0.5;
+            pointer-events: none;
+            text-shadow: 0 0 8px rgba(0,0,0,1);
+            white-space: nowrap;
+            z-index: 10;
+        }
+        .thumbnail-watermark-container::after {
+            content: '';
+        }
+        .similar-watermark-container::after {
+            font-size: clamp(12px, 3vw, 18px);
+        }
+
+        .lang-link img {
             opacity: 0.7;
             transition: all 0.2s ease-in-out;
             border-radius: 0.25rem;
@@ -46,6 +82,11 @@
         .lang-link:hover img {
             opacity: 1;
             transform: scale(1.1);
+        }
+        .lang-link.active img {
+            opacity: 1;
+            transform: scale(1.1);
+            box-shadow: 0 0 0 2px #dd6822;
         }
     </style>
 </head>
@@ -83,128 +124,146 @@
             <div class="hidden lg:flex justify-between items-center py-3" id="desktop-menu">
                 <nav class="flex items-center space-x-6">
                     <a href="spanelsko/index.html" id="nav-spanelsko" class="font-semibold pb-1 hover:text-primary">Španělsko</a>
-                    <a href="bulharsko/index.html" id="nav-bulharsko" class="font-semibold pb-1 nav-link-active">Bulharsko</a>
+                    <a href="bulharsko/index.html" id="nav-bulharsko" class="font-semibold pb-1 hover:text-primary">Bulharsko</a>
                 </nav>
                 <nav class="flex items-center space-x-6" id="main-navigation">
                     <div class="relative group">
                         <button id="nav-informace" class="font-semibold hover:text-primary">Informace <i class="fas fa-chevron-down text-xs ml-1"></i></button>
-                        <div class="absolute hidden group-hover:block bg-white shadow-lg rounded-md top-full pt-3 pb-2 w-52 z-10" id="info-menu-container-desktop"></div>
+                        <div class="absolute hidden group-hover:block bg-white shadow-lg rounded-md top-full pt-3 pb-2 w-52 z-50" id="info-menu-container-desktop"></div>
                     </div>
                     <div class="relative group">
                         <button id="nav-sluzby" class="font-semibold hover:text-primary">Naše služby <i class="fas fa-chevron-down text-xs ml-1"></i></button>
-                        <div class="absolute hidden group-hover:block bg-white shadow-lg rounded-md top-full pt-3 pb-2 w-52 z-10" id="services-menu-container-desktop"></div>
+                        <div class="absolute hidden group-hover:block bg-white shadow-lg rounded-md top-full pt-3 pb-2 w-52 z-50" id="services-menu-container-desktop"></div>
                     </div>
-                    <a href="page.html?slug=o-nas" id="nav-onas" class="font-semibold hover:text-primary">O nás</a>
+                    <a href="page/index.html?slug=o-nas" id="nav-onas" class="font-semibold hover:text-primary">O nás</a>
                     <a href="#" id="contactLink" class="font-semibold hover:text-primary">Kontakt</a>
                 </nav>
             </div>
         </div>
         <div id="mobile-menu" class="hidden lg:hidden px-4 pb-4 border-t">
-            <nav class="flex flex-col space-y-3 pt-4">
+              <nav class="flex flex-col space-y-3 pt-4">
                 <a href="spanelsko/index.html" id="nav-mobil-spanelsko" class="font-semibold pb-1 hover:text-primary">Španělsko</a>
-                <a href="bulharsko/index.html" id="nav-mobil-bulharsko" class="font-semibold pb-1 nav-link-active">Bulharsko</a>
+                <a href="bulharsko/index.html" id="nav-mobil-bulharsko" class="font-semibold pb-1 hover:text-primary">Bulharsko</a>
                 <hr>
                 <h3 id="nav-mobil-informace" class="font-bold pt-2">Informace</h3>
                 <div id="info-menu-container-mobile" class="flex flex-col space-y-2 pl-2"></div>
                 <h3 id="nav-mobil-sluzby" class="font-bold pt-2">Naše služby</h3>
                 <div id="services-menu-container-mobile" class="flex flex-col space-y-2 pl-2"></div>
-                <hr>
-                <a href="page.html?slug=o-nas" id="nav-mobil-onas" class="font-semibold hover:text-primary">O nás</a>
+                 <hr>
+                <a href="page/index.html?slug=o-nas" id="nav-mobil-onas" class="font-semibold hover:text-primary">O nás</a>
                 <a href="#" id="contactLinkMobile" class="font-semibold hover:text-primary">Kontakt</a>
             </nav>
         </div>
     </header>
 
-    <div class="flex-grow container mx-auto px-4 py-8">
-        <div class="flex flex-col lg:flex-row gap-8">
-            <aside class="lg:w-1/4 xl:w-1/5">
-                <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h3 id="filter-title" class="text-lg font-bold border-b-2 border-primary pb-2 mb-4 flex items-center"><i class="fa fa-search text-primary mr-2"></i> Rychlé vyhledávání</h3>
-                    <form id="filter-form" class="space-y-4">
-                        <div>
-                            <label for="lokalita" id="filter-location-label" class="block text-sm font-medium mb-1">Lokalita</label>
-                            <select id="lokalita" name="lokalita" class="w-full p-2 border rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition"><option value="">-- Načítání --</option></select>
-                        </div>
-                        <div>
-                            <label for="druh-nemovitosti" id="filter-type-label" class="block text-sm font-medium mb-1">Druh nemovitosti</label>
-                            <select id="druh-nemovitosti" name="druh-nemovitosti" class="w-full p-2 border rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition"><option value="">-- Načítání --</option></select>
-                        </div>
-                        <div>
-                            <label for="dispozice-filter" id="filter-rooms-label" class="block text-sm font-medium mb-1">Dispozice</label>
-                            <select id="dispozice-filter" name="dispozice" class="w-full p-2 border rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition"><option value="">-- Načítání --</option></select>
-                        </div>
-                        <div>
-                            <label for="offer-id-filter" id="filter-offerid-label" class="block text-sm font-medium mb-1">Č. nabídky</label>
-                            <input type="number" id="offer-id-filter" name="offer-id" placeholder="Zadejte číslo" class="w-full p-2 border rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition">
-                        </div>
-                        <div>
-                            <label id="filter-price-label" class="block text-sm font-medium mb-1">Cena (€)</label>
-                            <div class="flex flex-col sm:flex-row items-center gap-2">
-                                <input type="number" id="cena-od" name="cena-od" placeholder="Od" class="w-full p-2 border rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition">
-                                <span class="hidden sm:inline">-</span>
-                                <input type="number" id="cena-do" name="cena-do" placeholder="Do" class="w-full p-2 border rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition">
+    <main class="flex-grow container mx-auto px-4 py-8">
+        <div class="bg-white p-6 md:p-8 rounded-lg shadow-lg max-w-6xl mx-auto">
+            <div class="breadcrumb text-sm mb-6">
+                <a href="index/index.html" id="breadcrumb-home" class="text-primary hover:underline">Úvod</a> &gt; 
+                <a id="breadcrumb-country" href="#" class="text-primary hover:underline">...</a> &gt; 
+                <span id="property-title-breadcrumb" class="text-gray-500">Načítání...</span>
+            </div>
+            
+            <div class="property-header mb-6">
+                <h1 id="property-title" class="text-3xl md:text-4xl font-bold">Načítání...</h1>
+                <p id="property-location" class="text-gray-600 text-lg mt-1"></p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="lg:col-span-2">
+                    <div class="image-gallery">
+                        <div class="main-image-container relative mb-4 cursor-pointer group">
+                            <div id="main-image-wrapper" class="watermark-container w-full h-96 md:h-[500px] rounded-lg shadow-md overflow-hidden bg-gray-100">
+                                <img id="mainImage" src="https://placehold.co/800x600/e2e8f0/4a5568?text=Na%C4%8D%C3%ADt%C3%A1m..." alt="Hlavní fotka nemovitosti" class="w-full h-full object-cover transition-opacity duration-300">
                             </div>
+                            <button id="mainPrevBtn" class="main-image-nav absolute top-1/2 -translate-y-1/2 left-3 bg-black bg-opacity-40 text-white rounded-full w-10 h-10 text-2xl opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">&#10094;</button>
+                            <button id="mainNextBtn" class="main-image-nav absolute top-1/2 -translate-y-1/2 right-3 bg-black bg-opacity-40 text-white rounded-full w-10 h-10 text-2xl opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">&#10095;</button>
                         </div>
-                        <button type="submit" id="filter-submit-btn" class="w-full bg-gradient-to-r from-[#dd6822] to-[#4c18e1] text-white font-bold py-2.5 px-4 rounded-md hover:opacity-90 transition transform hover:-translate-y-0.5 shadow-lg">Vyhledat</button>
-                    </form>
-                </div>
-            </aside>
-            <main class="w-full lg:w-3/4 xl:w-4/5">
-                <section class="h-64 md:h-80 rounded-lg bg-cover bg-center flex flex-col justify-center items-center text-white text-center p-4 mb-8 shadow-xl" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url(https://images.pexels.com/photos/1732414/pexels-photo-1732414.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2)">
-                    <h1 id="main-title" class="text-3xl md:text-5xl font-bold text-shadow">Nemovitosti v Bulharsku</h1>
-                    <p id="main-subtitle" class="text-lg md:text-xl mt-2 text-shadow-md">Objevte svůj vysněný apartmán na pobřeží Černého moře.</p>
-                </section>
-                <div class="flex justify-center mb-6">
-                    <div class="inline-flex rounded-md shadow-sm">
-                        <button id="offer-type-sale" class="offer-type-btn px-6 py-2 text-sm font-medium border border-gray-200 rounded-l-lg focus:z-10 focus:ring-2 focus:ring-primary" data-offer-type="prodej">Na prodej</button>
-                        <button id="offer-type-rent" class="offer-type-btn px-6 py-2 text-sm font-medium border-t border-b border-gray-200 focus:z-10 focus:ring-2 focus:ring-primary" data-offer-type="pronajem">K pronájmu</button>
+
+                        <div id="thumbnail-slider" class="relative pr-12 hidden overflow-hidden">
+                            <div id="thumbnail-wrapper" class="overflow-hidden mx-auto" style="width: 2950px;">
+                                <div id="thumbnailContainer" class="flex items-center space-x-3 transition-transform duration-300 ease-in-out">
+                                    </div>
+                            </div>
+                            <button id="thumbPrevBtn" class="absolute top-1/2 left-0 -translate-y-1/2 p-2 text-gray-800 bg-white/70 rounded-full shadow-md hover:bg-white disabled:opacity-40 disabled:cursor-not-allowed z-10"><i class="fas fa-chevron-left"></i></button>
+                            <button id="thumbNextBtn" class="absolute top-1/2 right-0 -translate-y-1/2 p-2 text-gray-800 bg-white/70 rounded-full shadow-md hover:bg-white disabled:opacity-40 disabled:cursor-not-allowed z-10"><i class="fas fa-chevron-right"></i></button>
+                        </div>
                     </div>
                 </div>
-                <div class="flex justify-end mb-6">
-                    <div class="flex items-center space-x-2">
-                        <label for="sort-by" id="sort-by-label" class="text-sm font-medium">Seřadit podle:</label>
-                        <select id="sort-by" class="p-2 border rounded-md text-sm focus:ring-2 focus:ring-primary focus:border-primary transition">
-                            <option id="sort-date-desc" value="date-desc">Data (od nejnovější)</option>
-                            <option id="sort-offer-desc" value="offerId-desc">Číslo nabídky (sestupně)</option>
-                            <option id="sort-price-asc" value="price-asc">Ceny (od nejlevnější)</option>
-                            <option id="sort-price-desc" value="price-desc">Ceny (od nejdražší)</option>
-                        </select>
-                    </div>
-                </div>
-                <section id="properties-container" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8"></section>
-                <div id="pagination-container" class="flex justify-center items-center space-x-2 mt-8"></div>
-                <section class="mt-12 p-6 bg-white rounded-lg shadow-md border-l-4 border-yellow-400">
-                    <h2 id="facts-title" class="text-2xl font-bold mb-4">Zajímavosti o Bulharsku</h2>
-                    <ul class="space-y-3">
-                        <li id="fact-1" class="flex items-start"><i class="fas fa-check-circle text-primary mt-1 mr-3"></i><span>Bulharsko je jednou z nejstarších zemí v Evropě a jediná, která si od svého založení v roce 681 nezměnila jméno.</span></li>
-                        <li id="fact-2" class="flex items-start"><i class="fas fa-check-circle text-primary mt-1 mr-3"></i><span>Bulharská kuchyně je vynikající a rozmanitá, známá pro svůj jogurt, sýr sirene a tradiční salát šopska.</span></li>
-                        <li id="fact-3" class="flex items-start"><i class="fas fa-check-circle text-primary mt-1 mr-3"></i><span>Země nabízí jak krásné písečné pláže u Černého moře, tak i vysoké hory ideální pro lyžování a turistiku.</span></li>
-                    </ul>
-                </section>
-            </main>
+
+                <div class="lg:col-span-1">
+                    <div class="bg-gray-50 p-6 rounded-lg sticky top-28">
+                        <p class="text-4xl font-bold text-red-600 mb-2" id="property-price">Načítání...</p>
+                        <p id="offer-id" class="font-semibold text-gray-700 mb-4"></p>
+                        <div class="attributes space-y-3 mb-6">
+                            <ul id="main-features-list" class="space-y-2 text-lg"></ul>
+                            <hr class="my-4">
+                            <h4 id="features-title" class="font-bold text-md text-gray-800">Vybavení:</h4>
+                            <ul id="features-list" class="grid grid-cols-1 gap-y-2 text-sm"></ul>
+                        </div>
+                        <div class="contact-buttons space-y-3">
+                            <button id="inquiryBtn" class="w-full bg-primary text-white font-bold py-3 px-4 rounded-md hover:bg-primary-dark transition"><i class="fas fa-envelope mr-2"></i> Poslat dotaz</button>
+                            <a href="javascript:window.print()" id="printBtn" class="block w-full text-center bg-gray-200 text-gray-800 font-bold py-3 px-4 rounded-md hover:bg-gray-300 transition"><i class="fas fa-print mr-2"></i> Vytisknout nabídku</a>
+                            <button id="shareBtn" class="w-full bg-green-600 text-white font-bold py-3 px-4 rounded-md hover:bg-green-700 transition"><i class="fas fa-share-alt mr-2"></i> Sdílet</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-10 pt-8 border-t">
+                <div id="property-description-section" class="property-description">
+                    <h2 id="description-title" class="text-2xl font-bold text-primary border-l-4 border-yellow-400 pl-3 mb-4">Popis</h2>
+                    <div id="property-description">Načítání...</div>
+                </div>
+                
+                <div id="map-section" class="mt-10" style="display: none;">
+                    <h2 id="map-title" class="text-2xl font-bold text-primary border-l-4 border-yellow-400 pl-3 mb-4">Mapa</h2>
+                    <div id="map-container" class="rounded-lg overflow-hidden shadow-md"></div>
+                </div>
+
+                <div id="similar-properties-section" class="mt-10" style="display: none;">
+                    <h2 id="similar-title" class="text-2xl font-bold text-primary border-l-4 border-yellow-400 pl-3 mb-4">Podobné nemovitosti</h2>
+                    <div id="similar-properties-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+                </div>
+            </div>
         </div>
-    </div>
+    </main>
 
     <footer class="bg-gray-100 border-t mt-auto">
         <div id="site-footer" class="container mx-auto px-4 py-6 flex flex-wrap justify-between items-center text-sm text-gray-600 gap-6"></div>
     </footer>
 
-    <div id="contactModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center p-4 modal-fade-in">
+    <div id="inquiryModal" class="fixed inset-0 bg-black bg-opacity-50 z-[60] hidden items-center justify-center p-4 modal-fade-in">
         <div class="bg-white rounded-lg shadow-2xl w-full max-w-lg p-8 modal-slide-in">
-            <div class="flex justify-between items-center mb-4">
-                <h2 id="contact-modal-title" class="text-2xl font-bold">Kontaktní formulář</h2>
+             <div class="flex justify-between items-center mb-4">
+                <h2 id="inquiry-modal-title" class="text-2xl font-bold">Dotaz na nemovitost</h2>
                 <button class="close-btn text-3xl text-gray-400 hover:text-gray-700">&times;</button>
             </div>
             <form class="space-y-4" action="https://formsubmit.co/nesvarba.martin@seznam.cz" method="POST">
-                <div><label for="name" id="contact-modal-name" class="block font-medium">Vaše jméno</label><input type="text" id="name" name="name" required class="w-full p-2 border rounded-md mt-1"></div>
-                <div><label for="email" id="contact-modal-email" class="block font-medium">Váš e-mail</label><input type="email" id="email" name="email" required class="w-full p-2 border rounded-md mt-1"></div>
-                <div><label for="phone" id="contact-modal-phone" class="block font-medium">Telefon (nepovinné)</label><input type="tel" id="phone" name="phone" class="w-full p-2 border rounded-md mt-1"></div>
-                <div><label for="message" id="contact-modal-message" class="block font-medium">Vaše zpráva</label><textarea id="message" name="message" required rows="4" class="w-full p-2 border rounded-md mt-1"></textarea></div>
-                <button type="submit" id="contact-modal-submit" class="w-full bg-primary text-white font-bold py-2.5 px-4 rounded-md hover:bg-primary-dark transition">Odeslat zprávu</button>
+                <input type="hidden" name="_subject" id="inquirySubject">
+                <input type="hidden" name="_next" value="https://horizon-estates.eu/index.html?lang=cz&country=bulharsko">
+                <div><label for="inquiry-name" id="inquiry-modal-name" class="block font-medium">Vaše jméno</label><input type="text" id="inquiry-name" name="name" required class="w-full p-2 border rounded-md mt-1"></div>
+                <div><label for="inquiry-email" id="inquiry-modal-email" class="block font-medium">Váš e-mail</label><input type="email" id="inquiry-email" name="email" required class="w-full p-2 border rounded-md mt-1"></div>
+                <div><label for="inquiry-phone" id="inquiry-modal-phone" class="block font-medium">Telefon (nepovinné)</label><input type="tel" id="inquiry-phone" name="phone" class="w-full p-2 border rounded-md mt-1"></div>
+                <div><label for="inquiry-message" id="inquiry-modal-message" class="block font-medium">Vaše zpráva</label><textarea id="inquiry-message" name="message" required rows="4" class="w-full p-2 border rounded-md mt-1"></textarea></div>
+                <button type="submit" id="inquiry-modal-submit" class="w-full bg-primary text-white font-bold py-2.5 px-4 rounded-md hover:bg-primary-dark transition">Odeslat zprávu</button>
             </form>
         </div>
     </div>
-    <div id="authModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center p-4 modal-fade-in">
+    <div id="shareModal" class="fixed inset-0 bg-black bg-opacity-50 z-[60] hidden items-center justify-center p-4 modal-fade-in">
+        <div class="bg-white rounded-lg shadow-2xl w-full max-w-sm p-8 modal-slide-in">
+            <div class="flex justify-between items-center mb-6">
+                <h2 id="share-modal-title" class="text-2xl font-bold">Sdílet nemovitost</h2>
+                <button class="close-btn text-3xl text-gray-400 hover:text-gray-700">&times;</button>
+            </div>
+            <div class="space-y-3">
+                <a id="shareFacebook" href="#" target="_blank" class="flex items-center justify-center w-full bg-[#1877F2] text-white font-bold py-3 px-4 rounded-md hover:opacity-90 transition"><i class="fab fa-facebook text-xl mr-3"></i> Facebook</a>
+                <a id="shareWhatsapp" href="#" target="_blank" class="flex items-center justify-center w-full bg-[#25D366] text-white font-bold py-3 px-4 rounded-md hover:opacity-90 transition"><i class="fab fa-whatsapp text-xl mr-3"></i> WhatsApp</a>
+                <button id="copyLinkBtn" class="flex items-center justify-center w-full bg-gray-600 text-white font-bold py-3 px-4 rounded-md hover:bg-gray-700 transition"><i class="fas fa-copy mr-3"></i> Kopírovat odkaz</button>
+            </div>
+        </div>
+    </div>
+    <div id="authModal" class="fixed inset-0 bg-black bg-opacity-50 z-[60] hidden items-center justify-center p-4 modal-fade-in">
         <div class="bg-white rounded-lg shadow-2xl w-full max-w-md p-8 modal-slide-in">
             <div class="text-right"><button class="close-btn text-3xl text-gray-400 hover:text-gray-700 -mt-4">&times;</button></div>
             <div id="loginFormContainer">
@@ -229,20 +288,44 @@
             </div>
         </div>
     </div>
-    <div id="favoritesModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center p-4 modal-fade-in">
+    <div id="favoritesModal" class="fixed inset-0 bg-black bg-opacity-50 z-[60] hidden items-center justify-center p-4 modal-fade-in">
         <div class="bg-white rounded-lg shadow-2xl w-full max-w-3xl p-8 modal-slide-in">
-             <div class="flex justify-between items-center mb-6">
+              <div class="flex justify-between items-center mb-6">
                 <h2 id="favorites-modal-title" class="text-2xl font-bold">Moje oblíbené nemovitosti</h2>
                 <button class="close-btn text-3xl text-gray-400 hover:text-gray-700">&times;</button>
             </div>
             <div id="favorites-list" class="max-h-[60vh] overflow-y-auto pr-2"></div>
         </div>
     </div>
+    <div id="lightbox" class="fixed inset-0 bg-black bg-opacity-90 z-[100] hidden justify-center items-center">
+        <button class="close-btn absolute top-5 right-8 text-white text-5xl">&times;</button>
+        <button class="lightbox-nav prev absolute left-5 text-white text-5xl">&#10094;</button>
+        <div id="lightbox-wrapper" class="watermark-container">
+            <img id="lightbox-image" src="" alt="Zvětšený obrázek nemovitosti" class="max-w-[90vw] max-h-[85vh] object-contain">
+        </div>
+        <button class="lightbox-nav next absolute right-5 text-white text-5xl">&#10095;</button>
+    </div>
+    <div id="contactModal" class="fixed inset-0 bg-black bg-opacity-50 z-[60] hidden items-center justify-center p-4 modal-fade-in">
+        <div class="bg-white rounded-lg shadow-2xl w-full max-w-lg p-8 modal-slide-in">
+            <div class="flex justify-between items-center mb-4">
+                <h2 id="contact-modal-title-main" class="text-2xl font-bold">Kontaktní formulář</h2>
+                <button class="close-btn text-3xl text-gray-400 hover:text-gray-700">&times;</button>
+            </div>
+            <form class="space-y-4" action="https://formsubmit.co/nesvarba.martin@seznam.cz" method="POST">
+                <input type="hidden" name="_next" value="https://horizon-estates.eu/index.html?lang=cz">
+                <div><label for="name" id="contact-modal-name-main" class="block font-medium">Vaše jméno</label><input type="text" id="name" name="name" required class="w-full p-2 border rounded-md mt-1"></div>
+                <div><label for="email" id="contact-modal-email-main" class="block font-medium">Váš e-mail</label><input type="email" id="email" name="email" required class="w-full p-2 border rounded-md mt-1"></div>
+                <div><label for="phone" id="contact-modal-phone-main" class="block font-medium">Telefon (nepovinné)</label><input type="tel" id="phone" name="phone" class="w-full p-2 border rounded-md mt-1"></div>
+                <div><label for="message" id="contact-modal-message-main" class="block font-medium">Vaše zpráva</label><textarea id="message" name="message" required rows="4" class="w-full p-2 border rounded-md mt-1"></textarea></div>
+                <button type="submit" id="contact-modal-submit-main" class="w-full bg-primary text-white font-bold py-2.5 px-4 rounded-md hover:bg-primary-dark transition">Odeslat zprávu</button>
+            </form>
+        </div>
+    </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
         import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
-        import { getFirestore, collection, doc, getDoc, getDocs, query, where, setDoc } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
+        import { getFirestore, collection, doc, getDoc, getDocs, query, where, setDoc, limit } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyAi_ugQSDUjk4y8ne4zpAyTbzNrf96SWDc",
@@ -257,7 +340,8 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        let currentLang = new URLSearchParams(window.location.search).get('lang') || 'cz';
+        const urlParams = new URLSearchParams(window.location.search);
+        const currentLang = urlParams.get('lang') || 'cz';
 
         const translations = {
             cz: {
@@ -267,47 +351,23 @@
                 "nav-sluzby": "Naše služby",
                 "nav-onas": "O nás",
                 "contactLink": "Kontakt",
-                "filter-title": "Rychlé vyhledávání",
-                "filter-location-label": "Lokalita",
-                "filter-type-label": "Druh nemovitosti",
-                "filter-rooms-label": "Dispozice",
-                "filter-offerid-label": "Č. nabídky",
-                "filter-price-label": "Cena (€)",
-                "filter-submit-btn": "Vyhledat",
-                "filter-all": "Všechny",
-                "offerIdPlaceholder": "Zadejte číslo",
-                "priceFromPlaceholder": "Od",
-                "priceToPlaceholder": "Do",
-                "main-title": "Nemovitosti v Bulharsku",
-                "main-subtitle": "Objevte svůj vysněný apartmán na pobřeží Černého moře.",
-                "offer-type-sale": "Na prodej",
-                "offer-type-rent": "K pronájmu",
-                "sort-by-label": "Seřadit podle:",
-                "sort-offer-desc": "Číslo nabídky (sestupně)",
-                "sort-price-asc": "Ceny (od nejlevnější)",
-                "sort-price-desc": "Ceny (od nejdražší)",
-                "sort-date-desc": "Data (od nejnovější)",
-                "facts-title": "Zajímavosti o Bulharsku",
-                "fact-1": "Bulharsko je jednou z nejstarších zemí v Evropě a jediná, která si od svého založení v roce 681 nezměnila jméno.",
-                "fact-2": "Bulharská kuchyně je vynikající a rozmanitá, známá pro svůj jogurt, sýr sirene a tradiční salát šopska.",
-                "fact-3": "Země nabízí jak krásné písečné pláže u Černého moře, tak i vysoké hory ideální pro lyžování a turistiku.",
-                "contact-modal-title": "Kontaktní formulář",
-                "contact-modal-name": "Vaše jméno",
-                "contact-modal-email": "Váš e-mail",
-                "contact-modal-phone": "Telefon (nepovinné)",
-                "contact-modal-message": "Vaše zpráva",
-                "contact-modal-submit": "Odeslat zprávu",
-                "login-modal-title": "Přihlášení",
-                "login-modal-submit": "Přihlásit se",
-                "login-modal-register-prompt": "Nemáte účet? <a>Zaregistrujte se</a>",
-                "register-modal-title": "Registrace",
-                "register-modal-submit": "Zaregistrovat se",
-                "register-modal-login-prompt": "Máte již účet? <a>Přihlaste se</a>",
-                "favorites-modal-title": "Moje oblíbené nemovitosti",
-                "cardOfferId": "Č. nabídky",
-                "cardRooms": "Dispozice",
-                "cardArea": "Plocha",
-                "cardViewDetail": "Zobrazit detail"
+                "breadcrumb-home": "Úvod",
+                "features-title": "Vybavení:",
+                "inquiryBtn": "Poslat dotaz",
+                "printBtn": "Vytisknout nabídku",
+                "shareBtn": "Sdílet",
+                "description-title": "Popis",
+                "map-title": "Mapa",
+                "similar-title": "Podobné nemovitosti",
+                "inquiry-modal-title": "Dotaz na nemovitost",
+                "inquiry-modal-name": "Vaše jméno",
+                "inquiry-modal-email": "Váš e-mail",
+                "inquiry-modal-phone": "Telefon (nepovinné)",
+                "inquiry-modal-message": "Vaše zpráva",
+                "inquiry-modal-submit": "Odeslat zprávu",
+                "share-modal-title": "Sdílet nemovitost",
+                "copyLinkBtn": "Kopírovat odkaz",
+                "copied": "Zkopírováno!",
             },
             en: {
                 "nav-spanelsko": "Spain",
@@ -316,47 +376,23 @@
                 "nav-sluzby": "Our Services",
                 "nav-onas": "About Us",
                 "contactLink": "Contact",
-                "filter-title": "Quick Search",
-                "filter-location-label": "Location",
-                "filter-type-label": "Property Type",
-                "filter-rooms-label": "Layout",
-                "filter-offerid-label": "Offer No.",
-                "filter-price-label": "Price (€)",
-                "filter-submit-btn": "Search",
-                "filter-all": "All",
-                "offerIdPlaceholder": "Enter number",
-                "priceFromPlaceholder": "From",
-                "priceToPlaceholder": "To",
-                "main-title": "Properties in Bulgaria",
-                "main-subtitle": "Discover your dream apartment on the Black Sea coast.",
-                "offer-type-sale": "For Sale",
-                "offer-type-rent": "For Rent",
-                "sort-by-label": "Sort by:",
-                "sort-offer-desc": "Offer number (desc)",
-                "sort-price-asc": "Price (lowest first)",
-                "sort-price-desc": "Price (highest first)",
-                "sort-date-desc": "Date (newest first)",
-                "facts-title": "Interesting Facts about Bulgaria",
-                "fact-1": "Bulgaria is one of the oldest countries in Europe and the only one that has not changed its name since its establishment in 681.",
-                "fact-2": "Bulgarian cuisine is excellent and diverse, known for its yogurt, sirene cheese, and traditional Shopska salad.",
-                "fact-3": "The country offers beautiful sandy beaches on the Black Sea as well as high mountains ideal for skiing and hiking.",
-                "contact-modal-title": "Contact Form",
-                "contact-modal-name": "Your Name",
-                "contact-modal-email": "Your E-mail",
-                "contact-modal-phone": "Phone (optional)",
-                "contact-modal-message": "Your Message",
-                "contact-modal-submit": "Send Message",
-                "login-modal-title": "Login",
-                "login-modal-submit": "Log In",
-                "login-modal-register-prompt": "Don't have an account? <a>Register</a>",
-                "register-modal-title": "Register",
-                "register-modal-submit": "Register",
-                "register-modal-login-prompt": "Already have an account? <a>Log In</a>",
-                "favorites-modal-title": "My Favorite Properties",
-                "cardOfferId": "Offer No.",
-                "cardRooms": "Layout",
-                "cardArea": "Area",
-                "cardViewDetail": "View Detail"
+                "breadcrumb-home": "Home",
+                "features-title": "Features:",
+                "inquiryBtn": "Send Inquiry",
+                "printBtn": "Print Offer",
+                "shareBtn": "Share",
+                "description-title": "Description",
+                "map-title": "Map",
+                "similar-title": "Similar Properties",
+                "inquiry-modal-title": "Inquiry about property",
+                "inquiry-modal-name": "Your Name",
+                "inquiry-modal-email": "Your E-mail",
+                "inquiry-modal-phone": "Phone (optional)",
+                "inquiry-modal-message": "Your Message",
+                "inquiry-modal-submit": "Send Message",
+                "share-modal-title": "Share Property",
+                "copyLinkBtn": "Copy Link",
+                "copied": "Copied!",
             },
             de: {
                 "nav-spanelsko": "Spanien",
@@ -365,281 +401,414 @@
                 "nav-sluzby": "Unsere Dienstleistungen",
                 "nav-onas": "Über uns",
                 "contactLink": "Kontakt",
-                "filter-title": "Schnellsuche",
-                "filter-location-label": "Standort",
-                "filter-type-label": "Immobilientyp",
-                "filter-rooms-label": "Aufteilung",
-                "filter-offerid-label": "Angebots-Nr.",
-                "filter-price-label": "Preis (€)",
-                "filter-submit-btn": "Suchen",
-                "filter-all": "Alle",
-                "offerIdPlaceholder": "Nummer eingeben",
-                "priceFromPlaceholder": "Von",
-                "priceToPlaceholder": "Bis",
-                "main-title": "Immobilien in Bulgarien",
-                "main-subtitle": "Entdecken Sie Ihre Traumwohnung an der Schwarzmeerküste.",
-                "offer-type-sale": "Zum Verkauf",
-                "offer-type-rent": "Zu vermieten",
-                "sort-by-label": "Sortieren nach:",
-                "sort-offer-desc": "Angebots-Nr. (absteigend)",
-                "sort-price-asc": "Preis (niedrigster zuerst)",
-                "sort-price-desc": "Preis (höchster zuerst)",
-                "sort-date-desc": "Datum (neuestes zuerst)",
-                "facts-title": "Interessante Fakten über Bulgarien",
-                "fact-1": "Bulgarien ist eines der ältesten Länder Europas und das einzige, das seinen Namen seit seiner Gründung im Jahr 681 nicht geändert hat.",
-                "fact-2": "Die bulgarische Küche ist ausgezeichnet und vielfältig, bekannt für ihren Joghurt, Sirene-Käse und den traditionellen Schopska-Salat.",
-                "fact-3": "Das Land bietet sowohl wunderschöne Sandstrände am Schwarzen Meer als auch hohe Berge, die ideal zum Skifahren und Wandern sind.",
-                "contact-modal-title": "Kontaktformular",
-                "contact-modal-name": "Ihr Name",
-                "contact-modal-email": "Ihre E-Mail",
-                "contact-modal-phone": "Telefon (optional)",
-                "contact-modal-message": "Ihre Nachricht",
-                "contact-modal-submit": "Nachricht senden",
-                "login-modal-title": "Anmelden",
-                "login-modal-submit": "Anmelden",
-                "login-modal-register-prompt": "Haben Sie kein Konto? <a>Registrieren</a>",
-                "register-modal-title": "Registrieren",
-                "register-modal-submit": "Registrieren",
-                "register-modal-login-prompt": "Haben Sie bereits ein Konto? <a>Anmelden</a>",
-                "favorites-modal-title": "Meine Lieblingsimmobilien",
-                "cardOfferId": "Angebots-Nr.",
-                "cardRooms": "Aufteilung",
-                "cardArea": "Fläche",
-                "cardViewDetail": "Details anzeigen"
+                "breadcrumb-home": "Startseite",
+                "features-title": "Ausstattung:",
+                "inquiryBtn": "Anfrage senden",
+                "printBtn": "Angebot drucken",
+                "shareBtn": "Teilen",
+                "description-title": "Beschreibung",
+                "map-title": "Karte",
+                "similar-title": "Ähnliche Immobilien",
+                "inquiry-modal-title": "Anfrage zur Immobilie",
+                "inquiry-modal-name": "Ihr Name",
+                "inquiry-modal-email": "Ihre E-Mail",
+                "inquiry-modal-phone": "Telefon (optional)",
+                "inquiry-modal-message": "Ihre Nachricht",
+                "inquiry-modal-submit": "Nachricht senden",
+                "share-modal-title": "Immobilie teilen",
+                "copyLinkBtn": "Link kopieren",
+                "copied": "Kopiert!",
             }
         };
 
-        const translatePage = (lang) => {
-            const langDict = translations[lang];
+        const translatePage = () => {
+             const langDict = translations[currentLang];
             if (!langDict) return;
-
             document.querySelectorAll('[id]').forEach(element => {
                 const key = element.id;
                 if (langDict[key]) {
-                    if (key.includes('-prompt')) {
-                        const linkText = langDict[key].match(/<a>(.*?)<\/a>/)?.[1] || '';
-                        const fullText = langDict[key].replace(/<a>.*?<\/a>/, `<a class="font-semibold text-primary hover:underline cursor-pointer">${linkText}</a>`);
-                        element.innerHTML = fullText;
-                    } else if (element.tagName === 'INPUT' && element.hasAttribute('placeholder')) {
-                         element.placeholder = langDict[key];
-                    } else if (['SPAN', 'A', 'BUTTON', 'H1', 'H2', 'H3', 'P', 'LABEL'].includes(element.tagName) && !element.dataset.offerType) {
-                        element.textContent = langDict[key];
-                    } else if (element.tagName === 'OPTION' && element.id) {
-                        element.textContent = langDict[element.id];
-                    }
+                    if (element.tagName === 'INPUT' && element.placeholder) element.placeholder = langDict[key];
+                    else if (['SPAN', 'A', 'BUTTON', 'H1', 'H2', 'H3', 'H4', 'P', 'LABEL', 'OPTION'].includes(element.tagName)) element.textContent = langDict[key];
                 }
             });
-
-            document.getElementById('offer-id-filter').placeholder = langDict['offerIdPlaceholder'] || 'Zadejte číslo';
-            document.getElementById('cena-od').placeholder = langDict['priceFromPlaceholder'] || 'Od';
-            document.getElementById('cena-do').placeholder = langDict['priceToPlaceholder'] || 'Do';
-
-            document.querySelectorAll('.offer-type-btn').forEach(btn => btn.textContent = langDict[btn.id] || btn.textContent);
-
-            document.querySelector('#fact-1 span').textContent = langDict['fact-1'];
-            document.querySelector('#fact-2 span').textContent = langDict['fact-2'];
-            document.querySelector('#fact-3 span').textContent = langDict['fact-3'];
         };
 
-        const setLang = (lang) => {
-            const url = new URL(window.location.href);
-            url.searchParams.set('lang', lang);
-            window.location.href = url.href;
-        };
-        
         const setActiveLangLink = () => {
             document.querySelectorAll('#lang-switcher .lang-link').forEach(link => {
                 link.classList.remove('active');
                 if (link.dataset.lang === currentLang) link.classList.add('active');
+                const url = new URL(window.location.href);
+                url.searchParams.set('lang', link.dataset.lang);
+                link.href = url.toString();
             });
-            document.querySelectorAll('a[href*=".html"]').forEach(link => {
+             document.querySelectorAll('a[href*=".html"]').forEach(link => {
                 if (!link.classList.contains('lang-link')) {
                     try {
-                        const url = new URL(link.getAttribute('href'), window.location.href);
+                        const url = new URL(link.href, window.location.href);
                         url.searchParams.set('lang', currentLang);
-                        url.searchParams.set('country', pageCountry);
-                        link.href = url.href;
+                        if (currentProperty && currentProperty.country) {
+                             url.searchParams.set('country', currentProperty.country);
+                        }
+                        link.href = url.toString();
                     } catch (e) {
-                        console.error(`Could not process URL for link: ${link.getAttribute('href')}`, e);
+                        // console.error(`Could not process URL for link: ${link.getAttribute('href')}`, e);
                     }
                 }
             });
         };
 
-        let filteredProperties = [], userFavorites = [], currentPage = 1;
-        const propertiesPerPage = 9;
-        let currentOfferType = 'prodej';
-        const pageCountry = 'bulharsko';
-        const propertiesContainer = document.getElementById('properties-container'), paginationContainer = document.getElementById('pagination-container'), sortSelect = document.getElementById('sort-by'), filterForm = document.getElementById('filter-form');
+        let currentProperty = null, galleryImages = [], activeImageIndex = 0, thumbnailStartIndex = 0, userFavorites = [];
+        const thumbnailsToShow = 3;
+        const mainImage = document.getElementById('mainImage'), thumbnailContainer = document.getElementById('thumbnailContainer'), lightbox = document.getElementById('lightbox'), lightboxImage = document.getElementById('lightbox-image');
+
+        const updateMainImage = (index) => {
+            if (!galleryImages[index]) return;
+            activeImageIndex = index;
+            mainImage.style.opacity = '0';
+            setTimeout(() => {
+                mainImage.src = galleryImages[index].src;
+                mainImage.alt = galleryImages[index].alt;
+                mainImage.style.opacity = '1';
+            }, 150);
+            if (index < thumbnailStartIndex) {
+                thumbnailStartIndex = index;
+            } else if (index >= thumbnailStartIndex + thumbnailsToShow) {
+                thumbnailStartIndex = index - thumbnailsToShow + 1;
+            }
+            slideThumbnails();
+            highlightActiveThumbnail();
+        };
+
+        const highlightActiveThumbnail = () => {
+            document.querySelectorAll('.thumbnail-image').forEach((thumb, idx) => {
+                thumb.classList.toggle('active', idx === activeImageIndex);
+            });
+        };
         
-        const displayProperties = () => {
-            propertiesContainer.innerHTML = "";
-            const startIndex = (currentPage - 1) * propertiesPerPage;
-            const paginatedProperties = filteredProperties.slice(startIndex, startIndex + propertiesPerPage);
-            if (paginatedProperties.length === 0) {
-                propertiesContainer.innerHTML = `<p class="md:col-span-2 xl:col-span-3 text-center text-gray-500">Nebyly nalezeny žádné nemovitosti odpovídající zadaným kritériím.</p>`;
-                setupPagination();
+        const slideThumbnails = () => {
+            const firstThumb = thumbnailContainer.querySelector('img');
+            if (!firstThumb) return;
+            const thumbWidth = 224 + 12; // w-56 is 224px, space-x-3 is 12px
+            const offset = -thumbnailStartIndex * thumbWidth;
+            thumbnailContainer.style.transform = `translateX(${offset}px)`;
+            updateNavButtons();
+        };
+        
+        const setupGallery = (watermarkText) => {
+            const slider = document.getElementById('thumbnail-slider');
+            if (galleryImages.length > 1) {
+                if(slider) slider.classList.remove('hidden');
+            } else {
+                if (slider) slider.style.display = 'none';
                 return;
             }
-            paginatedProperties.forEach(prop => {
-                const title = prop[`title_${currentLang}`] || prop.title_cz || "No title";
-                const firstImage = prop.images && prop.images.length > 0 ? prop.images[0] : 'https://placehold.co/600x400/e2e8f0/94a3b8?text=Foto';
-                const isFavorite = userFavorites.includes(prop.id);
-                const card = document.createElement('div');
-                card.className = "bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300 relative";
-                card.dataset.propertyId = prop.id;
-                card.innerHTML = `
-                    <i class="fas fa-heart favorite-icon absolute top-4 right-4 text-2xl cursor-pointer ${isFavorite ? 'text-red-500' : 'text-white'} drop-shadow-lg transition-colors"></i>
-                    <img src="${firstImage}" alt="Foto: ${title}" class="w-full h-56 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2">${title}</h3>
-                        <p class="text-2xl font-bold text-primary mb-4">€${prop.price.toLocaleString()}</p>
-                        <div class="text-sm text-gray-600 space-y-1 mb-4">
-                            <p>${translations[currentLang]['cardOfferId'] || 'Č. nabídky'}: <strong>${prop.offerId || 'N/A'}</strong> | ${translations[currentLang]['cardRooms'] || 'Dispozice'}: <strong>${prop.rooms || 'N/A'}</strong></p>
-                            <p>${prop.area ? `${translations[currentLang]['cardArea'] || 'Plocha'}: <strong>${prop.area} m²</strong>` : ''}</p>
-                        </div>
-                        <a href="detail.html?id=${prop.id}&lang=${currentLang}" class="inline-block w-full text-center bg-gray-800 text-white font-semibold py-2 px-4 rounded-md hover:bg-gray-700 transition">${translations[currentLang]['cardViewDetail'] || 'Zobrazit detail'}</a>
-                    </div>`;
-                propertiesContainer.appendChild(card);
+
+            thumbnailContainer.innerHTML = '';
+            galleryImages.forEach((img, i) => {
+                const wrapper = document.createElement('div');
+                wrapper.className = 'watermark-container thumbnail-watermark-container';
+                wrapper.dataset.watermark = watermarkText;
+
+                const thumb = document.createElement('img');
+                thumb.src = img.src;
+                thumb.alt = `Náhled - ${img.alt}`;
+                thumb.className = 'thumbnail-image w-56 h-36 object-cover rounded-md cursor-pointer border-4 border-transparent hover:border-primary/50 transition-all duration-200 flex-shrink-0';
+                thumb.onclick = () => updateMainImage(i);
+                
+                wrapper.appendChild(thumb);
+                thumbnailContainer.appendChild(wrapper);
             });
-            setupPagination();
-        };
 
-        const setupPagination = () => {
-            paginationContainer.innerHTML = "";
-            const pageCount = Math.ceil(filteredProperties.length / propertiesPerPage);
-            if (pageCount <= 1) return;
-            const prevButton = document.createElement('button');
-            prevButton.innerHTML = `<i class="fas fa-chevron-left"></i>`;
-            prevButton.className = "px-3 py-1 border rounded-md bg-white disabled:opacity-50 disabled:cursor-not-allowed";
-            prevButton.disabled = currentPage === 1;
-            prevButton.onclick = () => { if (currentPage > 1) { currentPage--; displayProperties(); } };
-            paginationContainer.appendChild(prevButton);
-            for (let i = 1; i <= pageCount; i++) {
-                const pageButton = document.createElement('button');
-                pageButton.innerText = i;
-                pageButton.className = `px-3 py-1 border rounded-md ${i === currentPage ? 'bg-primary text-white border-primary' : 'bg-white'}`;
-                pageButton.onclick = () => { currentPage = i; displayProperties(); };
-                paginationContainer.appendChild(pageButton);
-            }
-            const nextButton = document.createElement('button');
-            nextButton.innerHTML = `<i class="fas fa-chevron-right"></i>`;
-            nextButton.className = "px-3 py-1 border rounded-md bg-white disabled:opacity-50 disabled:cursor-not-allowed";
-            nextButton.disabled = currentPage === pageCount;
-            nextButton.onclick = () => { if (currentPage < pageCount) { currentPage++; displayProperties(); } };
-            paginationContainer.appendChild(nextButton);
-        };
+            const firstImage = thumbnailContainer.querySelector('img');
+            if (firstImage) {
+                const initSlider = () => {
+                      const thumbWidth = 2088; // w-56
+                      const gapWidth = 12; // space-x-3
+                      const thumbnailsToShow = 3;
+                      const containerWidth = (thumbWidth * thumbnailsToShow) + (gapWidth * (thumbnailsToShow - 1));
+                      const overflowContainer = document.getElementById('thumbnail-wrapper');
+                      if(overflowContainer) {
+                          overflowContainer.style.width = `${containerWidth}px`;
+                      }
+                      slideThumbnails();
+                      highlightActiveThumbnail();
+                };
 
-        const sortProperties = () => {
-            const [key, direction] = sortSelect.value.split('-');
-            filteredProperties.sort((a, b) => {
-                let valA = a[key], valB = b[key];
-                if (key === 'date') {
-                    valA = a.createdAt?.toMillis() || 0;
-                    valB = b.createdAt?.toMillis() || 0;
+                if (firstImage.complete && firstImage.naturalWidth > 0) {
+                    initSlider();
+                } else {
+                    firstImage.onload = initSlider;
                 }
-                return direction === 'asc' ? (valA || 0) - (valB || 0) : (valB || 0) - (valA || 0);
-            });
-            currentPage = 1;
-            displayProperties();
+            }
         };
 
-        const fetchAndFilterProperties = async (filters = {}) => {
-            propertiesContainer.innerHTML = `<p class="md:col-span-2 xl:col-span-3 text-center text-gray-500">Vyhledávání nemovitostí...</p>`;
+        const updateNavButtons = () => {
+            const showMainButtons = galleryImages.length > 1;
+            const mainPrevBtn = document.getElementById('mainPrevBtn');
+            const mainNextBtn = document.getElementById('mainNextBtn');
+            if(mainPrevBtn) mainPrevBtn.style.display = showMainButtons ? 'flex' : 'none';
+            if(mainNextBtn) mainNextBtn.style.display = showMainButtons ? 'flex' : 'none';
+
+            const thumbSlider = document.getElementById('thumbnail-slider');
+            if (thumbSlider && galleryImages.length > thumbnailsToShow) {
+                const prevBtn = thumbSlider.querySelector('#thumbPrevBtn');
+                if(prevBtn) prevBtn.disabled = thumbnailStartIndex === 0;
+
+                const nextBtn = thumbSlider.querySelector('#thumbNextBtn');
+                if(nextBtn) nextBtn.disabled = thumbnailStartIndex + thumbnailsToShow >= galleryImages.length;
+
+            } else if (thumbSlider) {
+                 const prevBtn = thumbSlider.querySelector('#thumbPrevBtn');
+                 if(prevBtn) prevBtn.style.display = 'none';
+
+                 const nextBtn = thumbSlider.querySelector('#thumbNextBtn');
+                 if(nextBtn) nextBtn.style.display = 'none';
+            }
+        };
+        
+        const setupSeoTags = async (property) => {
             try {
-                const propertiesRef = collection(db, 'properties');
-                let q = query(propertiesRef, where('country', '==', pageCountry), where('offerType', '==', currentOfferType));
-                const snapshot = await getDocs(q);
-                let results = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-                filteredProperties = results.filter(p => {
-                    return (!filters.location || p.location === filters.location) &&
-                                (!filters.type || p.type === filters.type) &&
-                                (!filters.rooms || p.rooms === filters.rooms) &&
-                                (!filters.priceFrom || p.price >= filters.priceFrom) &&
-                                (!filters.priceTo || p.price <= filters.priceTo) &&
-                                (!filters.offerId || p.offerId == filters.offerId);
-                });
-                sortProperties();
+                const globalSettingsDoc = await getDoc(doc(db, 'settings', 'global'));
+                const globalTags = globalSettingsDoc.exists() ? globalSettingsDoc.data().tags || [] : [];
+                const propertyTags = [
+                    property[`title_${currentLang}`] || property.title_cz,
+                    property.location,
+                    property.type,
+                    property.country
+                ].filter(Boolean);
+                const metaKeywordsTag = document.getElementById('meta-keywords');
+                const existingKeywords = metaKeywordsTag.getAttribute('content').split(',').map(k => k.trim()).filter(Boolean);
+                const allKeywords = [...new Set([...existingKeywords, ...propertyTags, ...globalTags])];
+                metaKeywordsTag.setAttribute('content', allKeywords.join(', '));
+            } catch (error) { console.error("Error setting up SEO tags:", error); }
+        };
+
+        const loadPropertyDetails = async () => {
+            const propertyId = new URLSearchParams(window.location.search).get('id');
+            if (!propertyId) {
+                document.querySelector('main').innerHTML = "<h1>Chyba: ID nemovitosti nebylo nalezeno v URL.</h1>";
+                return;
+            }
+            try {
+                const propertyDocRef = doc(db, 'properties', propertyId);
+                const globalSettingsDocRef = doc(db, 'settings', 'global');
+
+                const [propertyDocSnap, globalSettingsDocSnap] = await Promise.all([
+                    getDoc(propertyDocRef),
+                    getDoc(globalSettingsDocRef)
+                ]);
+
+                if (!propertyDocSnap.exists()) {
+                    document.querySelector('main').innerHTML = "<h1>Nemovitost nebyla nalezena.</h1>";
+                    return;
+                }
+                currentProperty = { id: propertyDocSnap.id, ...propertyDocSnap.data() };
+                
+                const globalFeatures = globalSettingsDocSnap.exists() ? globalSettingsDocSnap.data().features || [] : [];
+
+                loadSettings(currentProperty.country);
+                setupSeoTags(currentProperty);
+
+                const title = currentProperty[`title_${currentLang}`] || currentProperty.title_cz;
+                const description = currentProperty[`description_${currentLang}`] || currentProperty.description_cz;
+
+                let watermarkText = '';
+                if (currentProperty.country === 'bulharsko') {
+                    watermarkText = 'HORIZON-ESTATES';
+                } else if (currentProperty.country === 'spanelsko') {
+                    watermarkText = 'HORIZON-ESTATES';
+                }
+                document.getElementById('main-image-wrapper').dataset.watermark = watermarkText;
+                
+                const lightboxWrapper = document.getElementById('lightbox-wrapper');
+                if(lightboxWrapper) lightboxWrapper.dataset.watermark = watermarkText;
+
+                document.title = `${title} | Horizon Estates`;
+                document.getElementById('property-title').textContent = title || 'N/A';
+                document.getElementById('property-title-breadcrumb').textContent = title || 'N/A';
+                document.getElementById('property-location').textContent = currentProperty.location || 'N/A';
+                document.getElementById('property-price').textContent = currentProperty.price ? `€${currentProperty.price.toLocaleString()}` : 'Cena na dotaz';
+                document.getElementById('offer-id').textContent = `Č. nabídky: ${currentProperty.offerId || 'N/A'}`;
+                document.getElementById('property-description').innerHTML = description || 'Popis není k dispozici.';
+                
+                const breadcrumbCountry = document.getElementById('breadcrumb-country');
+                if (currentProperty.country) {
+                    const countryName = translations[currentLang][`nav-${currentProperty.country}`] || currentProperty.country;
+                    breadcrumbCountry.textContent = countryName;
+                    breadcrumbCountry.href = `${currentProperty.country}.html?lang=${currentLang}`;
+                    document.getElementById(`nav-${currentProperty.country}`)?.classList.add('nav-link-active');
+                    document.getElementById(`nav-mobil-${currentProperty.country}`)?.classList.add('nav-link-active');
+                }
+
+                const mainFeaturesList = document.getElementById('main-features-list');
+                mainFeaturesList.innerHTML = '';
+                if(currentProperty.area) mainFeaturesList.innerHTML += `<li><i class="fas fa-ruler-combined w-6 text-primary"></i>Plocha: <strong>${currentProperty.area} m²</strong></li>`;
+                if(currentProperty.floor) mainFeaturesList.innerHTML += `<li><i class="fas fa-building w-6 text-primary"></i>Podlaží: <strong>${currentProperty.floor}</strong></li>`;
+
+                const featuresList = document.getElementById('features-list');
+                featuresList.innerHTML = '';
+                if (currentProperty.features?.length) {
+                    currentProperty.features.forEach(featureKey => {
+                        const featureData = globalFeatures.find(f => f.key === featureKey);
+                        const featureName = featureData ? (featureData[`name_${currentLang}`] || featureData.name_cz) : featureKey;
+                        featuresList.innerHTML += `<li><i class="fas fa-check text-green-500 mr-2"></i>${featureName}</li>`;
+                    });
+                }
+
+                if (currentProperty.images?.length) {
+                    galleryImages = currentProperty.images.map(url => ({ src: url, alt: `Foto - ${title}` }));
+                    updateMainImage(0);
+                    setupGallery(watermarkText);
+                } else {
+                    mainImage.src = 'https://placehold.co/800x600?text=Foto+není+k+dispozici';
+                    document.querySelector('.image-gallery').innerHTML = '';
+                }
+
+                if (currentProperty.mapLink) {
+                    const mapContainer = document.getElementById('map-container');
+                    const mapSection = document.getElementById('map-section');
+                    if(mapContainer) mapContainer.innerHTML = `<iframe src="${currentProperty.mapLink}" class="w-full h-96 border-0 rounded-lg" allowfullscreen="" loading="lazy"></iframe>`;
+                    if(mapSection) mapSection.style.display = 'block';
+                }
+
+                loadSimilarProperties(currentProperty);
+                setupActionButtons(); 
             } catch (error) {
-                console.error("Chyba při načítání nemovitostí: ", error);
-                propertiesContainer.innerHTML = `<p class="md:col-span-2 xl:col-span-3 text-center text-red-500">Chyba při načítání dat. Zkuste to prosím později.</p>`;
+                console.error("Chyba při načítání detailů:", error);
+                document.querySelector('main').innerHTML = `<h1>Chyba při načítání dat.</h1>`;
             }
         };
-
-        const loadFilterOptions = async () => {
-            const selects = {
-                lokalita: document.getElementById('lokalita'),
-                'druh-nemovitosti': document.getElementById('druh-nemovitosti'),
-                'dispozice-filter': document.getElementById('dispozice-filter')
-            };
-            const allOptionText = translations[currentLang]['filter-all'] || 'Všechny';
-            Object.values(selects).forEach(s => s.innerHTML = `<option value="">-- ${allOptionText} --</option>`);
-            
+        
+        const loadSimilarProperties = async (property) => {
+            if (!property.location) return;
+            const similarContainer = document.getElementById('similar-properties-grid');
             try {
-                const settingsDoc = await getDoc(doc(db, 'settings', pageCountry));
-                if (settingsDoc.exists()) {
-                    const { locations = [], types = [], rooms = [] } = settingsDoc.data();
-                    
-                    const populateSelect = (selectElement, items) => {
-                        items.sort((a, b) => {
-                            const nameA = (typeof a === 'object' ? a[`name_${currentLang}`] || a.name_cz : a) || '';
-                            const nameB = (typeof b === 'object' ? b[`name_${currentLang}`] || b.name_cz : b) || '';
-                            return nameA.localeCompare(nameB, currentLang);
-                        }).forEach(item => {
-                            const value = (typeof item === 'object' ? item.name_cz : item) || '';
-                            const text = (typeof item === 'object' ? item[`name_${currentLang}`] || item.name_cz : item) || '';
-                            if (value && text) {
-                                selectElement.add(new Option(text, value));
-                            }
-                        });
-                    };
+                const q = query(collection(db, 'properties'), where('location', '==', property.location), where('__name__', '!=', property.id), limit(3));
+                const snapshot = await getDocs(q);
+                if (snapshot.empty) return;
 
-                    populateSelect(selects.lokalita, locations);
-                    populateSelect(selects['druh-nemovitosti'], types);
-                    populateSelect(selects['dispozice-filter'], rooms);
+                let watermarkText = '';
+                if (property.country === 'bulharsko') {
+                    watermarkText = 'BULHARSKO-NEMOVITOSTI';
+                } else if (property.country === 'spanelsko') {
+                    watermarkText = 'ŠPANĚLSKO-NEMOVITOSTI';
                 }
-            } catch (error) { console.error("Error loading filter options: ", error); }
+
+                similarContainer.innerHTML = '';
+                snapshot.forEach(doc => {
+                    const prop = doc.data();
+                    const title = prop[`title_${currentLang}`] || prop.title_cz;
+                    similarContainer.innerHTML += `
+                        <a href="detail.html?id=${doc.id}&lang=${currentLang}" class="block bg-white rounded-lg shadow-md overflow-hidden transform hover:-translate-y-1 transition">
+                            <div class="watermark-container similar-watermark-container" data-watermark="${watermarkText}">
+                                <img src="${prop.images?.[0] || 'https://placehold.co/300x200'}" alt="${title}" class="w-full h-40 object-cover">
+                            </div>
+                            <div class="p-4">
+                                <h3 class="font-bold">${title}</h3>
+                                <p class="text-primary font-semibold">€${prop.price.toLocaleString()}</p>
+                            </div>
+                        </a>`;
+                });
+                document.getElementById('similar-properties-section').style.display = 'block';
+            } catch (error) { console.error("Error loading similar properties:", error); }
         };
-        
-        filterForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const filters = {
-                location: e.target.lokalita.value,
-                type: e.target['druh-nemovitosti'].value,
-                rooms: e.target.dispozice.value,
-                priceFrom: parseInt(e.target['cena-od'].value) || null,
-                priceTo: parseInt(e.target['cena-do'].value) || null,
-                offerId: parseInt(e.target['offer-id'].value) || null,
-            };
-            fetchAndFilterProperties(filters);
-        });
 
-        sortSelect.addEventListener('change', sortProperties);
+        const modals = { contact: document.getElementById('contactModal'), auth: document.getElementById('authModal'), favorites: document.getElementById('favoritesModal'), inquiry: document.getElementById('inquiryModal'), share: document.getElementById('shareModal') };
+        const openModal = (modal) => { if(modal) modal.style.display = 'flex'; };
+        const closeModal = (modal) => { if(modal) modal.style.display = 'none'; };
 
-        document.querySelectorAll('.offer-type-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelector('.offer-type-btn.active')?.classList.remove('active', 'bg-primary', 'text-white');
-                btn.classList.add('active', 'bg-primary', 'text-white');
-                currentOfferType = btn.dataset.offerType;
-                fetchAndFilterProperties();
+        const setupActionButtons = () => {
+            document.getElementById('inquiryBtn')?.addEventListener('click', () => {
+                if (!currentProperty) return;
+                const title = currentProperty[`title_${currentLang}`] || currentProperty.title_cz;
+                document.getElementById('inquirySubject').value = `Dotaz: ${title} (Č. ${currentProperty.offerId})`;
+                document.getElementById('inquiry-message').value = `Dobrý den, mám zájem o nemovitost "${title}" (Č. ${currentProperty.offerId}).`;
+                openModal(modals.inquiry);
             });
-        });
-        document.querySelector('.offer-type-btn[data-offer-type="prodej"]').classList.add('active', 'bg-primary', 'text-white');
 
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-        mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+            document.getElementById('shareBtn')?.addEventListener('click', () => {
+                if (!currentProperty) return;
+                const url = window.location.href;
+                const text = `Podívejte se na tuto nemovitost: ${currentProperty[`title_${currentLang}`] || currentProperty.title_cz}`;
+                document.getElementById('shareFacebook').href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+                document.getElementById('shareWhatsapp').href = `https://api.whatsapp.com/send?text=${encodeURIComponent(text + ' ' + url)}`;
+                openModal(modals.share);
+            });
+            
+            document.getElementById('copyLinkBtn')?.addEventListener('click', async (e) => {
+                try {
+                    await navigator.clipboard.writeText(window.location.href);
+                    const btn = e.currentTarget;
+                    const originalText = translations[currentLang]['copyLinkBtn'];
+                    btn.innerHTML = `<i class="fas fa-check mr-3"></i> ${translations[currentLang]['copied']}`;
+                    setTimeout(() => btn.innerHTML = `<i class="fas fa-copy mr-3"></i> ${originalText}`, 2000);
+                } catch (err) { console.error('Failed to copy: ', err); }
+            });
+        };
 
-        const modals = { contact: document.getElementById('contactModal'), auth: document.getElementById('authModal'), favorites: document.getElementById('favoritesModal') };
-        const openModal = (modal) => modal.style.display = 'flex';
-        const closeModal = (modal) => modal.style.display = 'none';
-        document.getElementById('contactLink').onclick = (e) => { e.preventDefault(); openModal(modals.contact); };
-        document.getElementById('contactLinkMobile').onclick = (e) => { e.preventDefault(); openModal(modals.contact); mobileMenu.classList.add('hidden'); };
-        document.getElementById('loginIcon').onclick = () => openModal(modals.auth);
-        document.querySelectorAll('.close-btn').forEach(btn => btn.onclick = () => Object.values(modals).forEach(closeModal));
-        window.onclick = (e) => { if (Object.values(modals).includes(e.target)) Object.values(modals).forEach(closeModal); };
-        
-        const loginIconEl = document.getElementById('loginIcon'), userInfoEl = document.getElementById('userInfo'), userEmailSpan = document.getElementById('userEmail'), favoritesIconEl = document.getElementById('favoritesIcon'), loginForm = document.getElementById('loginForm'), registerForm = document.getElementById('registerForm');
+        async function loadSettings(pageCountry) {
+            try {
+                let countrySettings = {};
+                let globalSettings = {};
+
+                // Fetch country-specific settings if country is specified in URL
+                if (pageCountry) {
+                    const countrySettingsDoc = await getDoc(doc(db, 'settings', pageCountry));
+                    if (countrySettingsDoc.exists()) {
+                        countrySettings = countrySettingsDoc.data();
+                    }
+                }
+
+                // Fetch global settings
+                const globalSettingsDoc = await getDoc(doc(db, 'settings', 'global'));
+                if (globalSettingsDoc.exists()){
+                     globalSettings = globalSettingsDoc.data();
+                }
+                
+                const logoText = countrySettings.logoText || globalSettings.logoText || 'HORIZON ESTATES';
+                document.querySelector('header .font-bold.text-gray-800').textContent = logoText;
+
+                // Menu Logic: fetch from both, then create links with context
+                const countries = ['spanelsko', 'bulharsko'];
+                let allInfoItems = [], allServicesItems = [];
+
+                for (const country of countries) {
+                    const countrySettingsDoc = await getDoc(doc(db, 'settings', country));
+                    if (countrySettingsDoc.exists()) {
+                        const { infoMenu = [], servicesMenu = [] } = countrySettingsDoc.data();
+                        allInfoItems.push(...infoMenu.map(item => ({...item, country})));
+                        allServicesItems.push(...servicesMenu.map(item => ({...item, country})));
+                    }
+                }
+                
+                const uniqueInfo = Array.from(new Map(allInfoItems.map(item => [item.slug, item])).values());
+                const uniqueServices = Array.from(new Map(allServicesItems.map(item => [item.slug, item])).values());
+                
+                const infoHtml = uniqueInfo.map(item => `<a href="page.html?slug=${item.slug}&lang=${currentLang}&country=${item.country}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">${item.title}</a>`).join('');
+                const servicesHtml = uniqueServices.map(item => `<a href="page.html?slug=${item.slug}&lang=${currentLang}&country=${item.country}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">${item.title}</a>`).join('');
+                document.getElementById('info-menu-container-desktop').innerHTML = infoHtml;
+                document.getElementById('services-menu-container-desktop').innerHTML = servicesHtml;
+                document.getElementById('info-menu-container-mobile').innerHTML = uniqueInfo.map(item => `<a href="page.html?slug=${item.slug}&lang=${currentLang}&country=${item.country}" class="block py-1 text-gray-700 hover:text-primary">${item.title}</a>`).join('');
+                document.getElementById('services-menu-container-mobile').innerHTML = uniqueServices.map(item => `<a href="page.html?slug=${item.slug}&lang=${currentLang}&country=${item.country}" class="block py-1 text-gray-700 hover:text-primary">${item.title}</a>`).join('');
+
+                let footerHTML = `<div class="text-center lg:text-left"><p>&copy; ${new Date().getFullYear()} ${logoText}. Všechna práva vyhrazena.</p></div>`;
+                const contactsHTML = [];
+                for (let i = 1; i <= 4; i++) {
+                    if (globalSettings[`contact${i}_name`]) {
+                        contactsHTML.push(`
+                            <div class="text-center">
+                                <p class="font-semibold">${globalSettings[`contact${i}_name`]}</p>
+                                ${globalSettings[`contact${i}_phone`] ? `<a href="tel:${globalSettings[`contact${i}_phone`].replace(/\s/g, '')}" class="block hover:text-primary">${globalSettings[`contact${i}_phone`]}</a>` : ''}
+                                ${globalSettings[`contact${i}_email`] ? `<a href="mailto:${globalSettings[`contact${i}_email`]}" class="block hover:text-primary">${globalSettings[`contact${i}_email`]}</a>` : ''}
+                            </div>`);
+                    }
+                }
+                footerHTML += `<div class="flex flex-wrap justify-center lg:justify-end gap-6">${contactsHTML.join('')}</div>`;
+                document.getElementById('site-footer').innerHTML = footerHTML;
+            } catch (error) { console.error("Error loading global settings:", error); }
+        }
+
+        const loginIconEl = document.getElementById('loginIcon'), userInfoEl = document.getElementById('userInfo'), userEmailSpan = document.getElementById('userEmail'), favoritesIconEl = document.getElementById('favoritesIcon');
         const showError = (el, msg) => { el.textContent = msg; el.style.display = 'block'; };
         const hideError = (el) => el.style.display = 'none';
         
@@ -656,182 +825,156 @@
                 userInfoEl.style.display = 'none';
                 userFavorites = [];
             }
-            if (filteredProperties.length > 0) displayProperties(); 
         });
 
-        loginForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const email = e.target['login-email'].value, password = e.target['login-password'].value;
-            const errorEl = document.getElementById('loginError');
-            hideError(errorEl);
-            signInWithEmailAndPassword(auth, email, password).catch(() => showError(errorEl, 'Nesprávný e-mail nebo heslo.'));
-        });
-
-        registerForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const email = e.target['register-email'].value, password = e.target['register-password'].value;
-            const errorEl = document.getElementById('registerError');
-            hideError(errorEl);
-            createUserWithEmailAndPassword(auth, email, password).catch(err => showError(errorEl, 'Chyba registrace: ' + err.message));
-        });
-
-        document.getElementById('logoutIcon').addEventListener('click', () => signOut(auth));
-        document.getElementById('showRegister').addEventListener('click', () => {
-            document.getElementById('loginFormContainer').style.display = 'none';
-            document.getElementById('registerFormContainer').style.display = 'block';
-        });
-        document.getElementById('showLogin').addEventListener('click', () => {
-            document.getElementById('registerFormContainer').style.display = 'none';
-            document.getElementById('loginFormContainer').style.display = 'block';
-        });
-        
-        const toggleFavorite = async (userId, propertyId) => {
-            const userRef = doc(db, 'users', userId);
-            const isFavorite = userFavorites.includes(propertyId);
-            const updatedFavorites = isFavorite ? userFavorites.filter(id => id !== propertyId) : [...userFavorites, propertyId];
-            await setDoc(userRef, { favorites: updatedFavorites }, { merge: true });
-            userFavorites = updatedFavorites;
-            return !isFavorite;
-        };
-        
-        propertiesContainer.addEventListener('click', async (e) => {
-            if (e.target.classList.contains('favorite-icon')) {
-                const user = auth.currentUser;
-                if (!user) { openModal(modals.auth); return; }
-                const card = e.target.closest('[data-property-id]');
-                if (!card) return; 
-                const propertyId = card.dataset.propertyId;
-                const wasAdded = await toggleFavorite(user.uid, propertyId);
-                e.target.classList.toggle('text-red-500', wasAdded);
-                e.target.classList.toggle('text-white', !wasAdded);
-            }
-        });
-        
-        favoritesIconEl.addEventListener('click', async () => {
-            const listEl = document.getElementById('favorites-list');
-            listEl.innerHTML = '<p>Načítání oblíbených...</p>';
-            openModal(modals.favorites);
-            if (userFavorites.length === 0) {
-                listEl.innerHTML = '<p>Zatím nemáte žádné oblíbené nemovitosti.</p>';
-                return;
-            }
-            const promises = userFavorites.map(id => getDoc(doc(db, 'properties', id)));
-            const favDocs = await Promise.all(promises);
-            listEl.innerHTML = '';
-            favDocs.forEach(doc => {
-                if (!doc.exists()) return;
-                const prop = doc.data();
-                const item = document.createElement('div');
-                item.className = 'favorite-item flex items-center gap-4 py-3 border-b';
-                item.innerHTML = `
-                    <img src="${prop.images?.[0] || 'https://placehold.co/150x100'}" class="w-32 h-20 object-cover rounded-md">
-                    <div class="flex-grow">
-                        <h4 class="font-bold">${prop[`title_${currentLang}`] || prop.title_cz}</h4>
-                        <p class="text-primary font-semibold">€${prop.price.toLocaleString()}</p>
-                        <a href="detail.html?id=${doc.id}&lang=${currentLang}" class="text-sm text-gray-500 hover:underline">Zobrazit detail</a>
-                    </div>
-                    <button class="remove-favorite text-gray-400 hover:text-red-500 text-xl" data-id="${doc.id}"><i class="fas fa-trash-alt"></i></button>
-                `;
-                listEl.appendChild(item);
+        const loginForm = document.getElementById('loginForm');
+        if (loginForm) {
+            loginForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const email = e.target['login-email'].value, password = e.target['login-password'].value;
+                const errorEl = document.getElementById('loginError');
+                hideError(errorEl);
+                signInWithEmailAndPassword(auth, email, password).catch(() => showError(errorEl, 'Nesprávný e-mail nebo heslo.'));
             });
-        });
+        }
         
-        document.getElementById('favorites-list').addEventListener('click', async (e) => {
-            const removeBtn = e.target.closest('.remove-favorite');
-            if (removeBtn) {
-                const propertyId = removeBtn.dataset.id;
-                const user = auth.currentUser;
-                if (user) {
-                    await toggleFavorite(user.uid, propertyId);
-                    removeBtn.closest('.favorite-item').remove();
-                    const cardIcon = propertiesContainer.querySelector(`[data-property-id="${propertyId}"] .favorite-icon`);
-                    if (cardIcon) {
-                        cardIcon.classList.remove('text-red-500');
-                        cardIcon.classList.add('text-white');
+        const registerForm = document.getElementById('registerForm');
+        if (registerForm) {
+            registerForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const email = e.target['register-email'].value, password = e.target['register-password'].value;
+                const errorEl = document.getElementById('registerError');
+                hideError(errorEl);
+                createUserWithEmailAndPassword(auth, email, password).catch(err => showError(errorEl, 'Chyba registrace: ' + err.message));
+            });
+        }
+        
+        const logoutIcon = document.getElementById('logoutIcon');
+        if(logoutIcon) logoutIcon.addEventListener('click', () => signOut(auth));
+
+        if(favoritesIconEl) {
+            favoritesIconEl.addEventListener('click', async () => {
+                const listEl = document.getElementById('favorites-list');
+                listEl.innerHTML = '<p>Načítání oblíbených...</p>';
+                openModal(modals.favorites);
+                if (userFavorites.length === 0) {
+                    listEl.innerHTML = '<p>Zatím nemáte žádné oblíbené nemovitosti.</p>';
+                    return;
+                }
+                const promises = userFavorites.map(id => getDoc(doc(db, 'properties', id)));
+                const favDocs = await Promise.all(promises);
+                listEl.innerHTML = '';
+                favDocs.forEach(doc => {
+                    if (!doc.exists()) return;
+                    const prop = doc.data();
+                    const item = document.createElement('div');
+                    item.className = 'favorite-item flex items-center gap-4 py-3 border-b';
+                    item.innerHTML = `
+                        <img src="${prop.images?.[0] || 'https://placehold.co/150x100'}" class="w-32 h-20 object-cover rounded-md">
+                        <div class="flex-grow">
+                            <h4 class="font-bold">${prop[`title_${currentLang}`] || prop.title_cz}</h4>
+                            <p class="text-primary font-semibold">€${prop.price.toLocaleString()}</p>
+                            <a href="detail.html?id=${doc.id}&lang=${currentLang}" class="text-sm text-gray-500 hover:underline">Zobrazit detail</a>
+                        </div>
+                        <button class="remove-favorite text-gray-400 hover:text-red-500 text-xl" data-id="${doc.id}"><i class="fas fa-trash-alt"></i></button>
+                    `;
+                    listEl.appendChild(item);
+                });
+            });
+        }
+        
+        const favList = document.getElementById('favorites-list');
+        if (favList) {
+            favList.addEventListener('click', async (e) => {
+                const removeBtn = e.target.closest('.remove-favorite');
+                if (removeBtn) {
+                    const propertyId = removeBtn.dataset.id;
+                    const user = auth.currentUser;
+                    if (user) {
+                        const userRef = doc(db, 'users', user.uid);
+                        const updatedFavorites = userFavorites.filter(id => id !== propertyId);
+                        await setDoc(userRef, { favorites: updatedFavorites }, { merge: true });
+                        userFavorites = updatedFavorites;
+                        removeBtn.closest('.favorite-item').remove();
                     }
                 }
-            }
-        });
-
-        const loadSettings = async () => {
-            try {
-                let countrySettings = {};
-                let globalSettings = {};
-
-                const countrySettingsDoc = await getDoc(doc(db, 'settings', pageCountry));
-                if (countrySettingsDoc.exists()) {
-                    countrySettings = countrySettingsDoc.data();
-                    const { infoMenu = [], servicesMenu = [] } = countrySettings;
-                    const infoHtml = infoMenu.map(item => `<a href="page.html?slug=${item.slug}&lang=${currentLang}&country=${pageCountry}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">${item.title}</a>`).join('');
-                    const servicesHtml = servicesMenu.map(item => `<a href="page.html?slug=${item.slug}&lang=${currentLang}&country=${pageCountry}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">${item.title}</a>`).join('');
-                    document.getElementById('info-menu-container-desktop').innerHTML = infoHtml;
-                    document.getElementById('services-menu-container-desktop').innerHTML = servicesHtml;
-                    document.getElementById('info-menu-container-mobile').innerHTML = infoMenu.map(item => `<a href="page.html?slug=${item.slug}&lang=${currentLang}&country=${pageCountry}" class="block py-1 text-gray-700 hover:text-primary">${item.title}</a>`).join('');
-                    document.getElementById('services-menu-container-mobile').innerHTML = servicesMenu.map(item => `<a href="page.html?slug=${item.slug}&lang=${currentLang}&country=${pageCountry}" class="block py-1 text-gray-700 hover:text-primary">${item.title}</a>`).join('');
-                }
-
-                const globalSettingsDoc = await getDoc(doc(db, 'settings', 'global'));
-                if (globalSettingsDoc.exists()) {
-                    globalSettings = globalSettingsDoc.data();
-                }
-
-                const logoText = countrySettings.logoText || globalSettings.logoText || 'HORIZON ESTATES';
-                document.querySelector('header .font-bold.text-gray-800').textContent = logoText;
-
-                const contactsHTML = [];
-                for (let i = 1; i <= 2; i++) {
-                    if (globalSettings[`contact${i}_name`]) {
-                        contactsHTML.push(`
-                            <div class="text-center">
-                                <p class="font-semibold">${globalSettings[`contact${i}_name`]}</p>
-                                ${globalSettings[`contact${i}_phone`] ? `<a href="tel:${globalSettings[`contact${i}_phone`].replace(/\s/g, '')}" class="block hover:text-primary">${globalSettings[`contact${i}_phone`]}</a>` : ''}
-                                ${globalSettings[`contact${i}_phone2`] ? `<a href="tel:${globalSettings[`contact${i}_phone2`].replace(/\s/g, '')}" class="block hover:text-primary">${globalSettings[`contact${i}_phone2`]}</a>` : ''}
-                                ${globalSettings[`contact${i}_email`] ? `<a href="mailto:${globalSettings[`contact${i}_email`]}" class="block hover:text-primary">${globalSettings[`contact${i}_email`]}</a>` : ''}
-                            </div>
-                        `);
-                    }
-                }
-                let footerHTML = `<div class="text-center lg:text-left"><p>&copy; ${new Date().getFullYear()} ${logoText}. Všechna práva vyhrazena.</p></div>`;
-                footerHTML += `<div class="flex flex-wrap justify-center lg:justify-end gap-6">${contactsHTML.join('')}</div>`;
-                document.getElementById('site-footer').innerHTML = footerHTML;
-
-            } catch (error) {
-                console.error("Error loading settings:", error);
-            }
-        };
-
-        const loadGlobalTags = async () => {
-            try {
-                const globalSettingsDoc = await getDoc(doc(db, 'settings', 'global'));
-                if (globalSettingsDoc.exists()) {
-                    const settings = globalSettingsDoc.data();
-                    const globalTags = settings.tags || [];
-                    const metaKeywordsTag = document.getElementById('meta-keywords');
-                    const existingKeywords = metaKeywordsTag.getAttribute('content').split(',').map(k => k.trim()).filter(Boolean);
-                    const allKeywords = [...new Set([...existingKeywords, ...globalTags])];
-                    metaKeywordsTag.setAttribute('content', allKeywords.join(', '));
-                }
-            } catch (error) {
-                console.error("Error loading global SEO tags:", error);
-            }
-        };
+            });
+        }
 
         document.addEventListener('DOMContentLoaded', () => {
+            loadPropertyDetails();
             setActiveLangLink();
-            translatePage(currentLang);
-            fetchAndFilterProperties();
-            loadFilterOptions();
-            loadSettings();
-            loadGlobalTags();
-        });
-        
-        document.querySelectorAll('#lang-switcher .lang-link').forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const lang = e.currentTarget.dataset.lang;
-                setLang(lang);
+            translatePage();
+            
+            document.getElementById('mobile-menu-button')?.addEventListener('click', () => document.getElementById('mobile-menu')?.classList.toggle('hidden'));
+            
+            const contactLink = document.getElementById('contactLink');
+            if (contactLink) contactLink.onclick = (e) => { e.preventDefault(); openModal(modals.contact); };
+            
+            const contactLinkMobile = document.getElementById('contactLinkMobile');
+            if (contactLinkMobile) contactLinkMobile.onclick = (e) => { e.preventDefault(); openModal(modals.contact); document.getElementById('mobile-menu')?.classList.add('hidden'); };
+
+            const loginIcon = document.getElementById('loginIcon');
+            if (loginIcon) loginIcon.onclick = () => openModal(modals.auth);
+
+            document.querySelectorAll('.close-btn').forEach(btn => btn.onclick = () => Object.values(modals).forEach(closeModal));
+            
+            window.onclick = (e) => { if (Object.values(modals).some(modal => modal && modal === e.target)) Object.values(modals).forEach(closeModal); };
+
+            const showRegister = document.getElementById('showRegister');
+            if (showRegister) showRegister.addEventListener('click', () => {
+                document.getElementById('loginFormContainer').style.display = 'none';
+                document.getElementById('registerFormContainer').style.display = 'block';
             });
+            
+            const showLogin = document.getElementById('showLogin');
+            if (showLogin) showLogin.addEventListener('click', () => {
+                document.getElementById('registerFormContainer').style.display = 'none';
+                document.getElementById('loginFormContainer').style.display = 'block';
+            });
+
+            const thumbPrevBtn = document.getElementById('thumbPrevBtn');
+            if (thumbPrevBtn) thumbPrevBtn.addEventListener('click', () => { if (thumbnailStartIndex > 0) { thumbnailStartIndex--; slideThumbnails(); } });
+
+            const thumbNextBtn = document.getElementById('thumbNextBtn');
+            if (thumbNextBtn) thumbNextBtn.addEventListener('click', () => { if (thumbnailStartIndex + thumbnailsToShow < galleryImages.length) { thumbnailStartIndex++; slideThumbnails(); } });
+            
+            const mainPrevBtn = document.getElementById('mainPrevBtn');
+            if (mainPrevBtn) mainPrevBtn.addEventListener('click', (e) => { e.stopPropagation(); updateMainImage((activeImageIndex - 1 + galleryImages.length) % galleryImages.length); });
+
+            const mainNextBtn = document.getElementById('mainNextBtn');
+            if (mainNextBtn) mainNextBtn.addEventListener('click', (e) => { e.stopPropagation(); updateMainImage((activeImageIndex + 1) % galleryImages.length); });
+            
+            const mainImageContainer = document.getElementById('main-image-wrapper');
+            if (mainImageContainer) {
+                mainImageContainer.addEventListener('click', () => {
+                    if (galleryImages.length > 0) {
+                        lightboxImage.src = galleryImages[activeImageIndex].src;
+                        openModal(lightbox);
+                    }
+                });
+            }
+
+            if (lightbox) {
+                const lightboxCloseButton = lightbox.querySelector('.close-btn');
+                if (lightboxCloseButton) {
+                    lightboxCloseButton.addEventListener('click', () => closeModal(lightbox));
+                }
+                
+                const changeLightboxImage = (dir) => {
+                    const newIndex = (activeImageIndex + dir + galleryImages.length) % galleryImages.length;
+                    updateMainImage(newIndex);
+                    lightboxImage.src = galleryImages[newIndex].src;
+                };
+
+                const lightboxPrev = lightbox.querySelector('.prev');
+                if(lightboxPrev) lightboxPrev.addEventListener('click', () => changeLightboxImage(-1));
+
+                const lightboxNext = lightbox.querySelector('.next');
+                if(lightboxNext) lightboxNext.addEventListener('click', () => changeLightboxImage(1));
+            }
         });
     </script>
 </body>
 </html>
+
