@@ -106,11 +106,11 @@
                         <button id="nav-sluzby" class="font-semibold hover:text-primary">Naše služby <i class="fas fa-chevron-down text-xs ml-1"></i></button>
                         <div class="absolute hidden group-hover:block bg-white shadow-lg rounded-md top-full pt-3 pb-2 w-52 z-10" id="services-menu-container-desktop"></div>
                     </div>
-                    <div class="relative group hidden" id="nav-group-ospanelsku">
+                    <div class="relative group">
                         <button id="nav-ospanelsku" class="font-semibold hover:text-primary">O Španělsku <i class="fas fa-chevron-down text-xs ml-1"></i></button>
                         <div class="absolute hidden group-hover:block bg-white shadow-lg rounded-md top-full pt-3 pb-2 w-52 z-10" id="ospanelsku-menu-container-desktop"></div>
                     </div>
-                    <div class="relative group hidden" id="nav-group-obulharsku">
+                    <div class="relative group">
                         <button id="nav-obulharsku" class="font-semibold hover:text-primary">O Bulharsku <i class="fas fa-chevron-down text-xs ml-1"></i></button>
                         <div class="absolute hidden group-hover:block bg-white shadow-lg rounded-md top-full pt-3 pb-2 w-52 z-10" id="obulharsku-menu-container-desktop"></div>
                     </div>
@@ -128,14 +128,10 @@
                 <div id="info-menu-container-mobile" class="flex flex-col space-y-2 pl-2"></div>
                 <h3 id="nav-mobil-sluzby" class="font-bold pt-2">Naše služby</h3>
                 <div id="services-menu-container-mobile" class="flex flex-col space-y-2 pl-2"></div>
-                <div id="nav-mobil-group-ospanelsku" class="hidden">
-                    <h3 id="nav-mobil-ospanelsku" class="font-bold pt-2">O Španělsku</h3>
-                    <div id="ospanelsku-menu-container-mobile" class="flex flex-col space-y-2 pl-2"></div>
-                </div>
-                <div id="nav-mobil-group-obulharsku" class="hidden">
-                    <h3 id="nav-mobil-obulharsku" class="font-bold pt-2">O Bulharsku</h3>
-                    <div id="obulharsku-menu-container-mobile" class="flex flex-col space-y-2 pl-2"></div>
-                </div>
+                <h3 id="nav-mobil-ospanelsku" class="font-bold pt-2">O Španělsku</h3>
+                <div id="ospanelsku-menu-container-mobile" class="flex flex-col space-y-2 pl-2"></div>
+                <h3 id="nav-mobil-obulharsku" class="font-bold pt-2">O Bulharsku</h3>
+                <div id="obulharsku-menu-container-mobile" class="flex flex-col space-y-2 pl-2"></div>
                  <hr>
                 <a href="/page/?slug=o-nas" id="nav-mobil-onas" class="font-semibold hover:text-primary">O nás</a>
                 <a href="#" id="contactLinkMobile" class="font-semibold hover:text-primary">Kontakt</a>
@@ -532,14 +528,6 @@
                 document.getElementById('ospanelsku-menu-container-mobile').innerHTML = buildMobileMenuHtml(allSpainItems);
                 document.getElementById('obulharsku-menu-container-mobile').innerHTML = buildMobileMenuHtml(allBulgariaItems);
 
-                // Zobrazení správného menu podle země
-                if (pageCountry === 'spanelsko') {
-                    document.getElementById('nav-group-ospanelsku')?.classList.remove('hidden');
-                    document.getElementById('nav-mobil-group-ospanelsku')?.classList.remove('hidden');
-                } else if (pageCountry === 'bulharsko') {
-                    document.getElementById('nav-group-obulharsku')?.classList.remove('hidden');
-                    document.getElementById('nav-mobil-group-obulharsku')?.classList.remove('hidden');
-                }
 
                 const globalSettingsDoc = await getDoc(doc(db, 'settings', 'global'));
                 if (!globalSettingsDoc.exists()) return;
