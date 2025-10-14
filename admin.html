@@ -47,7 +47,7 @@
         /* Style for SEO tags list */
         #tags-list {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             gap: 0.5rem;
         }
     </style>
@@ -340,11 +340,14 @@
                         </header>
                         <div class="bg-white p-6 rounded-lg shadow-lg">
                             <h3 class="text-xl font-bold mb-4">Seznam tagů</h3>
-                            <div id="tags-list" class="mb-4 space-y-2"></div>
-                            <div class="flex gap-2">
-                                <input type="text" id="new-tag-input" placeholder="Přidat nový tag" class="input-field">
-                                <button id="add-tag-btn" class="btn btn-primary whitespace-nowrap">Přidat</button>
-                            </div>
+                            <div id="tags-list" class="mb-4"></div>
+                            <form id="form-tags" class="flex gap-2 items-start">
+                                <div class="flex-grow">
+                                    <input type="text" id="new-tag-input" placeholder="Přidat nebo upravit tag" class="input-field">
+                                </div>
+                                <button id="add-tag-btn" type="submit" class="btn btn-primary whitespace-nowrap">Přidat</button>
+                                <button id="cancel-edit-tag-btn" type="button" class="btn btn-secondary whitespace-nowrap hidden">Zrušit</button>
+                            </form>
                             <p class="text-sm text-gray-500 mt-4">Tyto tagy se automaticky přidají jako klíčová slova do hlavičky všech stránek pro zlepšení SEO.</p>
                         </div>
                     </div>
@@ -473,6 +476,7 @@
         let currentSettingsCountry = 'bulharsko';
         let currentPropertyListCountry = 'bulharsko';
         let currentEditItem = { type: null, key: null };
+        let currentEditTag = null; // For editing SEO tags
 
         // --- UI Element Selectors ---
         const loginScreen = document.getElementById('login-screen');
@@ -1097,45 +1101,81 @@
                 const tagEl = document.createElement('div');
                 tagEl.className = 'flex justify-between items-center bg-gray-100 p-2 rounded';
                 tagEl.innerHTML = `
-                    <span>${tag}</span>
-                    <button class="delete-tag-btn text-red-500 hover:text-red-700 font-bold text-lg" data-tag="${tag}">&times;</button>
+                    <span class="flex-grow mr-4">${tag}</span>
+                    <div class="flex-shrink-0">
+                        <button class="edit-tag-btn text-blue-600 hover:text-blue-900 mr-3" data-tag="${tag}"><i class="fas fa-pencil-alt"></i></button>
+                        <button class="delete-tag-btn text-red-500 hover:text-red-700" data-tag="${tag}"><i class="fas fa-trash-alt"></i></button>
+                    </div>
                 `;
                 container.appendChild(tagEl);
             });
         }
-
-        document.getElementById('add-tag-btn').addEventListener('click', async () => {
+        
+        function resetTagForm() {
+            const form = document.getElementById('form-tags');
             const input = document.getElementById('new-tag-input');
-            const tag = input.value.trim();
-            if (!tag) return;
+            const addBtn = document.getElementById('add-tag-btn');
+            const cancelBtn = document.getElementById('cancel-edit-tag-btn');
+            
+            currentEditTag = null;
+            input.value = '';
+            addBtn.textContent = 'Přidat';
+            cancelBtn.classList.add('hidden');
+        }
+
+        document.getElementById('form-tags').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const input = document.getElementById('new-tag-input');
+            const newTag = input.value.trim();
+            if (!newTag) return;
+
+            const settingsDocRef = doc(db, 'settings', 'global');
             try {
-                const settingsDocRef = doc(db, 'settings', 'global');
-                await setDoc(settingsDocRef, {
-                    tags: arrayUnion(tag)
-                }, { merge: true });
-                input.value = '';
-                loadTags();
+                if (currentEditTag) { // Editing existing tag
+                    const docSnap = await getDoc(settingsDocRef);
+                    let tags = docSnap.exists() ? docSnap.data().tags || [] : [];
+                    const index = tags.indexOf(currentEditTag);
+                    if (index > -1) {
+                        tags[index] = newTag;
+                    } else { // Failsafe if old tag not found
+                        tags.push(newTag);
+                    }
+                    await updateDoc(settingsDocRef, { tags });
+                } else { // Adding new tag
+                    await updateDoc(settingsDocRef, { tags: arrayUnion(newTag) });
+                }
+                resetTagForm();
+                await loadTags();
             } catch (error) {
-                handleFirestoreError(error, 'Přidání tagu');
+                handleFirestoreError(error, 'Ukládání SEO tagu');
             }
         });
 
         document.getElementById('tags-list').addEventListener('click', async (e) => {
-            if (e.target.classList.contains('delete-tag-btn')) {
-                const tag = e.target.dataset.tag;
+            const button = e.target.closest('button');
+            if (!button) return;
+
+            const tag = button.dataset.tag;
+            if (button.classList.contains('delete-tag-btn')) {
                 if (confirm(`Opravdu chcete smazat tag "${tag}"?`)) {
                     try {
                         const settingsDocRef = doc(db, 'settings', 'global');
-                        await updateDoc(settingsDocRef, {
-                            tags: arrayRemove(tag)
-                        });
-                        loadTags();
+                        await updateDoc(settingsDocRef, { tags: arrayRemove(tag) });
+                        await loadTags();
                     } catch (error) {
-                        handleFirestoreError(error, 'Smazání tagu');
+                        handleFirestoreError(error, 'Mazání SEO tagu');
                     }
                 }
+            } else if (button.classList.contains('edit-tag-btn')) {
+                currentEditTag = tag;
+                document.getElementById('new-tag-input').value = tag;
+                document.getElementById('add-tag-btn').textContent = 'Uložit změny';
+                document.getElementById('cancel-edit-tag-btn').classList.remove('hidden');
+                document.getElementById('new-tag-input').focus();
             }
         });
+        
+        document.getElementById('cancel-edit-tag-btn').addEventListener('click', resetTagForm);
 
         // --- Settings Management ---
         const settingsTabs = document.getElementById('settings-tabs');
@@ -1191,26 +1231,30 @@
         function renderCountrySettingsHTML(country) {
             const countryCapitalized = country.charAt(0).toUpperCase() + country.slice(1);
             
-            const extraMenuHTML = `
-                <div id="bulgaria-menu-wrapper" class="hidden">
-                    <h4 class="font-bold mb-2">Menu "O Bulharsku"</h4>
-                    <div id="bulgaria-menu-list-${country}" class="mb-4 space-y-2"></div>
-                    <div class="flex gap-2">
-                        <input type="text" id="new-bulgaria-menu-title-${country}" placeholder="Název položky" class="input-field">
-                        <select id="new-bulgaria-menu-link-${country}" class="input-field"></select>
-                        <button data-menu-type="bulgaria" class="add-menu-item-btn btn btn-primary whitespace-nowrap">Přidat</button>
-                    </div>
-                </div>
-                <div id="spain-menu-wrapper" class="hidden">
-                    <h4 class="font-bold mb-2">Menu "O Španělsku"</h4>
-                    <div id="spain-menu-list-${country}" class="mb-4 space-y-2"></div>
-                    <div class="flex gap-2">
-                        <input type="text" id="new-spain-menu-title-${country}" placeholder="Název položky" class="input-field">
-                        <select id="new-spain-menu-link-${country}" class="input-field"></select>
-                        <button data-menu-type="spain" class="add-menu-item-btn btn btn-primary whitespace-nowrap">Přidat</button>
-                    </div>
-                </div>
-            `;
+            let extraMenuHTML = '';
+            if (country === 'bulgaria') {
+                extraMenuHTML = `
+                    <div>
+                        <h4 class="font-bold mb-2">Menu "O Bulharsku"</h4>
+                        <div id="bulgaria-menu-list-${country}" class="mb-4 space-y-2"></div>
+                        <div class="flex gap-2">
+                            <input type="text" id="new-bulgaria-menu-title-${country}" placeholder="Název položky" class="input-field">
+                            <select id="new-bulgaria-menu-link-${country}" class="input-field"></select>
+                            <button data-menu-type="bulgaria" class="add-menu-item-btn btn btn-primary whitespace-nowrap">Přidat</button>
+                        </div>
+                    </div>`;
+            } else if (country === 'spanelsko') {
+                extraMenuHTML = `
+                    <div>
+                        <h4 class="font-bold mb-2">Menu "O Španělsku"</h4>
+                        <div id="spain-menu-list-${country}" class="mb-4 space-y-2"></div>
+                        <div class="flex gap-2">
+                            <input type="text" id="new-spain-menu-title-${country}" placeholder="Název položky" class="input-field">
+                            <select id="new-spain-menu-link-${country}" class="input-field"></select>
+                            <button data-menu-type="spain" class="add-menu-item-btn btn btn-primary whitespace-nowrap">Přidat</button>
+                        </div>
+                    </div>`;
+            }
 
             return `
                 <div class="bg-white p-6 rounded-lg shadow-lg mb-8">
@@ -1267,13 +1311,6 @@
                 
                 container.innerHTML = renderCountrySettingsHTML(country);
                 
-                // Show the correct country-specific menu
-                if (country === 'bulgaria') {
-                    document.getElementById('bulgaria-menu-wrapper').classList.remove('hidden');
-                } else if (country === 'spanelsko') {
-                    document.getElementById('spain-menu-wrapper').classList.remove('hidden');
-                }
-
                 document.getElementById(`setting-logo-text-${country}`).value = settings.logoText || '';
                 
                 const pagesSnapshot = await getDocs(collection(db, 'pages'));
@@ -1367,8 +1404,7 @@
 
             if (title) title.textContent = 'Přidat novou položku';
             if (submitBtn) {
-                const originalText = submitBtn.textContent.includes('změny') ? 'Přidat' : submitBtn.textContent;
-                submitBtn.textContent = originalText;
+                submitBtn.textContent = 'Přidat';
             }
             if (cancelBtn) cancelBtn.classList.add('hidden');
             currentEditItem = { type: null, key: null };
