@@ -4,16 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detail nemovitosti</title>
+    <!-- SEO: Přidán meta tag pro popis stránky (bude vyplněn dynamicky) -->
+    <meta name="description" id="meta-description" content="Prozkoumejte detailní informace o této nemovitosti, včetně fotografií, popisu a vybavení.">
     <meta name="keywords" id="meta-keywords" content="nemovitosti, reality, zahraničí, investice">
     
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+    <!-- Optimalizace načítání písem a ikon -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    </noscript>
 
+    <script src="https://cdn.tailwindcss.com"></script>
+    
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -107,7 +113,7 @@
                             <img src="https://flagcdn.com/w40/de.png" alt="Deutsch" class="w-8 h-6 object-cover">
                         </a>
                     </div>
-                    <a href="index.html" class="text-xl md:text-2xl font-bold text-gray-800 tracking-wider">HORIZON ESTATES</a>
+                    <a href="/" class="text-xl md:text-2xl font-bold text-gray-800 tracking-wider">HORIZON ESTATES</a>
                 </div>
                 <div class="flex items-center space-x-4">
                     <div id="auth-controls">
@@ -118,13 +124,14 @@
                             <i class="fas fa-sign-out-alt text-xl cursor-pointer hover:text-red-500" id="logoutIcon" title="Odhlásit se"></i>
                         </div>
                     </div>
-                    <button id="mobile-menu-button" class="lg:hidden text-2xl"><i class="fas fa-bars"></i></button>
+                    <!-- Přístupnost: Přidán aria-label pro screen readery -->
+                    <button id="mobile-menu-button" class="lg:hidden text-2xl" aria-label="Otevřít menu"><i class="fas fa-bars"></i></button>
                 </div>
             </div>
             <div class="hidden lg:flex justify-between items-center py-3" id="desktop-menu">
                 <nav class="flex items-center space-x-6">
-                    <a href="spanelsko.html" id="nav-spanelsko" class="font-semibold pb-1 hover:text-primary">Španělsko</a>
-                    <a href="bulharsko.html" id="nav-bulharsko" class="font-semibold pb-1 hover:text-primary">Bulharsko</a>
+                    <a href="/spanelsko/" id="nav-spanelsko" class="font-semibold pb-1 hover:text-primary">Španělsko</a>
+                    <a href="/bulharsko/" id="nav-bulharsko" class="font-semibold pb-1 hover:text-primary">Bulharsko</a>
                 </nav>
                 <nav class="flex items-center space-x-6" id="main-navigation">
                     <div class="relative group">
@@ -135,22 +142,22 @@
                         <button id="nav-sluzby" class="font-semibold hover:text-primary">Naše služby <i class="fas fa-chevron-down text-xs ml-1"></i></button>
                         <div class="absolute hidden group-hover:block bg-white shadow-lg rounded-md top-full pt-3 pb-2 w-52 z-50" id="services-menu-container-desktop"></div>
                     </div>
-                    <a href="page.html?slug=o-nas" id="nav-onas" class="font-semibold hover:text-primary">O nás</a>
+                    <a href="/page/?slug=o-nas" id="nav-onas" class="font-semibold hover:text-primary">O nás</a>
                     <a href="#" id="contactLink" class="font-semibold hover:text-primary">Kontakt</a>
                 </nav>
             </div>
         </div>
         <div id="mobile-menu" class="hidden lg:hidden px-4 pb-4 border-t">
               <nav class="flex flex-col space-y-3 pt-4">
-                <a href="spanelsko.html" id="nav-mobil-spanelsko" class="font-semibold pb-1 hover:text-primary">Španělsko</a>
-                <a href="bulharsko.html" id="nav-mobil-bulharsko" class="font-semibold pb-1 hover:text-primary">Bulharsko</a>
+                <a href="/spanelsko/" id="nav-mobil-spanelsko" class="font-semibold pb-1 hover:text-primary">Španělsko</a>
+                <a href="/bulharsko/" id="nav-mobil-bulharsko" class="font-semibold pb-1 hover:text-primary">Bulharsko</a>
                 <hr>
                 <h3 id="nav-mobil-informace" class="font-bold pt-2">Informace</h3>
                 <div id="info-menu-container-mobile" class="flex flex-col space-y-2 pl-2"></div>
                 <h3 id="nav-mobil-sluzby" class="font-bold pt-2">Naše služby</h3>
                 <div id="services-menu-container-mobile" class="flex flex-col space-y-2 pl-2"></div>
                  <hr>
-                <a href="page.html?slug=o-nas" id="nav-mobil-onas" class="font-semibold hover:text-primary">O nás</a>
+                <a href="/page/?slug=o-nas" id="nav-mobil-onas" class="font-semibold hover:text-primary">O nás</a>
                 <a href="#" id="contactLinkMobile" class="font-semibold hover:text-primary">Kontakt</a>
             </nav>
         </div>
@@ -159,7 +166,7 @@
     <main class="flex-grow container mx-auto px-4 py-8">
         <div class="bg-white p-6 md:p-8 rounded-lg shadow-lg max-w-6xl mx-auto">
             <div class="breadcrumb text-sm mb-6">
-                <a href="index.html" id="breadcrumb-home" class="text-primary hover:underline">Úvod</a> &gt; 
+                <a href="/" id="breadcrumb-home" class="text-primary hover:underline">Úvod</a> &gt; 
                 <a id="breadcrumb-country" href="#" class="text-primary hover:underline">...</a> &gt; 
                 <span id="property-title-breadcrumb" class="text-gray-500">Načítání...</span>
             </div>
@@ -174,10 +181,11 @@
                     <div class="image-gallery">
                         <div class="main-image-container relative mb-4 cursor-pointer group">
                             <div id="main-image-wrapper" class="watermark-container w-full h-96 md:h-[500px] rounded-lg shadow-md overflow-hidden bg-gray-100">
-                                <img id="mainImage" src="https://placehold.co/800x600/e2e8f0/4a5568?text=Na%C4%8D%C3%ADt%C3%A1m..." alt="Hlavní fotka nemovitosti" class="w-full h-full object-cover transition-opacity duration-300">
+                                <!-- Optimalizace LCP: Priorita načítání, explicitní rozměry -->
+                                <img id="mainImage" src="https://placehold.co/800x600/e2e8f0/4a5568?text=Na%C4%8D%C3%ADt%C3%A1m..." alt="Hlavní fotka nemovitosti" class="w-full h-full object-cover transition-opacity duration-300" fetchpriority="high" width="800" height="600">
                             </div>
-                            <button id="mainPrevBtn" class="main-image-nav absolute top-1/2 -translate-y-1/2 left-3 bg-black bg-opacity-40 text-white rounded-full w-10 h-10 text-2xl opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">&#10094;</button>
-                            <button id="mainNextBtn" class="main-image-nav absolute top-1/2 -translate-y-1/2 right-3 bg-black bg-opacity-40 text-white rounded-full w-10 h-10 text-2xl opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">&#10095;</button>
+                            <button id="mainPrevBtn" class="main-image-nav absolute top-1/2 -translate-y-1/2 left-3 bg-black bg-opacity-40 text-white rounded-full w-10 h-10 text-2xl opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center" aria-label="Předchozí obrázek">&#10094;</button>
+                            <button id="mainNextBtn" class="main-image-nav absolute top-1/2 -translate-y-1/2 right-3 bg-black bg-opacity-40 text-white rounded-full w-10 h-10 text-2xl opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center" aria-label="Další obrázek">&#10095;</button>
                         </div>
 
                         <div id="thumbnail-slider" class="relative pr-12 hidden overflow-hidden">
@@ -185,8 +193,8 @@
                                 <div id="thumbnailContainer" class="flex items-center space-x-3 transition-transform duration-300 ease-in-out">
                                     </div>
                             </div>
-                            <button id="thumbPrevBtn" class="absolute top-1/2 left-0 -translate-y-1/2 p-2 text-gray-800 bg-white/70 rounded-full shadow-md hover:bg-white disabled:opacity-40 disabled:cursor-not-allowed z-10"><i class="fas fa-chevron-left"></i></button>
-                            <button id="thumbNextBtn" class="absolute top-1/2 right-0 -translate-y-1/2 p-2 text-gray-800 bg-white/70 rounded-full shadow-md hover:bg-white disabled:opacity-40 disabled:cursor-not-allowed z-10"><i class="fas fa-chevron-right"></i></button>
+                            <button id="thumbPrevBtn" class="absolute top-1/2 left-0 -translate-y-1/2 p-2 text-gray-800 bg-white/70 rounded-full shadow-md hover:bg-white disabled:opacity-40 disabled:cursor-not-allowed z-10" aria-label="Předchozí náhledy"><i class="fas fa-chevron-left"></i></button>
+                            <button id="thumbNextBtn" class="absolute top-1/2 right-0 -translate-y-1/2 p-2 text-gray-800 bg-white/70 rounded-full shadow-md hover:bg-white disabled:opacity-40 disabled:cursor-not-allowed z-10" aria-label="Další náhledy"><i class="fas fa-chevron-right"></i></button>
                         </div>
                     </div>
                 </div>
@@ -237,11 +245,11 @@
         <div class="bg-white rounded-lg shadow-2xl w-full max-w-lg p-8 modal-slide-in">
              <div class="flex justify-between items-center mb-4">
                 <h2 id="inquiry-modal-title" class="text-2xl font-bold">Dotaz na nemovitost</h2>
-                <button class="close-btn text-3xl text-gray-400 hover:text-gray-700">&times;</button>
+                <button class="close-btn text-3xl text-gray-400 hover:text-gray-700" aria-label="Zavřít okno">&times;</button>
             </div>
             <form class="space-y-4" action="https://formsubmit.co/nesvarba.martin@seznam.cz" method="POST">
                 <input type="hidden" name="_subject" id="inquirySubject">
-                <input type="hidden" name="_next" value="https://horizon-estates.eu/index.html?lang=cz&country=bulharsko">
+                <input type="hidden" name="_next" value="https://horizon-estates.eu/">
                 <div><label for="inquiry-name" id="inquiry-modal-name" class="block font-medium">Vaše jméno</label><input type="text" id="inquiry-name" name="name" required class="w-full p-2 border rounded-md mt-1"></div>
                 <div><label for="inquiry-email" id="inquiry-modal-email" class="block font-medium">Váš e-mail</label><input type="email" id="inquiry-email" name="email" required class="w-full p-2 border rounded-md mt-1"></div>
                 <div><label for="inquiry-phone" id="inquiry-modal-phone" class="block font-medium">Telefon (nepovinné)</label><input type="tel" id="inquiry-phone" name="phone" class="w-full p-2 border rounded-md mt-1"></div>
@@ -254,7 +262,7 @@
         <div class="bg-white rounded-lg shadow-2xl w-full max-w-sm p-8 modal-slide-in">
             <div class="flex justify-between items-center mb-6">
                 <h2 id="share-modal-title" class="text-2xl font-bold">Sdílet nemovitost</h2>
-                <button class="close-btn text-3xl text-gray-400 hover:text-gray-700">&times;</button>
+                <button class="close-btn text-3xl text-gray-400 hover:text-gray-700" aria-label="Zavřít okno">&times;</button>
             </div>
             <div class="space-y-3">
                 <a id="shareFacebook" href="#" target="_blank" class="flex items-center justify-center w-full bg-[#1877F2] text-white font-bold py-3 px-4 rounded-md hover:opacity-90 transition"><i class="fab fa-facebook text-xl mr-3"></i> Facebook</a>
@@ -265,7 +273,7 @@
     </div>
     <div id="authModal" class="fixed inset-0 bg-black bg-opacity-50 z-[60] hidden items-center justify-center p-4 modal-fade-in">
         <div class="bg-white rounded-lg shadow-2xl w-full max-w-md p-8 modal-slide-in">
-            <div class="text-right"><button class="close-btn text-3xl text-gray-400 hover:text-gray-700 -mt-4">&times;</button></div>
+            <div class="text-right"><button class="close-btn text-3xl text-gray-400 hover:text-gray-700 -mt-4" aria-label="Zavřít okno">&times;</button></div>
             <div id="loginFormContainer">
                 <h2 id="login-modal-title" class="text-2xl font-bold text-center mb-6">Přihlášení</h2>
                 <form id="loginForm" class="space-y-4">
@@ -292,27 +300,27 @@
         <div class="bg-white rounded-lg shadow-2xl w-full max-w-3xl p-8 modal-slide-in">
               <div class="flex justify-between items-center mb-6">
                 <h2 id="favorites-modal-title" class="text-2xl font-bold">Moje oblíbené nemovitosti</h2>
-                <button class="close-btn text-3xl text-gray-400 hover:text-gray-700">&times;</button>
+                <button class="close-btn text-3xl text-gray-400 hover:text-gray-700" aria-label="Zavřít okno">&times;</button>
             </div>
             <div id="favorites-list" class="max-h-[60vh] overflow-y-auto pr-2"></div>
         </div>
     </div>
     <div id="lightbox" class="fixed inset-0 bg-black bg-opacity-90 z-[100] hidden justify-center items-center">
-        <button class="close-btn absolute top-5 right-8 text-white text-5xl">&times;</button>
-        <button class="lightbox-nav prev absolute left-5 text-white text-5xl">&#10094;</button>
+        <button class="close-btn absolute top-5 right-8 text-white text-5xl" aria-label="Zavřít galerii">&times;</button>
+        <button class="lightbox-nav prev absolute left-5 text-white text-5xl" aria-label="Předchozí obrázek v galerii">&#10094;</button>
         <div id="lightbox-wrapper" class="watermark-container">
             <img id="lightbox-image" src="" alt="Zvětšený obrázek nemovitosti" class="max-w-[90vw] max-h-[85vh] object-contain">
         </div>
-        <button class="lightbox-nav next absolute right-5 text-white text-5xl">&#10095;</button>
+        <button class="lightbox-nav next absolute right-5 text-white text-5xl" aria-label="Další obrázek v galerii">&#10095;</button>
     </div>
     <div id="contactModal" class="fixed inset-0 bg-black bg-opacity-50 z-[60] hidden items-center justify-center p-4 modal-fade-in">
         <div class="bg-white rounded-lg shadow-2xl w-full max-w-lg p-8 modal-slide-in">
             <div class="flex justify-between items-center mb-4">
                 <h2 id="contact-modal-title-main" class="text-2xl font-bold">Kontaktní formulář</h2>
-                <button class="close-btn text-3xl text-gray-400 hover:text-gray-700">&times;</button>
+                <button class="close-btn text-3xl text-gray-400 hover:text-gray-700" aria-label="Zavřít okno">&times;</button>
             </div>
             <form class="space-y-4" action="https://formsubmit.co/nesvarba.martin@seznam.cz" method="POST">
-                <input type="hidden" name="_next" value="https://horizon-estates.eu/index.html?lang=cz">
+                <input type="hidden" name="_next" value="https://horizon-estates.eu/">
                 <div><label for="name" id="contact-modal-name-main" class="block font-medium">Vaše jméno</label><input type="text" id="name" name="name" required class="w-full p-2 border rounded-md mt-1"></div>
                 <div><label for="email" id="contact-modal-email-main" class="block font-medium">Váš e-mail</label><input type="email" id="email" name="email" required class="w-full p-2 border rounded-md mt-1"></div>
                 <div><label for="phone" id="contact-modal-phone-main" class="block font-medium">Telefon (nepovinné)</label><input type="tel" id="phone" name="phone" class="w-full p-2 border rounded-md mt-1"></div>
@@ -322,7 +330,8 @@
         </div>
     </div>
 
-    <script type="module">
+    <!-- Optimalizace: Odložení načítání skriptu pomocí 'defer' -->
+    <script type="module" defer>
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
         import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
         import { getFirestore, collection, doc, getDoc, getDocs, query, where, setDoc, limit } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
@@ -368,6 +377,13 @@
                 "share-modal-title": "Sdílet nemovitost",
                 "copyLinkBtn": "Kopírovat odkaz",
                 "copied": "Zkopírováno!",
+                "login-modal-title": "Přihlášení",
+                "login-modal-submit": "Přihlásit se",
+                "login-modal-register-prompt": "Nemáte účet? <a>Zaregistrujte se</a>",
+                "register-modal-title": "Registrace",
+                "register-modal-submit": "Zaregistrovat se",
+                "register-modal-login-prompt": "Máte již účet? <a>Přihlaste se</a>",
+                "favorites-modal-title": "Moje oblíbené nemovitosti",
             },
             en: {
                 "nav-spanelsko": "Spain",
@@ -393,6 +409,13 @@
                 "share-modal-title": "Share Property",
                 "copyLinkBtn": "Copy Link",
                 "copied": "Copied!",
+                "login-modal-title": "Login",
+                "login-modal-submit": "Log In",
+                "login-modal-register-prompt": "Don't have an account? <a>Register</a>",
+                "register-modal-title": "Register",
+                "register-modal-submit": "Register",
+                "register-modal-login-prompt": "Already have an account? <a>Log In</a>",
+                "favorites-modal-title": "My Favorite Properties",
             },
             de: {
                 "nav-spanelsko": "Spanien",
@@ -418,6 +441,13 @@
                 "share-modal-title": "Immobilie teilen",
                 "copyLinkBtn": "Link kopieren",
                 "copied": "Kopiert!",
+                "login-modal-title": "Anmelden",
+                "login-modal-submit": "Anmelden",
+                "login-modal-register-prompt": "Haben Sie kein Konto? <a>Registrieren</a>",
+                "register-modal-title": "Registrieren",
+                "register-modal-submit": "Registrieren",
+                "register-modal-login-prompt": "Haben Sie bereits ein Konto? <a>Anmelden</a>",
+                "favorites-modal-title": "Meine Lieblingsimmobilien",
             }
         };
 
@@ -427,33 +457,26 @@
             document.querySelectorAll('[id]').forEach(element => {
                 const key = element.id;
                 if (langDict[key]) {
-                    if (element.tagName === 'INPUT' && element.placeholder) element.placeholder = langDict[key];
-                    else if (['SPAN', 'A', 'BUTTON', 'H1', 'H2', 'H3', 'H4', 'P', 'LABEL', 'OPTION'].includes(element.tagName)) element.textContent = langDict[key];
+                    if (key.includes('-prompt')) {
+                        const linkId = (key === 'login-modal-register-prompt') ? 'showRegister' : 'showLogin';
+                        const linkText = langDict[key].match(/<a>(.*?)<\/a>/)?.[1] || '';
+                        const linkHTML = `<a id="${linkId}" class="font-semibold text-primary hover:underline cursor-pointer">${linkText}</a>`;
+                        const fullText = langDict[key].replace(/<a>.*?<\/a>/, linkHTML);
+                        element.innerHTML = fullText;
+                    } else if (element.tagName === 'INPUT' && element.placeholder) {
+                        element.placeholder = langDict[key];
+                    } else if (['SPAN', 'A', 'BUTTON', 'H1', 'H2', 'H3', 'H4', 'P', 'LABEL', 'OPTION'].includes(element.tagName)) {
+                        element.textContent = langDict[key];
+                    }
                 }
             });
+            setupAuthFormToggle();
         };
 
         const setActiveLangLink = () => {
             document.querySelectorAll('#lang-switcher .lang-link').forEach(link => {
                 link.classList.remove('active');
                 if (link.dataset.lang === currentLang) link.classList.add('active');
-                const url = new URL(window.location.href);
-                url.searchParams.set('lang', link.dataset.lang);
-                link.href = url.toString();
-            });
-             document.querySelectorAll('a[href*=".html"]').forEach(link => {
-                if (!link.classList.contains('lang-link')) {
-                    try {
-                        const url = new URL(link.href, window.location.href);
-                        url.searchParams.set('lang', currentLang);
-                        if (currentProperty && currentProperty.country) {
-                             url.searchParams.set('country', currentProperty.country);
-                        }
-                        link.href = url.toString();
-                    } catch (e) {
-                        // console.error(`Could not process URL for link: ${link.getAttribute('href')}`, e);
-                    }
-                }
             });
         };
 
@@ -512,7 +535,11 @@
                 const thumb = document.createElement('img');
                 thumb.src = img.src;
                 thumb.alt = `Náhled - ${img.alt}`;
+                // Optimalizace: Líné načítání a explicitní rozměry pro náhledy
                 thumb.className = 'thumbnail-image w-56 h-36 object-cover rounded-md cursor-pointer border-4 border-transparent hover:border-primary/50 transition-all duration-200 flex-shrink-0';
+                thumb.loading = 'lazy';
+                thumb.width = '224';
+                thumb.height = '144';
                 thumb.onclick = () => updateMainImage(i);
                 
                 wrapper.appendChild(thumb);
@@ -522,16 +549,16 @@
             const firstImage = thumbnailContainer.querySelector('img');
             if (firstImage) {
                 const initSlider = () => {
-                      const thumbWidth = 2088; // w-56
-                      const gapWidth = 12; // space-x-3
-                      const thumbnailsToShow = 3;
-                      const containerWidth = (thumbWidth * thumbnailsToShow) + (gapWidth * (thumbnailsToShow - 1));
-                      const overflowContainer = document.getElementById('thumbnail-wrapper');
-                      if(overflowContainer) {
-                          overflowContainer.style.width = `${containerWidth}px`;
-                      }
-                      slideThumbnails();
-                      highlightActiveThumbnail();
+                        const thumbWidth = 2088; // w-56
+                        const gapWidth = 12; // space-x-3
+                        const thumbnailsToShow = 3;
+                        const containerWidth = (thumbWidth * thumbnailsToShow) + (gapWidth * (thumbnailsToShow - 1));
+                        const overflowContainer = document.getElementById('thumbnail-wrapper');
+                        if(overflowContainer) {
+                             overflowContainer.style.width = `${containerWidth}px`;
+                        }
+                        slideThumbnails();
+                        highlightActiveThumbnail();
                 };
 
                 if (firstImage.complete && firstImage.naturalWidth > 0) {
@@ -580,6 +607,13 @@
                 const existingKeywords = metaKeywordsTag.getAttribute('content').split(',').map(k => k.trim()).filter(Boolean);
                 const allKeywords = [...new Set([...existingKeywords, ...propertyTags, ...globalTags])];
                 metaKeywordsTag.setAttribute('content', allKeywords.join(', '));
+                
+                // SEO: Dynamicky nastaví meta description
+                const metaDescriptionTag = document.getElementById('meta-description');
+                const descriptionText = property[`description_${currentLang}`] || property.description_cz || '';
+                // Zkrátí popis na prvních 155 znaků a odstraní HTML tagy
+                metaDescriptionTag.setAttribute('content', descriptionText.replace(/<[^>]*>/g, '').substring(0, 155));
+
             } catch (error) { console.error("Error setting up SEO tags:", error); }
         };
 
@@ -635,7 +669,8 @@
                 if (currentProperty.country) {
                     const countryName = translations[currentLang][`nav-${currentProperty.country}`] || currentProperty.country;
                     breadcrumbCountry.textContent = countryName;
-                    breadcrumbCountry.href = `${currentProperty.country}.html?lang=${currentLang}`;
+                    // OPRAVENO ZDE
+                    breadcrumbCountry.href = `/${currentProperty.country}/?lang=${currentLang}`;
                     document.getElementById(`nav-${currentProperty.country}`)?.classList.add('nav-link-active');
                     document.getElementById(`nav-mobil-${currentProperty.country}`)?.classList.add('nav-link-active');
                 }
@@ -689,9 +724,9 @@
 
                 let watermarkText = '';
                 if (property.country === 'bulharsko') {
-                    watermarkText = 'BULHARSKO-NEMOVITOSTI';
+                    watermarkText = 'HORIZON-ESTATES';
                 } else if (property.country === 'spanelsko') {
-                    watermarkText = 'ŠPANĚLSKO-NEMOVITOSTI';
+                    watermarkText = 'HORIZON-ESTATES';
                 }
 
                 similarContainer.innerHTML = '';
@@ -699,9 +734,10 @@
                     const prop = doc.data();
                     const title = prop[`title_${currentLang}`] || prop.title_cz;
                     similarContainer.innerHTML += `
-                        <a href="detail.html?id=${doc.id}&lang=${currentLang}" class="block bg-white rounded-lg shadow-md overflow-hidden transform hover:-translate-y-1 transition">
+                        <!-- OPRAVENO ZDE -->
+                        <a href="/detail/?id=${doc.id}&lang=${currentLang}" class="block bg-white rounded-lg shadow-md overflow-hidden transform hover:-translate-y-1 transition">
                             <div class="watermark-container similar-watermark-container" data-watermark="${watermarkText}">
-                                <img src="${prop.images?.[0] || 'https://placehold.co/300x200'}" alt="${title}" class="w-full h-40 object-cover">
+                                <img src="${prop.images?.[0] || 'https://placehold.co/300x200'}" alt="${title}" class="w-full h-40 object-cover" loading="lazy" width="300" height="200">
                             </div>
                             <div class="p-4">
                                 <h3 class="font-bold">${title}</h3>
@@ -784,12 +820,13 @@
                 const uniqueInfo = Array.from(new Map(allInfoItems.map(item => [item.slug, item])).values());
                 const uniqueServices = Array.from(new Map(allServicesItems.map(item => [item.slug, item])).values());
                 
-                const infoHtml = uniqueInfo.map(item => `<a href="page.html?slug=${item.slug}&lang=${currentLang}&country=${item.country}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">${item.title}</a>`).join('');
-                const servicesHtml = uniqueServices.map(item => `<a href="page.html?slug=${item.slug}&lang=${currentLang}&country=${item.country}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">${item.title}</a>`).join('');
+                // OPRAVENO ZDE
+                const infoHtml = uniqueInfo.map(item => `<a href="/page/?slug=${item.slug}&lang=${currentLang}&country=${item.country}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">${item.title}</a>`).join('');
+                const servicesHtml = uniqueServices.map(item => `<a href="/page/?slug=${item.slug}&lang=${currentLang}&country=${item.country}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">${item.title}</a>`).join('');
                 document.getElementById('info-menu-container-desktop').innerHTML = infoHtml;
                 document.getElementById('services-menu-container-desktop').innerHTML = servicesHtml;
-                document.getElementById('info-menu-container-mobile').innerHTML = uniqueInfo.map(item => `<a href="page.html?slug=${item.slug}&lang=${currentLang}&country=${item.country}" class="block py-1 text-gray-700 hover:text-primary">${item.title}</a>`).join('');
-                document.getElementById('services-menu-container-mobile').innerHTML = uniqueServices.map(item => `<a href="page.html?slug=${item.slug}&lang=${currentLang}&country=${item.country}" class="block py-1 text-gray-700 hover:text-primary">${item.title}</a>`).join('');
+                document.getElementById('info-menu-container-mobile').innerHTML = uniqueInfo.map(item => `<a href="/page/?slug=${item.slug}&lang=${currentLang}&country=${item.country}" class="block py-1 text-gray-700 hover:text-primary">${item.title}</a>`).join('');
+                document.getElementById('services-menu-container-mobile').innerHTML = uniqueServices.map(item => `<a href="/page/?slug=${item.slug}&lang=${currentLang}&country=${item.country}" class="block py-1 text-gray-700 hover:text-primary">${item.title}</a>`).join('');
 
                 let footerHTML = `<div class="text-center lg:text-left"><p>&copy; ${new Date().getFullYear()} ${logoText}. Všechna práva vyhrazena.</p></div>`;
                 const contactsHTML = [];
@@ -800,7 +837,8 @@
                                 <p class="font-semibold">${globalSettings[`contact${i}_name`]}</p>
                                 ${globalSettings[`contact${i}_phone`] ? `<a href="tel:${globalSettings[`contact${i}_phone`].replace(/\s/g, '')}" class="block hover:text-primary">${globalSettings[`contact${i}_phone`]}</a>` : ''}
                                 ${globalSettings[`contact${i}_email`] ? `<a href="mailto:${globalSettings[`contact${i}_email`]}" class="block hover:text-primary">${globalSettings[`contact${i}_email`]}</a>` : ''}
-                            </div>`);
+                            </div>
+                        `);
                     }
                 }
                 footerHTML += `<div class="flex flex-wrap justify-center lg:justify-end gap-6">${contactsHTML.join('')}</div>`;
@@ -852,6 +890,23 @@
         const logoutIcon = document.getElementById('logoutIcon');
         if(logoutIcon) logoutIcon.addEventListener('click', () => signOut(auth));
 
+        const setupAuthFormToggle = () => {
+            const showRegisterBtn = document.getElementById('showRegister');
+            const showLoginBtn = document.getElementById('showLogin');
+            if (showRegisterBtn) {
+                showRegisterBtn.addEventListener('click', () => {
+                    document.getElementById('loginFormContainer').style.display = 'none';
+                    document.getElementById('registerFormContainer').style.display = 'block';
+                });
+            }
+            if (showLoginBtn) {
+                showLoginBtn.addEventListener('click', () => {
+                    document.getElementById('registerFormContainer').style.display = 'none';
+                    document.getElementById('loginFormContainer').style.display = 'block';
+                });
+            }
+        };
+
         if(favoritesIconEl) {
             favoritesIconEl.addEventListener('click', async () => {
                 const listEl = document.getElementById('favorites-list');
@@ -874,7 +929,8 @@
                         <div class="flex-grow">
                             <h4 class="font-bold">${prop[`title_${currentLang}`] || prop.title_cz}</h4>
                             <p class="text-primary font-semibold">€${prop.price.toLocaleString()}</p>
-                            <a href="detail.html?id=${doc.id}&lang=${currentLang}" class="text-sm text-gray-500 hover:underline">Zobrazit detail</a>
+                            <!-- OPRAVENO ZDE -->
+                            <a href="/detail/?id=${doc.id}&lang=${currentLang}" class="text-sm text-gray-500 hover:underline">Zobrazit detail</a>
                         </div>
                         <button class="remove-favorite text-gray-400 hover:text-red-500 text-xl" data-id="${doc.id}"><i class="fas fa-trash-alt"></i></button>
                     `;
@@ -905,6 +961,7 @@
             loadPropertyDetails();
             setActiveLangLink();
             translatePage();
+            setupAuthFormToggle();
             
             document.getElementById('mobile-menu-button')?.addEventListener('click', () => document.getElementById('mobile-menu')?.classList.toggle('hidden'));
             
@@ -920,18 +977,6 @@
             document.querySelectorAll('.close-btn').forEach(btn => btn.onclick = () => Object.values(modals).forEach(closeModal));
             
             window.onclick = (e) => { if (Object.values(modals).some(modal => modal && modal === e.target)) Object.values(modals).forEach(closeModal); };
-
-            const showRegister = document.getElementById('showRegister');
-            if (showRegister) showRegister.addEventListener('click', () => {
-                document.getElementById('loginFormContainer').style.display = 'none';
-                document.getElementById('registerFormContainer').style.display = 'block';
-            });
-            
-            const showLogin = document.getElementById('showLogin');
-            if (showLogin) showLogin.addEventListener('click', () => {
-                document.getElementById('registerFormContainer').style.display = 'none';
-                document.getElementById('loginFormContainer').style.display = 'block';
-            });
 
             const thumbPrevBtn = document.getElementById('thumbPrevBtn');
             if (thumbPrevBtn) thumbPrevBtn.addEventListener('click', () => { if (thumbnailStartIndex > 0) { thumbnailStartIndex--; slideThumbnails(); } });
@@ -974,7 +1019,16 @@
                 if(lightboxNext) lightboxNext.addEventListener('click', () => changeLightboxImage(1));
             }
         });
+        
+        document.querySelectorAll('#lang-switcher .lang-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const lang = e.currentTarget.dataset.lang;
+                const url = new URL(window.location);
+                url.searchParams.set('lang', lang);
+                window.location.href = url.toString();
+            });
+        });
     </script>
 </body>
 </html>
-
