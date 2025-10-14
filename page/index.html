@@ -509,15 +509,18 @@
                 if (!globalSettingsDoc.exists()) return;
                 const settings = globalSettingsDoc.data();
                 let footerHTML = `<div class="text-center lg:text-left"><p>&copy; ${new Date().getFullYear()} Nesvarba. Všechna práva vyhrazena.</p></div>`;
+                // Uvnitř funkce loadSettings
                 const contactsHTML = [];
                 for (let i = 1; i <= 4; i++) {
-                    if (settings[`contact${i}_name`]) {
+                    if (globalSettings[`contact${i}_name`]) {
                         contactsHTML.push(`
                             <div class="text-center">
-                                <p class="font-semibold">${settings[`contact${i}_name`]}</p>
-                                ${settings[`contact${i}_phone`] ? `<a href="tel:${settings[`contact${i}_phone`].replace(/\s/g, '')}" class="block hover:text-primary">${settings[`contact${i}_phone`]}</a>` : ''}
-                                ${settings[`contact${i}_email`] ? `<a href="mailto:${settings[`contact${i}_email`]}" class="block hover:text-primary">${settings[`contact${i}_email`]}</a>` : ''}
-                            </div>`);
+                                <p class="font-semibold">${globalSettings[`contact${i}_name`]}</p>
+                                ${globalSettings[`contact${i}_phone`] ? `<a href="tel:${globalSettings[`contact${i}_phone`].replace(/\s/g, '')}" class="block hover:text-primary">${globalSettings[`contact${i}_phone`]}</a>` : ''}
+                                ${globalSettings[`contact${i}_phone2`] ? `<a href="tel:${globalSettings[`contact${i}_phone2`].replace(/\s/g, '')}" class="block hover:text-primary">${globalSettings[`contact${i}_phone2`]}</a>` : ''}
+                                ${globalSettings[`contact${i}_email`] ? `<a href="mailto:${globalSettings[`contact${i}_email`]}" class="block hover:text-primary">${globalSettings[`contact${i}_email`]}</a>` : ''}
+                            </div>
+                        `);
                     }
                 }
                 footerHTML += `<div class="flex flex-wrap justify-center lg:justify-end gap-6">${contactsHTML.join('')}</div>`;
