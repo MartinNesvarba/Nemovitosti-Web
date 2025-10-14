@@ -6,7 +6,6 @@
     <title>Admin Panel - Správa obsahu</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- Rich Text Editor TinyMCE -->
     <script src="https://cdn.tiny.cloud/1/t62v88urbx396otieiqu7apcy81f9ulf00f3eb24ym4s0x2c/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
     <style>
         /* Custom Tailwind directives for cleaner HTML */
@@ -48,7 +47,6 @@
 </head>
 <body class="bg-gray-100 font-sans">
 
-    <!-- Login Screen -->
     <div id="login-screen" class="min-h-screen flex items-center justify-center">
         <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md mx-4">
             <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">Admin Přihlášení</h2>
@@ -67,10 +65,8 @@
         </div>
     </div>
 
-    <!-- Admin Dashboard (hidden by default) -->
     <div id="dashboard" class="hidden">
         <div class="relative min-h-screen md:flex">
-            <!-- Mobile menu button -->
             <div class="md:hidden flex justify-between items-center bg-gray-800 text-white p-4">
                 <h1 class="text-xl font-bold">HORIZON ESTATES</h1>
                 <button id="mobile-menu-button" class="focus:outline-none">
@@ -78,7 +74,6 @@
                 </button>
             </div>
 
-            <!-- Sidebar -->
             <div id="sidebar" class="w-64 bg-gray-800 text-white p-5 flex flex-col fixed inset-y-0 left-0 transform -translate-x-full md:relative md:translate-x-0 transition-transform duration-300 ease-in-out z-30">
                 <h1 class="text-2xl font-bold mb-10 text-center hidden md:block">HORIZON ESTATES</h1>
                 <nav class="flex-grow">
@@ -90,19 +85,16 @@
                 <button id="admin-logout-btn" class="btn btn-danger w-full mt-auto"><i class="fas fa-sign-out-alt mr-2"></i>Odhlásit se</button>
             </div>
 
-            <!-- Main Content -->
             <div class="flex-1 flex flex-col overflow-hidden">
                 <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 p-4 sm:p-6">
                     <div id="firestore-error" class="error-message hidden mb-6"></div>
 
-                    <!-- Property List View -->
                     <div id="property-list-view">
                         <header class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
                             <h2 class="text-2xl sm:text-3xl font-semibold text-gray-700">Správa nemovitostí</h2>
                             <button id="add-property-btn" class="btn btn-primary w-full sm:w-auto"><i class="fas fa-plus mr-2"></i>Přidat nemovitost</button>
                         </header>
 
-                        <!-- Country Tabs for Property List -->
                         <div class="mb-4 border-b border-gray-200">
                             <nav class="flex -mb-px" id="property-country-tabs">
                                 <button type="button" data-country="bulharsko" class="tab-button active" style="padding: 10px;">Bulharsko</button>
@@ -129,13 +121,11 @@
                         </div>
                     </div>
                     
-                    <!-- Add/Edit Property Form View (hidden by default) -->
                     <div id="property-form-view" class="hidden">
                         <h2 id="form-title" class="text-3xl font-semibold text-gray-700 mb-6">Přidat novou nemovitost</h2>
                         <div class="bg-white p-8 rounded-lg shadow-lg">
                             <form id="property-form">
                                 <input type="hidden" id="property-id">
-                                <!-- Language Tabs -->
                                 <div class="mb-4 border-b border-gray-200">
                                     <nav class="flex -mb-px" id="property-lang-tabs">
                                         <button type="button" data-lang="cz" class="tab-button active" style="padding: 5px;">Čeština</button>
@@ -144,7 +134,6 @@
                                     </nav>
                                 </div>
 
-                                <!-- CZ Content -->
                                 <div id="property-lang-cz" class="lang-tab-content active space-y-6">
                                     <div>
                                         <label for="property-title-cz" class="block text-gray-700 font-bold mb-2">Název nemovitosti (CZ)</label>
@@ -155,7 +144,6 @@
                                         <textarea id="property-description-cz" class="tinymce-editor"></textarea>
                                     </div>
                                 </div>
-                                <!-- EN Content -->
                                 <div id="property-lang-en" class="lang-tab-content space-y-6">
                                     <div>
                                         <label for="property-title-en" class="block text-gray-700 font-bold mb-2">Název nemovitosti (EN)</label>
@@ -166,7 +154,6 @@
                                         <textarea id="property-description-en" class="tinymce-editor"></textarea>
                                     </div>
                                 </div>
-                                <!-- DE Content -->
                                 <div id="property-lang-de" class="lang-tab-content space-y-6">
                                     <div>
                                         <label for="property-title-de" class="block text-gray-700 font-bold mb-2">Název nemovitosti (DE)</label>
@@ -256,7 +243,6 @@
                         </div>
                     </div>
 
-                    <!-- Page Management View -->
                     <div id="page-management-view" class="hidden">
                         <header class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
                             <h2 class="text-2xl sm:text-3xl font-semibold text-gray-700">Správa stránek</h2>
@@ -277,7 +263,6 @@
                         </div>
                     </div>
 
-                    <!-- Add/Edit Page Form View -->
                     <div id="page-form-view" class="hidden">
                         <h2 id="page-form-title" class="text-3xl font-semibold text-gray-700 mb-6">Přidat novou stránku</h2>
                         <div class="bg-white p-8 rounded-lg shadow-lg">
@@ -341,7 +326,6 @@
                         </div>
                     </div>
                     
-                    <!-- Tag Management View -->
                     <div id="tag-management-view" class="hidden">
                         <header class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
                             <h2 class="text-2xl sm:text-3xl font-semibold text-gray-700">Správa SEO tagů</h2>
@@ -357,11 +341,9 @@
                         </div>
                     </div>
 
-                    <!-- Settings View -->
                     <div id="settings-view" class="hidden">
                          <h2 class="text-2xl sm:text-3xl font-semibold text-gray-700 mb-6">Nastavení</h2>
                          
-                         <!-- Global Settings Section -->
                          <div class="bg-white p-6 rounded-lg shadow-lg mb-8">
                               <h3 class="text-xl font-bold mb-4">Globální nastavení</h3>
                               <form id="global-settings-form">
@@ -395,12 +377,14 @@
                               </form>
                               <hr class="my-6">
                               <h3 class="text-xl font-bold mb-4">Správa Vlastností (globální)</h3>
+                              <p class="text-sm text-gray-500 mb-4">Zde můžete spravovat globální vlastnosti, které se nabízejí u všech nemovitostí. Pořadí zatím nelze měnit.</p>
                               <div id="features-settings-list" class="mb-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2"></div>
                               <form id="add-feature-form" class="space-y-4 p-4 border rounded-md">
+                                   <h4 id="feature-form-title" class="font-bold text-lg">Přidat novou vlastnost</h4>
                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                                         <div>
                                             <label for="new-feature-cz-input" class="block text-sm font-medium text-gray-700">Název CZ</label>
-                                            <input type="text" id="new-feature-cz-input" class="input-field mt-1">
+                                            <input type="text" id="new-feature-cz-input" class="input-field mt-1" required>
                                         </div>
                                         <div>
                                             <label for="new-feature-en-input" class="block text-sm font-medium text-gray-700">Název EN</label>
@@ -418,7 +402,6 @@
                               </form>
                          </div>
 
-                        <!-- Country Specific Settings -->
                         <div class="mb-4 border-b border-gray-200">
                              <nav class="flex -mb-px" id="settings-tabs">
                                  <button type="button" data-country="bulharsko" class="tab-button active" style="padding-right: 15px;">Bulharsko</button>
@@ -427,8 +410,7 @@
                         </div>
 
                         <div id="country-specific-settings-container">
-                            <!-- This container will be populated by JS -->
-                        </div>
+                            </div>
                     </div>
 
                 </main>
@@ -436,7 +418,6 @@
         </div>
     </div>
 
-    <!-- Firebase SDK v9 -->
     <script type="module">
         // Import functions from the SDKs
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
@@ -483,7 +464,7 @@
         let existingImageUrls = [];
         let currentSettingsCountry = 'bulharsko';
         let currentPropertyListCountry = 'bulharsko';
-        let currentEditFeature = null;
+        let currentEditItem = { type: null, key: null };
 
         // --- UI Element Selectors ---
         const loginScreen = document.getElementById('login-screen');
@@ -555,55 +536,38 @@
             return editor ? editor.getContent() : '';
         }
 
-        function renderList(type, items) {
-            const containerId = type === 'features-settings' ? 'features-settings-list' : `${type}-list`;
-            const container = document.getElementById(containerId);
+        function renderList(type, items, formId) {
+            const container = document.getElementById(`${type}-list`);
             if (!container) return;
+            
             container.innerHTML = '';
             
-            const mappedItems = (items || []).map(item => {
-                if (typeof item === 'object' && item !== null) {
-                    const key = item.key || slugify(item.name_cz);
-                    return { ...item, key: key, name: item.name_cz || key };
-                }
-                if (typeof item === 'string') {
-                    return { name: item, key: slugify(item), name_cz: item, name_en: '', name_de: '' }; 
-                }
-                return null;
-            }).filter(Boolean);
+            const sortedItems = (items || []).sort((a, b) => {
+                const nameA = (typeof a === 'object' ? a.name_cz : a) || '';
+                const nameB = (typeof b === 'object' ? b.name_cz : b) || '';
+                return nameA.localeCompare(nameB, 'cs');
+            });
 
-            mappedItems.sort((a, b) => a.name.localeCompare(b.name, 'cs'));
+            sortedItems.forEach(item => {
+                const isObject = typeof item === 'object' && item !== null;
+                const key = isObject ? item.key : slugify(item);
+                const name_cz = isObject ? item.name_cz : item;
+                const name_en = isObject ? item.name_en || '-' : '-';
+                const name_de = isObject ? item.name_de || '-' : '-';
 
-            mappedItems.forEach(item => {
-                const dataType = type === 'features-settings' ? 'features-settings' : type;
-                let displayHtml;
-
-                if (type === 'features-settings' || type === 'types' || type === 'rooms') {
-                    const editButtonHtml = type === 'features-settings' 
-                        ? `<button class="edit-setting-item-btn text-blue-600 hover:text-blue-900 mr-3" data-type="${dataType}" data-key="${item.key}"><i class="fas fa-pencil-alt"></i></button>`
-                        : '';
-                     displayHtml = `
-                         <div class="flex justify-between items-center bg-gray-100 p-2 rounded text-sm">
-                             <div class="flex-grow mr-4">
-                                 <strong class="text-gray-800">${item.name_cz || '(Chybí český název)'}</strong>
-                                 <div class="text-gray-500">
-                                     <span class="mr-3">EN: ${item.name_en || '-'}</span>
-                                     <span>DE: ${item.name_de || '-'}</span>
-                                 </div>
-                             </div>
-                             <div class="flex-shrink-0 flex items-center">
-                                ${editButtonHtml}
-                                 <button class="delete-setting-item-btn text-red-500 hover:text-red-700" data-type="${dataType}" data-key="${item.key}"><i class="fas fa-trash-alt"></i></button>
-                             </div>
-                         </div>`;
-                } else { // For locations
-                    displayHtml = `
-                         <div class="flex justify-between items-center bg-gray-100 p-2 rounded">
-                             <span><strong>${item.name_cz}</strong></span>
-                             <button class="delete-setting-item-btn text-red-500 hover:text-red-700" data-type="${dataType}" data-key="${item.key}"><i class="fas fa-trash-alt"></i></button>
-                         </div>`;
-                }
-                container.innerHTML += displayHtml;
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'flex justify-between items-center bg-gray-100 p-2 rounded text-sm';
+                itemDiv.innerHTML = `
+                    <div class="flex-grow mr-4">
+                        <strong class="text-gray-800">${name_cz || '(Chybí český název)'}</strong>
+                        ${(type !== 'locations') ? `<div class="text-gray-500"><span class="mr-3">EN: ${name_en}</span><span>DE: ${name_de}</span></div>` : ''}
+                    </div>
+                    <div class="flex-shrink-0 flex items-center">
+                        <button class="edit-setting-item-btn text-blue-600 hover:text-blue-900 mr-3" data-type="${type}" data-key="${key}" data-form-id="${formId}"><i class="fas fa-pencil-alt"></i></button>
+                        <button class="delete-setting-item-btn text-red-500 hover:text-red-700" data-type="${type}" data-key="${key}"><i class="fas fa-trash-alt"></i></button>
+                    </div>
+                `;
+                container.appendChild(itemDiv);
             });
         }
         
@@ -777,7 +741,6 @@
         
         async function openNewPropertyForm() {
             resetPropertyForm();
-            // Removed automatic offer ID generation
             await populateFormDropdowns('bulharsko');
             await populateFeatures([]);
             showView('propertyForm', 'properties');
@@ -1176,52 +1139,77 @@
             }
         });
 
-        function createSingleLangInputForm(type, label) {
-             return `
-                 <form id="add-${type}-form" class="p-4 border rounded-md">
-                     <div class="flex gap-2">
-                         <input type="text" id="new-${type}-cz-input" placeholder="Přidat ${label}" class="input-field">
-                         <button type="submit" class="btn btn-primary whitespace-nowrap add-setting-item-btn" data-type="${type}s">Přidat</button>
-                     </div>
-                 </form>
-            `;
-        }
+        function createSettingsForm(type, title, isMultiLang) {
+            const formId = `form-${type}`;
+            const inputs = isMultiLang 
+                ? `
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                            <label for="new-${type}-cz-input" class="block text-sm font-medium text-gray-700">Název CZ</label>
+                            <input type="text" id="new-${type}-cz-input" class="input-field mt-1" required>
+                        </div>
+                        <div>
+                            <label for="new-${type}-en-input" class="block text-sm font-medium text-gray-700">Název EN</label>
+                            <input type="text" id="new-${type}-en-input" class="input-field mt-1">
+                        </div>
+                        <div>
+                            <label for="new-${type}-de-input" class="block text-sm font-medium text-gray-700">Název DE</label>
+                            <input type="text" id="new-${type}-de-input" class="input-field mt-1">
+                        </div>
+                    </div>`
+                : `
+                    <div>
+                        <label for="new-${type}-cz-input" class="block text-sm font-medium text-gray-700">Název</label>
+                        <input type="text" id="new-${type}-cz-input" class="input-field mt-1" required>
+                    </div>`;
 
-        function createMultilangInputForm(type) {
-            const typeLabels = {
-                type: "nový druh",
-                room: "novou dispozici"
-            };
             return `
-                 <form id="add-${type}-form" class="space-y-4 p-4 border rounded-md">
-                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                         <div>
-                             <label for="new-${type}-cz-input" class="block text-sm font-medium text-gray-700">Název CZ</label>
-                             <input type="text" id="new-${type}-cz-input" class="input-field mt-1">
-                         </div>
-                         <div>
-                             <label for="new-${type}-en-input" class="block text-sm font-medium text-gray-700">Název EN</label>
-                             <input type="text" id="new-${type}-en-input" class="input-field mt-1">
-                         </div>
-                         <div>
-                             <label for="new-${type}-de-input" class="block text-sm font-medium text-gray-700">Název DE</label>
-                             <input type="text" id="new-${type}-de-input" class="input-field mt-1">
-                         </div>
-                    </div>
-                     <button type="submit" class="btn btn-primary w-full md:w-auto add-setting-item-btn" data-type="${type}s">Přidat ${typeLabels[type]}</button>
-                 </form>
-            `;
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <h3 class="text-xl font-bold mb-4">${title}</h3>
+                    <div id="${type}-list" class="mb-4 space-y-2"></div>
+                    <form id="${formId}" class="space-y-4 p-4 border rounded-md">
+                        <h4 id="${type}-form-title" class="font-bold text-lg">Přidat novou položku</h4>
+                        ${inputs}
+                        <div class="flex gap-2 mt-4">
+                            <button type="submit" class="btn btn-primary w-full md:w-auto">Přidat</button>
+                            <button type="button" class="btn btn-secondary hidden cancel-edit-btn">Zrušit úpravu</button>
+                        </div>
+                    </form>
+                </div>`;
         }
-
-        function renderCountrySettingsHTML(country, settings) {
+        
+        function renderCountrySettingsHTML(country) {
             const countryCapitalized = country.charAt(0).toUpperCase() + country.slice(1);
+            
+            const extraMenuHTML = country === 'bulgaria' ? `
+                <div>
+                    <h4 class="font-bold mb-2">Menu "O Bulharsku"</h4>
+                    <div id="bulgaria-menu-list-${country}" class="mb-4 space-y-2"></div>
+                    <div class="flex gap-2">
+                        <input type="text" id="new-bulgaria-menu-title-${country}" placeholder="Název položky" class="input-field">
+                        <select id="new-bulgaria-menu-link-${country}" class="input-field"></select>
+                        <button data-menu-type="bulgaria" class="add-menu-item-btn btn btn-primary whitespace-nowrap">Přidat</button>
+                    </div>
+                </div>
+            ` : country === 'spanelsko' ? `
+                <div>
+                    <h4 class="font-bold mb-2">Menu "O Španělsku"</h4>
+                    <div id="spain-menu-list-${country}" class="mb-4 space-y-2"></div>
+                    <div class="flex gap-2">
+                        <input type="text" id="new-spain-menu-title-${country}" placeholder="Název položky" class="input-field">
+                        <select id="new-spain-menu-link-${country}" class="input-field"></select>
+                        <button data-menu-type="spain" class="add-menu-item-btn btn btn-primary whitespace-nowrap">Přidat</button>
+                    </div>
+                </div>
+            ` : '';
+
             return `
                 <div class="bg-white p-6 rounded-lg shadow-lg mb-8">
                     <h3 class="text-xl font-bold mb-4">Nastavení pro ${countryCapitalized}</h3>
                     <form id="${country}-settings-form">
                         <div class="mb-4">
                             <label for="setting-logo-text-${country}" class="block text-gray-700 font-bold mb-2">Text loga</label>
-                            <input type="text" id="setting-logo-text-${country}" class="input-field" value="${settings.logoText || ''}">
+                            <input type="text" id="setting-logo-text-${country}" class="input-field">
                         </div>
                         <div class="mt-6 flex justify-end">
                             <button type="submit" class="btn btn-primary">Uložit nastavení pro ${countryCapitalized}</button>
@@ -1249,77 +1237,59 @@
                                 <button data-menu-type="services" class="add-menu-item-btn btn btn-primary whitespace-nowrap">Přidat</button>
                             </div>
                         </div>
-                        <div>
-                            <h4 class="font-bold mb-2">Menu "O Bulharsku"</h4>
-                            <div id="bulgaria-menu-list-${country}" class="mb-4 space-y-2"></div>
-                            <div class="flex gap-2">
-                                <input type="text" id="new-bulgaria-menu-title-${country}" placeholder="Název položky" class="input-field">
-                                <select id="new-bulgaria-menu-link-${country}" class="input-field"></select>
-                                <button data-menu-type="bulgaria" class="add-menu-item-btn btn btn-primary whitespace-nowrap">Přidat</button>
-                            </div>
-                        </div>
+                        ${extraMenuHTML}
                     </div>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div class="bg-white p-6 rounded-lg shadow-lg">
-                        <h3 class="text-xl font-bold mb-4">Správa Lokalit</h3>
-                        <div id="locations-list" class="mb-4 space-y-2"></div>
-                        ${createSingleLangInputForm('location', 'novou lokalitu')}
-                    </div>
-                    <div class="bg-white p-6 rounded-lg shadow-lg">
-                        <h3 class="text-xl font-bold mb-4">Správa Druhů Nemovitostí</h3>
-                        <div id="types-list" class="mb-4 space-y-2"></div>
-                        ${createMultilangInputForm('type')}
-                    </div>
-                    <div class="bg-white p-6 rounded-lg shadow-lg">
-                       <h3 class="text-xl font-bold mb-4">Správa Dispozic</h3>
-                       <div id="rooms-list" class="mb-4 space-y-2"></div>
-                       ${createMultilangInputForm('room')}
-                   </div>
+                    ${createSettingsForm('locations', 'Správa Lokalit', false)}
+                    ${createSettingsForm('types', 'Správa Druhů Nemovitostí', true)}
+                    ${createSettingsForm('rooms', 'Správa Dispozic', true)}
                 </div>
             `;
         }
         
         async function loadAndRenderCountrySettings() {
             const container = document.getElementById('country-specific-settings-container');
+            const country = currentSettingsCountry;
             try {
-                const settingsDocRef = doc(db, 'settings', currentSettingsCountry);
+                const settingsDocRef = doc(db, 'settings', country);
                 const settingsDocSnap = await getDoc(settingsDocRef);
                 const settings = settingsDocSnap.exists() ? settingsDocSnap.data() : {};
-                container.innerHTML = renderCountrySettingsHTML(currentSettingsCountry, settings);
+                
+                container.innerHTML = renderCountrySettingsHTML(country);
+                document.getElementById(`setting-logo-text-${country}`).value = settings.logoText || '';
                 
                 const pagesSnapshot = await getDocs(collection(db, 'pages'));
-                const infoMenuLink = document.getElementById(`new-info-menu-link-${currentSettingsCountry}`);
-                const servicesMenuLink = document.getElementById(`new-services-menu-link-${currentSettingsCountry}`);
-                const bulgariaMenuLink = document.getElementById(`new-bulgaria-menu-link-${currentSettingsCountry}`);
+                const menuSelects = [
+                    document.getElementById(`new-info-menu-link-${country}`),
+                    document.getElementById(`new-services-menu-link-${country}`),
+                    document.getElementById(`new-bulgaria-menu-link-${country}`),
+                    document.getElementById(`new-spain-menu-link-${country}`)
+                ].filter(Boolean);
 
-                infoMenuLink.innerHTML = '<option value="">-- Vyberte stránku --</option>';
-                servicesMenuLink.innerHTML = '<option value="">-- Vyberte stránku --</option>';
-                bulgariaMenuLink.innerHTML = '<option value="">-- Vyberte stránku --</option>';
+                menuSelects.forEach(select => select.innerHTML = '<option value="">-- Vyberte stránku --</option>');
                 
                 pagesSnapshot.forEach(doc => {
                     const page = doc.data();
-                    const statusIndicator = page.status === 'Aktivní' ? '✓' : '✗';
-                    const optionText = `${page.title_cz} (${statusIndicator})`;
-                    const option = new Option(optionText, page.slug);
+                    const option = new Option(`${page.title_cz} (${page.status === 'Aktivní' ? '✓' : '✗'})`, page.slug);
                     if (page.status !== 'Aktivní') {
                         option.disabled = true;
                         option.style.color = '#ccc';
                     }
-                    infoMenuLink.add(option.cloneNode(true));
-                    servicesMenuLink.add(option.cloneNode(true));
-                    bulgariaMenuLink.add(option);
+                    menuSelects.forEach(select => select.add(option.cloneNode(true)));
                 });
-
+                
                 renderMenuItems('info', settings.infoMenu || []);
                 renderMenuItems('services', settings.servicesMenu || []);
-                renderMenuItems('bulgaria', settings.bulgariaMenu || []);
-                renderList('locations', settings.locations || []);
-                renderList('types', settings.types || []);
-                renderList('rooms', settings.rooms || []);
+                if (country === 'bulgaria') renderMenuItems('bulgaria', settings.bulgariaMenu || []);
+                if (country === 'spanelsko') renderMenuItems('spain', settings.spainMenu || []);
+                
+                renderList('locations', settings.locations || [], 'form-locations');
+                renderList('types', settings.types || [], 'form-types');
+                renderList('rooms', settings.rooms || [], 'form-rooms');
 
             } catch (error) {
-                handleFirestoreError(error, `Načítání nastavení pro ${currentSettingsCountry}`);
+                handleFirestoreError(error, `Načítání nastavení pro ${country}`);
             }
         }
 
@@ -1337,7 +1307,7 @@
                     document.getElementById('setting-contact2-phone').value = data.contact2_phone || '';
                     document.getElementById('setting-contact2-phone2').value = data.contact2_phone2 || '';
                     document.getElementById('setting-contact2-email').value = data.contact2_email || '';
-                    renderList('features-settings', data.features || []);
+                    renderList('features', data.features || [], 'add-feature-form');
                 }
             } catch (error) {
                 handleFirestoreError(error, 'Načítání globálních nastavení');
@@ -1369,73 +1339,78 @@
                 button.textContent = 'Uložit globální kontakty';
             }
         });
+        
+        function resetForm(formId) {
+            const form = document.getElementById(formId);
+            if (!form) return;
+            form.reset();
+            const title = form.querySelector('h4');
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const cancelBtn = form.querySelector('.cancel-edit-btn');
 
-        const addFeatureForm = document.getElementById('add-feature-form');
-        const addFeatureBtn = document.getElementById('add-feature-btn');
-        const cancelEditFeatureBtn = document.getElementById('cancel-edit-feature-btn');
-
-        function resetAddFeatureForm() {
-            addFeatureForm.reset();
-            currentEditFeature = null;
-            addFeatureBtn.textContent = 'Přidat vlastnost';
-            cancelEditFeatureBtn.classList.add('hidden');
+            if (title) title.textContent = 'Přidat novou položku';
+            if (submitBtn) submitBtn.textContent = 'Přidat';
+            if (cancelBtn) cancelBtn.classList.add('hidden');
+            currentEditItem = { type: null, key: null };
         }
 
-        cancelEditFeatureBtn.addEventListener('click', resetAddFeatureForm);
-
-        addFeatureForm.addEventListener('submit', async (e) => {
+        async function handleSettingsFormSubmit(e) {
             e.preventDefault();
-            const button = e.target.querySelector('button[type="submit"]');
-            const czInput = document.getElementById('new-feature-cz-input');
-            const enInput = document.getElementById('new-feature-en-input');
-            const deInput = document.getElementById('new-feature-de-input');
-            const czName = czInput.value.trim();
+            const form = e.target;
+            const type = form.id.split('-')[1];
+            const isGlobal = type === 'features';
+            const docId = isGlobal ? 'global' : currentSettingsCountry;
+            const arrayName = type;
 
-            if (!czName) {
+            const czInput = form.querySelector(`#new-${type}-cz-input`);
+            const enInput = form.querySelector(`#new-${type}-en-input`);
+            const deInput = form.querySelector(`#new-${type}-de-input`);
+
+            const name_cz = czInput.value.trim();
+            if (!name_cz) {
                 alert('Český název je povinný.');
                 return;
             }
 
-            const newFeatureData = {
-                key: slugify(czName),
-                name_cz: czName,
-                name_en: enInput.value.trim(),
-                name_de: deInput.value.trim()
-            };
-
-            button.disabled = true;
-            const settingsDocRef = doc(db, 'settings', 'global');
+            const key = currentEditItem.key || slugify(name_cz);
+            let newItemData;
+            if (enInput) { // Multilang object
+                newItemData = { key, name_cz, name_en: enInput.value.trim(), name_de: deInput.value.trim() };
+            } else { // Simple string (for locations)
+                newItemData = name_cz;
+            }
+            
+            const submitButton = form.querySelector('button[type="submit"]');
+            submitButton.disabled = true;
 
             try {
-                if (currentEditFeature) { // UPDATE LOGIC
-                    button.textContent = 'Ukládám...';
-                    const docSnap = await getDoc(settingsDocRef);
-                    if (docSnap.exists()) {
-                        let features = docSnap.data().features || [];
-                        const featureIndex = features.findIndex(f => f.key === currentEditFeature.key);
-                        
-                        if (featureIndex > -1) {
-                             features[featureIndex] = newFeatureData;
-                        } else {
-                            features.push(newFeatureData);
-                        }
-                        await updateDoc(settingsDocRef, { features: features });
+                const settingsDocRef = doc(db, 'settings', docId);
+                const docSnap = await getDoc(settingsDocRef);
+                let items = (docSnap.exists() && docSnap.data()[arrayName]) ? docSnap.data()[arrayName] : [];
+
+                if (currentEditItem.key) { // UPDATE
+                    submitButton.textContent = 'Ukládám...';
+                    const itemIndex = items.findIndex(item => (typeof item === 'object' ? item.key : slugify(item)) === currentEditItem.key);
+                    if (itemIndex > -1) {
+                        items[itemIndex] = newItemData;
+                    } else { // Failsafe if not found, add it
+                        items.push(newItemData);
                     }
-                } else { // ADD LOGIC
-                    button.textContent = 'Přidávám...';
-                    await updateDoc(settingsDocRef, {
-                        features: arrayUnion(newFeatureData)
-                    });
+                } else { // ADD
+                    submitButton.textContent = 'Přidávám...';
+                    items.push(newItemData);
                 }
-                resetAddFeatureForm();
-                await loadGlobalSettings();
+                
+                await setDoc(settingsDocRef, { [arrayName]: items }, { merge: true });
+                resetForm(form.id);
+                isGlobal ? await loadGlobalSettings() : await loadAndRenderCountrySettings();
+
             } catch (error) {
-                handleFirestoreError(error, currentEditFeature ? 'Úprava vlastnosti' : 'Přidání vlastnosti');
+                handleFirestoreError(error, currentEditItem.key ? 'Úprava položky' : 'Přidání položky');
             } finally {
-                button.disabled = false;
-                resetAddFeatureForm();
+                submitButton.disabled = false;
             }
-        });
+        }
 
         document.getElementById('settings-view').addEventListener('click', async (e) => {
             const button = e.target.closest('button');
@@ -1444,19 +1419,69 @@
             if (button.classList.contains('edit-setting-item-btn')) {
                 e.preventDefault();
                 const key = button.dataset.key;
-                const settingsDocRef = doc(db, 'settings', 'global');
-                const docSnap = await getDoc(settingsDocRef);
+                const type = button.dataset.type;
+                const formId = button.dataset.formId;
+                const form = document.getElementById(formId);
+                
+                const isGlobal = type === 'features';
+                const docId = isGlobal ? 'global' : currentSettingsCountry;
+                const arrayName = type;
+
+                const docRef = doc(db, 'settings', docId);
+                const docSnap = await getDoc(docRef);
+
                 if (docSnap.exists()) {
-                    const features = docSnap.data().features || [];
-                    const featureToEdit = features.find(f => f.key === key);
-                    if (featureToEdit) {
-                        currentEditFeature = featureToEdit;
-                        document.getElementById('new-feature-cz-input').value = featureToEdit.name_cz || '';
-                        document.getElementById('new-feature-en-input').value = featureToEdit.name_en || '';
-                        document.getElementById('new-feature-de-input').value = featureToEdit.name_de || '';
-                        addFeatureBtn.textContent = 'Uložit změny';
-                        cancelEditFeatureBtn.classList.remove('hidden');
-                        addFeatureForm.scrollIntoView({ behavior: 'smooth' });
+                    const items = docSnap.data()[arrayName] || [];
+                    const itemToEdit = items.find(item => (typeof item === 'object' ? item.key : slugify(item)) === key);
+                    
+                    if (itemToEdit) {
+                        currentEditItem = { type, key };
+                        const isObject = typeof itemToEdit === 'object';
+                        
+                        form.querySelector(`#new-${type}-cz-input`).value = isObject ? itemToEdit.name_cz : itemToEdit;
+                        const enInput = form.querySelector(`#new-${type}-en-input`);
+                        if (enInput) enInput.value = isObject ? itemToEdit.name_en || '' : '';
+                        const deInput = form.querySelector(`#new-${type}-de-input`);
+                        if (deInput) deInput.value = isObject ? itemToEdit.name_de || '' : '';
+
+                        form.querySelector('h4').textContent = 'Upravit položku';
+                        form.querySelector('button[type="submit"]').textContent = 'Uložit změny';
+                        form.querySelector('.cancel-edit-btn').classList.remove('hidden');
+                        form.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }
+                return;
+            }
+
+            if(button.classList.contains('cancel-edit-btn')) {
+                resetForm(button.closest('form').id);
+                return;
+            }
+            
+            if (button.classList.contains('delete-setting-item-btn')) {
+                e.preventDefault();
+                const key = button.dataset.key;
+                const type = button.dataset.type;
+                const isGlobal = type === 'features';
+                const docId = isGlobal ? 'global' : currentSettingsCountry;
+                const arrayName = type;
+
+                if (confirm(`Opravdu chcete smazat tuto položku?`)) {
+                    try {
+                        const docRef = doc(db, 'settings', docId);
+                        const docSnap = await getDoc(docRef);
+                        if (!docSnap.exists()) return;
+
+                        const data = docSnap.data();
+                        let items = data[arrayName] || [];
+                        const itemToRemove = items.find(item => (typeof item === 'object' ? item.key : slugify(item)) === key);
+
+                        if (itemToRemove) {
+                             await updateDoc(docRef, { [arrayName]: arrayRemove(itemToRemove) });
+                             isGlobal ? await loadGlobalSettings() : await loadAndRenderCountrySettings();
+                        }
+                    } catch (error) {
+                        handleFirestoreError(error, 'Mazání položky');
                     }
                 }
                 return;
@@ -1477,89 +1502,6 @@
                 } finally {
                     button.disabled = false;
                     button.textContent = `Uložit nastavení pro ${currentSettingsCountry}`;
-                }
-                return;
-            }
-            
-            if (button.classList.contains('add-setting-item-btn')) {
-                e.preventDefault();
-                const form = button.closest('form');
-                const type = button.dataset.type.replace(/s$/, '');
-                const czInput = form.querySelector(`#new-${type}-cz-input`);
-                const enInput = form.querySelector(`#new-${type}-en-input`);
-                const deInput = form.querySelector(`#new-${type}-de-input`);
-
-                const czName = czInput.value.trim();
-                if (!czName) {
-                    alert('Název je povinný.');
-                    return;
-                }
-                
-                let newItem;
-                if(type === 'location') {
-                    newItem = czName; // Save locations as a simple string
-                } else {
-                    newItem = {
-                        key: slugify(czName),
-                        name_cz: czName,
-                        name_en: enInput ? enInput.value.trim() : '',
-                        name_de: deInput ? deInput.value.trim() : ''
-                    };
-                }
-
-                button.disabled = true;
-                button.textContent = 'Přidávám...';
-                try {
-                    await setDoc(doc(db, 'settings', currentSettingsCountry), {
-                        [button.dataset.type]: arrayUnion(newItem)
-                    }, { merge: true });
-                    form.reset();
-                    await loadAndRenderCountrySettings();
-                } catch (error) {
-                    handleFirestoreError(error, `Přidání položky do ${type}`);
-                } finally {
-                    button.disabled = false;
-                    button.textContent = 'Přidat';
-                }
-                return;
-            }
-
-            if (button.classList.contains('delete-setting-item-btn')) {
-                e.preventDefault();
-                const key = button.dataset.key;
-                const type = button.dataset.type;
-                const isGlobal = type === 'features-settings';
-                const docId = isGlobal ? 'global' : currentSettingsCountry;
-                const arrayName = isGlobal ? 'features' : type;
-
-                if (!key) {
-                    console.error("Delete button is missing a key.");
-                    return;
-                }
-
-                if (confirm(`Opravdu chcete smazat tuto položku?`)) {
-                    try {
-                        const docRef = doc(db, 'settings', docId);
-                        const docSnap = await getDoc(docRef);
-                        if (!docSnap.exists()) return;
-
-                        const data = docSnap.data();
-                        let items = data[arrayName] || [];
-                        const itemToRemove = items.find(item => {
-                            if (typeof item === 'object' && item !== null) return item.key === key;
-                            if (typeof item === 'string') return slugify(item) === key;
-                            return false;
-                        });
-
-                        if (itemToRemove) {
-                             await updateDoc(docRef, { [arrayName]: arrayRemove(itemToRemove) });
-                        }
-                        
-                        if (isGlobal) await loadGlobalSettings();
-                        else await loadAndRenderCountrySettings();
-                    } catch (error) {
-                        handleFirestoreError(error, 'Mazání položky');
-                    }
                 }
                 return;
             }
@@ -1615,6 +1557,16 @@
             }
         });
         
+        // Add submit listeners to settings forms
+        document.getElementById('settings-view').addEventListener('submit', (e) => {
+             if (e.target.id.startsWith('form-')) {
+                 handleSettingsFormSubmit(e);
+             }
+             if (e.target.id === 'add-feature-form') { // Special handling for the global features form
+                 handleSettingsFormSubmit(e);
+             }
+        });
+        
         async function populateFormDropdowns(country, propertyData = {}) {
             const selects = {
                 location: document.getElementById('property-location'),
@@ -1636,31 +1588,17 @@
                 const populateSelect = (selectElement, items, selectedValue) => {
                     selectElement.innerHTML = `<option value="">-- Vyberte --</option>`;
                     
-                    if (!Array.isArray(items)) {
-                        console.warn("Data pro select nejsou polem:", items);
-                        return;
-                    }
+                    if (!Array.isArray(items)) return;
 
-                    const getName = (item) => {
-                        if (typeof item === 'object' && item !== null && item.name_cz) {
-                            return item.name_cz;
-                        }
-                        if (typeof item === 'string' && item) {
-                            return item;
-                        }
-                        return ''; // Return empty string for invalid items
-                    };
+                    const getName = (item) => (typeof item === 'object' && item !== null) ? item.name_cz : item;
 
                     items
-                        .filter(item => getName(item)) // Remove all invalid/empty items first
+                        .filter(item => getName(item))
                         .sort((a, b) => getName(a).localeCompare(getName(b), 'cs'))
                         .forEach(item => {
                             const value = getName(item);
-                            const text = getName(item);
-                            const option = new Option(text, value);
-                            if (value === selectedValue) {
-                                option.selected = true;
-                            }
+                            const option = new Option(value, value);
+                            if (value === selectedValue) option.selected = true;
                             selectElement.add(option);
                         });
                 };
