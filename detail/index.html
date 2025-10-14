@@ -139,11 +139,11 @@
                         <button id="nav-sluzby" class="font-semibold hover:text-primary">Naše služby <i class="fas fa-chevron-down text-xs ml-1"></i></button>
                         <div class="absolute hidden group-hover:block bg-white shadow-lg rounded-md top-full pt-3 pb-2 w-52 z-50" id="services-menu-container-desktop"></div>
                     </div>
-                    <div class="relative group">
+                    <div class="relative group" id="nav-group-ospanelsku">
                         <button id="nav-ospanelsku" class="font-semibold hover:text-primary">O Španělsku <i class="fas fa-chevron-down text-xs ml-1"></i></button>
                         <div class="absolute hidden group-hover:block bg-white shadow-lg rounded-md top-full pt-3 pb-2 w-52 z-10" id="ospanelsku-menu-container-desktop"></div>
                     </div>
-                    <div class="relative group">
+                    <div class="relative group" id="nav-group-obulharsku">
                         <button id="nav-obulharsku" class="font-semibold hover:text-primary">O Bulharsku <i class="fas fa-chevron-down text-xs ml-1"></i></button>
                         <div class="absolute hidden group-hover:block bg-white shadow-lg rounded-md top-full pt-3 pb-2 w-52 z-10" id="obulharsku-menu-container-desktop"></div>
                     </div>
@@ -161,10 +161,14 @@
                 <div id="info-menu-container-mobile" class="flex flex-col space-y-2 pl-2"></div>
                 <h3 id="nav-mobil-sluzby" class="font-bold pt-2">Naše služby</h3>
                 <div id="services-menu-container-mobile" class="flex flex-col space-y-2 pl-2"></div>
-                <h3 id="nav-mobil-ospanelsku" class="font-bold pt-2">O Španělsku</h3>
-                <div id="ospanelsku-menu-container-mobile" class="flex flex-col space-y-2 pl-2"></div>
-                <h3 id="nav-mobil-obulharsku" class="font-bold pt-2">O Bulharsku</h3>
-                <div id="obulharsku-menu-container-mobile" class="flex flex-col space-y-2 pl-2"></div>
+                <div id="mobile-menu-ospanelsku-section">
+                    <h3 id="nav-mobil-ospanelsku" class="font-bold pt-2">O Španělsku</h3>
+                    <div id="ospanelsku-menu-container-mobile" class="flex flex-col space-y-2 pl-2"></div>
+                </div>
+                <div id="mobile-menu-obulharsku-section">
+                    <h3 id="nav-mobil-obulharsku" class="font-bold pt-2">O Bulharsku</h3>
+                    <div id="obulharsku-menu-container-mobile" class="flex flex-col space-y-2 pl-2"></div>
+                </div>
                  <hr>
                 <a href="/page/?slug=o-nas" id="nav-mobil-onas" class="font-semibold hover:text-primary">O nás</a>
                 <a href="#" id="contactLinkMobile" class="font-semibold hover:text-primary">Kontakt</a>
@@ -786,76 +790,43 @@
 
         async function loadSettings(pageCountry) {
             try {
-                let globalSettings = {};
                 const globalSettingsDoc = await getDoc(doc(db, 'settings', 'global'));
-                if (globalSettingsDoc.exists()){
-                     globalSettings = globalSettingsDoc.data();
-                }
+                const globalSettings = globalSettingsDoc.exists() ? globalSettingsDoc.data() : {};
                 
-                // Always use the global logo text or the default fallback
                 const logoText = globalSettings.logoText || 'HORIZON ESTATES';
                 document.querySelector('header .font-bold.text-gray-800').textContent = logoText;
 
-                // Hide irrelevant country-specific menu elements
+                const otherCountry = pageCountry === 'bulharsko' ? 'spanelsko' : 'bulharsko';
+                document.getElementById(`nav-group-o${otherCountry}`).style.display = 'none';
+                document.getElementById(`mobile-menu-o${otherCountry}-section`).style.display = 'none';
+
+                const countrySettingsDoc = await getDoc(doc(db, 'settings', pageCountry));
+                const countrySettings = countrySettingsDoc.exists() ? countrySettingsDoc.data() : {};
+
+                const infoItems = countrySettings.infoMenu || [];
+                const servicesItems = countrySettings.servicesMenu || [];
+                let countrySpecificItems = [];
                 if (pageCountry === 'bulharsko') {
-                    const navOspanelsku = document.getElementById('nav-ospanelsku');
-                    if (navOspanelsku) navOspanelsku.parentElement.style.display = 'none';
-
-                    const navMobilOspanelsku = document.getElementById('nav-mobil-ospanelsku');
-                    if (navMobilOspanelsku) {
-                        navMobilOspanelsku.style.display = 'none';
-                        if (navMobilOspanelsku.nextElementSibling) navMobilOspanelsku.nextElementSibling.style.display = 'none';
-                    }
+                    countrySpecificItems = countrySettings.bulgariaMenu || [];
                 } else if (pageCountry === 'spanelsko') {
-                    const navObulharsku = document.getElementById('nav-obulharsku');
-                    if (navObulharsku) navObulharsku.parentElement.style.display = 'none';
-                    
-                    const navMobilObulharsku = document.getElementById('nav-mobil-obulharsku');
-                    if (navMobilObulharsku) {
-                         navMobilObulharsku.style.display = 'none';
-                         if (navMobilObulharsku.nextElementSibling) navMobilObulharsku.nextElementSibling.style.display = 'none';
-                    }
-                }
-
-
-                let allInfoItems = [], allServicesItems = [], allSpainItems = [], allBulgariaItems = [];
-                // Fetch menu items for both countries since "Informace" and "Služby" are shared
-                for (const country of ['spanelsko', 'bulharsko']) {
-                    const countrySettingsDocLoop = await getDoc(doc(db, 'settings', country));
-                    if (countrySettingsDocLoop.exists()) {
-                        const data = countrySettingsDocLoop.data();
-                        allInfoItems.push(...(data.infoMenu || []).map(item => ({...item, country})));
-                        allServicesItems.push(...(data.servicesMenu || []).map(item => ({...item, country})));
-                        if (country === 'spanelsko') {
-                           allSpainItems.push(...(data.spainMenu || []).map(item => ({...item, country})));
-                        }
-                        if (country === 'bulharsko') {
-                            allBulgariaItems.push(...(data.bulgariaMenu || []).map(item => ({...item, country})));
-                        }
-                    }
+                    countrySpecificItems = countrySettings.spainMenu || [];
                 }
                 
-                const buildMenuHtml = (items) => items.map(item => `<a href="/page/?slug=${item.slug}&lang=${currentLang}&country=${item.country}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">${item.title}</a>`).join('');
-                const buildMobileMenuHtml = (items) => items.map(item => `<a href="/page/?slug=${item.slug}&lang=${currentLang}&country=${item.country}" class="block py-1 text-gray-700 hover:text-primary">${item.title}</a>`).join('');
+                const buildMenuHtml = (items) => items.map(item => `<a href="/page/?slug=${item.slug}&lang=${currentLang}&country=${pageCountry}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">${item.title}</a>`).join('');
+                const buildMobileMenuHtml = (items) => items.map(item => `<a href="/page/?slug=${item.slug}&lang=${currentLang}&country=${pageCountry}" class="block py-1 text-gray-700 hover:text-primary">${item.title}</a>`).join('');
 
-                // Populate shared menus
-                document.getElementById('info-menu-container-desktop').innerHTML = buildMenuHtml(allInfoItems);
-                document.getElementById('services-menu-container-desktop').innerHTML = buildMenuHtml(allServicesItems);
-                document.getElementById('info-menu-container-mobile').innerHTML = buildMobileMenuHtml(allInfoItems);
-                document.getElementById('services-menu-container-mobile').innerHTML = buildMobileMenuHtml(allServicesItems);
+                document.getElementById('info-menu-container-desktop').innerHTML = buildMenuHtml(infoItems);
+                document.getElementById('services-menu-container-desktop').innerHTML = buildMenuHtml(servicesItems);
+                document.getElementById('info-menu-container-mobile').innerHTML = buildMobileMenuHtml(infoItems);
+                document.getElementById('services-menu-container-mobile').innerHTML = buildMobileMenuHtml(servicesItems);
                 
-                // Populate the visible country-specific menu
-                if (pageCountry === 'bulharsko') {
-                    const desktopMenu = document.getElementById('obulharsku-menu-container-desktop');
-                    if(desktopMenu) desktopMenu.innerHTML = buildMenuHtml(allBulgariaItems);
-                    const mobileMenu = document.getElementById('obulharsku-menu-container-mobile');
-                    if(mobileMenu) mobileMenu.innerHTML = buildMobileMenuHtml(allBulgariaItems);
-                } else if (pageCountry === 'spanelsko') {
-                    const desktopMenu = document.getElementById('ospanelsku-menu-container-desktop');
-                    if (desktopMenu) desktopMenu.innerHTML = buildMenuHtml(allSpainItems);
-                    const mobileMenu = document.getElementById('ospanelsku-menu-container-mobile');
-                    if(mobileMenu) mobileMenu.innerHTML = buildMobileMenuHtml(allSpainItems);
-                }
+                const countryMenuId = `o${pageCountry}-menu-container-desktop`;
+                const countryMenuDesktop = document.getElementById(countryMenuId);
+                if (countryMenuDesktop) countryMenuDesktop.innerHTML = buildMenuHtml(countrySpecificItems);
+
+                const countryMenuIdMobile = `o${pageCountry}-menu-container-mobile`;
+                const countryMenuMobile = document.getElementById(countryMenuIdMobile);
+                if(countryMenuMobile) countryMenuMobile.innerHTML = buildMobileMenuHtml(countrySpecificItems);
 
 
                 let footerHTML = `<div class="text-center lg:text-left"><p>&copy; ${new Date().getFullYear()} ${logoText}. Všechna práva vyhrazena.</p></div>`;
@@ -874,7 +845,7 @@
                 }
                 footerHTML += `<div class="flex flex-wrap justify-center lg:justify-end gap-6">${contactsHTML.join('')}</div>`;
                 document.getElementById('site-footer').innerHTML = footerHTML;
-            } catch (error) { console.error("Error loading global settings:", error); }
+            } catch (error) { console.error("Error loading settings:", error); }
         }
 
         const loginIconEl = document.getElementById('loginIcon'), userInfoEl = document.getElementById('userInfo'), userEmailSpan = document.getElementById('userEmail'), favoritesIconEl = document.getElementById('favoritesIcon');
