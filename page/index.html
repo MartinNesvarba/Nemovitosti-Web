@@ -4,21 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Horizon Estates</title>
-    <!-- SEO: Přidán meta tag pro popis stránky (bude vyplněn dynamicky) -->
-    <meta name="description" id="meta-description" content="Informace od Horizon Estates. Přečtěte si více o našich službách a nabídkách nemovitostí ve Španělsku a Bulharsku.">
     <meta name="keywords" id="meta-keywords" content="nemovitosti, reality, zahraničí, investice">
     
-    <!-- Optimalizace: Asynchronní načítání písem a ikon -->
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts (Inter) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript>
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    </noscript>
-    
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
         body {
@@ -47,6 +44,7 @@
         .modal-fade-in { animation: fadeIn 0.3s ease-out; }
         .modal-slide-in { animation: slideIn 0.3s ease-out; }
         
+        /* --- START OF CHANGES: Flag Styles --- */
         .lang-link img {
             opacity: 0.7;
             transition: all 0.2s ease-in-out;
@@ -61,6 +59,7 @@
             transform: scale(1.1);
             box-shadow: 0 0 0 2px #dd6822;
         }
+        /* --- END OF CHANGES --- */
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800 flex flex-col min-h-screen">
@@ -69,6 +68,7 @@
         <div class="container mx-auto px-4">
             <div class="flex justify-between items-center py-3 border-b">
                 <div class="flex items-center space-x-4">
+                    <!-- --- START OF CHANGES: Language Switcher --- -->
                     <div id="lang-switcher" class="flex space-x-2">
                         <a href="#" data-lang="cz" class="lang-link">
                             <img src="https://flagcdn.com/w40/cz.png" alt="Čeština" class="w-8 h-6 object-cover">
@@ -80,6 +80,7 @@
                             <img src="https://flagcdn.com/w40/de.png" alt="Deutsch" class="w-8 h-6 object-cover">
                         </a>
                     </div>
+                    <!-- --- END OF CHANGES --- -->
                     <a href="index.html" class="text-xl md:text-2xl font-bold text-gray-800 tracking-wider">HORIZON ESTATES</a>
                 </div>
                 <div class="flex items-center space-x-4">
@@ -91,7 +92,7 @@
                             <i class="fas fa-sign-out-alt text-xl cursor-pointer hover:text-red-500" id="logoutIcon" title="Odhlásit se"></i>
                         </div>
                     </div>
-                    <button id="mobile-menu-button" class="lg:hidden text-2xl" aria-label="Otevřít menu"><i class="fas fa-bars"></i></button>
+                    <button id="mobile-menu-button" class="lg:hidden text-2xl"><i class="fas fa-bars"></i></button>
                 </div>
             </div>
             <div class="hidden lg:flex justify-between items-center py-3" id="desktop-menu">
@@ -108,17 +109,13 @@
                         <button id="nav-sluzby" class="font-semibold hover:text-primary">Naše služby <i class="fas fa-chevron-down text-xs ml-1"></i></button>
                         <div class="absolute hidden group-hover:block bg-white shadow-lg rounded-md top-full pt-3 pb-2 w-52 z-10" id="services-menu-container-desktop"></div>
                     </div>
-                     <div class="relative group">
-                        <button id="nav-about-country" class="font-semibold hover:text-primary">O zemi <i class="fas fa-chevron-down text-xs ml-1"></i></button>
-                        <div class="absolute hidden group-hover:block bg-white shadow-lg rounded-md top-full pt-3 pb-2 w-52 z-10" id="about-country-menu-container-desktop"></div>
-                    </div>
                     <a href="page.html?slug=o-nas" id="nav-onas" class="font-semibold hover:text-primary">O nás</a>
                     <a href="#" id="contactLink" class="font-semibold hover:text-primary">Kontakt</a>
                 </nav>
             </div>
         </div>
         <div id="mobile-menu" class="hidden lg:hidden px-4 pb-4 border-t">
-             <nav class="flex flex-col space-y-3 pt-4">
+              <nav class="flex flex-col space-y-3 pt-4">
                 <a href="spanelsko.html" id="nav-mobil-spanelsko" class="font-semibold pb-1 hover:text-primary">Španělsko</a>
                 <a href="bulharsko.html" id="nav-mobil-bulharsko" class="font-semibold pb-1 hover:text-primary">Bulharsko</a>
                 <hr>
@@ -126,8 +123,6 @@
                 <div id="info-menu-container-mobile" class="flex flex-col space-y-2 pl-2"></div>
                 <h3 id="nav-mobil-sluzby" class="font-bold pt-2">Naše služby</h3>
                 <div id="services-menu-container-mobile" class="flex flex-col space-y-2 pl-2"></div>
-                <h3 id="nav-mobil-about-country" class="font-bold pt-2">O zemi</h3>
-                <div id="about-country-menu-container-mobile" class="flex flex-col space-y-2 pl-2"></div>
                  <hr>
                 <a href="page.html?slug=o-nas" id="nav-mobil-onas" class="font-semibold hover:text-primary">O nás</a>
                 <a href="#" id="contactLinkMobile" class="font-semibold hover:text-primary">Kontakt</a>
@@ -151,7 +146,7 @@
         <div class="bg-white rounded-lg shadow-2xl w-full max-w-lg p-8 modal-slide-in">
             <div class="flex justify-between items-center mb-4">
                 <h2 id="contact-modal-title" class="text-2xl font-bold">Kontaktní formulář</h2>
-                <button class="close-btn text-3xl text-gray-400 hover:text-gray-700" aria-label="Zavřít okno">&times;</button>
+                <button class="close-btn text-3xl text-gray-400 hover:text-gray-700">&times;</button>
             </div>
             <form class="space-y-4" action="https://formsubmit.co/nesvarba.martin@seznam.cz" method="POST">
                 <div><label for="name" id="contact-modal-name" class="block font-medium">Vaše jméno</label><input type="text" id="name" name="name" required class="w-full p-2 border rounded-md mt-1"></div>
@@ -164,7 +159,7 @@
     </div>
     <div id="authModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center p-4 modal-fade-in">
         <div class="bg-white rounded-lg shadow-2xl w-full max-w-md p-8 modal-slide-in">
-            <div class="text-right"><button class="close-btn text-3xl text-gray-400 hover:text-gray-700 -mt-4" aria-label="Zavřít okno">&times;</button></div>
+            <div class="text-right"><button class="close-btn text-3xl text-gray-400 hover:text-gray-700 -mt-4">&times;</button></div>
             <div id="loginFormContainer">
                 <h2 id="login-modal-title" class="text-2xl font-bold text-center mb-6">Přihlášení</h2>
                 <form id="loginForm" class="space-y-4">
@@ -189,16 +184,15 @@
     </div>
     <div id="favoritesModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center p-4 modal-fade-in">
         <div class="bg-white rounded-lg shadow-2xl w-full max-w-3xl p-8 modal-slide-in">
-             <div class="flex justify-between items-center mb-6">
+              <div class="flex justify-between items-center mb-6">
                 <h2 id="favorites-modal-title" class="text-2xl font-bold">Moje oblíbené nemovitosti</h2>
-                <button class="close-btn text-3xl text-gray-400 hover:text-gray-700" aria-label="Zavřít okno">&times;</button>
+                <button class="close-btn text-3xl text-gray-400 hover:text-gray-700">&times;</button>
             </div>
             <div id="favorites-list" class="max-h-[60vh] overflow-y-auto pr-2"></div>
         </div>
     </div>
 
-    <!-- Optimalizace: Odložení načítání skriptu pomocí 'defer' -->
-    <script type="module" defer>
+    <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
         import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
         import { getFirestore, collection, doc, getDoc, getDocs, query, where, setDoc } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
@@ -219,7 +213,6 @@
 
         const urlParams = new URLSearchParams(window.location.search);
         const currentLang = urlParams.get('lang') || 'cz';
-        const pageCountry = urlParams.get('country') || 'bulharsko'; // Default to one country
 
         const translations = {
             cz: {
@@ -227,8 +220,6 @@
                 "nav-bulharsko": "Bulharsko",
                 "nav-informace": "Informace",
                 "nav-sluzby": "Naše služby",
-                "nav-about-country-spanelsko": "O Španělsku",
-                "nav-about-country-bulharsko": "O Bulharsku",
                 "nav-onas": "O nás",
                 "contactLink": "Kontakt",
                 "page-not-found-title": "Stránka nenalezena",
@@ -254,8 +245,6 @@
                 "nav-bulharsko": "Bulgaria",
                 "nav-informace": "Information",
                 "nav-sluzby": "Our Services",
-                "nav-about-country-spanelsko": "About Spain",
-                "nav-about-country-bulharsko": "About Bulgaria",
                 "nav-onas": "About Us",
                 "contactLink": "Contact",
                 "page-not-found-title": "Page Not Found",
@@ -281,8 +270,6 @@
                 "nav-bulharsko": "Bulgarien",
                 "nav-informace": "Informationen",
                 "nav-sluzby": "Unsere Dienstleistungen",
-                "nav-about-country-spanelsko": "Über Spanien",
-                "nav-about-country-bulharsko": "Über Bulgarien",
                 "nav-onas": "Über uns",
                 "contactLink": "Kontakt",
                 "page-not-found-title": "Seite nicht gefunden",
@@ -306,30 +293,22 @@
         };
 
         const translatePage = () => {
-             const langDict = translations[currentLang];
+            const langDict = translations[currentLang];
             if (!langDict) return;
             document.querySelectorAll('[id]').forEach(element => {
-                let key = element.id;
-                // Special handling for dynamic country-specific keys
-                if (key === 'nav-about-country' || key === 'nav-mobil-about-country') {
-                    key = `${key}-${pageCountry}`;
-                }
-                
+                const key = element.id;
                 if (langDict[key]) {
                     if (key.includes('-prompt')) {
-                        const linkId = (key === 'login-modal-register-prompt') ? 'showRegister' : 'showLogin';
-                        const linkText = langDict[key].match(/<a>(.*?)<\/a>/)?.[1] || '';
-                        const linkHTML = `<a id="${linkId}" class="font-semibold text-primary hover:underline cursor-pointer">${linkText}</a>`;
-                        const fullText = langDict[key].replace(/<a>.*?<\/a>/, linkHTML);
+                        const linkText = langDict[key].match(/<a>(.*?)<\/a>/)[1];
+                        const fullText = langDict[key].replace(/<a>.*?<\/a>/, `<a class="font-semibold text-primary hover:underline cursor-pointer">${linkText}</a>`);
                         element.innerHTML = fullText;
                     } else if (element.tagName === 'INPUT' && element.placeholder) {
                         element.placeholder = langDict[key];
                     } else if (['SPAN', 'A', 'BUTTON', 'H1', 'H2', 'H3', 'P', 'LABEL', 'OPTION'].includes(element.tagName)) {
-                        element.textContent = langDict[key];
+                         element.textContent = langDict[key];
                     }
                 }
             });
-            setupAuthFormToggle();
         };
 
         const setActiveLangLink = () => {
@@ -338,18 +317,18 @@
                 if (link.dataset.lang === currentLang) {
                     link.classList.add('active');
                 }
+                const url = new URL(window.location.href);
+                url.searchParams.set('lang', link.dataset.lang);
+                link.href = url.toString();
             });
-            document.querySelectorAll('a[href]').forEach(link => {
+            document.querySelectorAll('a[href*=".html"]').forEach(link => {
                 if (!link.classList.contains('lang-link')) {
                     try {
                         const url = new URL(link.href, window.location.href);
                         url.searchParams.set('lang', currentLang);
-                        if(link.href.includes('page.html') && !url.searchParams.has('country')) {
-                            url.searchParams.set('country', pageCountry);
-                        }
                         link.href = url.toString();
                     } catch (e) {
-                        // console.error(`Could not process URL for link: ${link.getAttribute('href')}`, e);
+                        console.error(`Could not process URL for link: ${link.getAttribute('href')}`, e);
                     }
                 }
             });
@@ -378,11 +357,6 @@
                     
                     document.title = `${title} | Horizon Estates`;
                     contentContainer.innerHTML = `<div class="content-from-db">${content}</div>`;
-
-                    // SEO: Dynamically set meta description
-                    const metaDescriptionTag = document.getElementById('meta-description');
-                    metaDescriptionTag.setAttribute('content', content.replace(/<[^>]*>/g, '').substring(0, 155));
-
 
                     const globalSettingsDoc = await getDoc(doc(db, 'settings', 'global'));
                     if (globalSettingsDoc.exists()) {
@@ -448,24 +422,15 @@
         });
 
         document.getElementById('logoutIcon').addEventListener('click', () => signOut(auth));
+        document.getElementById('showRegister').addEventListener('click', () => {
+            document.getElementById('loginFormContainer').style.display = 'none';
+            document.getElementById('registerFormContainer').style.display = 'block';
+        });
+        document.getElementById('showLogin').addEventListener('click', () => {
+            document.getElementById('registerFormContainer').style.display = 'none';
+            document.getElementById('loginFormContainer').style.display = 'block';
+        });
         
-        const setupAuthFormToggle = () => {
-            const showRegisterBtn = document.getElementById('showRegister');
-            const showLoginBtn = document.getElementById('showLogin');
-            if (showRegisterBtn) {
-                showRegisterBtn.addEventListener('click', () => {
-                    document.getElementById('loginFormContainer').style.display = 'none';
-                    document.getElementById('registerFormContainer').style.display = 'block';
-                });
-            }
-            if (showLoginBtn) {
-                showLoginBtn.addEventListener('click', () => {
-                    document.getElementById('registerFormContainer').style.display = 'none';
-                    document.getElementById('loginFormContainer').style.display = 'block';
-                });
-            }
-        };
-
         favoritesIconEl.addEventListener('click', async () => {
             const listEl = document.getElementById('favorites-list');
             listEl.innerHTML = '<p>Načítání oblíbených...</p>';
@@ -512,56 +477,40 @@
 
         async function loadSettings() {
             try {
-                let countrySettings = {};
-                let globalSettings = {};
-
-                const countrySettingsDoc = await getDoc(doc(db, 'settings', pageCountry));
-                if (countrySettingsDoc.exists()) {
-                    countrySettings = countrySettingsDoc.data();
-                }
-
-                const globalSettingsDoc = await getDoc(doc(db, 'settings', 'global'));
-                if (globalSettingsDoc.exists()) {
-                    globalSettings = globalSettingsDoc.data();
-                }
-                
-                const logoText = countrySettings.logoText || globalSettings.logoText || 'HORIZON ESTATES';
-                document.querySelector('header .font-bold.text-gray-800').textContent = logoText;
-
-                // Menu Logic
-                const { infoMenu = [], servicesMenu = [], aboutCountryMenu = [] } = countrySettings;
-
-                const createMenuHtml = (menuItems, isMobile) => {
-                    return menuItems.map(item => {
-                        const linkClass = isMobile ? 'block py-1 text-gray-700 hover:text-primary' : 'block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100';
-                        return `<a href="page.html?slug=${item.slug}&lang=${currentLang}&country=${pageCountry}" class="${linkClass}">${item.title}</a>`;
-                    }).join('');
-                };
-
-                document.getElementById('info-menu-container-desktop').innerHTML = createMenuHtml(infoMenu, false);
-                document.getElementById('services-menu-container-desktop').innerHTML = createMenuHtml(servicesMenu, false);
-                document.getElementById('about-country-menu-container-desktop').innerHTML = createMenuHtml(aboutCountryMenu, false);
-                
-                document.getElementById('info-menu-container-mobile').innerHTML = createMenuHtml(infoMenu, true);
-                document.getElementById('services-menu-container-mobile').innerHTML = createMenuHtml(servicesMenu, true);
-                document.getElementById('about-country-menu-container-mobile').innerHTML = createMenuHtml(aboutCountryMenu, true);
-
-
-                // Footer Contacts
-                const contactsHTML = [];
-                for (let i = 1; i <= 2; i++) {
-                    if (globalSettings[`contact${i}_name`]) {
-                        contactsHTML.push(`
-                            <div class="text-center">
-                                <p class="font-semibold">${globalSettings[`contact${i}_name`]}</p>
-                                ${globalSettings[`contact${i}_phone`] ? `<a href="tel:${globalSettings[`contact${i}_phone`].replace(/\s/g, '')}" class="block hover:text-primary">${globalSettings[`contact${i}_phone`]}</a>` : ''}
-                                ${globalSettings[`contact${i}_phone2`] ? `<a href="tel:${globalSettings[`contact${i}_phone2`].replace(/\s/g, '')}" class="block hover:text-primary">${globalSettings[`contact${i}_phone2`]}</a>` : ''}
-                                ${globalSettings[`contact${i}_email`] ? `<a href="mailto:${globalSettings[`contact${i}_email`]}" class="block hover:text-primary">${globalSettings[`contact${i}_email`]}</a>` : ''}
-                            </div>
-                        `);
+                const countries = ['spanelsko', 'bulharsko'];
+                let allInfoItems = [], allServicesItems = [];
+                for (const country of countries) {
+                    const countrySettingsDoc = await getDoc(doc(db, 'settings', country));
+                    if (countrySettingsDoc.exists()) {
+                        const { infoMenu = [], servicesMenu = [] } = countrySettingsDoc.data();
+                        allInfoItems.push(...infoMenu);
+                        allServicesItems.push(...servicesMenu);
                     }
                 }
-                let footerHTML = `<div class="text-center lg:text-left"><p>&copy; ${new Date().getFullYear()} ${logoText}. Všechna práva vyhrazena.</p></div>`;
+                const uniqueInfo = Array.from(new Map(allInfoItems.map(item => [item.slug, item])).values());
+                const uniqueServices = Array.from(new Map(allServicesItems.map(item => [item.slug, item])).values());
+                const infoHtml = uniqueInfo.map(item => `<a href="page.html?slug=${item.slug}&lang=${currentLang}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">${item.title}</a>`).join('');
+                const servicesHtml = uniqueServices.map(item => `<a href="page.html?slug=${item.slug}&lang=${currentLang}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">${item.title}</a>`).join('');
+                document.getElementById('info-menu-container-desktop').innerHTML = infoHtml;
+                document.getElementById('services-menu-container-desktop').innerHTML = servicesHtml;
+                document.getElementById('info-menu-container-mobile').innerHTML = uniqueInfo.map(item => `<a href="page.html?slug=${item.slug}&lang=${currentLang}" class="block py-1 text-gray-700 hover:text-primary">${item.title}</a>`).join('');
+                document.getElementById('services-menu-container-mobile').innerHTML = uniqueServices.map(item => `<a href="page.html?slug=${item.slug}&lang=${currentLang}" class="block py-1 text-gray-700 hover:text-primary">${item.title}</a>`).join('');
+
+                const globalSettingsDoc = await getDoc(doc(db, 'settings', 'global'));
+                if (!globalSettingsDoc.exists()) return;
+                const settings = globalSettingsDoc.data();
+                let footerHTML = `<div class="text-center lg:text-left"><p>&copy; ${new Date().getFullYear()} Nesvarba. Všechna práva vyhrazena.</p></div>`;
+                const contactsHTML = [];
+                for (let i = 1; i <= 4; i++) {
+                    if (settings[`contact${i}_name`]) {
+                        contactsHTML.push(`
+                            <div class="text-center">
+                                <p class="font-semibold">${settings[`contact${i}_name`]}</p>
+                                ${settings[`contact${i}_phone`] ? `<a href="tel:${settings[`contact${i}_phone`].replace(/\s/g, '')}" class="block hover:text-primary">${settings[`contact${i}_phone`]}</a>` : ''}
+                                ${settings[`contact${i}_email`] ? `<a href="mailto:${settings[`contact${i}_email`]}" class="block hover:text-primary">${settings[`contact${i}_email`]}</a>` : ''}
+                            </div>`);
+                    }
+                }
                 footerHTML += `<div class="flex flex-wrap justify-center lg:justify-end gap-6">${contactsHTML.join('')}</div>`;
                 document.getElementById('site-footer').innerHTML = footerHTML;
             } catch (error) { console.error("Error loading global settings:", error); }
@@ -572,19 +521,7 @@
             loadSettings();
             setActiveLangLink();
             translatePage();
-            setupAuthFormToggle();
-        });
-        
-        document.querySelectorAll('#lang-switcher .lang-link').forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const lang = e.currentTarget.dataset.lang;
-                const url = new URL(window.location);
-                url.searchParams.set('lang', lang);
-                window.location.href = url.toString();
-            });
         });
     </script>
 </body>
 </html>
-
