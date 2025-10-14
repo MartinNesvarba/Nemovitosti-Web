@@ -55,7 +55,7 @@
         <!-- Left half - Spain -->
         <section
             class="w-full md:w-1/2 min-h-[50vh] md:min-h-screen bg-cover bg-center relative bg-half bg-spain"
-            style="background-image: url(španělsko.png);"
+            style="background-image: url(španělsko.png);">
             <!-- Semi-transparent overlay for better text readability -->
             <div class="absolute inset-0 bg-black bg-opacity-40"></div>
         </section>
@@ -88,10 +88,10 @@
 
                 <!-- Button container -->
                 <div class="flex flex-col md:flex-row gap-4 w-full sm:w-auto">
-                    <a id="spain-button" href="spanelsko/index.html" class="bg-transparent border-2 border-white text-white font-bold text-lg py-3 px-8 rounded-lg hover:bg-white hover:text-gray-900 transition-all duration-300 transform hover:scale-105 shadow-lg">
+                    <a id="spain-button" href="spanelsko.html" class="bg-transparent border-2 border-white text-white font-bold text-lg py-3 px-8 rounded-lg hover:bg-white hover:text-gray-900 transition-all duration-300 transform hover:scale-105 shadow-lg">
                         <!-- Text will be inserted from JS -->
                     </a>
-                    <a id="bulgaria-button" href="bulharsko/index.html" class="bg-transparent border-2 border-white text-white font-bold text-lg py-3 px-8 rounded-lg hover:bg-white hover:text-gray-900 transition-all duration-300 transform hover:scale-105 shadow-lg">
+                    <a id="bulgaria-button" href="bulharsko.html" class="bg-transparent border-2 border-white text-white font-bold text-lg py-3 px-8 rounded-lg hover:bg-white hover:text-gray-900 transition-all duration-300 transform hover:scale-105 shadow-lg">
                         <!-- Text will be inserted from JS -->
                     </a>
                 </div>
@@ -99,12 +99,7 @@
         </div>
     </main>
     
-    <!-- Using latest modular Firebase SDK for future data loading -->
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getFirestore } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-
         // --- Translations Data Structure ---
         const translations = {
             cz: {
@@ -170,31 +165,6 @@
             });
         }
         
-        // Function to initialize Firebase connection
-        async function initializeFirebase() {
-            try {
-                // These global variables are provided by the environment.
-                const firebaseConfig = typeof __firebase_config !== 'undefined' 
-                    ? JSON.parse(__firebase_config) 
-                    : { apiKey: "YOUR_API_KEY", authDomain: "YOUR_AUTH_DOMAIN", projectId: "YOUR_PROJECT_ID" }; // Fallback for local dev
-
-                const app = initializeApp(firebaseConfig);
-                const db = getFirestore(app);
-                const auth = getAuth(app);
-                
-                // Firebase Authentication
-                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                    await signInWithCustomToken(auth, __initial_auth_token);
-                } else {
-                    await signInAnonymously(auth);
-                }
-                console.log('Firebase auth successful. User UID:', auth.currentUser?.uid);
-
-            } catch (error) {
-                console.error("Firebase initialization failed:", error);
-            }
-        }
-        
         // Run the main logic after the DOM is fully loaded
         document.addEventListener('DOMContentLoaded', () => {
             // --- Initialize UI first ---
@@ -213,14 +183,7 @@
             const initialLang = langFromUrl || savedLang || 'cz';
             
             updateContent(initialLang);
-            
-            // --- Then initialize Firebase in the background ---
-            initializeFirebase();
         });
-
     </script>
 </body>
 </html>
-
-
-
