@@ -3,16 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Horizon Estates</title>
-    <meta name="keywords" id="meta-keywords" content="nemovitosti, reality, zahraničí, investice">
+    <title>Horizon Estates - Nemovitosti ve Španělsku</title>
+    <meta name="keywords" id="meta-keywords" content="nemovitosti španělsko, reality španělsko, apartmány španělsko, dům u moře">
     
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Google Fonts (Inter) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -29,22 +26,14 @@
         .text-primary { color: #dd6822; }
         .border-primary { border-color: #dd6822; }
         .hover\:bg-primary-dark:hover { background-color: #c55a1e; }
+        .bg-secondary { background-color: #4c18e1; }
         .nav-link-active { color: #dd6822; position: relative; }
         .nav-link-active::after { content: ''; position: absolute; width: 100%; height: 2px; bottom: -5px; left: 0; background-color: #dd6822; }
-        .content-from-db h1, .content-from-db h2, .content-from-db h3 { font-weight: 700; margin-top: 1.5em; margin-bottom: 0.75em; }
-        .content-from-db h1 { font-size: 2.25rem; line-height: 2.5rem; }
-        .content-from-db h2 { font-size: 1.875rem; line-height: 2.25rem; }
-        .content-from-db h3 { font-size: 1.5rem; line-height: 2rem; }
-        .content-from-db p { margin-bottom: 1.25em; line-height: 1.75; }
-        .content-from-db ul { list-style-position: inside; list-style-type: disc; margin-bottom: 1.25em; padding-left: 1.5rem; }
-        .content-from-db li { margin-bottom: 0.5em; }
-        .content-from-db a { color: #dd6822; text-decoration: underline; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes slideIn { from { transform: translateY(-30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
         .modal-fade-in { animation: fadeIn 0.3s ease-out; }
         .modal-slide-in { animation: slideIn 0.3s ease-out; }
         
-        /* --- START OF CHANGES: Flag Styles --- */
         .lang-link img {
             opacity: 0.7;
             transition: all 0.2s ease-in-out;
@@ -59,7 +48,6 @@
             transform: scale(1.1);
             box-shadow: 0 0 0 2px #dd6822;
         }
-        /* --- END OF CHANGES --- */
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800 flex flex-col min-h-screen">
@@ -68,19 +56,17 @@
         <div class="container mx-auto px-4">
             <div class="flex justify-between items-center py-3 border-b">
                 <div class="flex items-center space-x-4">
-                    <!-- --- START OF CHANGES: Language Switcher --- -->
                     <div id="lang-switcher" class="flex space-x-2">
-                        <a href="#" data-lang="cz" class="lang-link">
+                        <a href="spanelsko.html?lang=cz" data-lang="cz" class="lang-link">
                             <img src="https://flagcdn.com/w40/cz.png" alt="Čeština" class="w-8 h-6 object-cover">
                         </a>
-                        <a href="#" data-lang="en" class="lang-link">
+                        <a href="spanelsko.html?lang=en" data-lang="en" class="lang-link">
                             <img src="https://flagcdn.com/w40/gb.png" alt="English" class="w-8 h-6 object-cover">
                         </a>
-                        <a href="#" data-lang="de" class="lang-link">
+                        <a href="spanelsko.html?lang=de" data-lang="de" class="lang-link">
                             <img src="https://flagcdn.com/w40/de.png" alt="Deutsch" class="w-8 h-6 object-cover">
                         </a>
                     </div>
-                    <!-- --- END OF CHANGES --- -->
                     <a href="index.html" class="text-xl md:text-2xl font-bold text-gray-800 tracking-wider">HORIZON ESTATES</a>
                 </div>
                 <div class="flex items-center space-x-4">
@@ -97,7 +83,7 @@
             </div>
             <div class="hidden lg:flex justify-between items-center py-3" id="desktop-menu">
                  <nav class="flex items-center space-x-6">
-                    <a href="spanelsko.html" id="nav-spanelsko" class="font-semibold pb-1 hover:text-primary">Španělsko</a>
+                    <a href="spanelsko.html" id="nav-spanelsko" class="font-semibold pb-1 nav-link-active">Španělsko</a>
                     <a href="bulharsko.html" id="nav-bulharsko" class="font-semibold pb-1 hover:text-primary">Bulharsko</a>
                 </nav>
                 <nav class="flex items-center space-x-6" id="main-navigation">
@@ -116,7 +102,7 @@
         </div>
         <div id="mobile-menu" class="hidden lg:hidden px-4 pb-4 border-t">
               <nav class="flex flex-col space-y-3 pt-4">
-                <a href="spanelsko.html" id="nav-mobil-spanelsko" class="font-semibold pb-1 hover:text-primary">Španělsko</a>
+                <a href="spanelsko.html" id="nav-mobil-spanelsko" class="font-semibold pb-1 nav-link-active">Španělsko</a>
                 <a href="bulharsko.html" id="nav-mobil-bulharsko" class="font-semibold pb-1 hover:text-primary">Bulharsko</a>
                 <hr>
                 <h3 id="nav-mobil-informace" class="font-bold pt-2">Informace</h3>
@@ -130,12 +116,75 @@
         </div>
     </header>
 
-    <main class="flex-grow container mx-auto px-4 py-8 md:py-12">
-        <div id="page-content-container" class="bg-white p-6 md:p-10 rounded-lg shadow-lg max-w-4xl mx-auto">
-            <h1 class="text-3xl font-bold mb-4">Načítání...</h1>
-            <p>Obsah se právě načítá, prosím o strpení.</p>
+    <div class="flex-grow container mx-auto px-4 py-8">
+        <div class="flex flex-col lg:flex-row gap-8">
+            <aside class="lg:w-1/4 xl:w-1/5">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 id="filter-title" class="text-lg font-bold border-b-2 border-primary pb-2 mb-4 flex items-center"><i class="fa fa-search text-primary mr-2"></i> Rychlé vyhledávání</h3>
+                    <form id="filter-form" class="space-y-4">
+                        <div>
+                            <label for="lokalita" id="filter-location-label" class="block text-sm font-medium mb-1">Lokalita</label>
+                            <select id="lokalita" name="lokalita" class="w-full p-2 border rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition"><option value="">-- Načítání --</option></select>
+                        </div>
+                        <div>
+                            <label for="druh-nemovitosti" id="filter-type-label" class="block text-sm font-medium mb-1">Druh nemovitosti</label>
+                            <select id="druh-nemovitosti" name="druh-nemovitosti" class="w-full p-2 border rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition"><option value="">-- Načítání --</option></select>
+                        </div>
+                        <div>
+                            <label for="dispozice-filter" id="filter-rooms-label" class="block text-sm font-medium mb-1">Dispozice</label>
+                            <select id="dispozice-filter" name="dispozice" class="w-full p-2 border rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition"><option value="">-- Načítání --</option></select>
+                        </div>
+                        <div>
+                            <label for="offer-id-filter" id="filter-offerid-label" class="block text-sm font-medium mb-1">Č. nabídky</label>
+                            <input type="number" id="offer-id-filter" name="offer-id" placeholder="Zadejte číslo" class="w-full p-2 border rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition">
+                        </div>
+                        <div>
+                            <label id="filter-price-label" class="block text-sm font-medium mb-1">Cena (€)</label>
+                            <div class="flex flex-col sm:flex-row items-center gap-2">
+                                <input type="number" id="cena-od" name="cena-od" placeholder="Od" class="w-full p-2 border rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition">
+                                <span class="hidden sm:inline">-</span>
+                                <input type="number" id="cena-do" name="cena-do" placeholder="Do" class="w-full p-2 border rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition">
+                            </div>
+                        </div>
+                        <button type="submit" id="filter-submit-btn" class="w-full bg-gradient-to-r from-[#dd6822] to-[#4c18e1] text-white font-bold py-2.5 px-4 rounded-md hover:opacity-90 transition transform hover:-translate-y-0.5 shadow-lg">Vyhledat</button>
+                    </form>
+                </div>
+            </aside>
+            <main class="w-full lg:w-3/4 xl:w-4/5">
+                <section class="h-64 md:h-80 rounded-lg bg-cover bg-center flex flex-col justify-center items-center text-white text-center p-4 mb-8 shadow-xl" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url(https://images.pexels.com/photos/1732414/pexels-photo-1732414.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2)">
+                    <h1 id="main-title" class="text-3xl md:text-5xl font-bold text-shadow">Nemovitosti ve Španělsku</h1>
+                    <p id="main-subtitle" class="text-lg md:text-xl mt-2 text-shadow-md">Váš nový domov pod sluncem na pobřeží Costa Blanca.</p>
+                </section>
+                <div class="flex justify-center mb-6">
+                    <div class="inline-flex rounded-md shadow-sm">
+                        <button id="offer-type-sale" class="offer-type-btn px-6 py-2 text-sm font-medium border border-gray-200 rounded-l-lg focus:z-10 focus:ring-2 focus:ring-primary" data-offer-type="prodej">Na prodej</button>
+                        <button id="offer-type-rent" class="offer-type-btn px-6 py-2 text-sm font-medium border-t border-b border-gray-200 focus:z-10 focus:ring-2 focus:ring-primary" data-offer-type="pronajem">K pronájmu</button>
+                    </div>
+                </div>
+                <div class="flex justify-end mb-6">
+                    <div class="flex items-center space-x-2">
+                        <label for="sort-by" id="sort-by-label" class="text-sm font-medium">Seřadit podle:</label>
+                        <select id="sort-by" class="p-2 border rounded-md text-sm focus:ring-2 focus:ring-primary focus:border-primary transition">
+                            <option id="sort-date-desc" value="date-desc">Data (od nejnovější)</option>
+                            <option id="sort-offer-desc" value="offerId-desc">Číslo nabídky (sestupně)</option>
+                            <option id="sort-price-asc" value="price-asc">Ceny (od nejlevnější)</option>
+                            <option id="sort-price-desc" value="price-desc">Ceny (od nejdražší)</option>
+                        </select>
+                    </div>
+                </div>
+                <section id="properties-container" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8"></section>
+                <div id="pagination-container" class="flex justify-center items-center space-x-2 mt-8"></div>
+                <section class="mt-12 p-6 bg-white rounded-lg shadow-md border-l-4 border-yellow-400">
+                    <h2 id="facts-title" class="text-2xl font-bold mb-4">Zajímavosti o Španělsku</h2>
+                    <ul class="space-y-3">
+                        <li id="fact-1" class="flex items-start"><i class="fas fa-check-circle text-primary mt-1 mr-3"></i><span>Španělsko je jedinou zemí v Evropě, která sdílí fyzickou hranici s africkou zemí (Maroko).</span></li>
+                        <li id="fact-2" class="flex items-start"><i class="fas fa-check-circle text-primary mt-1 mr-3"></i><span>Země je proslulá svou kuchyní, včetně paelly, tapas a jamónu, a je třetím největším výrobcem vína na světě.</span></li>
+                        <li id="fact-3" class="flex items-start"><i class="fas fa-check-circle text-primary mt-1 mr-3"></i><span>Španělsko má více než 8 000 kilometrů pláží, které lákají miliony turistů každý rok.</span></li>
+                    </ul>
+                </section>
+            </main>
         </div>
-    </main>
+    </div>
 
     <footer class="bg-gray-100 border-t mt-auto">
         <div id="site-footer" class="container mx-auto px-4 py-6 flex flex-wrap justify-between items-center text-sm text-gray-600 gap-6"></div>
@@ -184,7 +233,7 @@
     </div>
     <div id="favoritesModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center p-4 modal-fade-in">
         <div class="bg-white rounded-lg shadow-2xl w-full max-w-3xl p-8 modal-slide-in">
-              <div class="flex justify-between items-center mb-6">
+             <div class="flex justify-between items-center mb-6">
                 <h2 id="favorites-modal-title" class="text-2xl font-bold">Moje oblíbené nemovitosti</h2>
                 <button class="close-btn text-3xl text-gray-400 hover:text-gray-700">&times;</button>
             </div>
@@ -209,23 +258,48 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
-        let userFavorites = [];
 
+        // --- Language and Translations ---
         const urlParams = new URLSearchParams(window.location.search);
         const currentLang = urlParams.get('lang') || 'cz';
 
         const translations = {
             cz: {
+                // Navigation
                 "nav-spanelsko": "Španělsko",
                 "nav-bulharsko": "Bulharsko",
                 "nav-informace": "Informace",
                 "nav-sluzby": "Naše služby",
                 "nav-onas": "O nás",
                 "contactLink": "Kontakt",
-                "page-not-found-title": "Stránka nenalezena",
-                "page-not-found-text": "Je nám líto, ale požadovaný obsah neexistuje nebo není aktivní.",
-                "server-error-title": "Chyba serveru",
-                "server-error-text": "Při načítání obsahu došlo k chybě. Zkuste to prosím později.",
+                // Filters
+                "filter-title": "Rychlé vyhledávání",
+                "filter-location-label": "Lokalita",
+                "filter-type-label": "Druh nemovitosti",
+                "filter-rooms-label": "Dispozice",
+                "filter-offerid-label": "Č. nabídky",
+                "filter-price-label": "Cena (€)",
+                "filter-submit-btn": "Vyhledat",
+                "filter-all": "Všechny",
+                "offerIdPlaceholder": "Zadejte číslo",
+                "priceFromPlaceholder": "Od",
+                "priceToPlaceholder": "Do",
+                // Main Content
+                "main-title": "Nemovitosti ve Španělsku",
+                "main-subtitle": "Váš nový domov pod sluncem na pobřeží Costa Blanca.",
+                "offer-type-sale": "Na prodej",
+                "offer-type-rent": "K pronájmu",
+                "sort-by-label": "Seřadit podle:",
+                "sort-offer-desc": "Číslo nabídky (sestupně)",
+                "sort-price-asc": "Ceny (od nejlevnější)",
+                "sort-price-desc": "Ceny (od nejdražší)",
+                "sort-date-desc": "Data (od nejnovější)",
+                // Facts
+                "facts-title": "Zajímavosti o Španělsku",
+                "fact-1": "Španělsko je jedinou zemí v Evropě, která sdílí fyzickou hranici s africkou zemí (Maroko).",
+                "fact-2": "Země je proslulá svou kuchyní, včetně paelly, tapas a jamónu, a je třetím největším výrobcem vína na světě.",
+                "fact-3": "Španělsko má více než 8 000 kilometrů pláží, které lákají miliony turistů každý rok.",
+                // Modals
                 "contact-modal-title": "Kontaktní formulář",
                 "contact-modal-name": "Vaše jméno",
                 "contact-modal-email": "Váš e-mail",
@@ -239,6 +313,10 @@
                 "register-modal-submit": "Zaregistrovat se",
                 "register-modal-login-prompt": "Máte již účet? <a>Přihlaste se</a>",
                 "favorites-modal-title": "Moje oblíbené nemovitosti",
+                "cardOfferId": "Č. nabídky",
+                "cardRooms": "Dispozice",
+                "cardArea": "Plocha",
+                "cardViewDetail": "Zobrazit detail"
             },
             en: {
                 "nav-spanelsko": "Spain",
@@ -247,10 +325,30 @@
                 "nav-sluzby": "Our Services",
                 "nav-onas": "About Us",
                 "contactLink": "Contact",
-                "page-not-found-title": "Page Not Found",
-                "page-not-found-text": "We are sorry, but the requested content does not exist or is not active.",
-                "server-error-title": "Server Error",
-                "server-error-text": "An error occurred while loading the content. Please try again later.",
+                "filter-title": "Quick Search",
+                "filter-location-label": "Location",
+                "filter-type-label": "Property Type",
+                "filter-rooms-label": "Layout",
+                "filter-offerid-label": "Offer No.",
+                "filter-price-label": "Price (€)",
+                "filter-submit-btn": "Search",
+                "filter-all": "All",
+                "offerIdPlaceholder": "Enter number",
+                "priceFromPlaceholder": "From",
+                "priceToPlaceholder": "To",
+                "main-title": "Properties in Spain",
+                "main-subtitle": "Your new home under the sun on the Costa Blanca.",
+                "offer-type-sale": "For Sale",
+                "offer-type-rent": "For Rent",
+                "sort-by-label": "Sort by:",
+                "sort-offer-desc": "Offer number (desc)",
+                "sort-price-asc": "Price (lowest first)",
+                "sort-price-desc": "Price (highest first)",
+                "sort-date-desc": "Date (newest first)",
+                "facts-title": "Interesting Facts about Spain",
+                "fact-1": "Spain is the only country in Europe that shares a physical border with an African country (Morocco).",
+                "fact-2": "The country is famous for its cuisine, including paella, tapas, and jamón, and is the world's third-largest wine producer.",
+                "fact-3": "Spain has over 8,000 kilometers of beaches, attracting millions of tourists every year.",
                 "contact-modal-title": "Contact Form",
                 "contact-modal-name": "Your Name",
                 "contact-modal-email": "Your E-mail",
@@ -264,6 +362,10 @@
                 "register-modal-submit": "Register",
                 "register-modal-login-prompt": "Already have an account? <a>Log In</a>",
                 "favorites-modal-title": "My Favorite Properties",
+                "cardOfferId": "Offer No.",
+                "cardRooms": "Layout",
+                "cardArea": "Area",
+                "cardViewDetail": "View Detail"
             },
             de: {
                 "nav-spanelsko": "Spanien",
@@ -272,10 +374,30 @@
                 "nav-sluzby": "Unsere Dienstleistungen",
                 "nav-onas": "Über uns",
                 "contactLink": "Kontakt",
-                "page-not-found-title": "Seite nicht gefunden",
-                "page-not-found-text": "Es tut uns leid, aber der angeforderte Inhalt existiert nicht oder ist nicht aktiv.",
-                "server-error-title": "Serverfehler",
-                "server-error-text": "Beim Laden des Inhalts ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut.",
+                "filter-title": "Schnellsuche",
+                "filter-location-label": "Standort",
+                "filter-type-label": "Immobilientyp",
+                "filter-rooms-label": "Aufteilung",
+                "filter-offerid-label": "Angebots-Nr.",
+                "filter-price-label": "Preis (€)",
+                "filter-submit-btn": "Suchen",
+                "filter-all": "Alle",
+                "offerIdPlaceholder": "Nummer eingeben",
+                "priceFromPlaceholder": "Von",
+                "priceToPlaceholder": "Bis",
+                "main-title": "Immobilien in Spanien",
+                "main-subtitle": "Ihr neues Zuhause unter der Sonne an der Costa Blanca.",
+                "offer-type-sale": "Zum Verkauf",
+                "offer-type-rent": "Zu vermieten",
+                "sort-by-label": "Sortieren nach:",
+                "sort-offer-desc": "Angebots-Nr. (absteigend)",
+                "sort-price-asc": "Preis (niedrigster zuerst)",
+                "sort-price-desc": "Preis (höchster zuerst)",
+                "sort-date-desc": "Datum (neuestes zuerst)",
+                "facts-title": "Interessante Fakten über Spanien",
+                "fact-1": "Spanien ist das einzige Land in Europa, das eine physische Grenze mit einem afrikanischen Land (Marokko) teilt.",
+                "fact-2": "Das Land ist berühmt für seine Küche, einschließlich Paella, Tapas und Jamón, und ist der drittgrößte Weinproduzent der Welt.",
+                "fact-3": "Spanien hat über 8.000 Kilometer Strände, die jedes Jahr Millionen von Touristen anziehen.",
                 "contact-modal-title": "Kontaktformular",
                 "contact-modal-name": "Ihr Name",
                 "contact-modal-email": "Ihre E-Mail",
@@ -289,12 +411,17 @@
                 "register-modal-submit": "Registrieren",
                 "register-modal-login-prompt": "Haben Sie bereits ein Konto? <a>Anmelden</a>",
                 "favorites-modal-title": "Meine Lieblingsimmobilien",
+                "cardOfferId": "Angebots-Nr.",
+                "cardRooms": "Aufteilung",
+                "cardArea": "Fläche",
+                "cardViewDetail": "Details anzeigen"
             }
         };
 
         const translatePage = () => {
             const langDict = translations[currentLang];
             if (!langDict) return;
+
             document.querySelectorAll('[id]').forEach(element => {
                 const key = element.id;
                 if (langDict[key]) {
@@ -302,13 +429,20 @@
                         const linkText = langDict[key].match(/<a>(.*?)<\/a>/)[1];
                         const fullText = langDict[key].replace(/<a>.*?<\/a>/, `<a class="font-semibold text-primary hover:underline cursor-pointer">${linkText}</a>`);
                         element.innerHTML = fullText;
-                    } else if (element.tagName === 'INPUT' && element.placeholder) {
+                    } else if (element.tagName === 'INPUT' && element.hasAttribute('placeholder')) {
                         element.placeholder = langDict[key];
                     } else if (['SPAN', 'A', 'BUTTON', 'H1', 'H2', 'H3', 'P', 'LABEL', 'OPTION'].includes(element.tagName)) {
                          element.textContent = langDict[key];
                     }
                 }
             });
+            document.getElementById('offer-id-filter').placeholder = langDict['offerIdPlaceholder'] || 'Zadejte číslo';
+            document.getElementById('cena-od').placeholder = langDict['priceFromPlaceholder'] || 'Od';
+            document.getElementById('cena-do').placeholder = langDict['priceToPlaceholder'] || 'Do';
+            
+            document.querySelector('#fact-1 span').textContent = langDict['fact-1'];
+            document.querySelector('#fact-2 span').textContent = langDict['fact-2'];
+            document.querySelector('#fact-3 span').textContent = langDict['fact-3'];
         };
 
         const setActiveLangLink = () => {
@@ -317,16 +451,15 @@
                 if (link.dataset.lang === currentLang) {
                     link.classList.add('active');
                 }
-                const url = new URL(window.location.href);
-                url.searchParams.set('lang', link.dataset.lang);
-                link.href = url.toString();
             });
+            // Update nav links to carry over the lang parameter
             document.querySelectorAll('a[href*=".html"]').forEach(link => {
                 if (!link.classList.contains('lang-link')) {
                     try {
-                        const url = new URL(link.href, window.location.href);
+                        const url = new URL(link.getAttribute('href'), window.location.href);
                         url.searchParams.set('lang', currentLang);
-                        link.href = url.toString();
+                        url.searchParams.set('country', pageCountry);
+                        link.href = url.href;
                     } catch (e) {
                         console.error(`Could not process URL for link: ${link.getAttribute('href')}`, e);
                     }
@@ -334,44 +467,177 @@
             });
         };
 
-        async function loadPageContent() {
-            const contentContainer = document.getElementById('page-content-container');
-            const langDict = translations[currentLang];
-            try {
-                const slug = urlParams.get('slug');
-                if (!slug) {
-                    contentContainer.innerHTML = `<h1>${langDict['page-not-found-title']}</h1><p>Chybí identifikátor stránky.</p>`;
-                    return;
-                }
 
-                const q = query(collection(db, 'pages'), where('slug', '==', slug), where('status', '==', 'Aktivní'));
-                const querySnapshot = await getDocs(q);
+        // --- Globální proměnné ---
+        let filteredProperties = [];
+        let userFavorites = [];
+        let currentPage = 1;
+        const propertiesPerPage = 9;
+        let currentOfferType = 'prodej';
+        const pageCountry = 'spanelsko';
 
-                if (querySnapshot.empty) {
-                    contentContainer.innerHTML = `<h1>${langDict['page-not-found-title']}</h1><p>${langDict['page-not-found-text']}</p>`;
-                    document.title = `${langDict['page-not-found-title']} | Horizon Estates`;
-                } else {
-                    const pageData = querySnapshot.docs[0].data();
-                    const title = pageData[`title_${currentLang}`] || pageData.title_cz;
-                    const content = pageData[`content_${currentLang}`] || pageData.content_cz;
-                    
-                    document.title = `${title} | Horizon Estates`;
-                    contentContainer.innerHTML = `<div class="content-from-db">${content}</div>`;
+        // --- Elementy DOM ---
+        const propertiesContainer = document.getElementById('properties-container');
+        const paginationContainer = document.getElementById('pagination-container');
+        const sortSelect = document.getElementById('sort-by');
+        const filterForm = document.getElementById('filter-form');
+        
+        const displayProperties = () => {
+            propertiesContainer.innerHTML = "";
+            const startIndex = (currentPage - 1) * propertiesPerPage;
+            const paginatedProperties = filteredProperties.slice(startIndex, startIndex + propertiesPerPage);
 
-                    const globalSettingsDoc = await getDoc(doc(db, 'settings', 'global'));
-                    if (globalSettingsDoc.exists()) {
-                        const settings = globalSettingsDoc.data();
-                        const globalTags = settings.tags || [];
-                        const pageTags = [title, pageData.slug];
-                        const allKeywords = [...new Set([...globalTags, ...pageTags.filter(t => t)])];
-                        document.getElementById('meta-keywords').setAttribute('content', allKeywords.join(', '));
-                    }
-                }
-            } catch (error) {
-                console.error("Chyba při načítání stránky: ", error);
-                contentContainer.innerHTML = `<h1>${langDict['server-error-title']}</h1><p>${langDict['server-error-text']}</p>`;
+            if (paginatedProperties.length === 0) {
+                propertiesContainer.innerHTML = `<p class="md:col-span-2 xl:col-span-3 text-center text-gray-500">Nebyly nalezeny žádné nemovitosti odpovídající zadaným kritériím.</p>`;
+                setupPagination();
+                return;
             }
-        }
+
+            paginatedProperties.forEach(prop => {
+                const title = prop[`title_${currentLang}`] || prop.title_cz || "No title";
+                const firstImage = prop.images && prop.images.length > 0 ? prop.images[0] : 'https://placehold.co/600x400/e2e8f0/94a3b8?text=Foto';
+                const isFavorite = userFavorites.includes(prop.id);
+                const card = document.createElement('div');
+                card.className = "bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300 relative";
+                card.dataset.propertyId = prop.id;
+                card.innerHTML = `
+                    <i class="fas fa-heart favorite-icon absolute top-4 right-4 text-2xl cursor-pointer ${isFavorite ? 'text-red-500' : 'text-white'} drop-shadow-lg transition-colors"></i>
+                    <img src="${firstImage}" alt="Foto: ${title}" class="w-full h-56 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">${title}</h3>
+                        <p class="text-2xl font-bold text-primary mb-4">€${prop.price.toLocaleString()}</p>
+                        <div class="text-sm text-gray-600 space-y-1 mb-4">
+                            <p>${translations[currentLang]['cardOfferId'] || 'Č. nabídky'}: <strong>${prop.offerId || 'N/A'}</strong> | ${translations[currentLang]['cardRooms'] || 'Dispozice'}: <strong>${prop.rooms || 'N/A'}</strong></p>
+                            <p>${prop.area ? `${translations[currentLang]['cardArea'] || 'Plocha'}: <strong>${prop.area} m²</strong>` : ''}</p>
+                        </div>
+                        <a href="detail.html?id=${prop.id}&lang=${currentLang}" class="inline-block w-full text-center bg-gray-800 text-white font-semibold py-2 px-4 rounded-md hover:bg-gray-700 transition">${translations[currentLang]['cardViewDetail'] || 'Zobrazit detail'}</a>
+                    </div>
+                `;
+                propertiesContainer.appendChild(card);
+            });
+            setupPagination();
+        };
+
+        const setupPagination = () => {
+            paginationContainer.innerHTML = "";
+            const pageCount = Math.ceil(filteredProperties.length / propertiesPerPage);
+            if (pageCount <= 1) return;
+            const prevButton = document.createElement('button');
+            prevButton.innerHTML = `<i class="fas fa-chevron-left"></i>`;
+            prevButton.className = "px-3 py-1 border rounded-md bg-white disabled:opacity-50 disabled:cursor-not-allowed";
+            prevButton.disabled = currentPage === 1;
+            prevButton.onclick = () => { if (currentPage > 1) { currentPage--; displayProperties(); } };
+            paginationContainer.appendChild(prevButton);
+            for (let i = 1; i <= pageCount; i++) {
+                const pageButton = document.createElement('button');
+                pageButton.innerText = i;
+                pageButton.className = `px-3 py-1 border rounded-md ${i === currentPage ? 'bg-primary text-white border-primary' : 'bg-white'}`;
+                pageButton.onclick = () => { currentPage = i; displayProperties(); };
+                paginationContainer.appendChild(pageButton);
+            }
+            const nextButton = document.createElement('button');
+            nextButton.innerHTML = `<i class="fas fa-chevron-right"></i>`;
+            nextButton.className = "px-3 py-1 border rounded-md bg-white disabled:opacity-50 disabled:cursor-not-allowed";
+            nextButton.disabled = currentPage === pageCount;
+            nextButton.onclick = () => { if (currentPage < pageCount) { currentPage++; displayProperties(); } };
+            paginationContainer.appendChild(nextButton);
+        };
+
+        const sortProperties = () => {
+            const [key, direction] = sortSelect.value.split('-');
+            filteredProperties.sort((a, b) => {
+                let valA = a[key], valB = b[key];
+                if (key === 'date') {
+                    valA = a.createdAt?.toMillis() || 0;
+                    valB = b.createdAt?.toMillis() || 0;
+                }
+                return direction === 'asc' ? (valA || 0) - (valB || 0) : (valB || 0) - (valA || 0);
+            });
+            currentPage = 1;
+            displayProperties();
+        };
+
+        const fetchAndFilterProperties = async (filters = {}) => {
+            propertiesContainer.innerHTML = `<p class="md:col-span-2 xl:col-span-3 text-center text-gray-500">Vyhledávání nemovitostí...</p>`;
+            try {
+                const propertiesRef = collection(db, 'properties');
+                let q = query(propertiesRef, where('country', '==', pageCountry), where('offerType', '==', currentOfferType));
+                const snapshot = await getDocs(q);
+                let results = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                filteredProperties = results.filter(p => {
+                    return (!filters.location || p.location === filters.location) &&
+                                (!filters.type || p.type === filters.type) &&
+                                (!filters.rooms || p.rooms === filters.rooms) &&
+                                (!filters.priceFrom || p.price >= filters.priceFrom) &&
+                                (!filters.priceTo || p.price <= filters.priceTo) &&
+                                (!filters.offerId || p.offerId == filters.offerId);
+                });
+                sortProperties();
+            } catch (error) {
+                console.error("Chyba při načítání nemovitostí: ", error);
+                propertiesContainer.innerHTML = `<p class="md:col-span-2 xl:col-span-3 text-center text-red-500">Chyba při načítání dat. Zkuste to prosím později.</p>`;
+            }
+        };
+
+        const loadFilterOptions = async () => {
+            const selects = {
+                lokalita: document.getElementById('lokalita'),
+                'druh-nemovitosti': document.getElementById('druh-nemovitosti'),
+                'dispozice-filter': document.getElementById('dispozice-filter')
+            };
+            const allOptionText = translations[currentLang]['filter-all'] || 'Všechny';
+            Object.values(selects).forEach(s => s.innerHTML = `<option value="">-- ${allOptionText} --</option>`);
+            
+            try {
+                const settingsDoc = await getDoc(doc(db, 'settings', pageCountry));
+                if (settingsDoc.exists()) {
+                    const { locations = [], types = [], rooms = [] } = settingsDoc.data();
+                    
+                    const populateSelect = (selectElement, items) => {
+                        items.sort((a, b) => {
+                            const nameA = (typeof a === 'object' ? a[`name_${currentLang}`] || a.name_cz : a) || '';
+                            const nameB = (typeof b === 'object' ? b[`name_${currentLang}`] || b.name_cz : b) || '';
+                            return nameA.localeCompare(nameB, currentLang);
+                        }).forEach(item => {
+                            const value = (typeof item === 'object' ? item.name_cz : item) || '';
+                            const text = (typeof item === 'object' ? item[`name_${currentLang}`] || item.name_cz : item) || '';
+                            if (value && text) {
+                                selectElement.add(new Option(text, value));
+                            }
+                        });
+                    };
+
+                    populateSelect(selects.lokalita, locations);
+                    populateSelect(selects['druh-nemovitosti'], types);
+                    populateSelect(selects['dispozice-filter'], rooms);
+                }
+            } catch (error) { console.error("Error loading filter options: ", error); }
+        };
+        
+        filterForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const filters = {
+                location: e.target.lokalita.value,
+                type: e.target['druh-nemovitosti'].value,
+                rooms: e.target.dispozice.value,
+                priceFrom: parseInt(e.target['cena-od'].value) || null,
+                priceTo: parseInt(e.target['cena-do'].value) || null,
+                offerId: parseInt(e.target['offer-id'].value) || null,
+            };
+            fetchAndFilterProperties(filters);
+        });
+
+        sortSelect.addEventListener('change', sortProperties);
+
+        document.querySelectorAll('.offer-type-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelector('.offer-type-btn.active')?.classList.remove('active', 'bg-primary', 'text-white');
+                btn.classList.add('active', 'bg-primary', 'text-white');
+                currentOfferType = btn.dataset.offerType;
+                fetchAndFilterProperties();
+            });
+        });
+        document.querySelector('.offer-type-btn[data-offer-type="prodej"]').classList.add('active', 'bg-primary', 'text-white');
 
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
@@ -403,6 +669,7 @@
                 userInfoEl.style.display = 'none';
                 userFavorites = [];
             }
+            if (filteredProperties.length > 0) displayProperties(); 
         });
 
         loginForm.addEventListener('submit', (e) => {
@@ -429,6 +696,28 @@
         document.getElementById('showLogin').addEventListener('click', () => {
             document.getElementById('registerFormContainer').style.display = 'none';
             document.getElementById('loginFormContainer').style.display = 'block';
+        });
+        
+        const toggleFavorite = async (userId, propertyId) => {
+            const userRef = doc(db, 'users', userId);
+            const isFavorite = userFavorites.includes(propertyId);
+            const updatedFavorites = isFavorite ? userFavorites.filter(id => id !== propertyId) : [...userFavorites, propertyId];
+            await setDoc(userRef, { favorites: updatedFavorites }, { merge: true });
+            userFavorites = updatedFavorites;
+            return !isFavorite;
+        };
+        
+        propertiesContainer.addEventListener('click', async (e) => {
+            if (e.target.classList.contains('favorite-icon')) {
+                const user = auth.currentUser;
+                if (!user) { openModal(modals.auth); return; }
+                const card = e.target.closest('[data-property-id]');
+                if (!card) return; 
+                const propertyId = card.dataset.propertyId;
+                const wasAdded = await toggleFavorite(user.uid, propertyId);
+                e.target.classList.toggle('text-red-500', wasAdded);
+                e.target.classList.toggle('text-white', !wasAdded);
+            }
         });
         
         favoritesIconEl.addEventListener('click', async () => {
@@ -471,56 +760,83 @@
                     await setDoc(userRef, { favorites: updatedFavorites }, { merge: true });
                     userFavorites = updatedFavorites;
                     removeBtn.closest('.favorite-item').remove();
+                    const cardIcon = propertiesContainer.querySelector(`[data-property-id="${propertyId}"] .favorite-icon`);
+                    if (cardIcon) {
+                        cardIcon.classList.remove('text-red-500');
+                        cardIcon.classList.add('text-white');
+                    }
                 }
             }
         });
 
-        async function loadSettings() {
+        const loadSettings = async () => {
             try {
-                const countries = ['spanelsko', 'bulharsko'];
-                let allInfoItems = [], allServicesItems = [];
-                for (const country of countries) {
-                    const countrySettingsDoc = await getDoc(doc(db, 'settings', country));
-                    if (countrySettingsDoc.exists()) {
-                        const { infoMenu = [], servicesMenu = [] } = countrySettingsDoc.data();
-                        allInfoItems.push(...infoMenu);
-                        allServicesItems.push(...servicesMenu);
-                    }
+                let countrySettings = {};
+                let globalSettings = {};
+
+                const countrySettingsDoc = await getDoc(doc(db, 'settings', pageCountry));
+                if (countrySettingsDoc.exists()) {
+                    countrySettings = countrySettingsDoc.data();
+                    const { infoMenu = [], servicesMenu = [] } = countrySettings;
+                    const infoHtml = infoMenu.map(item => `<a href="page.html?slug=${item.slug}&lang=${currentLang}&country=${pageCountry}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">${item.title}</a>`).join('');
+                    const servicesHtml = servicesMenu.map(item => `<a href="page.html?slug=${item.slug}&lang=${currentLang}&country=${pageCountry}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">${item.title}</a>`).join('');
+                    document.getElementById('info-menu-container-desktop').innerHTML = infoHtml;
+                    document.getElementById('services-menu-container-desktop').innerHTML = servicesHtml;
+                    document.getElementById('info-menu-container-mobile').innerHTML = infoMenu.map(item => `<a href="page.html?slug=${item.slug}&lang=${currentLang}&country=${pageCountry}" class="block py-1 text-gray-700 hover:text-primary">${item.title}</a>`).join('');
+                    document.getElementById('services-menu-container-mobile').innerHTML = servicesMenu.map(item => `<a href="page.html?slug=${item.slug}&lang=${currentLang}&country=${pageCountry}" class="block py-1 text-gray-700 hover:text-primary">${item.title}</a>`).join('');
                 }
-                const uniqueInfo = Array.from(new Map(allInfoItems.map(item => [item.slug, item])).values());
-                const uniqueServices = Array.from(new Map(allServicesItems.map(item => [item.slug, item])).values());
-                const infoHtml = uniqueInfo.map(item => `<a href="page.html?slug=${item.slug}&lang=${currentLang}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">${item.title}</a>`).join('');
-                const servicesHtml = uniqueServices.map(item => `<a href="page.html?slug=${item.slug}&lang=${currentLang}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">${item.title}</a>`).join('');
-                document.getElementById('info-menu-container-desktop').innerHTML = infoHtml;
-                document.getElementById('services-menu-container-desktop').innerHTML = servicesHtml;
-                document.getElementById('info-menu-container-mobile').innerHTML = uniqueInfo.map(item => `<a href="page.html?slug=${item.slug}&lang=${currentLang}" class="block py-1 text-gray-700 hover:text-primary">${item.title}</a>`).join('');
-                document.getElementById('services-menu-container-mobile').innerHTML = uniqueServices.map(item => `<a href="page.html?slug=${item.slug}&lang=${currentLang}" class="block py-1 text-gray-700 hover:text-primary">${item.title}</a>`).join('');
 
                 const globalSettingsDoc = await getDoc(doc(db, 'settings', 'global'));
-                if (!globalSettingsDoc.exists()) return;
-                const settings = globalSettingsDoc.data();
-                let footerHTML = `<div class="text-center lg:text-left"><p>&copy; ${new Date().getFullYear()} Nesvarba. Všechna práva vyhrazena.</p></div>`;
+                if (globalSettingsDoc.exists()) {
+                    globalSettings = globalSettingsDoc.data();
+                }
+
+                const logoText = countrySettings.logoText || globalSettings.logoText || 'HORIZON ESTATES';
+                document.querySelector('header .font-bold.text-gray-800').textContent = logoText;
+
                 const contactsHTML = [];
                 for (let i = 1; i <= 4; i++) {
-                    if (settings[`contact${i}_name`]) {
+                    if (globalSettings[`contact${i}_name`]) {
                         contactsHTML.push(`
                             <div class="text-center">
-                                <p class="font-semibold">${settings[`contact${i}_name`]}</p>
-                                ${settings[`contact${i}_phone`] ? `<a href="tel:${settings[`contact${i}_phone`].replace(/\s/g, '')}" class="block hover:text-primary">${settings[`contact${i}_phone`]}</a>` : ''}
-                                ${settings[`contact${i}_email`] ? `<a href="mailto:${settings[`contact${i}_email`]}" class="block hover:text-primary">${settings[`contact${i}_email`]}</a>` : ''}
-                            </div>`);
+                                <p class="font-semibold">${globalSettings[`contact${i}_name`]}</p>
+                                ${globalSettings[`contact${i}_phone`] ? `<a href="tel:${globalSettings[`contact${i}_phone`].replace(/\s/g, '')}" class="block hover:text-primary">${globalSettings[`contact${i}_phone`]}</a>` : ''}
+                                ${globalSettings[`contact${i}_email`] ? `<a href="mailto:${globalSettings[`contact${i}_email`]}" class="block hover:text-primary">${globalSettings[`contact${i}_email`]}</a>` : ''}
+                            </div>
+                        `);
                     }
                 }
+                let footerHTML = `<div class="text-center lg:text-left"><p>&copy; ${new Date().getFullYear()} ${logoText}. Všechna práva vyhrazena.</p></div>`;
                 footerHTML += `<div class="flex flex-wrap justify-center lg:justify-end gap-6">${contactsHTML.join('')}</div>`;
                 document.getElementById('site-footer').innerHTML = footerHTML;
-            } catch (error) { console.error("Error loading global settings:", error); }
-        }
+            } catch (error) {
+                console.error("Error loading settings:", error);
+            }
+        };
+        
+        const loadGlobalTags = async () => {
+            try {
+                const globalSettingsDoc = await getDoc(doc(db, 'settings', 'global'));
+                if (globalSettingsDoc.exists()) {
+                    const settings = globalSettingsDoc.data();
+                    const globalTags = settings.tags || [];
+                    const metaKeywordsTag = document.getElementById('meta-keywords');
+                    const existingKeywords = metaKeywordsTag.getAttribute('content').split(',').map(k => k.trim()).filter(Boolean);
+                    const allKeywords = [...new Set([...existingKeywords, ...globalTags])];
+                    metaKeywordsTag.setAttribute('content', allKeywords.join(', '));
+                }
+            } catch (error) {
+                console.error("Error loading global SEO tags:", error);
+            }
+        };
 
         document.addEventListener('DOMContentLoaded', () => {
-            loadPageContent();
-            loadSettings();
             setActiveLangLink();
             translatePage();
+            fetchAndFilterProperties();
+            loadFilterOptions();
+            loadSettings();
+            loadGlobalTags();
         });
     </script>
 </body>
