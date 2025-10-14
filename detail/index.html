@@ -4,11 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detail nemovitosti</title>
-    <!-- SEO: Přidán meta tag pro popis stránky (bude vyplněn dynamicky) -->
     <meta name="description" id="meta-description" content="Prozkoumejte detailní informace o této nemovitosti, včetně fotografií, popisu a vybavení.">
     <meta name="keywords" id="meta-keywords" content="nemovitosti, reality, zahraničí, investice">
     
-    <!-- Optimalizace načítání písem a ikon -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -124,7 +122,6 @@
                             <i class="fas fa-sign-out-alt text-xl cursor-pointer hover:text-red-500" id="logoutIcon" title="Odhlásit se"></i>
                         </div>
                     </div>
-                    <!-- Přístupnost: Přidán aria-label pro screen readery -->
                     <button id="mobile-menu-button" class="lg:hidden text-2xl" aria-label="Otevřít menu"><i class="fas fa-bars"></i></button>
                 </div>
             </div>
@@ -142,6 +139,14 @@
                         <button id="nav-sluzby" class="font-semibold hover:text-primary">Naše služby <i class="fas fa-chevron-down text-xs ml-1"></i></button>
                         <div class="absolute hidden group-hover:block bg-white shadow-lg rounded-md top-full pt-3 pb-2 w-52 z-50" id="services-menu-container-desktop"></div>
                     </div>
+                    <div class="relative group">
+                        <button id="nav-ospanelsku" class="font-semibold hover:text-primary">O Španělsku <i class="fas fa-chevron-down text-xs ml-1"></i></button>
+                        <div class="absolute hidden group-hover:block bg-white shadow-lg rounded-md top-full pt-3 pb-2 w-52 z-10" id="ospanelsku-menu-container-desktop"></div>
+                    </div>
+                    <div class="relative group">
+                        <button id="nav-obulharsku" class="font-semibold hover:text-primary">O Bulharsku <i class="fas fa-chevron-down text-xs ml-1"></i></button>
+                        <div class="absolute hidden group-hover:block bg-white shadow-lg rounded-md top-full pt-3 pb-2 w-52 z-10" id="obulharsku-menu-container-desktop"></div>
+                    </div>
                     <a href="/page/?slug=o-nas" id="nav-onas" class="font-semibold hover:text-primary">O nás</a>
                     <a href="#" id="contactLink" class="font-semibold hover:text-primary">Kontakt</a>
                 </nav>
@@ -156,6 +161,10 @@
                 <div id="info-menu-container-mobile" class="flex flex-col space-y-2 pl-2"></div>
                 <h3 id="nav-mobil-sluzby" class="font-bold pt-2">Naše služby</h3>
                 <div id="services-menu-container-mobile" class="flex flex-col space-y-2 pl-2"></div>
+                <h3 id="nav-mobil-ospanelsku" class="font-bold pt-2">O Španělsku</h3>
+                <div id="ospanelsku-menu-container-mobile" class="flex flex-col space-y-2 pl-2"></div>
+                <h3 id="nav-mobil-obulharsku" class="font-bold pt-2">O Bulharsku</h3>
+                <div id="obulharsku-menu-container-mobile" class="flex flex-col space-y-2 pl-2"></div>
                  <hr>
                 <a href="/page/?slug=o-nas" id="nav-mobil-onas" class="font-semibold hover:text-primary">O nás</a>
                 <a href="#" id="contactLinkMobile" class="font-semibold hover:text-primary">Kontakt</a>
@@ -181,7 +190,6 @@
                     <div class="image-gallery">
                         <div class="main-image-container relative mb-4 cursor-pointer group">
                             <div id="main-image-wrapper" class="watermark-container w-full h-96 md:h-[500px] rounded-lg shadow-md overflow-hidden bg-gray-100">
-                                <!-- Optimalizace LCP: Priorita načítání, explicitní rozměry -->
                                 <img id="mainImage" src="https://placehold.co/800x600/e2e8f0/4a5568?text=Na%C4%8D%C3%ADt%C3%A1m..." alt="Hlavní fotka nemovitosti" class="w-full h-full object-cover transition-opacity duration-300" fetchpriority="high" width="800" height="600">
                             </div>
                             <button id="mainPrevBtn" class="main-image-nav absolute top-1/2 -translate-y-1/2 left-3 bg-black bg-opacity-40 text-white rounded-full w-10 h-10 text-2xl opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center" aria-label="Předchozí obrázek">&#10094;</button>
@@ -330,7 +338,6 @@
         </div>
     </div>
 
-    <!-- Optimalizace: Odložení načítání skriptu pomocí 'defer' -->
     <script type="module" defer>
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
         import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
@@ -358,6 +365,8 @@
                 "nav-bulharsko": "Bulharsko",
                 "nav-informace": "Informace",
                 "nav-sluzby": "Naše služby",
+                "nav-ospanelsku": "O Španělsku",
+                "nav-obulharsku": "O Bulharsku",
                 "nav-onas": "O nás",
                 "contactLink": "Kontakt",
                 "breadcrumb-home": "Úvod",
@@ -390,6 +399,8 @@
                 "nav-bulharsko": "Bulgaria",
                 "nav-informace": "Information",
                 "nav-sluzby": "Our Services",
+                "nav-ospanelsku": "About Spain",
+                "nav-obulharsku": "About Bulgaria",
                 "nav-onas": "About Us",
                 "contactLink": "Contact",
                 "breadcrumb-home": "Home",
@@ -422,6 +433,8 @@
                 "nav-bulharsko": "Bulgarien",
                 "nav-informace": "Informationen",
                 "nav-sluzby": "Unsere Dienstleistungen",
+                "nav-ospanelsku": "Über Spanien",
+                "nav-obulharsku": "Über Bulgarien",
                 "nav-onas": "Über uns",
                 "contactLink": "Kontakt",
                 "breadcrumb-home": "Startseite",
@@ -456,6 +469,8 @@
             if (!langDict) return;
             document.querySelectorAll('[id]').forEach(element => {
                 const key = element.id;
+                const mobileKey = key.startsWith('nav-mobil-') ? key.replace('nav-mobil-', 'nav-') : null;
+
                 if (langDict[key]) {
                     if (key.includes('-prompt')) {
                         const linkId = (key === 'login-modal-register-prompt') ? 'showRegister' : 'showLogin';
@@ -468,6 +483,8 @@
                     } else if (['SPAN', 'A', 'BUTTON', 'H1', 'H2', 'H3', 'H4', 'P', 'LABEL', 'OPTION'].includes(element.tagName)) {
                         element.textContent = langDict[key];
                     }
+                } else if (mobileKey && langDict[mobileKey]) {
+                    element.textContent = langDict[mobileKey];
                 }
             });
             setupAuthFormToggle();
@@ -535,7 +552,6 @@
                 const thumb = document.createElement('img');
                 thumb.src = img.src;
                 thumb.alt = `Náhled - ${img.alt}`;
-                // Optimalizace: Líné načítání a explicitní rozměry pro náhledy
                 thumb.className = 'thumbnail-image w-56 h-36 object-cover rounded-md cursor-pointer border-4 border-transparent hover:border-primary/50 transition-all duration-200 flex-shrink-0';
                 thumb.loading = 'lazy';
                 thumb.width = '224';
@@ -608,10 +624,8 @@
                 const allKeywords = [...new Set([...existingKeywords, ...propertyTags, ...globalTags])];
                 metaKeywordsTag.setAttribute('content', allKeywords.join(', '));
                 
-                // SEO: Dynamicky nastaví meta description
                 const metaDescriptionTag = document.getElementById('meta-description');
                 const descriptionText = property[`description_${currentLang}`] || property.description_cz || '';
-                // Zkrátí popis na prvních 155 znaků a odstraní HTML tagy
                 metaDescriptionTag.setAttribute('content', descriptionText.replace(/<[^>]*>/g, '').substring(0, 155));
 
             } catch (error) { console.error("Error setting up SEO tags:", error); }
@@ -646,12 +660,7 @@
                 const title = currentProperty[`title_${currentLang}`] || currentProperty.title_cz;
                 const description = currentProperty[`description_${currentLang}`] || currentProperty.description_cz;
 
-                let watermarkText = '';
-                if (currentProperty.country === 'bulharsko') {
-                    watermarkText = 'HORIZON-ESTATES';
-                } else if (currentProperty.country === 'spanelsko') {
-                    watermarkText = 'HORIZON-ESTATES';
-                }
+                let watermarkText = 'HORIZON-ESTATES';
                 document.getElementById('main-image-wrapper').dataset.watermark = watermarkText;
                 
                 const lightboxWrapper = document.getElementById('lightbox-wrapper');
@@ -669,7 +678,6 @@
                 if (currentProperty.country) {
                     const countryName = translations[currentLang][`nav-${currentProperty.country}`] || currentProperty.country;
                     breadcrumbCountry.textContent = countryName;
-                    // OPRAVENO ZDE
                     breadcrumbCountry.href = `/${currentProperty.country}/?lang=${currentLang}`;
                     document.getElementById(`nav-${currentProperty.country}`)?.classList.add('nav-link-active');
                     document.getElementById(`nav-mobil-${currentProperty.country}`)?.classList.add('nav-link-active');
@@ -722,19 +730,13 @@
                 const snapshot = await getDocs(q);
                 if (snapshot.empty) return;
 
-                let watermarkText = '';
-                if (property.country === 'bulharsko') {
-                    watermarkText = 'HORIZON-ESTATES';
-                } else if (property.country === 'spanelsko') {
-                    watermarkText = 'HORIZON-ESTATES';
-                }
+                let watermarkText = 'HORIZON-ESTATES';
 
                 similarContainer.innerHTML = '';
                 snapshot.forEach(doc => {
                     const prop = doc.data();
                     const title = prop[`title_${currentLang}`] || prop.title_cz;
                     similarContainer.innerHTML += `
-                        <!-- OPRAVENO ZDE -->
                         <a href="/detail/?id=${doc.id}&lang=${currentLang}" class="block bg-white rounded-lg shadow-md overflow-hidden transform hover:-translate-y-1 transition">
                             <div class="watermark-container similar-watermark-container" data-watermark="${watermarkText}">
                                 <img src="${prop.images?.[0] || 'https://placehold.co/300x200'}" alt="${title}" class="w-full h-40 object-cover" loading="lazy" width="300" height="200">
@@ -784,49 +786,39 @@
 
         async function loadSettings(pageCountry) {
             try {
-                let countrySettings = {};
                 let globalSettings = {};
-
-                // Fetch country-specific settings if country is specified in URL
-                if (pageCountry) {
-                    const countrySettingsDoc = await getDoc(doc(db, 'settings', pageCountry));
-                    if (countrySettingsDoc.exists()) {
-                        countrySettings = countrySettingsDoc.data();
-                    }
-                }
-
-                // Fetch global settings
                 const globalSettingsDoc = await getDoc(doc(db, 'settings', 'global'));
                 if (globalSettingsDoc.exists()){
                      globalSettings = globalSettingsDoc.data();
                 }
                 
-                const logoText = countrySettings.logoText || globalSettings.logoText || 'HORIZON ESTATES';
+                const logoText = globalSettings.logoText || 'HORIZON ESTATES';
                 document.querySelector('header .font-bold.text-gray-800').textContent = logoText;
 
-                // Menu Logic: fetch from both, then create links with context
-                const countries = ['spanelsko', 'bulharsko'];
-                let allInfoItems = [], allServicesItems = [];
-
-                for (const country of countries) {
+                let allInfoItems = [], allServicesItems = [], allSpainItems = [], allBulgariaItems = [];
+                for (const country of ['spanelsko', 'bulharsko']) {
                     const countrySettingsDoc = await getDoc(doc(db, 'settings', country));
                     if (countrySettingsDoc.exists()) {
-                        const { infoMenu = [], servicesMenu = [] } = countrySettingsDoc.data();
-                        allInfoItems.push(...infoMenu.map(item => ({...item, country})));
-                        allServicesItems.push(...servicesMenu.map(item => ({...item, country})));
+                        const data = countrySettingsDoc.data();
+                        allInfoItems.push(...(data.infoMenu || []).map(item => ({...item, country})));
+                        allServicesItems.push(...(data.servicesMenu || []).map(item => ({...item, country})));
+                        allSpainItems.push(...(data.spainMenu || []).map(item => ({...item, country})));
+                        allBulgariaItems.push(...(data.bulgariaMenu || []).map(item => ({...item, country})));
                     }
                 }
                 
-                const uniqueInfo = Array.from(new Map(allInfoItems.map(item => [item.slug, item])).values());
-                const uniqueServices = Array.from(new Map(allServicesItems.map(item => [item.slug, item])).values());
+                const buildMenuHtml = (items) => items.map(item => `<a href="/page/?slug=${item.slug}&lang=${currentLang}&country=${item.country}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">${item.title}</a>`).join('');
+                const buildMobileMenuHtml = (items) => items.map(item => `<a href="/page/?slug=${item.slug}&lang=${currentLang}&country=${item.country}" class="block py-1 text-gray-700 hover:text-primary">${item.title}</a>`).join('');
+
+                document.getElementById('info-menu-container-desktop').innerHTML = buildMenuHtml(allInfoItems);
+                document.getElementById('services-menu-container-desktop').innerHTML = buildMenuHtml(allServicesItems);
+                document.getElementById('ospanelsku-menu-container-desktop').innerHTML = buildMenuHtml(allSpainItems);
+                document.getElementById('obulharsku-menu-container-desktop').innerHTML = buildMenuHtml(allBulgariaItems);
                 
-                // OPRAVENO ZDE
-                const infoHtml = uniqueInfo.map(item => `<a href="/page/?slug=${item.slug}&lang=${currentLang}&country=${item.country}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">${item.title}</a>`).join('');
-                const servicesHtml = uniqueServices.map(item => `<a href="/page/?slug=${item.slug}&lang=${currentLang}&country=${item.country}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">${item.title}</a>`).join('');
-                document.getElementById('info-menu-container-desktop').innerHTML = infoHtml;
-                document.getElementById('services-menu-container-desktop').innerHTML = servicesHtml;
-                document.getElementById('info-menu-container-mobile').innerHTML = uniqueInfo.map(item => `<a href="/page/?slug=${item.slug}&lang=${currentLang}&country=${item.country}" class="block py-1 text-gray-700 hover:text-primary">${item.title}</a>`).join('');
-                document.getElementById('services-menu-container-mobile').innerHTML = uniqueServices.map(item => `<a href="/page/?slug=${item.slug}&lang=${currentLang}&country=${item.country}" class="block py-1 text-gray-700 hover:text-primary">${item.title}</a>`).join('');
+                document.getElementById('info-menu-container-mobile').innerHTML = buildMobileMenuHtml(allInfoItems);
+                document.getElementById('services-menu-container-mobile').innerHTML = buildMobileMenuHtml(allServicesItems);
+                document.getElementById('ospanelsku-menu-container-mobile').innerHTML = buildMobileMenuHtml(allSpainItems);
+                document.getElementById('obulharsku-menu-container-mobile').innerHTML = buildMobileMenuHtml(allBulgariaItems);
 
                 let footerHTML = `<div class="text-center lg:text-left"><p>&copy; ${new Date().getFullYear()} ${logoText}. Všechna práva vyhrazena.</p></div>`;
                 const contactsHTML = [];
@@ -930,7 +922,6 @@
                         <div class="flex-grow">
                             <h4 class="font-bold">${prop[`title_${currentLang}`] || prop.title_cz}</h4>
                             <p class="text-primary font-semibold">€${prop.price.toLocaleString()}</p>
-                            <!-- OPRAVENO ZDE -->
                             <a href="/detail/?id=${doc.id}&lang=${currentLang}" class="text-sm text-gray-500 hover:underline">Zobrazit detail</a>
                         </div>
                         <button class="remove-favorite text-gray-400 hover:text-red-500 text-xl" data-id="${doc.id}"><i class="fas fa-trash-alt"></i></button>
