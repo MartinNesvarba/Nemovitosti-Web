@@ -99,8 +99,8 @@
             </div>
             <div class="hidden lg:flex justify-between items-center py-3" id="desktop-menu">
                 <nav class="flex items-center space-x-6">
-                    <a href="/spanelsko" id="nav-spanelsko" class="font-semibold pb-1 hover:text-primary">Španělsko</a>
-                    <a href="/bulharsko" id="nav-bulharsko" class="font-semibold pb-1 nav-link-active">Bulharsko</a>
+                    <a href="spanelsko.html" id="nav-spanelsko" class="font-semibold pb-1 hover:text-primary">Španělsko</a>
+                    <a href="bulharsko.html" id="nav-bulharsko" class="font-semibold pb-1 nav-link-active">Bulharsko</a>
                 </nav>
                 <nav class="flex items-center space-x-6" id="main-navigation">
                     <div class="relative group">
@@ -112,25 +112,25 @@
                         <div class="absolute hidden group-hover:block bg-white shadow-lg rounded-md top-full pt-3 pb-2 w-52 z-10" id="services-menu-container-desktop"></div>
                     </div>
                     <div class="relative group">
-                        <button id="nav-countryInfo" class="font-semibold hover:text-primary">O Bulharsku <i class="fas fa-chevron-down text-xs ml-1"></i></button>
-                        <div class="absolute hidden group-hover:block bg-white shadow-lg rounded-md top-full pt-3 pb-2 w-52 z-10" id="countryInfo-menu-container-desktop"></div>
+                        <button id="nav-about-country" class="font-semibold hover:text-primary">O Bulharsku <i class="fas fa-chevron-down text-xs ml-1"></i></button>
+                        <div class="absolute hidden group-hover:block bg-white shadow-lg rounded-md top-full pt-3 pb-2 w-52 z-10" id="about-country-menu-container-desktop"></div>
                     </div>
-                    <a href="/page" id="nav-onas" class="font-semibold hover:text-primary">O nás</a>
+                    <a href="page.html?slug=o-nas" id="nav-onas" class="font-semibold hover:text-primary">O nás</a>
                     <a href="#" id="contactLink" class="font-semibold hover:text-primary">Kontakt</a>
                 </nav>
             </div>
         </div>
         <div id="mobile-menu" class="hidden lg:hidden px-4 pb-4 border-t">
             <nav class="flex flex-col space-y-3 pt-4">
-                <a href="/spanelsko" id="nav-mobil-spanelsko" class="font-semibold pb-1 hover:text-primary">Španělsko</a>
-                <a href="/bulharsko" id="nav-mobil-bulharsko" class="font-semibold pb-1 nav-link-active">Bulharsko</a>
+                <a href="spanelsko.html" id="nav-mobil-spanelsko" class="font-semibold pb-1 hover:text-primary">Španělsko</a>
+                <a href="bulharsko.html" id="nav-mobil-bulharsko" class="font-semibold pb-1 nav-link-active">Bulharsko</a>
                 <hr>
                 <h3 id="nav-mobil-informace" class="font-bold pt-2">Informace</h3>
                 <div id="info-menu-container-mobile" class="flex flex-col space-y-2 pl-2"></div>
                 <h3 id="nav-mobil-sluzby" class="font-bold pt-2">Naše služby</h3>
                 <div id="services-menu-container-mobile" class="flex flex-col space-y-2 pl-2"></div>
-                <h3 id="nav-mobil-countryInfo" class="font-bold pt-2">O Bulharsku</h3>
-                <div id="countryInfo-menu-container-mobile" class="flex flex-col space-y-2 pl-2"></div>
+                <h3 id="nav-mobil-about-country" class="font-bold pt-2">O Bulharsku</h3>
+                <div id="about-country-menu-container-mobile" class="flex flex-col space-y-2 pl-2"></div>
                 <hr>
                 <a href="page.html?slug=o-nas" id="nav-mobil-onas" class="font-semibold hover:text-primary">O nás</a>
                 <a href="#" id="contactLinkMobile" class="font-semibold hover:text-primary">Kontakt</a>
@@ -289,7 +289,7 @@
                 "nav-bulharsko": "Bulharsko",
                 "nav-informace": "Informace",
                 "nav-sluzby": "Naše služby",
-                "nav-countryInfo": "O Bulharsku",
+                "nav-about-country": "O Bulharsku",
                 "nav-onas": "O nás",
                 "contactLink": "Kontakt",
                 "filter-title": "Rychlé vyhledávání",
@@ -339,7 +339,7 @@
                 "nav-bulharsko": "Bulgaria",
                 "nav-informace": "Information",
                 "nav-sluzby": "Our Services",
-                "nav-countryInfo": "About Bulgaria",
+                "nav-about-country": "About Bulgaria",
                 "nav-onas": "About Us",
                 "contactLink": "Contact",
                 "filter-title": "Quick Search",
@@ -389,7 +389,7 @@
                 "nav-bulharsko": "Bulgarien",
                 "nav-informace": "Informationen",
                 "nav-sluzby": "Unsere Dienstleistungen",
-                "nav-countryInfo": "Über Bulgarien",
+                "nav-about-country": "Über Bulgarien",
                 "nav-onas": "Über uns",
                 "contactLink": "Kontakt",
                 "filter-title": "Schnellsuche",
@@ -450,11 +450,11 @@
                         const fullText = langDict[key].replace(/<a>.*?<\/a>/, linkHTML);
                         element.innerHTML = fullText;
                     } else if (element.tagName === 'INPUT' && element.hasAttribute('placeholder')) {
-                         element.placeholder = langDict[key];
+                        element.placeholder = langDict[key];
                     } else if (['SPAN', 'A', 'BUTTON', 'H1', 'H2', 'H3', 'P', 'LABEL'].includes(element.tagName) && !element.dataset.offerType) {
                         element.textContent = langDict[key];
                     } else if (element.tagName === 'OPTION' && element.id) {
-                         element.textContent = langDict[element.id];
+                        element.textContent = langDict[element.id];
                     }
                 }
             });
@@ -462,7 +462,7 @@
             document.getElementById('offer-id-filter').placeholder = langDict['offerIdPlaceholder'] || 'Zadejte číslo';
             document.getElementById('cena-od').placeholder = langDict['priceFromPlaceholder'] || 'Od';
             document.getElementById('cena-do').placeholder = langDict['priceToPlaceholder'] || 'Do';
-
+            
             document.querySelectorAll('.offer-type-btn').forEach(btn => btn.textContent = langDict[btn.id] || btn.textContent);
 
             document.querySelector('#fact-1 span').textContent = langDict['fact-1'];
@@ -483,15 +483,17 @@
                 link.classList.remove('active');
                 if (link.dataset.lang === currentLang) link.classList.add('active');
             });
-            document.querySelectorAll('a[href*=".html"]').forEach(link => {
+            document.querySelectorAll('a[href]').forEach(link => {
                 if (!link.classList.contains('lang-link')) {
                     try {
-                        const url = new URL(link.getAttribute('href'), window.location.href);
+                        const url = new URL(link.href, window.location.href);
                         url.searchParams.set('lang', currentLang);
-                        url.searchParams.set('country', pageCountry);
-                        link.href = url.href;
+                        if (link.href.includes('page.html') && !url.searchParams.has('country')) {
+                             url.searchParams.set('country', pageCountry);
+                        }
+                        link.href = url.toString();
                     } catch (e) {
-                        console.error(`Could not process URL for link: ${link.getAttribute('href')}`, e);
+                        // console.error(`Could not process URL for link: ${link.getAttribute('href')}`, e);
                     }
                 }
             });
@@ -803,29 +805,36 @@
                 const countrySettingsDoc = await getDoc(doc(db, 'settings', pageCountry));
                 if (countrySettingsDoc.exists()) {
                     countrySettings = countrySettingsDoc.data();
-                    const { infoMenu = [], servicesMenu = [], countryInfoMenu = [] } = countrySettings;
-                    
-                    const infoHtml = infoMenu.map(item => `<a href="page.html?slug=${item.slug}&lang=${currentLang}&country=${pageCountry}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">${item.title}</a>`).join('');
-                    const servicesHtml = servicesMenu.map(item => `<a href="page.html?slug=${item.slug}&lang=${currentLang}&country=${pageCountry}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">${item.title}</a>`).join('');
-                    const countryInfoHtml = countryInfoMenu.map(item => `<a href="page.html?slug=${item.slug}&lang=${currentLang}&country=${pageCountry}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">${item.title}</a>`).join('');
-
-                    document.getElementById('info-menu-container-desktop').innerHTML = infoHtml;
-                    document.getElementById('services-menu-container-desktop').innerHTML = servicesHtml;
-                    document.getElementById('countryInfo-menu-container-desktop').innerHTML = countryInfoHtml;
-                    
-                    document.getElementById('info-menu-container-mobile').innerHTML = infoMenu.map(item => `<a href="page.html?slug=${item.slug}&lang=${currentLang}&country=${pageCountry}" class="block py-1 text-gray-700 hover:text-primary">${item.title}</a>`).join('');
-                    document.getElementById('services-menu-container-mobile').innerHTML = servicesMenu.map(item => `<a href="page.html?slug=${item.slug}&lang=${currentLang}&country=${pageCountry}" class="block py-1 text-gray-700 hover:text-primary">${item.title}</a>`).join('');
-                    document.getElementById('countryInfo-menu-container-mobile').innerHTML = countryInfoMenu.map(item => `<a href="page.html?slug=${item.slug}&lang=${currentLang}&country=${pageCountry}" class="block py-1 text-gray-700 hover:text-primary">${item.title}</a>`).join('');
                 }
 
                 const globalSettingsDoc = await getDoc(doc(db, 'settings', 'global'));
                 if (globalSettingsDoc.exists()) {
                     globalSettings = globalSettingsDoc.data();
                 }
-
+                
                 const logoText = countrySettings.logoText || globalSettings.logoText || 'HORIZON ESTATES';
                 document.querySelector('header .font-bold.text-gray-800').textContent = logoText;
 
+                // Menu Logic
+                const { infoMenu = [], servicesMenu = [], aboutCountryMenu = [] } = countrySettings;
+
+                const createMenuHtml = (menuItems, isMobile) => {
+                    return menuItems.map(item => {
+                        const linkClass = isMobile ? 'block py-1 text-gray-700 hover:text-primary' : 'block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100';
+                        return `<a href="page.html?slug=${item.slug}&lang=${currentLang}&country=${pageCountry}" class="${linkClass}">${item.title}</a>`;
+                    }).join('');
+                };
+
+                document.getElementById('info-menu-container-desktop').innerHTML = createMenuHtml(infoMenu, false);
+                document.getElementById('services-menu-container-desktop').innerHTML = createMenuHtml(servicesMenu, false);
+                document.getElementById('about-country-menu-container-desktop').innerHTML = createMenuHtml(aboutCountryMenu, false);
+                
+                document.getElementById('info-menu-container-mobile').innerHTML = createMenuHtml(infoMenu, true);
+                document.getElementById('services-menu-container-mobile').innerHTML = createMenuHtml(servicesMenu, true);
+                document.getElementById('about-country-menu-container-mobile').innerHTML = createMenuHtml(aboutCountryMenu, true);
+
+
+                // Footer Contacts
                 const contactsHTML = [];
                 for (let i = 1; i <= 2; i++) {
                     if (globalSettings[`contact${i}_name`]) {
@@ -843,9 +852,7 @@
                 footerHTML += `<div class="flex flex-wrap justify-center lg:justify-end gap-6">${contactsHTML.join('')}</div>`;
                 document.getElementById('site-footer').innerHTML = footerHTML;
 
-            } catch (error) {
-                console.error("Error loading settings:", error);
-            }
+            } catch (error) { console.error("Error loading settings:", error); }
         };
 
         const loadGlobalTags = async () => {
@@ -866,7 +873,7 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             setActiveLangLink();
-            translatePage(currentLang);
+            translatePage();
             fetchAndFilterProperties();
             loadFilterOptions();
             loadSettings();
