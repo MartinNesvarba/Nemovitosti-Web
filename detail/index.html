@@ -139,11 +139,11 @@
                         <button id="nav-sluzby" class="font-semibold hover:text-primary">Naše služby <i class="fas fa-chevron-down text-xs ml-1"></i></button>
                         <div class="absolute hidden group-hover:block bg-white shadow-lg rounded-md top-full pt-3 pb-2 w-52 z-50" id="services-menu-container-desktop"></div>
                     </div>
-                    <div class="relative group hidden" id="nav-group-ospanelsku">
+                    <div class="relative group">
                         <button id="nav-ospanelsku" class="font-semibold hover:text-primary">O Španělsku <i class="fas fa-chevron-down text-xs ml-1"></i></button>
                         <div class="absolute hidden group-hover:block bg-white shadow-lg rounded-md top-full pt-3 pb-2 w-52 z-10" id="ospanelsku-menu-container-desktop"></div>
                     </div>
-                    <div class="relative group hidden" id="nav-group-obulharsku">
+                    <div class="relative group">
                         <button id="nav-obulharsku" class="font-semibold hover:text-primary">O Bulharsku <i class="fas fa-chevron-down text-xs ml-1"></i></button>
                         <div class="absolute hidden group-hover:block bg-white shadow-lg rounded-md top-full pt-3 pb-2 w-52 z-10" id="obulharsku-menu-container-desktop"></div>
                     </div>
@@ -161,14 +161,10 @@
                 <div id="info-menu-container-mobile" class="flex flex-col space-y-2 pl-2"></div>
                 <h3 id="nav-mobil-sluzby" class="font-bold pt-2">Naše služby</h3>
                 <div id="services-menu-container-mobile" class="flex flex-col space-y-2 pl-2"></div>
-                <div id="nav-mobil-group-ospanelsku" class="hidden">
-                    <h3 id="nav-mobil-ospanelsku" class="font-bold pt-2">O Španělsku</h3>
-                    <div id="ospanelsku-menu-container-mobile" class="flex flex-col space-y-2 pl-2"></div>
-                </div>
-                <div id="nav-mobil-group-obulharsku" class="hidden">
-                    <h3 id="nav-mobil-obulharsku" class="font-bold pt-2">O Bulharsku</h3>
-                    <div id="obulharsku-menu-container-mobile" class="flex flex-col space-y-2 pl-2"></div>
-                </div>
+                <h3 id="nav-mobil-ospanelsku" class="font-bold pt-2">O Španělsku</h3>
+                <div id="ospanelsku-menu-container-mobile" class="flex flex-col space-y-2 pl-2"></div>
+                <h3 id="nav-mobil-obulharsku" class="font-bold pt-2">O Bulharsku</h3>
+                <div id="obulharsku-menu-container-mobile" class="flex flex-col space-y-2 pl-2"></div>
                  <hr>
                 <a href="/page/?slug=o-nas" id="nav-mobil-onas" class="font-semibold hover:text-primary">O nás</a>
                 <a href="#" id="contactLinkMobile" class="font-semibold hover:text-primary">Kontakt</a>
@@ -252,7 +248,7 @@
     <footer class="bg-gray-100 border-t mt-auto">
         <div id="site-footer" class="container mx-auto px-4 py-6 flex flex-wrap justify-between items-center text-sm text-gray-600 gap-6"></div>
     </footer>
-    
+
     <div id="inquiryModal" class="fixed inset-0 bg-black bg-opacity-50 z-[60] hidden items-center justify-center p-4 modal-fade-in">
         <div class="bg-white rounded-lg shadow-2xl w-full max-w-lg p-8 modal-slide-in">
              <div class="flex justify-between items-center mb-4">
@@ -790,20 +786,27 @@
 
         async function loadSettings(pageCountry) {
             try {
+                let countrySettings = {};
                 let globalSettings = {};
+
+                const countrySettingsDoc = await getDoc(doc(db, 'settings', pageCountry));
+                if (countrySettingsDoc.exists()) {
+                    countrySettings = countrySettingsDoc.data();
+                }
+
                 const globalSettingsDoc = await getDoc(doc(db, 'settings', 'global'));
                 if (globalSettingsDoc.exists()){
                      globalSettings = globalSettingsDoc.data();
                 }
                 
-                const logoText = globalSettings.logoText || 'HORIZON ESTATES';
+                const logoText = countrySettings.logoText || globalSettings.logoText || 'HORIZON ESTATES';
                 document.querySelector('header .font-bold.text-gray-800').textContent = logoText;
 
                 let allInfoItems = [], allServicesItems = [], allSpainItems = [], allBulgariaItems = [];
                 for (const country of ['spanelsko', 'bulharsko']) {
-                    const countrySettingsDoc = await getDoc(doc(db, 'settings', country));
-                    if (countrySettingsDoc.exists()) {
-                        const data = countrySettingsDoc.data();
+                    const countrySettingsDocLoop = await getDoc(doc(db, 'settings', country));
+                    if (countrySettingsDocLoop.exists()) {
+                        const data = countrySettingsDocLoop.data();
                         allInfoItems.push(...(data.infoMenu || []).map(item => ({...item, country})));
                         allServicesItems.push(...(data.servicesMenu || []).map(item => ({...item, country})));
                         allSpainItems.push(...(data.spainMenu || []).map(item => ({...item, country})));
@@ -823,15 +826,6 @@
                 document.getElementById('services-menu-container-mobile').innerHTML = buildMobileMenuHtml(allServicesItems);
                 document.getElementById('ospanelsku-menu-container-mobile').innerHTML = buildMobileMenuHtml(allSpainItems);
                 document.getElementById('obulharsku-menu-container-mobile').innerHTML = buildMobileMenuHtml(allBulgariaItems);
-
-                // Zobrazení správného menu podle země
-                if (pageCountry === 'spanelsko') {
-                    document.getElementById('nav-group-ospanelsku')?.classList.remove('hidden');
-                    document.getElementById('nav-mobil-group-ospanelsku')?.classList.remove('hidden');
-                } else if (pageCountry === 'bulharsko') {
-                    document.getElementById('nav-group-obulharsku')?.classList.remove('hidden');
-                    document.getElementById('nav-mobil-group-obulharsku')?.classList.remove('hidden');
-                }
 
                 let footerHTML = `<div class="text-center lg:text-left"><p>&copy; ${new Date().getFullYear()} ${logoText}. Všechna práva vyhrazena.</p></div>`;
                 const contactsHTML = [];
