@@ -1293,7 +1293,7 @@
                 </div>
                 <div class="bg-white p-6 rounded-lg shadow-lg mb-8">
                     <h3 class="text-xl font-bold mb-4">Správa menu pro ${countryCapitalized}</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                         <div>
                             <h4 class="font-bold mb-2">Menu "Informace"</h4>
                             <div id="info-menu-list-${country}" class="mb-4 space-y-2"></div>
@@ -1310,6 +1310,15 @@
                                 <input type="text" id="new-services-menu-title-${country}" placeholder="Název položky" class="input-field">
                                 <select id="new-services-menu-link-${country}" class="input-field"></select>
                                 <button data-menu-type="services" class="add-menu-item-btn btn btn-primary whitespace-nowrap">Přidat</button>
+                            </div>
+                        </div>
+                         <div>
+                            <h4 class="font-bold mb-2">Menu "O ${countryCapitalized}"</h4>
+                            <div id="countryInfo-menu-list-${country}" class="mb-4 space-y-2"></div>
+                            <div class="flex gap-2">
+                                <input type="text" id="new-countryInfo-menu-title-${country}" placeholder="Název položky" class="input-field">
+                                <select id="new-countryInfo-menu-link-${country}" class="input-field"></select>
+                                <button data-menu-type="countryInfo" class="add-menu-item-btn btn btn-primary whitespace-nowrap">Přidat</button>
                             </div>
                         </div>
                     </div>
@@ -1345,8 +1354,12 @@
                 const pagesSnapshot = await getDocs(collection(db, 'pages'));
                 const infoMenuLink = document.getElementById(`new-info-menu-link-${currentSettingsCountry}`);
                 const servicesMenuLink = document.getElementById(`new-services-menu-link-${currentSettingsCountry}`);
+                const countryInfoMenuLink = document.getElementById(`new-countryInfo-menu-link-${currentSettingsCountry}`);
+                
                 infoMenuLink.innerHTML = '<option value="">-- Vyberte stránku --</option>';
                 servicesMenuLink.innerHTML = '<option value="">-- Vyberte stránku --</option>';
+                countryInfoMenuLink.innerHTML = '<option value="">-- Vyberte stránku --</option>';
+                
                 pagesSnapshot.forEach(doc => {
                     const page = doc.data();
                     const statusIndicator = page.status === 'Aktivní' ? '✓' : '✗';
@@ -1357,11 +1370,13 @@
                         option.style.color = '#ccc';
                     }
                     infoMenuLink.add(option.cloneNode(true));
-                    servicesMenuLink.add(option);
+                    servicesMenuLink.add(option.cloneNode(true));
+                    countryInfoMenuLink.add(option);
                 });
 
                 renderMenuItems('info', settings.infoMenu || []);
                 renderMenuItems('services', settings.servicesMenu || []);
+                renderMenuItems('countryInfo', settings.countryInfoMenu || []);
                 renderList('locations', settings.locations || []);
                 renderList('types', settings.types || []);
                 renderList('rooms', settings.rooms || []);
