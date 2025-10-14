@@ -1237,7 +1237,7 @@
             const countryCapitalized = country.charAt(0).toUpperCase() + country.slice(1);
             
             let extraMenuHTML = '';
-            if (country === 'bulgaria') {
+            if (country === 'bulharsko') { // ZMĚNA: opraveno z 'bulgaria' na 'bulharsko'
                 extraMenuHTML = `
                     <div>
                         <h4 class="font-bold mb-2">Menu "O Bulharsku"</h4>
@@ -1340,7 +1340,7 @@
                 
                 renderMenuItems('info', settings.infoMenu || []);
                 renderMenuItems('services', settings.servicesMenu || []);
-                if (country === 'bulgaria') renderMenuItems('bulgaria', settings.bulgariaMenu || []);
+                if (country === 'bulharsko') renderMenuItems('bulgaria', settings.bulgariaMenu || []);
                 if (country === 'spanelsko') renderMenuItems('spain', settings.spainMenu || []);
                 
                 renderList('locations', settings.locations || [], 'form-locations');
