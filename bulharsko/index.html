@@ -814,6 +814,7 @@
                 const logoText = countrySettings.logoText || globalSettings.logoText || 'HORIZON ESTATES';
                 document.querySelector('header .font-bold.text-gray-800').textContent = logoText;
 
+                // Uvnitř funkce loadSettings
                 const contactsHTML = [];
                 for (let i = 1; i <= 4; i++) {
                     if (globalSettings[`contact${i}_name`]) {
