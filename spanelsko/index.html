@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Horizon Estates - Nemovitosti ve Španělsku</title>
+    <title>Horizon Estates - Nemovitosti v Bulharsku</title>
     <!-- SEO: Přidán meta tag pro popis stránky -->
-    <meta name="description" content="Prodej a pronájem exkluzivních vil a apartmánů ve Španělsku. Objevte svůj nový domov pod sluncem na pobřeží Costa Blanca.">
-    <meta name="keywords" id="meta-keywords" content="nemovitosti španělsko, reality španělsko, apartmány španělsko, dům u moře">
+    <meta name="description" content="Objevte svůj vysněný apartmán na pobřeží Černého moře. Nabízíme široký výběr ověřených nemovitostí v Bulharsku k prodeji i pronájmu.">
+    <meta name="keywords" id="meta-keywords" content="nemovitosti bulharsko, reality bulharsko, apartmány bulharsko, slunečné pobřeží">
     
     <!-- Optimalizace: Asynchronní načítání písem a ikon, aby neblokovaly vykreslování -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,12 +17,12 @@
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     </noscript>
-
+    
     <!-- Optimalizace: Přednačtení hlavního obrázku (LCP) -->
     <link rel="preload" as="image" href="https://images.pexels.com/photos/1732414/pexels-photo-1732414.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2">
 
     <script src="https://cdn.tailwindcss.com"></script>
-    
+
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -42,8 +42,12 @@
         @keyframes slideIn { from { transform: translateY(-30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
         .modal-fade-in { animation: fadeIn 0.3s ease-out; }
         .modal-slide-in { animation: slideIn 0.3s ease-out; }
-        
-        .lang-link img {
+        .lang-link.active img {
+            opacity: 1;
+            transform: scale(1.1);
+            box-shadow: 0 0 0 2px #dd6822;
+        }
+         .lang-link img {
             opacity: 0.7;
             transition: all 0.2s ease-in-out;
             border-radius: 0.25rem;
@@ -52,13 +56,8 @@
             opacity: 1;
             transform: scale(1.1);
         }
-        .lang-link.active img {
-            opacity: 1;
-            transform: scale(1.1);
-            box-shadow: 0 0 0 2px #dd6822;
-        }
-         /* Přístupnost: Zvýšení kontrastu pro tlačítka nabídek */
-         .offer-type-btn {
+        /* Přístupnost: Zvýšení kontrastu pro tlačítka nabídek */
+        .offer-type-btn {
             color: #374151; /* Tmavší šedá pro lepší čitelnost */
         }
         .offer-type-btn.active {
@@ -83,7 +82,7 @@
                             <img src="https://flagcdn.com/w40/de.png" alt="Deutsch" class="w-8 h-6 object-cover">
                         </a>
                     </div>
-                    <a href="index.html" class="text-xl md:text-2xl font-bold text-gray-800 tracking-wider">HORIZON ESTATES</a>
+                    <a href="/index.html" class="text-xl md:text-2xl font-bold text-gray-800 tracking-wider">HORIZON ESTATES</a>
                 </div>
                 <div class="flex items-center space-x-4">
                     <div id="auth-controls">
@@ -94,13 +93,14 @@
                             <i class="fas fa-sign-out-alt text-xl cursor-pointer hover:text-red-500" id="logoutIcon" title="Odhlásit se"></i>
                         </div>
                     </div>
+                    <!-- Přístupnost: Přidán aria-label pro screen readery -->
                     <button id="mobile-menu-button" class="lg:hidden text-2xl" aria-label="Otevřít menu"><i class="fas fa-bars"></i></button>
                 </div>
             </div>
             <div class="hidden lg:flex justify-between items-center py-3" id="desktop-menu">
-                 <nav class="flex items-center space-x-6">
-                    <a href="spanelsko.html" id="nav-spanelsko" class="font-semibold pb-1 nav-link-active">Španělsko</a>
-                    <a href="bulharsko.html" id="nav-bulharsko" class="font-semibold pb-1 hover:text-primary">Bulharsko</a>
+                <nav class="flex items-center space-x-6">
+                    <a href="/spanelsko.html" id="nav-spanelsko" class="font-semibold pb-1 hover:text-primary">Španělsko</a>
+                    <a href="/bulharsko.html" id="nav-bulharsko" class="font-semibold pb-1 nav-link-active">Bulharsko</a>
                 </nav>
                 <nav class="flex items-center space-x-6" id="main-navigation">
                     <div class="relative group">
@@ -112,27 +112,27 @@
                         <div class="absolute hidden group-hover:block bg-white shadow-lg rounded-md top-full pt-3 pb-2 w-52 z-10" id="services-menu-container-desktop"></div>
                     </div>
                     <div class="relative group">
-                        <button id="nav-about-country" class="font-semibold hover:text-primary">O Španělsku <i class="fas fa-chevron-down text-xs ml-1"></i></button>
+                        <button id="nav-about-country" class="font-semibold hover:text-primary">O Bulharsku <i class="fas fa-chevron-down text-xs ml-1"></i></button>
                         <div class="absolute hidden group-hover:block bg-white shadow-lg rounded-md top-full pt-3 pb-2 w-52 z-10" id="about-country-menu-container-desktop"></div>
                     </div>
-                    <a href="page.html?slug=o-nas" id="nav-onas" class="font-semibold hover:text-primary">O nás</a>
+                    <a href="/page.html?slug=o-nas" id="nav-onas" class="font-semibold hover:text-primary">O nás</a>
                     <a href="#" id="contactLink" class="font-semibold hover:text-primary">Kontakt</a>
                 </nav>
             </div>
         </div>
         <div id="mobile-menu" class="hidden lg:hidden px-4 pb-4 border-t">
-             <nav class="flex flex-col space-y-3 pt-4">
-                <a href="spanelsko.html" id="nav-mobil-spanelsko" class="font-semibold pb-1 nav-link-active">Španělsko</a>
-                <a href="bulharsko.html" id="nav-mobil-bulharsko" class="font-semibold pb-1 hover:text-primary">Bulharsko</a>
+            <nav class="flex flex-col space-y-3 pt-4">
+                <a href="/spanelsko.html" id="nav-mobil-spanelsko" class="font-semibold pb-1 hover:text-primary">Španělsko</a>
+                <a href="/bulharsko.html" id="nav-mobil-bulharsko" class="font-semibold pb-1 nav-link-active">Bulharsko</a>
                 <hr>
                 <h3 id="nav-mobil-informace" class="font-bold pt-2">Informace</h3>
                 <div id="info-menu-container-mobile" class="flex flex-col space-y-2 pl-2"></div>
                 <h3 id="nav-mobil-sluzby" class="font-bold pt-2">Naše služby</h3>
                 <div id="services-menu-container-mobile" class="flex flex-col space-y-2 pl-2"></div>
-                <h3 id="nav-mobil-about-country" class="font-bold pt-2">O Španělsku</h3>
+                <h3 id="nav-mobil-about-country" class="font-bold pt-2">O Bulharsku</h3>
                 <div id="about-country-menu-container-mobile" class="flex flex-col space-y-2 pl-2"></div>
-                 <hr>
-                <a href="page.html?slug=o-nas" id="nav-mobil-onas" class="font-semibold hover:text-primary">O nás</a>
+                <hr>
+                <a href="/page.html?slug=o-nas" id="nav-mobil-onas" class="font-semibold hover:text-primary">O nás</a>
                 <a href="#" id="contactLinkMobile" class="font-semibold hover:text-primary">Kontakt</a>
             </nav>
         </div>
@@ -174,8 +174,8 @@
             </aside>
             <main class="w-full lg:w-3/4 xl:w-4/5">
                 <section class="h-64 md:h-80 rounded-lg bg-cover bg-center flex flex-col justify-center items-center text-white text-center p-4 mb-8 shadow-xl" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url(https://images.pexels.com/photos/1732414/pexels-photo-1732414.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2)">
-                    <h1 id="main-title" class="text-3xl md:text-5xl font-bold text-shadow">Nemovitosti ve Španělsku</h1>
-                    <p id="main-subtitle" class="text-lg md:text-xl mt-2 text-shadow-md">Váš nový domov pod sluncem na pobřeží Costa Blanca.</p>
+                    <h1 id="main-title" class="text-3xl md:text-5xl font-bold text-shadow">Nemovitosti v Bulharsku</h1>
+                    <p id="main-subtitle" class="text-lg md:text-xl mt-2 text-shadow-md">Objevte svůj vysněný apartmán na pobřeží Černého moře.</p>
                 </section>
                 <div class="flex justify-center mb-6">
                     <div class="inline-flex rounded-md shadow-sm">
@@ -197,11 +197,11 @@
                 <section id="properties-container" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8"></section>
                 <div id="pagination-container" class="flex justify-center items-center space-x-2 mt-8"></div>
                 <section class="mt-12 p-6 bg-white rounded-lg shadow-md border-l-4 border-yellow-400">
-                    <h2 id="facts-title" class="text-2xl font-bold mb-4">Zajímavosti o Španělsku</h2>
+                    <h2 id="facts-title" class="text-2xl font-bold mb-4">Zajímavosti o Bulharsku</h2>
                     <ul class="space-y-3">
-                        <li id="fact-1" class="flex items-start"><i class="fas fa-check-circle text-primary mt-1 mr-3"></i><span>Španělsko je jedinou zemí v Evropě, která sdílí fyzickou hranici s africkou zemí (Maroko).</span></li>
-                        <li id="fact-2" class="flex items-start"><i class="fas fa-check-circle text-primary mt-1 mr-3"></i><span>Země je proslulá svou kuchyní, včetně paelly, tapas a jamónu, a je třetím největším výrobcem vína na světě.</span></li>
-                        <li id="fact-3" class="flex items-start"><i class="fas fa-check-circle text-primary mt-1 mr-3"></i><span>Španělsko má více než 8 000 kilometrů pláží, které lákají miliony turistů každý rok.</span></li>
+                        <li id="fact-1" class="flex items-start"><i class="fas fa-check-circle text-primary mt-1 mr-3"></i><span>Bulharsko je jednou z nejstarších zemí v Evropě a jediná, která si od svého založení v roce 681 nezměnila jméno.</span></li>
+                        <li id="fact-2" class="flex items-start"><i class="fas fa-check-circle text-primary mt-1 mr-3"></i><span>Bulharská kuchyně je vynikající a rozmanitá, známá pro svůj jogurt, sýr sirene a tradiční salát šopska.</span></li>
+                        <li id="fact-3" class="flex items-start"><i class="fas fa-check-circle text-primary mt-1 mr-3"></i><span>Země nabízí jak krásné písečné pláže u Černého moře, tak i vysoké hory ideální pro lyžování a turistiku.</span></li>
                     </ul>
                 </section>
             </main>
@@ -212,7 +212,6 @@
         <div id="site-footer" class="container mx-auto px-4 py-6 flex flex-wrap justify-between items-center text-sm text-gray-600 gap-6"></div>
     </footer>
 
-    <!-- Modals -->
     <div id="contactModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center p-4 modal-fade-in">
         <div class="bg-white rounded-lg shadow-2xl w-full max-w-lg p-8 modal-slide-in">
             <div class="flex justify-between items-center mb-4">
@@ -282,21 +281,17 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // --- Language and Translations ---
-        const urlParams = new URLSearchParams(window.location.search);
-        const currentLang = urlParams.get('lang') || 'cz';
+        let currentLang = new URLSearchParams(window.location.search).get('lang') || 'cz';
 
         const translations = {
             cz: {
-                // Navigation
                 "nav-spanelsko": "Španělsko",
                 "nav-bulharsko": "Bulharsko",
                 "nav-informace": "Informace",
                 "nav-sluzby": "Naše služby",
-                "nav-about-country": "O Španělsku",
+                "nav-about-country": "O Bulharsku",
                 "nav-onas": "O nás",
                 "contactLink": "Kontakt",
-                // Filters
                 "filter-title": "Rychlé vyhledávání",
                 "filter-location-label": "Lokalita",
                 "filter-type-label": "Druh nemovitosti",
@@ -308,9 +303,8 @@
                 "offerIdPlaceholder": "Zadejte číslo",
                 "priceFromPlaceholder": "Od",
                 "priceToPlaceholder": "Do",
-                // Main Content
-                "main-title": "Nemovitosti ve Španělsku",
-                "main-subtitle": "Váš nový domov pod sluncem na pobřeží Costa Blanca.",
+                "main-title": "Nemovitosti v Bulharsku",
+                "main-subtitle": "Objevte svůj vysněný apartmán na pobřeží Černého moře.",
                 "offer-type-sale": "Na prodej",
                 "offer-type-rent": "K pronájmu",
                 "sort-by-label": "Seřadit podle:",
@@ -318,12 +312,10 @@
                 "sort-price-asc": "Ceny (od nejlevnější)",
                 "sort-price-desc": "Ceny (od nejdražší)",
                 "sort-date-desc": "Data (od nejnovější)",
-                // Facts
-                "facts-title": "Zajímavosti o Španělsku",
-                "fact-1": "Španělsko je jedinou zemí v Evropě, která sdílí fyzickou hranici s africkou zemí (Maroko).",
-                "fact-2": "Země je proslulá svou kuchyní, včetně paelly, tapas a jamónu, a je třetím největším výrobcem vína na světě.",
-                "fact-3": "Španělsko má více než 8 000 kilometrů pláží, které lákají miliony turistů každý rok.",
-                // Modals
+                "facts-title": "Zajímavosti o Bulharsku",
+                "fact-1": "Bulharsko je jednou z nejstarších zemí v Evropě a jediná, která si od svého založení v roce 681 nezměnila jméno.",
+                "fact-2": "Bulharská kuchyně je vynikající a rozmanitá, známá pro svůj jogurt, sýr sirene a tradiční salát šopska.",
+                "fact-3": "Země nabízí jak krásné písečné pláže u Černého moře, tak i vysoké hory ideální pro lyžování a turistiku.",
                 "contact-modal-title": "Kontaktní formulář",
                 "contact-modal-name": "Vaše jméno",
                 "contact-modal-email": "Váš e-mail",
@@ -347,7 +339,7 @@
                 "nav-bulharsko": "Bulgaria",
                 "nav-informace": "Information",
                 "nav-sluzby": "Our Services",
-                "nav-about-country": "About Spain",
+                "nav-about-country": "About Bulgaria",
                 "nav-onas": "About Us",
                 "contactLink": "Contact",
                 "filter-title": "Quick Search",
@@ -361,8 +353,8 @@
                 "offerIdPlaceholder": "Enter number",
                 "priceFromPlaceholder": "From",
                 "priceToPlaceholder": "To",
-                "main-title": "Properties in Spain",
-                "main-subtitle": "Your new home under the sun on the Costa Blanca.",
+                "main-title": "Properties in Bulgaria",
+                "main-subtitle": "Discover your dream apartment on the Black Sea coast.",
                 "offer-type-sale": "For Sale",
                 "offer-type-rent": "For Rent",
                 "sort-by-label": "Sort by:",
@@ -370,10 +362,10 @@
                 "sort-price-asc": "Price (lowest first)",
                 "sort-price-desc": "Price (highest first)",
                 "sort-date-desc": "Date (newest first)",
-                "facts-title": "Interesting Facts about Spain",
-                "fact-1": "Spain is the only country in Europe that shares a physical border with an African country (Morocco).",
-                "fact-2": "The country is famous for its cuisine, including paella, tapas, and jamón, and is the world's third-largest wine producer.",
-                "fact-3": "Spain has over 8,000 kilometers of beaches, attracting millions of tourists every year.",
+                "facts-title": "Interesting Facts about Bulgaria",
+                "fact-1": "Bulgaria is one of the oldest countries in Europe and the only one that has not changed its name since its establishment in 681.",
+                "fact-2": "Bulgarian cuisine is excellent and diverse, known for its yogurt, sirene cheese, and traditional Shopska salad.",
+                "fact-3": "The country offers beautiful sandy beaches on the Black Sea as well as high mountains ideal for skiing and hiking.",
                 "contact-modal-title": "Contact Form",
                 "contact-modal-name": "Your Name",
                 "contact-modal-email": "Your E-mail",
@@ -397,7 +389,7 @@
                 "nav-bulharsko": "Bulgarien",
                 "nav-informace": "Informationen",
                 "nav-sluzby": "Unsere Dienstleistungen",
-                "nav-about-country": "Über Spanien",
+                "nav-about-country": "Über Bulgarien",
                 "nav-onas": "Über uns",
                 "contactLink": "Kontakt",
                 "filter-title": "Schnellsuche",
@@ -411,8 +403,8 @@
                 "offerIdPlaceholder": "Nummer eingeben",
                 "priceFromPlaceholder": "Von",
                 "priceToPlaceholder": "Bis",
-                "main-title": "Immobilien in Spanien",
-                "main-subtitle": "Ihr neues Zuhause unter der Sonne an der Costa Blanca.",
+                "main-title": "Immobilien in Bulgarien",
+                "main-subtitle": "Entdecken Sie Ihre Traumwohnung an der Schwarzmeerküste.",
                 "offer-type-sale": "Zum Verkauf",
                 "offer-type-rent": "Zu vermieten",
                 "sort-by-label": "Sortieren nach:",
@@ -420,10 +412,10 @@
                 "sort-price-asc": "Preis (niedrigster zuerst)",
                 "sort-price-desc": "Preis (höchster zuerst)",
                 "sort-date-desc": "Datum (neuestes zuerst)",
-                "facts-title": "Interessante Fakten über Spanien",
-                "fact-1": "Spanien ist das einzige Land in Europa, das eine physische Grenze mit einem afrikanischen Land (Marokko) teilt.",
-                "fact-2": "Das Land ist berühmt für seine Küche, einschließlich Paella, Tapas und Jamón, und ist der drittgrößte Weinproduzent der Welt.",
-                "fact-3": "Spanien hat über 8.000 Kilometer Strände, die jedes Jahr Millionen von Touristen anziehen.",
+                "facts-title": "Interessante Fakten über Bulgarien",
+                "fact-1": "Bulgarien ist eines der ältesten Länder Europas und das einzige, das seinen Namen seit seiner Gründung im Jahr 681 nicht geändert hat.",
+                "fact-2": "Die bulgarische Küche ist ausgezeichnet und vielfältig, bekannt für ihren Joghurt, Sirene-Käse und den traditionellen Schopska-Salat.",
+                "fact-3": "Das Land bietet sowohl wunderschöne Sandstrände am Schwarzen Meer als auch hohe Berge, die ideal zum Skifahren und Wandern sind.",
                 "contact-modal-title": "Kontaktformular",
                 "contact-modal-name": "Ihr Name",
                 "contact-modal-email": "Ihre E-Mail",
@@ -444,8 +436,8 @@
             }
         };
 
-        const translatePage = () => {
-            const langDict = translations[currentLang];
+        const translatePage = (lang) => {
+            const langDict = translations[lang];
             if (!langDict) return;
 
             document.querySelectorAll('[id]').forEach(element => {
@@ -458,14 +450,15 @@
                         const fullText = langDict[key].replace(/<a>.*?<\/a>/, linkHTML);
                         element.innerHTML = fullText;
                     } else if (element.tagName === 'INPUT' && element.hasAttribute('placeholder')) {
-                         element.placeholder = langDict[key];
+                        element.placeholder = langDict[key];
                     } else if (['SPAN', 'A', 'BUTTON', 'H1', 'H2', 'H3', 'P', 'LABEL'].includes(element.tagName) && !element.dataset.offerType) {
                         element.textContent = langDict[key];
                     } else if (element.tagName === 'OPTION' && element.id) {
-                         element.textContent = langDict[element.id];
+                        element.textContent = langDict[element.id];
                     }
                 }
             });
+
             document.getElementById('offer-id-filter').placeholder = langDict['offerIdPlaceholder'] || 'Zadejte číslo';
             document.getElementById('cena-od').placeholder = langDict['priceFromPlaceholder'] || 'Od';
             document.getElementById('cena-do').placeholder = langDict['priceToPlaceholder'] || 'Do';
@@ -475,29 +468,32 @@
             document.querySelector('#fact-1 span').textContent = langDict['fact-1'];
             document.querySelector('#fact-2 span').textContent = langDict['fact-2'];
             document.querySelector('#fact-3 span').textContent = langDict['fact-3'];
+
             setupAuthFormToggle();
         };
 
+        const setLang = (lang) => {
+            const url = new URL(window.location.href);
+            url.searchParams.set('lang', lang);
+            window.location.href = url.href;
+        };
+        
         const setActiveLangLink = () => {
             document.querySelectorAll('#lang-switcher .lang-link').forEach(link => {
                 link.classList.remove('active');
-                if (link.dataset.lang === currentLang) {
-                    link.classList.add('active');
-                }
+                if (link.dataset.lang === currentLang) link.classList.add('active');
             });
             document.querySelectorAll('a[href]').forEach(link => {
                 if (!link.classList.contains('lang-link')) {
                     try {
-                        const url = new URL(link.href, window.location.href);
-                        url.searchParams.set('lang', currentLang);
-                         if(link.href.includes('spanelsko.html') || link.href.includes('bulharsko.html') || link.href.includes('page.html')) {
-                           // Let the loadSettings determine the country parameter
-                        } else if(link.href.includes('detail.html')) {
-                           // Detail pages will handle their own country parameter
-                        } else {
-                            // For other links like index.html, we don't need a country
+                        const url = new URL(link.href, window.location.origin);
+                        if(url.pathname.endsWith('.html')){
+                            url.searchParams.set('lang', currentLang);
+                            if (link.href.includes('page.html') && !url.searchParams.has('country')) {
+                                url.searchParams.set('country', pageCountry);
+                            }
+                            link.href = url.pathname + url.search;
                         }
-                        link.href = url.toString();
                     } catch (e) {
                          // console.error(`Could not process URL for link: ${link.getAttribute('href')}`, e);
                     }
@@ -505,32 +501,21 @@
             });
         };
 
-
-        // --- Globální proměnné ---
-        let filteredProperties = [];
-        let userFavorites = [];
-        let currentPage = 1;
+        let filteredProperties = [], userFavorites = [], currentPage = 1;
         const propertiesPerPage = 9;
         let currentOfferType = 'prodej';
-        const pageCountry = 'spanelsko';
-
-        // --- Elementy DOM ---
-        const propertiesContainer = document.getElementById('properties-container');
-        const paginationContainer = document.getElementById('pagination-container');
-        const sortSelect = document.getElementById('sort-by');
-        const filterForm = document.getElementById('filter-form');
+        const pageCountry = 'bulharsko';
+        const propertiesContainer = document.getElementById('properties-container'), paginationContainer = document.getElementById('pagination-container'), sortSelect = document.getElementById('sort-by'), filterForm = document.getElementById('filter-form');
         
         const displayProperties = () => {
             propertiesContainer.innerHTML = "";
             const startIndex = (currentPage - 1) * propertiesPerPage;
             const paginatedProperties = filteredProperties.slice(startIndex, startIndex + propertiesPerPage);
-
             if (paginatedProperties.length === 0) {
                 propertiesContainer.innerHTML = `<p class="md:col-span-2 xl:col-span-3 text-center text-gray-500">Nebyly nalezeny žádné nemovitosti odpovídající zadaným kritériím.</p>`;
                 setupPagination();
                 return;
             }
-
             paginatedProperties.forEach(prop => {
                 const title = prop[`title_${currentLang}`] || prop.title_cz || "No title";
                 const firstImage = prop.images && prop.images.length > 0 ? prop.images[0] : 'https://placehold.co/600x400/e2e8f0/94a3b8?text=Foto';
@@ -548,9 +533,8 @@
                             <p>${translations[currentLang]['cardOfferId'] || 'Č. nabídky'}: <strong>${prop.offerId || 'N/A'}</strong> | ${translations[currentLang]['cardRooms'] || 'Dispozice'}: <strong>${prop.rooms || 'N/A'}</strong></p>
                             <p>${prop.area ? `${translations[currentLang]['cardArea'] || 'Plocha'}: <strong>${prop.area} m²</strong>` : ''}</p>
                         </div>
-                        <a href="detail.html?id=${prop.id}&lang=${currentLang}" class="inline-block w-full text-center bg-gray-800 text-white font-semibold py-2 px-4 rounded-md hover:bg-gray-700 transition">${translations[currentLang]['cardViewDetail'] || 'Zobrazit detail'}</a>
-                    </div>
-                `;
+                        <a href="/detail.html?id=${prop.id}&lang=${currentLang}" class="inline-block w-full text-center bg-gray-800 text-white font-semibold py-2 px-4 rounded-md hover:bg-gray-700 transition">${translations[currentLang]['cardViewDetail'] || 'Zobrazit detail'}</a>
+                    </div>`;
                 propertiesContainer.appendChild(card);
             });
             setupPagination();
@@ -839,7 +823,7 @@
                 const createMenuHtml = (menuItems, isMobile) => {
                     return menuItems.map(item => {
                         const linkClass = isMobile ? 'block py-1 text-gray-700 hover:text-primary' : 'block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100';
-                        return `<a href="page.html?slug=${item.slug}&lang=${currentLang}&country=${pageCountry}" class="${linkClass}">${item.title}</a>`;
+                        return `<a href="/page.html?slug=${item.slug}&lang=${currentLang}&country=${pageCountry}" class="${linkClass}">${item.title}</a>`;
                     }).join('');
                 };
 
