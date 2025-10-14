@@ -83,8 +83,7 @@
                             <img src="https://flagcdn.com/w40/de.png" alt="Deutsch" class="w-8 h-6 object-cover">
                         </a>
                     </div>
-                    <!-- OPRAVENO ZDE: Odkaz na hlavní stránku -->
-                    <a href="/" class="text-xl md:text-2xl font-bold text-gray-800 tracking-wider">HORIZON ESTATES</a>
+                    <a href="index.html" class="text-xl md:text-2xl font-bold text-gray-800 tracking-wider">HORIZON ESTATES</a>
                 </div>
                 <div class="flex items-center space-x-4">
                     <div id="auth-controls">
@@ -100,8 +99,8 @@
             </div>
             <div class="hidden lg:flex justify-between items-center py-3" id="desktop-menu">
                  <nav class="flex items-center space-x-6">
-                    <a href="/spanelsko" id="nav-spanelsko" class="font-semibold pb-1 nav-link-active">Španělsko</a>
-                    <a href="/bulharsko" id="nav-bulharsko" class="font-semibold pb-1 hover:text-primary">Bulharsko</a>
+                    <a href="spanelsko.html" id="nav-spanelsko" class="font-semibold pb-1 nav-link-active">Španělsko</a>
+                    <a href="bulharsko.html" id="nav-bulharsko" class="font-semibold pb-1 hover:text-primary">Bulharsko</a>
                 </nav>
                 <nav class="flex items-center space-x-6" id="main-navigation">
                     <div class="relative group">
@@ -112,22 +111,28 @@
                         <button id="nav-sluzby" class="font-semibold hover:text-primary">Naše služby <i class="fas fa-chevron-down text-xs ml-1"></i></button>
                         <div class="absolute hidden group-hover:block bg-white shadow-lg rounded-md top-full pt-3 pb-2 w-52 z-10" id="services-menu-container-desktop"></div>
                     </div>
-                    <a href="/page" id="nav-onas" class="font-semibold hover:text-primary">O nás</a>
+                    <div class="relative group">
+                        <button id="nav-about-country" class="font-semibold hover:text-primary">O Španělsku <i class="fas fa-chevron-down text-xs ml-1"></i></button>
+                        <div class="absolute hidden group-hover:block bg-white shadow-lg rounded-md top-full pt-3 pb-2 w-52 z-10" id="about-country-menu-container-desktop"></div>
+                    </div>
+                    <a href="page.html?slug=o-nas" id="nav-onas" class="font-semibold hover:text-primary">O nás</a>
                     <a href="#" id="contactLink" class="font-semibold hover:text-primary">Kontakt</a>
                 </nav>
             </div>
         </div>
         <div id="mobile-menu" class="hidden lg:hidden px-4 pb-4 border-t">
-              <nav class="flex flex-col space-y-3 pt-4">
-                <a href="/spanelsko" id="nav-mobil-spanelsko" class="font-semibold pb-1 nav-link-active">Španělsko</a>
-                <a href="/bulharsko" id="nav-mobil-bulharsko" class="font-semibold pb-1 hover:text-primary">Bulharsko</a>
+             <nav class="flex flex-col space-y-3 pt-4">
+                <a href="spanelsko.html" id="nav-mobil-spanelsko" class="font-semibold pb-1 nav-link-active">Španělsko</a>
+                <a href="bulharsko.html" id="nav-mobil-bulharsko" class="font-semibold pb-1 hover:text-primary">Bulharsko</a>
                 <hr>
                 <h3 id="nav-mobil-informace" class="font-bold pt-2">Informace</h3>
                 <div id="info-menu-container-mobile" class="flex flex-col space-y-2 pl-2"></div>
                 <h3 id="nav-mobil-sluzby" class="font-bold pt-2">Naše služby</h3>
                 <div id="services-menu-container-mobile" class="flex flex-col space-y-2 pl-2"></div>
+                <h3 id="nav-mobil-about-country" class="font-bold pt-2">O Španělsku</h3>
+                <div id="about-country-menu-container-mobile" class="flex flex-col space-y-2 pl-2"></div>
                  <hr>
-                <a href="/page" id="nav-mobil-onas" class="font-semibold hover:text-primary">O nás</a>
+                <a href="page.html?slug=o-nas" id="nav-mobil-onas" class="font-semibold hover:text-primary">O nás</a>
                 <a href="#" id="contactLinkMobile" class="font-semibold hover:text-primary">Kontakt</a>
             </nav>
         </div>
@@ -288,6 +293,7 @@
                 "nav-bulharsko": "Bulharsko",
                 "nav-informace": "Informace",
                 "nav-sluzby": "Naše služby",
+                "nav-about-country": "O Španělsku",
                 "nav-onas": "O nás",
                 "contactLink": "Kontakt",
                 // Filters
@@ -341,6 +347,7 @@
                 "nav-bulharsko": "Bulgaria",
                 "nav-informace": "Information",
                 "nav-sluzby": "Our Services",
+                "nav-about-country": "About Spain",
                 "nav-onas": "About Us",
                 "contactLink": "Contact",
                 "filter-title": "Quick Search",
@@ -390,6 +397,7 @@
                 "nav-bulharsko": "Bulgarien",
                 "nav-informace": "Informationen",
                 "nav-sluzby": "Unsere Dienstleistungen",
+                "nav-about-country": "Über Spanien",
                 "nav-onas": "Über uns",
                 "contactLink": "Kontakt",
                 "filter-title": "Schnellsuche",
@@ -450,11 +458,11 @@
                         const fullText = langDict[key].replace(/<a>.*?<\/a>/, linkHTML);
                         element.innerHTML = fullText;
                     } else if (element.tagName === 'INPUT' && element.hasAttribute('placeholder')) {
-                        element.placeholder = langDict[key];
+                         element.placeholder = langDict[key];
                     } else if (['SPAN', 'A', 'BUTTON', 'H1', 'H2', 'H3', 'P', 'LABEL'].includes(element.tagName) && !element.dataset.offerType) {
                         element.textContent = langDict[key];
                     } else if (element.tagName === 'OPTION' && element.id) {
-                        element.textContent = langDict[element.id];
+                         element.textContent = langDict[element.id];
                     }
                 }
             });
@@ -477,7 +485,26 @@
                     link.classList.add('active');
                 }
             });
+            document.querySelectorAll('a[href]').forEach(link => {
+                if (!link.classList.contains('lang-link')) {
+                    try {
+                        const url = new URL(link.href, window.location.href);
+                        url.searchParams.set('lang', currentLang);
+                         if(link.href.includes('spanelsko.html') || link.href.includes('bulharsko.html') || link.href.includes('page.html')) {
+                           // Let the loadSettings determine the country parameter
+                        } else if(link.href.includes('detail.html')) {
+                           // Detail pages will handle their own country parameter
+                        } else {
+                            // For other links like index.html, we don't need a country
+                        }
+                        link.href = url.toString();
+                    } catch (e) {
+                         // console.error(`Could not process URL for link: ${link.getAttribute('href')}`, e);
+                    }
+                }
+            });
         };
+
 
         // --- Globální proměnné ---
         let filteredProperties = [];
@@ -521,8 +548,7 @@
                             <p>${translations[currentLang]['cardOfferId'] || 'Č. nabídky'}: <strong>${prop.offerId || 'N/A'}</strong> | ${translations[currentLang]['cardRooms'] || 'Dispozice'}: <strong>${prop.rooms || 'N/A'}</strong></p>
                             <p>${prop.area ? `${translations[currentLang]['cardArea'] || 'Plocha'}: <strong>${prop.area} m²</strong>` : ''}</p>
                         </div>
-                        <!-- OPRAVENO ZDE: Odkaz na detail -->
-                        <a href="/detail/?id=${prop.id}&lang=${currentLang}" class="inline-block w-full text-center bg-gray-800 text-white font-semibold py-2 px-4 rounded-md hover:bg-gray-700 transition">${translations[currentLang]['cardViewDetail'] || 'Zobrazit detail'}</a>
+                        <a href="detail.html?id=${prop.id}&lang=${currentLang}" class="inline-block w-full text-center bg-gray-800 text-white font-semibold py-2 px-4 rounded-md hover:bg-gray-700 transition">${translations[currentLang]['cardViewDetail'] || 'Zobrazit detail'}</a>
                     </div>
                 `;
                 propertiesContainer.appendChild(card);
@@ -764,8 +790,7 @@
                     <div class="flex-grow">
                         <h4 class="font-bold">${prop[`title_${currentLang}`] || prop.title_cz}</h4>
                         <p class="text-primary font-semibold">€${prop.price.toLocaleString()}</p>
-                        <!-- OPRAVENO ZDE: Odkaz na detail v oblíbených -->
-                        <a href="/detail/?id=${doc.id}&lang=${currentLang}" class="text-sm text-gray-500 hover:underline">Zobrazit detail</a>
+                        <a href="detail.html?id=${doc.id}&lang=${currentLang}" class="text-sm text-gray-500 hover:underline">Zobrazit detail</a>
                     </div>
                     <button class="remove-favorite text-gray-400 hover:text-red-500 text-xl" data-id="${doc.id}"><i class="fas fa-trash-alt"></i></button>
                 `;
@@ -798,31 +823,44 @@
                 const countrySettingsDoc = await getDoc(doc(db, 'settings', pageCountry));
                 if (countrySettingsDoc.exists()) {
                     countrySettings = countrySettingsDoc.data();
-                    const { infoMenu = [], servicesMenu = [] } = countrySettings;
-                    // OPRAVENO ZDE: Odkazy v menu
-                    const infoHtml = infoMenu.map(item => `<a href="/page/?slug=${item.slug}&lang=${currentLang}&country=${pageCountry}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">${item.title}</a>`).join('');
-                    const servicesHtml = servicesMenu.map(item => `<a href="/page/?slug=${item.slug}&lang=${currentLang}&country=${pageCountry}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">${item.title}</a>`).join('');
-                    document.getElementById('info-menu-container-desktop').innerHTML = infoHtml;
-                    document.getElementById('services-menu-container-desktop').innerHTML = servicesHtml;
-                    document.getElementById('info-menu-container-mobile').innerHTML = infoMenu.map(item => `<a href="/page/?slug=${item.slug}&lang=${currentLang}&country=${pageCountry}" class="block py-1 text-gray-700 hover:text-primary">${item.title}</a>`).join('');
-                    document.getElementById('services-menu-container-mobile').innerHTML = servicesMenu.map(item => `<a href="/page/?slug=${item.slug}&lang=${currentLang}&country=${pageCountry}" class="block py-1 text-gray-700 hover:text-primary">${item.title}</a>`).join('');
                 }
 
                 const globalSettingsDoc = await getDoc(doc(db, 'settings', 'global'));
                 if (globalSettingsDoc.exists()) {
                     globalSettings = globalSettingsDoc.data();
                 }
-
+                
                 const logoText = countrySettings.logoText || globalSettings.logoText || 'HORIZON ESTATES';
                 document.querySelector('header .font-bold.text-gray-800').textContent = logoText;
 
+                // Menu Logic
+                const { infoMenu = [], servicesMenu = [], aboutCountryMenu = [] } = countrySettings;
+
+                const createMenuHtml = (menuItems, isMobile) => {
+                    return menuItems.map(item => {
+                        const linkClass = isMobile ? 'block py-1 text-gray-700 hover:text-primary' : 'block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100';
+                        return `<a href="page.html?slug=${item.slug}&lang=${currentLang}&country=${pageCountry}" class="${linkClass}">${item.title}</a>`;
+                    }).join('');
+                };
+
+                document.getElementById('info-menu-container-desktop').innerHTML = createMenuHtml(infoMenu, false);
+                document.getElementById('services-menu-container-desktop').innerHTML = createMenuHtml(servicesMenu, false);
+                document.getElementById('about-country-menu-container-desktop').innerHTML = createMenuHtml(aboutCountryMenu, false);
+                
+                document.getElementById('info-menu-container-mobile').innerHTML = createMenuHtml(infoMenu, true);
+                document.getElementById('services-menu-container-mobile').innerHTML = createMenuHtml(servicesMenu, true);
+                document.getElementById('about-country-menu-container-mobile').innerHTML = createMenuHtml(aboutCountryMenu, true);
+
+
+                // Footer Contacts
                 const contactsHTML = [];
-                for (let i = 1; i <= 4; i++) {
+                for (let i = 1; i <= 2; i++) {
                     if (globalSettings[`contact${i}_name`]) {
                         contactsHTML.push(`
                             <div class="text-center">
                                 <p class="font-semibold">${globalSettings[`contact${i}_name`]}</p>
                                 ${globalSettings[`contact${i}_phone`] ? `<a href="tel:${globalSettings[`contact${i}_phone`].replace(/\s/g, '')}" class="block hover:text-primary">${globalSettings[`contact${i}_phone`]}</a>` : ''}
+                                ${globalSettings[`contact${i}_phone2`] ? `<a href="tel:${globalSettings[`contact${i}_phone2`].replace(/\s/g, '')}" class="block hover:text-primary">${globalSettings[`contact${i}_phone2`]}</a>` : ''}
                                 ${globalSettings[`contact${i}_email`] ? `<a href="mailto:${globalSettings[`contact${i}_email`]}" class="block hover:text-primary">${globalSettings[`contact${i}_email`]}</a>` : ''}
                             </div>
                         `);
@@ -832,9 +870,7 @@
                 footerHTML += `<div class="flex flex-wrap justify-center lg:justify-end gap-6">${contactsHTML.join('')}</div>`;
                 document.getElementById('site-footer').innerHTML = footerHTML;
 
-            } catch (error) {
-                console.error("Error loading settings:", error);
-            }
+            } catch (error) { console.error("Error loading settings:", error); }
         };
 
         const loadGlobalTags = async () => {
@@ -876,3 +912,4 @@
     </script>
 </body>
 </html>
+
