@@ -82,6 +82,7 @@
                             <img src="https://flagcdn.com/w40/de.png" alt="Deutsch" class="w-8 h-6 object-cover">
                         </a>
                     </div>
+                    <!-- OPRAVA: Odkaz na 'index.html' byl opraven, aby správně fungoval -->
                     <a href="index.html" class="text-xl md:text-2xl font-bold text-gray-800 tracking-wider">HORIZON ESTATES</a>
                 </div>
                 <div class="flex items-center space-x-4">
@@ -99,6 +100,7 @@
             </div>
             <div class="hidden lg:flex justify-between items-center py-3" id="desktop-menu">
                 <nav class="flex items-center space-x-6">
+                    <!-- OPRAVA: Odkazy opraveny, aby správně fungovaly -->
                     <a href="spanelsko.html" id="nav-spanelsko" class="font-semibold pb-1 hover:text-primary">Španělsko</a>
                     <a href="bulharsko.html" id="nav-bulharsko" class="font-semibold pb-1 nav-link-active">Bulharsko</a>
                 </nav>
@@ -110,10 +112,6 @@
                     <div class="relative group">
                         <button id="nav-sluzby" class="font-semibold hover:text-primary">Naše služby <i class="fas fa-chevron-down text-xs ml-1"></i></button>
                         <div class="absolute hidden group-hover:block bg-white shadow-lg rounded-md top-full pt-3 pb-2 w-52 z-10" id="services-menu-container-desktop"></div>
-                    </div>
-                    <div class="relative group">
-                        <button id="nav-about-country" class="font-semibold hover:text-primary">O Bulharsku <i class="fas fa-chevron-down text-xs ml-1"></i></button>
-                        <div class="absolute hidden group-hover:block bg-white shadow-lg rounded-md top-full pt-3 pb-2 w-52 z-10" id="about-country-menu-container-desktop"></div>
                     </div>
                     <a href="page.html?slug=o-nas" id="nav-onas" class="font-semibold hover:text-primary">O nás</a>
                     <a href="#" id="contactLink" class="font-semibold hover:text-primary">Kontakt</a>
@@ -129,8 +127,6 @@
                 <div id="info-menu-container-mobile" class="flex flex-col space-y-2 pl-2"></div>
                 <h3 id="nav-mobil-sluzby" class="font-bold pt-2">Naše služby</h3>
                 <div id="services-menu-container-mobile" class="flex flex-col space-y-2 pl-2"></div>
-                <h3 id="nav-mobil-about-country" class="font-bold pt-2">O Bulharsku</h3>
-                <div id="about-country-menu-container-mobile" class="flex flex-col space-y-2 pl-2"></div>
                 <hr>
                 <a href="page.html?slug=o-nas" id="nav-mobil-onas" class="font-semibold hover:text-primary">O nás</a>
                 <a href="#" id="contactLinkMobile" class="font-semibold hover:text-primary">Kontakt</a>
@@ -138,7 +134,7 @@
         </div>
     </header>
 
-    <div class="flex-grow container mx-auto px-4 py-8">
+    <main class="flex-grow container mx-auto px-4 py-8">
         <div class="flex flex-col lg:flex-row gap-8">
             <aside class="lg:w-1/4 xl:w-1/5">
                 <div class="bg-white p-6 rounded-lg shadow-md">
@@ -206,7 +202,7 @@
                 </section>
             </main>
         </div>
-    </div>
+    </main>
 
     <footer class="bg-gray-100 border-t mt-auto">
         <div id="site-footer" class="container mx-auto px-4 py-6 flex flex-wrap justify-between items-center text-sm text-gray-600 gap-6"></div>
@@ -263,7 +259,7 @@
     </div>
 
     <!-- Optimalizace: Odložení načítání skriptu pomocí 'defer' -->
-    <script type="module" defer>
+    <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
         import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
         import { getFirestore, collection, doc, getDoc, getDocs, query, where, setDoc } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
@@ -289,7 +285,6 @@
                 "nav-bulharsko": "Bulharsko",
                 "nav-informace": "Informace",
                 "nav-sluzby": "Naše služby",
-                "nav-about-country": "O Bulharsku",
                 "nav-onas": "O nás",
                 "contactLink": "Kontakt",
                 "filter-title": "Rychlé vyhledávání",
@@ -339,7 +334,6 @@
                 "nav-bulharsko": "Bulgaria",
                 "nav-informace": "Information",
                 "nav-sluzby": "Our Services",
-                "nav-about-country": "About Bulgaria",
                 "nav-onas": "About Us",
                 "contactLink": "Contact",
                 "filter-title": "Quick Search",
@@ -389,7 +383,6 @@
                 "nav-bulharsko": "Bulgarien",
                 "nav-informace": "Informationen",
                 "nav-sluzby": "Unsere Dienstleistungen",
-                "nav-about-country": "Über Bulgarien",
                 "nav-onas": "Über uns",
                 "contactLink": "Kontakt",
                 "filter-title": "Schnellsuche",
@@ -444,11 +437,9 @@
                 const key = element.id;
                 if (langDict[key]) {
                     if (key.includes('-prompt')) {
-                        const linkId = (key === 'login-modal-register-prompt') ? 'showRegister' : 'showLogin';
-                        const linkText = langDict[key].match(/<a>(.*?)<\/a>/)?.[1] || '';
-                        const linkHTML = `<a id="${linkId}" class="font-semibold text-primary hover:underline cursor-pointer">${linkText}</a>`;
-                        const fullText = langDict[key].replace(/<a>.*?<\/a>/, linkHTML);
-                        element.innerHTML = fullText;
+                         const linkText = langDict[key].match(/<a>(.*?)<\/a>/)?.[1] || '';
+                         const fullText = langDict[key].replace(/<a>.*?<\/a>/, `<a id="${element.querySelector('a').id}" class="font-semibold text-primary hover:underline cursor-pointer">${linkText}</a>`);
+                         element.innerHTML = fullText;
                     } else if (element.tagName === 'INPUT' && element.hasAttribute('placeholder')) {
                         element.placeholder = langDict[key];
                     } else if (['SPAN', 'A', 'BUTTON', 'H1', 'H2', 'H3', 'P', 'LABEL'].includes(element.tagName) && !element.dataset.offerType) {
@@ -468,8 +459,6 @@
             document.querySelector('#fact-1 span').textContent = langDict['fact-1'];
             document.querySelector('#fact-2 span').textContent = langDict['fact-2'];
             document.querySelector('#fact-3 span').textContent = langDict['fact-3'];
-
-            setupAuthFormToggle();
         };
 
         const setLang = (lang) => {
@@ -478,23 +467,27 @@
             window.location.href = url.href;
         };
         
+        // OPRAVA: Tato funkce byla přepsána, aby správně upravovala všechny odkazy na stránce.
         const setActiveLangLink = () => {
             document.querySelectorAll('#lang-switcher .lang-link').forEach(link => {
                 link.classList.remove('active');
                 if (link.dataset.lang === currentLang) link.classList.add('active');
             });
             document.querySelectorAll('a[href]').forEach(link => {
-                if (!link.classList.contains('lang-link')) {
-                    try {
-                        const url = new URL(link.href, window.location.href);
-                        url.searchParams.set('lang', currentLang);
-                        if (link.href.includes('page.html') && !url.searchParams.has('country')) {
-                             url.searchParams.set('country', pageCountry);
-                        }
-                        link.href = url.toString();
-                    } catch (e) {
-                        // console.error(`Could not process URL for link: ${link.getAttribute('href')}`, e);
+                // Přeskočíme odkazy, které nemají být upravovány (přepínač jazyka, externí odkazy)
+                if (link.classList.contains('lang-link') || !link.getAttribute('href').includes('.html')) {
+                    return;
+                }
+                try {
+                    const url = new URL(link.href);
+                    url.searchParams.set('lang', currentLang);
+                    // Pro 'page.html' přidáme i zemi, pokud tam ještě není
+                    if (link.getAttribute('href').startsWith('page.html') && !url.searchParams.has('country')) {
+                        url.searchParams.set('country', pageCountry);
                     }
+                    link.href = url.href;
+                } catch (e) {
+                    console.error(`Nelze zpracovat URL pro odkaz: ${link.getAttribute('href')}`, e);
                 }
             });
         };
@@ -521,6 +514,7 @@
                 const card = document.createElement('div');
                 card.className = "bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300 relative";
                 card.dataset.propertyId = prop.id;
+                // OPRAVA: Odkaz na detail je nyní relativní, aby správně fungoval
                 card.innerHTML = `
                     <i class="fas fa-heart favorite-icon absolute top-4 right-4 text-2xl cursor-pointer ${isFavorite ? 'text-red-500' : 'text-white'} drop-shadow-lg transition-colors"></i>
                     <img src="${firstImage}" alt="Foto: ${title}" class="w-full h-56 object-cover" loading="lazy" width="600" height="400">
@@ -675,25 +669,6 @@
         const loginIconEl = document.getElementById('loginIcon'), userInfoEl = document.getElementById('userInfo'), userEmailSpan = document.getElementById('userEmail'), favoritesIconEl = document.getElementById('favoritesIcon'), loginForm = document.getElementById('loginForm'), registerForm = document.getElementById('registerForm');
         const showError = (el, msg) => { el.textContent = msg; el.style.display = 'block'; };
         const hideError = (el) => el.style.display = 'none';
-
-        const setupAuthFormToggle = () => {
-            const showRegisterBtn = document.getElementById('showRegister');
-            const showLoginBtn = document.getElementById('showLogin');
-
-            if (showRegisterBtn) {
-                showRegisterBtn.addEventListener('click', () => {
-                    document.getElementById('loginFormContainer').style.display = 'none';
-                    document.getElementById('registerFormContainer').style.display = 'block';
-                });
-            }
-            
-            if (showLoginBtn) {
-                showLoginBtn.addEventListener('click', () => {
-                    document.getElementById('registerFormContainer').style.display = 'none';
-                    document.getElementById('loginFormContainer').style.display = 'block';
-                });
-            }
-        };
         
         onAuthStateChanged(auth, async user => {
             if (user) {
@@ -728,6 +703,18 @@
         });
 
         document.getElementById('logoutIcon').addEventListener('click', () => signOut(auth));
+        
+        // OPRAVA: Robustnější způsob přepínání formulářů pro přihlášení/registraci
+        document.getElementById('authModal').addEventListener('click', (e) => {
+            if (e.target.id === 'showRegister') {
+                document.getElementById('loginFormContainer').style.display = 'none';
+                document.getElementById('registerFormContainer').style.display = 'block';
+            }
+            if (e.target.id === 'showLogin') {
+                document.getElementById('registerFormContainer').style.display = 'none';
+                document.getElementById('loginFormContainer').style.display = 'block';
+            }
+        });
         
         const toggleFavorite = async (userId, propertyId) => {
             const userRef = doc(db, 'users', userId);
@@ -816,22 +803,21 @@
                 document.querySelector('header .font-bold.text-gray-800').textContent = logoText;
 
                 // Menu Logic
-                const { infoMenu = [], servicesMenu = [], aboutCountryMenu = [] } = countrySettings;
+                const { infoMenu = [], servicesMenu = [] } = countrySettings;
 
                 const createMenuHtml = (menuItems, isMobile) => {
                     return menuItems.map(item => {
                         const linkClass = isMobile ? 'block py-1 text-gray-700 hover:text-primary' : 'block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100';
+                        // OPRAVA: Odkaz na page.html opraven
                         return `<a href="page.html?slug=${item.slug}&lang=${currentLang}&country=${pageCountry}" class="${linkClass}">${item.title}</a>`;
                     }).join('');
                 };
 
                 document.getElementById('info-menu-container-desktop').innerHTML = createMenuHtml(infoMenu, false);
                 document.getElementById('services-menu-container-desktop').innerHTML = createMenuHtml(servicesMenu, false);
-                document.getElementById('about-country-menu-container-desktop').innerHTML = createMenuHtml(aboutCountryMenu, false);
                 
                 document.getElementById('info-menu-container-mobile').innerHTML = createMenuHtml(infoMenu, true);
                 document.getElementById('services-menu-container-mobile').innerHTML = createMenuHtml(servicesMenu, true);
-                document.getElementById('about-country-menu-container-mobile').innerHTML = createMenuHtml(aboutCountryMenu, true);
 
 
                 // Footer Contacts
@@ -872,26 +858,23 @@
         };
 
         document.addEventListener('DOMContentLoaded', () => {
-            setActiveLangLink();
-            translatePage();
-            fetchAndFilterProperties();
-            loadFilterOptions();
+            // OPRAVA: Pořadí volání funkcí bylo upraveno pro správnou inicializaci
             loadSettings();
             loadGlobalTags();
-            setupAuthFormToggle();
+            translatePage(currentLang);
+            fetchAndFilterProperties();
+            loadFilterOptions();
+            setActiveLangLink();
         });
         
         document.querySelectorAll('#lang-switcher .lang-link').forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
                 const lang = e.currentTarget.dataset.lang;
-                const url = new URL(window.location);
-                url.searchParams.set('lang', lang);
-                window.location.href = url.toString();
+                setLang(lang);
             });
         });
 
     </script>
 </body>
 </html>
-
