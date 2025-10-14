@@ -4,24 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Horizon Estates - Nemovitosti v Bulharsku</title>
-    <!-- SEO: Přidán meta tag pro popis stránky -->
-    <meta name="description" content="Objevte svůj vysněný apartmán na pobřeží Černého moře. Nabízíme široký výběr ověřených nemovitostí v Bulharsku k prodeji i pronájmu.">
     <meta name="keywords" id="meta-keywords" content="nemovitosti bulharsko, reality bulharsko, apartmány bulharsko, slunečné pobřeží">
     
-    <!-- Optimalizace: Asynchronní načítání písem a ikon, aby neblokovaly vykreslování -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript>
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    </noscript>
-    
-    <!-- Optimalizace: Přednačtení hlavního obrázku (LCP) -->
-    <link rel="preload" as="image" href="https://images.pexels.com/photos/1732414/pexels-photo-1732414.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2">
-
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
         body {
@@ -56,13 +47,6 @@
             opacity: 1;
             transform: scale(1.1);
         }
-        /* Přístupnost: Zvýšení kontrastu pro tlačítka nabídek */
-        .offer-type-btn {
-            color: #374151; /* Tmavší šedá pro lepší čitelnost */
-        }
-        .offer-type-btn.active {
-            color: #ffffff; /* Bílá na tmavém pozadí je v pořádku */
-        }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800 flex flex-col min-h-screen">
@@ -82,7 +66,6 @@
                             <img src="https://flagcdn.com/w40/de.png" alt="Deutsch" class="w-8 h-6 object-cover">
                         </a>
                     </div>
-                    <!-- OPRAVA: Odkaz na 'index.html' byl opraven, aby správně fungoval -->
                     <a href="index.html" class="text-xl md:text-2xl font-bold text-gray-800 tracking-wider">HORIZON ESTATES</a>
                 </div>
                 <div class="flex items-center space-x-4">
@@ -94,13 +77,11 @@
                             <i class="fas fa-sign-out-alt text-xl cursor-pointer hover:text-red-500" id="logoutIcon" title="Odhlásit se"></i>
                         </div>
                     </div>
-                    <!-- Přístupnost: Přidán aria-label pro screen readery -->
-                    <button id="mobile-menu-button" class="lg:hidden text-2xl" aria-label="Otevřít menu"><i class="fas fa-bars"></i></button>
+                    <button id="mobile-menu-button" class="lg:hidden text-2xl"><i class="fas fa-bars"></i></button>
                 </div>
             </div>
             <div class="hidden lg:flex justify-between items-center py-3" id="desktop-menu">
                 <nav class="flex items-center space-x-6">
-                    <!-- OPRAVA: Odkazy opraveny, aby správně fungovaly -->
                     <a href="spanelsko.html" id="nav-spanelsko" class="font-semibold pb-1 hover:text-primary">Španělsko</a>
                     <a href="bulharsko.html" id="nav-bulharsko" class="font-semibold pb-1 nav-link-active">Bulharsko</a>
                 </nav>
@@ -134,7 +115,7 @@
         </div>
     </header>
 
-    <main class="flex-grow container mx-auto px-4 py-8">
+    <div class="flex-grow container mx-auto px-4 py-8">
         <div class="flex flex-col lg:flex-row gap-8">
             <aside class="lg:w-1/4 xl:w-1/5">
                 <div class="bg-white p-6 rounded-lg shadow-md">
@@ -180,17 +161,17 @@
                     </div>
                 </div>
                 <div class="flex justify-end mb-6">
-                    <div class="flex items-center space-x-2">
-                        <label for="sort-by" id="sort-by-label" class="text-sm font-medium">Seřadit podle:</label>
-                        <select id="sort-by" class="p-2 border rounded-md text-sm focus:ring-2 focus:ring-primary focus:border-primary transition">
-                            <option id="sort-date-desc" value="date-desc">Data (od nejnovější)</option>
-                            <option id="sort-offer-desc" value="offerId-desc">Číslo nabídky (sestupně)</option>
-                            <option id="sort-price-asc" value="price-asc">Ceny (od nejlevnější)</option>
-                            <option id="sort-price-desc" value="price-desc">Ceny (od nejdražší)</option>
-                        </select>
-                    </div>
-                </div>
-                <section id="properties-container" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8"></section>
+                    <div class="flex items-center space-x-2">
+                        <label for="sort-by" id="sort-by-label" class="text-sm font-medium">Seřadit podle:</label>
+                        <select id="sort-by" class="p-2 border rounded-md text-sm focus:ring-2 focus:ring-primary focus:border-primary transition">
+                            <option id="sort-date-desc" value="date-desc">Data (od nejnovější)</option>
+                            <option id="sort-offer-desc" value="offerId-desc">Číslo nabídky (sestupně)</option>
+                            <option id="sort-price-asc" value="price-asc">Ceny (od nejlevnější)</option>
+                            <option id="sort-price-desc" value="price-desc">Ceny (od nejdražší)</option>
+                        </select>
+                    </div>
+                </div>
+                <section id="properties-container" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8"></section>
                 <div id="pagination-container" class="flex justify-center items-center space-x-2 mt-8"></div>
                 <section class="mt-12 p-6 bg-white rounded-lg shadow-md border-l-4 border-yellow-400">
                     <h2 id="facts-title" class="text-2xl font-bold mb-4">Zajímavosti o Bulharsku</h2>
@@ -202,7 +183,7 @@
                 </section>
             </main>
         </div>
-    </main>
+    </div>
 
     <footer class="bg-gray-100 border-t mt-auto">
         <div id="site-footer" class="container mx-auto px-4 py-6 flex flex-wrap justify-between items-center text-sm text-gray-600 gap-6"></div>
@@ -212,7 +193,7 @@
         <div class="bg-white rounded-lg shadow-2xl w-full max-w-lg p-8 modal-slide-in">
             <div class="flex justify-between items-center mb-4">
                 <h2 id="contact-modal-title" class="text-2xl font-bold">Kontaktní formulář</h2>
-                <button class="close-btn text-3xl text-gray-400 hover:text-gray-700" aria-label="Zavřít okno">&times;</button>
+                <button class="close-btn text-3xl text-gray-400 hover:text-gray-700">&times;</button>
             </div>
             <form class="space-y-4" action="https://formsubmit.co/nesvarba.martin@seznam.cz" method="POST">
                 <div><label for="name" id="contact-modal-name" class="block font-medium">Vaše jméno</label><input type="text" id="name" name="name" required class="w-full p-2 border rounded-md mt-1"></div>
@@ -225,7 +206,7 @@
     </div>
     <div id="authModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center p-4 modal-fade-in">
         <div class="bg-white rounded-lg shadow-2xl w-full max-w-md p-8 modal-slide-in">
-            <div class="text-right"><button class="close-btn text-3xl text-gray-400 hover:text-gray-700 -mt-4" aria-label="Zavřít okno">&times;</button></div>
+            <div class="text-right"><button class="close-btn text-3xl text-gray-400 hover:text-gray-700 -mt-4">&times;</button></div>
             <div id="loginFormContainer">
                 <h2 id="login-modal-title" class="text-2xl font-bold text-center mb-6">Přihlášení</h2>
                 <form id="loginForm" class="space-y-4">
@@ -252,13 +233,12 @@
         <div class="bg-white rounded-lg shadow-2xl w-full max-w-3xl p-8 modal-slide-in">
              <div class="flex justify-between items-center mb-6">
                 <h2 id="favorites-modal-title" class="text-2xl font-bold">Moje oblíbené nemovitosti</h2>
-                <button class="close-btn text-3xl text-gray-400 hover:text-gray-700" aria-label="Zavřít okno">&times;</button>
+                <button class="close-btn text-3xl text-gray-400 hover:text-gray-700">&times;</button>
             </div>
             <div id="favorites-list" class="max-h-[60vh] overflow-y-auto pr-2"></div>
         </div>
     </div>
 
-    <!-- Optimalizace: Odložení načítání skriptu pomocí 'defer' -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
         import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
@@ -437,11 +417,11 @@
                 const key = element.id;
                 if (langDict[key]) {
                     if (key.includes('-prompt')) {
-                         const linkText = langDict[key].match(/<a>(.*?)<\/a>/)?.[1] || '';
-                         const fullText = langDict[key].replace(/<a>.*?<\/a>/, `<a id="${element.querySelector('a').id}" class="font-semibold text-primary hover:underline cursor-pointer">${linkText}</a>`);
-                         element.innerHTML = fullText;
+                        const linkText = langDict[key].match(/<a>(.*?)<\/a>/)?.[1] || '';
+                        const fullText = langDict[key].replace(/<a>.*?<\/a>/, `<a class="font-semibold text-primary hover:underline cursor-pointer">${linkText}</a>`);
+                        element.innerHTML = fullText;
                     } else if (element.tagName === 'INPUT' && element.hasAttribute('placeholder')) {
-                        element.placeholder = langDict[key];
+                         element.placeholder = langDict[key];
                     } else if (['SPAN', 'A', 'BUTTON', 'H1', 'H2', 'H3', 'P', 'LABEL'].includes(element.tagName) && !element.dataset.offerType) {
                         element.textContent = langDict[key];
                     } else if (element.tagName === 'OPTION' && element.id) {
@@ -453,7 +433,7 @@
             document.getElementById('offer-id-filter').placeholder = langDict['offerIdPlaceholder'] || 'Zadejte číslo';
             document.getElementById('cena-od').placeholder = langDict['priceFromPlaceholder'] || 'Od';
             document.getElementById('cena-do').placeholder = langDict['priceToPlaceholder'] || 'Do';
-            
+
             document.querySelectorAll('.offer-type-btn').forEach(btn => btn.textContent = langDict[btn.id] || btn.textContent);
 
             document.querySelector('#fact-1 span').textContent = langDict['fact-1'];
@@ -467,27 +447,21 @@
             window.location.href = url.href;
         };
         
-        // OPRAVA: Tato funkce byla přepsána, aby správně upravovala všechny odkazy na stránce.
         const setActiveLangLink = () => {
             document.querySelectorAll('#lang-switcher .lang-link').forEach(link => {
                 link.classList.remove('active');
                 if (link.dataset.lang === currentLang) link.classList.add('active');
             });
-            document.querySelectorAll('a[href]').forEach(link => {
-                // Přeskočíme odkazy, které nemají být upravovány (přepínač jazyka, externí odkazy)
-                if (link.classList.contains('lang-link') || !link.getAttribute('href').includes('.html')) {
-                    return;
-                }
-                try {
-                    const url = new URL(link.href);
-                    url.searchParams.set('lang', currentLang);
-                    // Pro 'page.html' přidáme i zemi, pokud tam ještě není
-                    if (link.getAttribute('href').startsWith('page.html') && !url.searchParams.has('country')) {
+            document.querySelectorAll('a[href*=".html"]').forEach(link => {
+                if (!link.classList.contains('lang-link')) {
+                    try {
+                        const url = new URL(link.getAttribute('href'), window.location.href);
+                        url.searchParams.set('lang', currentLang);
                         url.searchParams.set('country', pageCountry);
+                        link.href = url.href;
+                    } catch (e) {
+                        console.error(`Could not process URL for link: ${link.getAttribute('href')}`, e);
                     }
-                    link.href = url.href;
-                } catch (e) {
-                    console.error(`Nelze zpracovat URL pro odkaz: ${link.getAttribute('href')}`, e);
                 }
             });
         };
@@ -514,10 +488,9 @@
                 const card = document.createElement('div');
                 card.className = "bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300 relative";
                 card.dataset.propertyId = prop.id;
-                // OPRAVA: Odkaz na detail je nyní relativní, aby správně fungoval
                 card.innerHTML = `
                     <i class="fas fa-heart favorite-icon absolute top-4 right-4 text-2xl cursor-pointer ${isFavorite ? 'text-red-500' : 'text-white'} drop-shadow-lg transition-colors"></i>
-                    <img src="${firstImage}" alt="Foto: ${title}" class="w-full h-56 object-cover" loading="lazy" width="600" height="400">
+                    <img src="${firstImage}" alt="Foto: ${title}" class="w-full h-56 object-cover">
                     <div class="p-6">
                         <h3 class="text-xl font-bold mb-2">${title}</h3>
                         <p class="text-2xl font-bold text-primary mb-4">€${prop.price.toLocaleString()}</p>
@@ -580,11 +553,11 @@
                 let results = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
                 filteredProperties = results.filter(p => {
                     return (!filters.location || p.location === filters.location) &&
-                           (!filters.type || p.type === filters.type) &&
-                           (!filters.rooms || p.rooms === filters.rooms) &&
-                           (!filters.priceFrom || p.price >= filters.priceFrom) &&
-                           (!filters.priceTo || p.price <= filters.priceTo) &&
-                           (!filters.offerId || p.offerId == filters.offerId);
+                                (!filters.type || p.type === filters.type) &&
+                                (!filters.rooms || p.rooms === filters.rooms) &&
+                                (!filters.priceFrom || p.price >= filters.priceFrom) &&
+                                (!filters.priceTo || p.price <= filters.priceTo) &&
+                                (!filters.offerId || p.offerId == filters.offerId);
                 });
                 sortProperties();
             } catch (error) {
@@ -703,17 +676,13 @@
         });
 
         document.getElementById('logoutIcon').addEventListener('click', () => signOut(auth));
-        
-        // OPRAVA: Robustnější způsob přepínání formulářů pro přihlášení/registraci
-        document.getElementById('authModal').addEventListener('click', (e) => {
-            if (e.target.id === 'showRegister') {
-                document.getElementById('loginFormContainer').style.display = 'none';
-                document.getElementById('registerFormContainer').style.display = 'block';
-            }
-            if (e.target.id === 'showLogin') {
-                document.getElementById('registerFormContainer').style.display = 'none';
-                document.getElementById('loginFormContainer').style.display = 'block';
-            }
+        document.getElementById('showRegister').addEventListener('click', () => {
+            document.getElementById('loginFormContainer').style.display = 'none';
+            document.getElementById('registerFormContainer').style.display = 'block';
+        });
+        document.getElementById('showLogin').addEventListener('click', () => {
+            document.getElementById('registerFormContainer').style.display = 'none';
+            document.getElementById('loginFormContainer').style.display = 'block';
         });
         
         const toggleFavorite = async (userId, propertyId) => {
@@ -792,35 +761,23 @@
                 const countrySettingsDoc = await getDoc(doc(db, 'settings', pageCountry));
                 if (countrySettingsDoc.exists()) {
                     countrySettings = countrySettingsDoc.data();
+                    const { infoMenu = [], servicesMenu = [] } = countrySettings;
+                    const infoHtml = infoMenu.map(item => `<a href="page.html?slug=${item.slug}&lang=${currentLang}&country=${pageCountry}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">${item.title}</a>`).join('');
+                    const servicesHtml = servicesMenu.map(item => `<a href="page.html?slug=${item.slug}&lang=${currentLang}&country=${pageCountry}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">${item.title}</a>`).join('');
+                    document.getElementById('info-menu-container-desktop').innerHTML = infoHtml;
+                    document.getElementById('services-menu-container-desktop').innerHTML = servicesHtml;
+                    document.getElementById('info-menu-container-mobile').innerHTML = infoMenu.map(item => `<a href="page.html?slug=${item.slug}&lang=${currentLang}&country=${pageCountry}" class="block py-1 text-gray-700 hover:text-primary">${item.title}</a>`).join('');
+                    document.getElementById('services-menu-container-mobile').innerHTML = servicesMenu.map(item => `<a href="page.html?slug=${item.slug}&lang=${currentLang}&country=${pageCountry}" class="block py-1 text-gray-700 hover:text-primary">${item.title}</a>`).join('');
                 }
 
                 const globalSettingsDoc = await getDoc(doc(db, 'settings', 'global'));
                 if (globalSettingsDoc.exists()) {
                     globalSettings = globalSettingsDoc.data();
                 }
-                
+
                 const logoText = countrySettings.logoText || globalSettings.logoText || 'HORIZON ESTATES';
                 document.querySelector('header .font-bold.text-gray-800').textContent = logoText;
 
-                // Menu Logic
-                const { infoMenu = [], servicesMenu = [] } = countrySettings;
-
-                const createMenuHtml = (menuItems, isMobile) => {
-                    return menuItems.map(item => {
-                        const linkClass = isMobile ? 'block py-1 text-gray-700 hover:text-primary' : 'block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100';
-                        // OPRAVA: Odkaz na page.html opraven
-                        return `<a href="page.html?slug=${item.slug}&lang=${currentLang}&country=${pageCountry}" class="${linkClass}">${item.title}</a>`;
-                    }).join('');
-                };
-
-                document.getElementById('info-menu-container-desktop').innerHTML = createMenuHtml(infoMenu, false);
-                document.getElementById('services-menu-container-desktop').innerHTML = createMenuHtml(servicesMenu, false);
-                
-                document.getElementById('info-menu-container-mobile').innerHTML = createMenuHtml(infoMenu, true);
-                document.getElementById('services-menu-container-mobile').innerHTML = createMenuHtml(servicesMenu, true);
-
-
-                // Footer Contacts
                 const contactsHTML = [];
                 for (let i = 1; i <= 2; i++) {
                     if (globalSettings[`contact${i}_name`]) {
@@ -838,7 +795,9 @@
                 footerHTML += `<div class="flex flex-wrap justify-center lg:justify-end gap-6">${contactsHTML.join('')}</div>`;
                 document.getElementById('site-footer').innerHTML = footerHTML;
 
-            } catch (error) { console.error("Error loading settings:", error); }
+            } catch (error) {
+                console.error("Error loading settings:", error);
+            }
         };
 
         const loadGlobalTags = async () => {
@@ -858,13 +817,12 @@
         };
 
         document.addEventListener('DOMContentLoaded', () => {
-            // OPRAVA: Pořadí volání funkcí bylo upraveno pro správnou inicializaci
-            loadSettings();
-            loadGlobalTags();
+            setActiveLangLink();
             translatePage(currentLang);
             fetchAndFilterProperties();
             loadFilterOptions();
-            setActiveLangLink();
+            loadSettings();
+            loadGlobalTags();
         });
         
         document.querySelectorAll('#lang-switcher .lang-link').forEach(link => {
@@ -874,7 +832,6 @@
                 setLang(lang);
             });
         });
-
     </script>
 </body>
 </html>
