@@ -4,11 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Horizon Estates - Nemovitosti v Bulharsku</title>
-    <!-- SEO: Přidán meta tag pro popis stránky -->
     <meta name="description" content="Objevte svůj vysněný apartmán na pobřeží Černého moře. Nabízíme široký výběr ověřených nemovitostí v Bulharsku k prodeji i pronájmu.">
     <meta name="keywords" id="meta-keywords" content="nemovitosti bulharsko, reality bulharsko, apartmány bulharsko, slunečné pobřeží">
     
-    <!-- Optimalizace: Asynchronní načítání písem a ikon, aby neblokovaly vykreslování -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -18,7 +16,6 @@
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     </noscript>
     
-    <!-- Optimalizace: Přednačtení hlavního obrázku (LCP) -->
     <link rel="preload" as="image" href="https://images.pexels.com/photos/1732414/pexels-photo-1732414.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2">
 
     <script src="https://cdn.tailwindcss.com"></script>
@@ -93,7 +90,6 @@
                             <i class="fas fa-sign-out-alt text-xl cursor-pointer hover:text-red-500" id="logoutIcon" title="Odhlásit se"></i>
                         </div>
                     </div>
-                    <!-- Přístupnost: Přidán aria-label pro screen readery -->
                     <button id="mobile-menu-button" class="lg:hidden text-2xl" aria-label="Otevřít menu"><i class="fas fa-bars"></i></button>
                 </div>
             </div>
@@ -111,6 +107,10 @@
                         <button id="nav-sluzby" class="font-semibold hover:text-primary">Naše služby <i class="fas fa-chevron-down text-xs ml-1"></i></button>
                         <div class="absolute hidden group-hover:block bg-white shadow-lg rounded-md top-full pt-3 pb-2 w-52 z-10" id="services-menu-container-desktop"></div>
                     </div>
+                    <div class="relative group">
+                        <button id="nav-obulharsku" class="font-semibold hover:text-primary">O Bulharsku <i class="fas fa-chevron-down text-xs ml-1"></i></button>
+                        <div class="absolute hidden group-hover:block bg-white shadow-lg rounded-md top-full pt-3 pb-2 w-52 z-10" id="obulharsku-menu-container-desktop"></div>
+                    </div>
                     <a href="/page/?slug=o-nas" id="nav-onas" class="font-semibold hover:text-primary">O nás</a>
                     <a href="#" id="contactLink" class="font-semibold hover:text-primary">Kontakt</a>
                 </nav>
@@ -125,6 +125,8 @@
                 <div id="info-menu-container-mobile" class="flex flex-col space-y-2 pl-2"></div>
                 <h3 id="nav-mobil-sluzby" class="font-bold pt-2">Naše služby</h3>
                 <div id="services-menu-container-mobile" class="flex flex-col space-y-2 pl-2"></div>
+                <h3 id="nav-mobil-obulharsku" class="font-bold pt-2">O Bulharsku</h3>
+                <div id="obulharsku-menu-container-mobile" class="flex flex-col space-y-2 pl-2"></div>
                 <hr>
                 <a href="/page/?slug=o-nas" id="nav-mobil-onas" class="font-semibold hover:text-primary">O nás</a>
                 <a href="#" id="contactLinkMobile" class="font-semibold hover:text-primary">Kontakt</a>
@@ -256,7 +258,6 @@
         </div>
     </div>
 
-    <!-- Optimalizace: Odložení načítání skriptu pomocí 'defer' -->
     <script type="module" defer>
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
         import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
@@ -283,6 +284,7 @@
                 "nav-bulharsko": "Bulharsko",
                 "nav-informace": "Informace",
                 "nav-sluzby": "Naše služby",
+                "nav-obulharsku": "O Bulharsku", // Přidáno
                 "nav-onas": "O nás",
                 "contactLink": "Kontakt",
                 "filter-title": "Rychlé vyhledávání",
@@ -332,6 +334,7 @@
                 "nav-bulharsko": "Bulgaria",
                 "nav-informace": "Information",
                 "nav-sluzby": "Our Services",
+                "nav-obulharsku": "About Bulgaria", // Přidáno
                 "nav-onas": "About Us",
                 "contactLink": "Contact",
                 "filter-title": "Quick Search",
@@ -381,6 +384,7 @@
                 "nav-bulharsko": "Bulgarien",
                 "nav-informace": "Informationen",
                 "nav-sluzby": "Unsere Dienstleistungen",
+                "nav-obulharsku": "Über Bulgarien", // Přidáno
                 "nav-onas": "Über uns",
                 "contactLink": "Kontakt",
                 "filter-title": "Schnellsuche",
@@ -433,6 +437,9 @@
 
             document.querySelectorAll('[id]').forEach(element => {
                 const key = element.id;
+                // Přidáno pro mobilní menu
+                const mobileKey = key.startsWith('nav-mobil-') ? key.replace('nav-mobil-', 'nav-') : null;
+
                 if (langDict[key]) {
                     if (key.includes('-prompt')) {
                         const linkId = (key === 'login-modal-register-prompt') ? 'showRegister' : 'showLogin';
@@ -447,6 +454,8 @@
                     } else if (element.tagName === 'OPTION' && element.id) {
                         element.textContent = langDict[element.id];
                     }
+                } else if (mobileKey && langDict[mobileKey]) { // Zpracování pro mobilní menu
+                     element.textContent = langDict[mobileKey];
                 }
             });
 
@@ -782,13 +791,19 @@
                 const countrySettingsDoc = await getDoc(doc(db, 'settings', pageCountry));
                 if (countrySettingsDoc.exists()) {
                     countrySettings = countrySettingsDoc.data();
-                    const { infoMenu = [], servicesMenu = [] } = countrySettings;
+                    const { infoMenu = [], servicesMenu = [], bulgariaMenu = [] } = countrySettings; // Přidáno bulgariaMenu
+                    
                     const infoHtml = infoMenu.map(item => `<a href="/page/?slug=${item.slug}&lang=${currentLang}&country=${pageCountry}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">${item.title}</a>`).join('');
                     const servicesHtml = servicesMenu.map(item => `<a href="/page/?slug=${item.slug}&lang=${currentLang}&country=${pageCountry}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">${item.title}</a>`).join('');
+                    const bulgariaHtml = bulgariaMenu.map(item => `<a href="/page/?slug=${item.slug}&lang=${currentLang}&country=${pageCountry}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">${item.title}</a>`).join('');
+
                     document.getElementById('info-menu-container-desktop').innerHTML = infoHtml;
                     document.getElementById('services-menu-container-desktop').innerHTML = servicesHtml;
+                    document.getElementById('obulharsku-menu-container-desktop').innerHTML = bulgariaHtml;
+
                     document.getElementById('info-menu-container-mobile').innerHTML = infoMenu.map(item => `<a href="/page/?slug=${item.slug}&lang=${currentLang}&country=${pageCountry}" class="block py-1 text-gray-700 hover:text-primary">${item.title}</a>`).join('');
                     document.getElementById('services-menu-container-mobile').innerHTML = servicesMenu.map(item => `<a href="/page/?slug=${item.slug}&lang=${currentLang}&country=${pageCountry}" class="block py-1 text-gray-700 hover:text-primary">${item.title}</a>`).join('');
+                    document.getElementById('obulharsku-menu-container-mobile').innerHTML = bulgariaMenu.map(item => `<a href="/page/?slug=${item.slug}&lang=${currentLang}&country=${pageCountry}" class="block py-1 text-gray-700 hover:text-primary">${item.title}</a>`).join('');
                 }
 
                 const globalSettingsDoc = await getDoc(doc(db, 'settings', 'global'));
@@ -806,6 +821,7 @@
                             <div class="text-center">
                                 <p class="font-semibold">${globalSettings[`contact${i}_name`]}</p>
                                 ${globalSettings[`contact${i}_phone`] ? `<a href="tel:${globalSettings[`contact${i}_phone`].replace(/\s/g, '')}" class="block hover:text-primary">${globalSettings[`contact${i}_phone`]}</a>` : ''}
+                                ${globalSettings[`contact${i}_phone2`] ? `<a href="tel:${globalSettings[`contact${i}_phone2`].replace(/\s/g, '')}" class="block hover:text-primary">${globalSettings[`contact${i}_phone2`]}</a>` : ''}
                                 ${globalSettings[`contact${i}_email`] ? `<a href="mailto:${globalSettings[`contact${i}_email`]}" class="block hover:text-primary">${globalSettings[`contact${i}_email`]}</a>` : ''}
                             </div>
                         `);
