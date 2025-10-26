@@ -60,10 +60,132 @@
         .offer-type-btn.active {
             color: #ffffff; /* Bílá na tmavém pozadí je v pořádku */
         }
+        /* ... vaše ostatní styly ... */
+        .lang-btn.active {
+            opacity: 1;
+            transform: scale(1.1);
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.9); /* White ring for active language */
+        }
+
+        /* ======== START CSS pro Gemini Chatbota ======== */
+        #chat-widget {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        #chat-toggle-btn {
+            background-color: #4F46E5; /* Indigo */
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+        #chat-toggle-btn:hover {
+            background-color: #4338CA;
+            transform: scale(1.1);
+        }
+        #chat-window {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 350px;
+            height: 500px;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transform: scale(0.9);
+            opacity: 0;
+            visibility: hidden;
+            transform-origin: bottom right;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        #chat-window.open {
+            transform: scale(1);
+            opacity: 1;
+            visibility: visible;
+        }
+        #chat-header {
+            background-color: #4F46E5;
+            color: white;
+            padding: 16px;
+            font-weight: bold;
+            text-align: center;
+        }
+        #chat-messages {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            background-color: #F3F4F6; /* Cool Gray 100 */
+        }
+        .chat-message {
+            padding: 10px 14px;
+            border-radius: 18px;
+            max-width: 80%;
+            line-height: 1.5;
+        }
+        .chat-message.user {
+            background-color: #3B82F6; /* Blue 500 */
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+        }
+        .chat-message.bot {
+            background-color: #E5E7EB; /* Gray 200 */
+            color: #1F2937; /* Gray 800 */
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+        }
+        .chat-message.bot.loading {
+            background-color: #E5E7EB;
+            color: #1F2937;
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+            font-style: italic;
+        }
+        #chat-input-form {
+            display: flex;
+            border-top: 1px solid #D1D5DB; /* Gray 300 */
+        }
+        #chat-input {
+            flex-grow: 1;
+            border: none;
+            padding: 16px;
+            font-size: 14px;
+            color: #1F2937;
+        }
+        #chat-input:focus {
+            outline: none;
+        }
+        #chat-send-btn {
+            background-color: #4F46E5;
+            color: white;
+            border: none;
+            padding: 0 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.2s;
+        }
+        #chat-send-btn:hover {
+            background-color: #4338CA;
+        }
+        /* ======== END CSS pro Gemini Chatbota ======== */
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800 flex flex-col min-h-screen">
 
+    <!-- Header -->
     <header class="bg-white shadow-md sticky top-0 z-50 border-b-4 border-primary">
         <div class="container mx-auto px-4">
             <div class="flex justify-between items-center py-3 border-b">
@@ -134,8 +256,10 @@
         </div>
     </header>
 
+    <!-- Main Content -->
     <div class="flex-grow container mx-auto px-4 py-8">
         <div class="flex flex-col lg:flex-row gap-8">
+            <!-- Sidebar with Filters -->
             <aside class="lg:w-1/4 xl:w-1/5">
                 <div class="bg-white p-6 rounded-lg shadow-md">
                     <h3 id="filter-title" class="text-lg font-bold border-b-2 border-primary pb-2 mb-4 flex items-center"><i class="fa fa-search text-primary mr-2"></i> Rychlé vyhledávání</h3>
@@ -168,17 +292,21 @@
                     </form>
                 </div>
             </aside>
+            <!-- Main Content Area -->
             <main class="w-full lg:w-3/4 xl:w-4/5">
+                <!-- Hero Section -->
                 <section class="h-64 md:h-80 rounded-lg bg-cover bg-center flex flex-col justify-center items-center text-white text-center p-4 mb-8 shadow-xl" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url(https://images.pexels.com/photos/1732414/pexels-photo-1732414.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2)">
                     <h1 id="main-title" class="text-3xl md:text-5xl font-bold text-shadow">Nemovitosti v Bulharsku</h1>
                     <p id="main-subtitle" class="text-lg md:text-xl mt-2 text-shadow-md">Objevte svůj vysněný apartmán na pobřeží Černého moře.</p>
                 </section>
+                <!-- Offer Type Buttons -->
                 <div class="flex justify-center mb-6">
                     <div class="inline-flex rounded-md shadow-sm">
                         <button id="offer-type-sale" class="offer-type-btn px-6 py-2 text-sm font-medium border border-gray-200 rounded-l-lg focus:z-10 focus:ring-2 focus:ring-primary" data-offer-type="prodej">Na prodej</button>
                         <button id="offer-type-rent" class="offer-type-btn px-6 py-2 text-sm font-medium border-t border-b border-gray-200 focus:z-10 focus:ring-2 focus:ring-primary" data-offer-type="pronajem">K pronájmu</button>
                     </div>
                 </div>
+                <!-- Sort Dropdown -->
                 <div class="flex justify-end mb-6">
                     <div class="flex items-center space-x-2">
                         <label for="sort-by" id="sort-by-label" class="text-sm font-medium">Seřadit podle:</label>
@@ -190,8 +318,11 @@
                         </select>
                     </div>
                 </div>
+                <!-- Properties Grid -->
                 <section id="properties-container" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8"></section>
+                <!-- Pagination -->
                 <div id="pagination-container" class="flex justify-center items-center space-x-2 mt-8"></div>
+                <!-- Interesting Facts Section -->
                 <section class="mt-12 p-6 bg-white rounded-lg shadow-md border-l-4 border-yellow-400">
                     <h2 id="facts-title" class="text-2xl font-bold mb-4">Zajímavosti o Bulharsku</h2>
                     <ul class="space-y-3">
@@ -204,10 +335,12 @@
         </div>
     </div>
 
+    <!-- Footer -->
     <footer class="bg-gray-100 border-t mt-auto">
         <div id="site-footer" class="container mx-auto px-4 py-6 flex flex-wrap justify-between items-center text-sm text-gray-600 gap-6"></div>
     </footer>
 
+    <!-- Modals (Contact, Auth, Favorites) -->
     <div id="contactModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center p-4 modal-fade-in">
         <div class="bg-white rounded-lg shadow-2xl w-full max-w-lg p-8 modal-slide-in">
             <div class="flex justify-between items-center mb-4">
@@ -258,10 +391,13 @@
         </div>
     </div>
 
+    <!-- Main Script Block -->
     <script type="module" defer>
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
-        import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
-        import { getFirestore, collection, doc, getDoc, getDocs, query, where, setDoc } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
+        // OPRAVA: Všechny importy sjednoceny na verzi 11.6.1
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, doc, getDoc, getDocs, query, where, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-functions.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyAi_ugQSDUjk4y8ne4zpAyTbzNrf96SWDc",
@@ -275,169 +411,34 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
+        
+        // Inicializace Functions a callable funkce pro chatbota
+        const functions = getFunctions(app, 'europe-west1'); // Důležité: stejný region jako funkce!
+        const askGemini = httpsCallable(functions, 'askGeminiRAG');
 
+        // Globální proměnná pro aktuální jazyk
         let currentLang = new URLSearchParams(window.location.search).get('lang') || 'cz';
 
+        // Překlady (zkráceno pro přehlednost)
         const translations = {
             cz: {
-                "nav-spanelsko": "Španělsko",
-                "nav-bulharsko": "Bulharsko",
-                "nav-informace": "Informace",
-                "nav-sluzby": "Naše služby",
-                "nav-obulharsku": "O Bulharsku", // Přidáno
-                "nav-onas": "O nás",
-                "contactLink": "Kontakt",
-                "filter-title": "Rychlé vyhledávání",
-                "filter-location-label": "Lokalita",
-                "filter-type-label": "Druh nemovitosti",
-                "filter-rooms-label": "Dispozice",
-                "filter-offerid-label": "Č. nabídky",
-                "filter-price-label": "Cena (€)",
-                "filter-submit-btn": "Vyhledat",
-                "filter-all": "Všechny",
-                "offerIdPlaceholder": "Zadejte číslo",
-                "priceFromPlaceholder": "Od",
-                "priceToPlaceholder": "Do",
-                "main-title": "Nemovitosti v Bulharsku",
-                "main-subtitle": "Objevte svůj vysněný apartmán na pobřeží Černého moře.",
-                "offer-type-sale": "Na prodej",
-                "offer-type-rent": "K pronájmu",
-                "sort-by-label": "Seřadit podle:",
-                "sort-offer-desc": "Číslo nabídky (sestupně)",
-                "sort-price-asc": "Ceny (od nejlevnější)",
-                "sort-price-desc": "Ceny (od nejdražší)",
-                "sort-date-desc": "Data (od nejnovější)",
-                "facts-title": "Zajímavosti o Bulharsku",
-                "fact-1": "Bulharsko je jednou z nejstarších zemí v Evropě a jediná, která si od svého založení v roce 681 nezměnila jméno.",
-                "fact-2": "Bulharská kuchyně je vynikající a rozmanitá, známá pro svůj jogurt, sýr sirene a tradiční salát šopska.",
-                "fact-3": "Země nabízí jak krásné písečné pláže u Černého moře, tak i vysoké hory ideální pro lyžování a turistiku.",
-                "contact-modal-title": "Kontaktní formulář",
-                "contact-modal-name": "Vaše jméno",
-                "contact-modal-email": "Váš e-mail",
-                "contact-modal-phone": "Telefon (nepovinné)",
-                "contact-modal-message": "Vaše zpráva",
-                "contact-modal-submit": "Odeslat zprávu",
-                "login-modal-title": "Přihlášení",
-                "login-modal-submit": "Přihlásit se",
-                "login-modal-register-prompt": "Nemáte účet? <a>Zaregistrujte se</a>",
-                "register-modal-title": "Registrace",
-                "register-modal-submit": "Zaregistrovat se",
-                "register-modal-login-prompt": "Máte již účet? <a>Přihlaste se</a>",
-                "favorites-modal-title": "Moje oblíbené nemovitosti",
-                "cardOfferId": "Č. nabídky",
-                "cardRooms": "Dispozice",
-                "cardArea": "Plocha",
-                "cardViewDetail": "Zobrazit detail"
+                "nav-spanelsko": "Španělsko", "nav-bulharsko": "Bulharsko", "nav-informace": "Informace", "nav-sluzby": "Naše služby", "nav-obulharsku": "O Bulharsku", "nav-onas": "O nás", "contactLink": "Kontakt", "filter-title": "Rychlé vyhledávání", "filter-location-label": "Lokalita", "filter-type-label": "Druh nemovitosti", "filter-rooms-label": "Dispozice", "filter-offerid-label": "Č. nabídky", "filter-price-label": "Cena (€)", "filter-submit-btn": "Vyhledat", "filter-all": "Všechny", "offerIdPlaceholder": "Zadejte číslo", "priceFromPlaceholder": "Od", "priceToPlaceholder": "Do", "main-title": "Nemovitosti v Bulharsku", "main-subtitle": "Objevte svůj vysněný apartmán na pobřeží Černého moře.", "offer-type-sale": "Na prodej", "offer-type-rent": "K pronájmu", "sort-by-label": "Seřadit podle:", "sort-offer-desc": "Číslo nabídky (sestupně)", "sort-price-asc": "Ceny (od nejlevnější)", "sort-price-desc": "Ceny (od nejdražší)", "sort-date-desc": "Data (od nejnovější)", "facts-title": "Zajímavosti o Bulharsku", "fact-1": "Bulharsko je jednou z nejstarších zemí v Evropě a jediná, která si od svého založení v roce 681 nezměnila jméno.", "fact-2": "Bulharská kuchyně je vynikající a rozmanitá, známá pro svůj jogurt, sýr sirene a tradiční salát šopska.", "fact-3": "Země nabízí jak krásné písečné pláže u Černého moře, tak i vysoké hory ideální pro lyžování a turistiku.", "contact-modal-title": "Kontaktní formulář", "contact-modal-name": "Vaše jméno", "contact-modal-email": "Váš e-mail", "contact-modal-phone": "Telefon (nepovinné)", "contact-modal-message": "Vaše zpráva", "contact-modal-submit": "Odeslat zprávu", "login-modal-title": "Přihlášení", "login-modal-submit": "Přihlásit se", "login-modal-register-prompt": "Nemáte účet? <a>Zaregistrujte se</a>", "register-modal-title": "Registrace", "register-modal-submit": "Zaregistrovat se", "register-modal-login-prompt": "Máte již účet? <a>Přihlaste se</a>", "favorites-modal-title": "Moje oblíbené nemovitosti", "cardOfferId": "Č. nabídky", "cardRooms": "Dispozice", "cardArea": "Plocha", "cardViewDetail": "Zobrazit detail", "chatHeader": "Horizon Estates Asistent", "chatPlaceholder": "Zeptejte se mě...", "chatInitialMessage": "Dobrý den, jak Vám mohu pomoci s výběrem nemovitosti?"
             },
             en: {
-                "nav-spanelsko": "Spain",
-                "nav-bulharsko": "Bulgaria",
-                "nav-informace": "Information",
-                "nav-sluzby": "Our Services",
-                "nav-obulharsku": "About Bulgaria", // Přidáno
-                "nav-onas": "About Us",
-                "contactLink": "Contact",
-                "filter-title": "Quick Search",
-                "filter-location-label": "Location",
-                "filter-type-label": "Property Type",
-                "filter-rooms-label": "Layout",
-                "filter-offerid-label": "Offer No.",
-                "filter-price-label": "Price (€)",
-                "filter-submit-btn": "Search",
-                "filter-all": "All",
-                "offerIdPlaceholder": "Enter number",
-                "priceFromPlaceholder": "From",
-                "priceToPlaceholder": "To",
-                "main-title": "Properties in Bulgaria",
-                "main-subtitle": "Discover your dream apartment on the Black Sea coast.",
-                "offer-type-sale": "For Sale",
-                "offer-type-rent": "For Rent",
-                "sort-by-label": "Sort by:",
-                "sort-offer-desc": "Offer number (desc)",
-                "sort-price-asc": "Price (lowest first)",
-                "sort-price-desc": "Price (highest first)",
-                "sort-date-desc": "Date (newest first)",
-                "facts-title": "Interesting Facts about Bulgaria",
-                "fact-1": "Bulgaria is one of the oldest countries in Europe and the only one that has not changed its name since its establishment in 681.",
-                "fact-2": "Bulgarian cuisine is excellent and diverse, known for its yogurt, sirene cheese, and traditional Shopska salad.",
-                "fact-3": "The country offers beautiful sandy beaches on the Black Sea as well as high mountains ideal for skiing and hiking.",
-                "contact-modal-title": "Contact Form",
-                "contact-modal-name": "Your Name",
-                "contact-modal-email": "Your E-mail",
-                "contact-modal-phone": "Phone (optional)",
-                "contact-modal-message": "Your Message",
-                "contact-modal-submit": "Send Message",
-                "login-modal-title": "Login",
-                "login-modal-submit": "Log In",
-                "login-modal-register-prompt": "Don't have an account? <a>Register</a>",
-                "register-modal-title": "Register",
-                "register-modal-submit": "Register",
-                "register-modal-login-prompt": "Already have an account? <a>Log In</a>",
-                "favorites-modal-title": "My Favorite Properties",
-                "cardOfferId": "Offer No.",
-                "cardRooms": "Layout",
-                "cardArea": "Area",
-                "cardViewDetail": "View Detail"
+                "nav-spanelsko": "Spain", "nav-bulharsko": "Bulgaria", "nav-informace": "Information", "nav-sluzby": "Our Services", "nav-obulharsku": "About Bulgaria", "nav-onas": "About Us", "contactLink": "Contact", "filter-title": "Quick Search", "filter-location-label": "Location", "filter-type-label": "Property Type", "filter-rooms-label": "Layout", "filter-offerid-label": "Offer No.", "filter-price-label": "Price (€)", "filter-submit-btn": "Search", "filter-all": "All", "offerIdPlaceholder": "Enter number", "priceFromPlaceholder": "From", "priceToPlaceholder": "To", "main-title": "Properties in Bulgaria", "main-subtitle": "Discover your dream apartment on the Black Sea coast.", "offer-type-sale": "For Sale", "offer-type-rent": "For Rent", "sort-by-label": "Sort by:", "sort-offer-desc": "Offer number (desc)", "sort-price-asc": "Price (lowest first)", "sort-price-desc": "Price (highest first)", "sort-date-desc": "Date (newest first)", "facts-title": "Interesting Facts about Bulgaria", "fact-1": "Bulgaria is one of the oldest countries in Europe and the only one that has not changed its name since its establishment in 681.", "fact-2": "Bulgarian cuisine is excellent and diverse, known for its yogurt, sirene cheese, and traditional Shopska salad.", "fact-3": "The country offers beautiful sandy beaches on the Black Sea as well as high mountains ideal for skiing and hiking.", "contact-modal-title": "Contact Form", "contact-modal-name": "Your Name", "contact-modal-email": "Your E-mail", "contact-modal-phone": "Phone (optional)", "contact-modal-message": "Your Message", "contact-modal-submit": "Send Message", "login-modal-title": "Login", "login-modal-submit": "Log In", "login-modal-register-prompt": "Don't have an account? <a>Register</a>", "register-modal-title": "Register", "register-modal-submit": "Register", "register-modal-login-prompt": "Already have an account? <a>Log In</a>", "favorites-modal-title": "My Favorite Properties", "cardOfferId": "Offer No.", "cardRooms": "Layout", "cardArea": "Area", "cardViewDetail": "View Detail", "chatHeader": "Horizon Estates Assistant", "chatPlaceholder": "Ask me anything...", "chatInitialMessage": "Hello! How can I help you with choosing a property?"
             },
             de: {
-                "nav-spanelsko": "Spanien",
-                "nav-bulharsko": "Bulgarien",
-                "nav-informace": "Informationen",
-                "nav-sluzby": "Unsere Dienstleistungen",
-                "nav-obulharsku": "Über Bulgarien", // Přidáno
-                "nav-onas": "Über uns",
-                "contactLink": "Kontakt",
-                "filter-title": "Schnellsuche",
-                "filter-location-label": "Standort",
-                "filter-type-label": "Immobilientyp",
-                "filter-rooms-label": "Aufteilung",
-                "filter-offerid-label": "Angebots-Nr.",
-                "filter-price-label": "Preis (€)",
-                "filter-submit-btn": "Suchen",
-                "filter-all": "Alle",
-                "offerIdPlaceholder": "Nummer eingeben",
-                "priceFromPlaceholder": "Von",
-                "priceToPlaceholder": "Bis",
-                "main-title": "Immobilien in Bulgarien",
-                "main-subtitle": "Entdecken Sie Ihre Traumwohnung an der Schwarzmeerküste.",
-                "offer-type-sale": "Zum Verkauf",
-                "offer-type-rent": "Zu vermieten",
-                "sort-by-label": "Sortieren nach:",
-                "sort-offer-desc": "Angebots-Nr. (absteigend)",
-                "sort-price-asc": "Preis (niedrigster zuerst)",
-                "sort-price-desc": "Preis (höchster zuerst)",
-                "sort-date-desc": "Datum (neuestes zuerst)",
-                "facts-title": "Interessante Fakten über Bulgarien",
-                "fact-1": "Bulgarien ist eines der ältesten Länder Europas und das einzige, das seinen Namen seit seiner Gründung im Jahr 681 nicht geändert hat.",
-                "fact-2": "Die bulgarische Küche ist ausgezeichnet und vielfältig, bekannt für ihren Joghurt, Sirene-Käse und den traditionellen Schopska-Salat.",
-                "fact-3": "Das Land bietet sowohl wunderschöne Sandstrände am Schwarzen Meer als auch hohe Berge, die ideal zum Skifahren und Wandern sind.",
-                "contact-modal-title": "Kontaktformular",
-                "contact-modal-name": "Ihr Name",
-                "contact-modal-email": "Ihre E-Mail",
-                "contact-modal-phone": "Telefon (optional)",
-                "contact-modal-message": "Ihre Nachricht",
-                "contact-modal-submit": "Nachricht senden",
-                "login-modal-title": "Anmelden",
-                "login-modal-submit": "Anmelden",
-                "login-modal-register-prompt": "Haben Sie kein Konto? <a>Registrieren</a>",
-                "register-modal-title": "Registrieren",
-                "register-modal-submit": "Registrieren",
-                "register-modal-login-prompt": "Haben Sie bereits ein Konto? <a>Anmelden</a>",
-                "favorites-modal-title": "Meine Lieblingsimmobilien",
-                "cardOfferId": "Angebots-Nr.",
-                "cardRooms": "Aufteilung",
-                "cardArea": "Fläche",
-                "cardViewDetail": "Details anzeigen"
+                "nav-spanelsko": "Spanien", "nav-bulharsko": "Bulgarien", "nav-informace": "Informationen", "nav-sluzby": "Unsere Dienstleistungen", "nav-obulharsku": "Über Bulgarien", "nav-onas": "Über uns", "contactLink": "Kontakt", "filter-title": "Schnellsuche", "filter-location-label": "Standort", "filter-type-label": "Immobilientyp", "filter-rooms-label": "Aufteilung", "filter-offerid-label": "Angebots-Nr.", "filter-price-label": "Preis (€)", "filter-submit-btn": "Suchen", "filter-all": "Alle", "offerIdPlaceholder": "Nummer eingeben", "priceFromPlaceholder": "Von", "priceToPlaceholder": "Bis", "main-title": "Immobilien in Bulgarien", "main-subtitle": "Entdecken Sie Ihre Traumwohnung an der Schwarzmeerküste.", "offer-type-sale": "Zum Verkauf", "offer-type-rent": "Zu vermieten", "sort-by-label": "Sortieren nach:", "sort-offer-desc": "Angebots-Nr. (absteigend)", "sort-price-asc": "Preis (niedrigster zuerst)", "sort-price-desc": "Preis (höchster zuerst)", "sort-date-desc": "Datum (neuestes zuerst)", "facts-title": "Interessante Fakten über Bulgarien", "fact-1": "Bulgarien ist eines der ältesten Länder Europas und das einzige, das seinen Namen seit seiner Gründung im Jahr 681 nicht geändert hat.", "fact-2": "Die bulgarische Küche ist ausgezeichnet und vielfältig, bekannt für ihren Joghurt, Sirene-Käse und den traditionellen Schopska-Salat.", "fact-3": "Das Land bietet sowohl wunderschöne Sandstrände am Schwarzen Meer als auch hohe Berge, die ideal zum Skifahren und Wandern sind.", "contact-modal-title": "Kontaktformular", "contact-modal-name": "Ihr Name", "contact-modal-email": "Ihre E-Mail", "contact-modal-phone": "Telefon (optional)", "contact-modal-message": "Ihre Nachricht", "contact-modal-submit": "Nachricht senden", "login-modal-title": "Anmelden", "login-modal-submit": "Anmelden", "register-modal-login-prompt": "Haben Sie bereits ein Konto? <a>Anmelden</a>", "favorites-modal-title": "Meine Lieblingsimmobilien", "cardOfferId": "Angebots-Nr.", "cardRooms": "Aufteilung", "cardArea": "Fläche", "cardViewDetail": "Details anzeigen", "chatHeader": "Horizon Estates Assistent", "chatPlaceholder": "Fragen Sie mich etwas...", "chatInitialMessage": "Guten Tag! Wie kann ich Ihnen bei der Auswahl einer Immobilie helfen?"
             }
         };
 
+        // Funkce pro překlad stránky
         const translatePage = (lang) => {
             const langDict = translations[lang];
             if (!langDict) return;
 
             document.querySelectorAll('[id]').forEach(element => {
                 const key = element.id;
-                // Přidáno pro mobilní menu
                 const mobileKey = key.startsWith('nav-mobil-') ? key.replace('nav-mobil-', 'nav-') : null;
 
                 if (langDict[key]) {
@@ -454,7 +455,7 @@
                     } else if (element.tagName === 'OPTION' && element.id) {
                         element.textContent = langDict[element.id];
                     }
-                } else if (mobileKey && langDict[mobileKey]) { // Zpracování pro mobilní menu
+                } else if (mobileKey && langDict[mobileKey]) {
                      element.textContent = langDict[mobileKey];
                 }
             });
@@ -468,16 +469,27 @@
             document.querySelector('#fact-1 span').textContent = langDict['fact-1'];
             document.querySelector('#fact-2 span').textContent = langDict['fact-2'];
             document.querySelector('#fact-3 span').textContent = langDict['fact-3'];
+            
+            // Překlad textů chatbota
+            document.getElementById('chat-header').textContent = langDict['chatHeader'] || 'Horizon Estates Assistant';
+            document.getElementById('chat-input').placeholder = langDict['chatPlaceholder'] || 'Ask me anything...';
+            // Překlad úvodní zprávy
+            const initialBotMessage = document.querySelector('#chat-messages .chat-message.bot');
+            if (initialBotMessage) {
+                initialBotMessage.textContent = langDict['chatInitialMessage'] || 'Dobrý den, jak Vám mohu pomoci?';
+            }
 
-            setupAuthFormToggle();
+            setupAuthFormToggle(); // Voláme pro případné překlady v auth formuláři
         };
 
+        // Funkce pro změnu jazyka a uložení do URL
         const setLang = (lang) => {
             const url = new URL(window.location.href);
             url.searchParams.set('lang', lang);
-            window.location.href = url.href;
+            window.location.href = url.href; // Změna na reload stránky
         };
         
+        // Funkce pro zvýraznění aktivního jazyka
         const setActiveLangLink = () => {
             document.querySelectorAll('#lang-switcher .lang-link').forEach(link => {
                 link.classList.remove('active');
@@ -485,28 +497,37 @@
             });
         };
 
+        // Globální proměnné pro nemovitosti a oblíbené
         let filteredProperties = [], userFavorites = [], currentPage = 1;
         const propertiesPerPage = 9;
-        let currentOfferType = 'prodej';
-        const pageCountry = 'bulharsko';
-        const propertiesContainer = document.getElementById('properties-container'), paginationContainer = document.getElementById('pagination-container'), sortSelect = document.getElementById('sort-by'), filterForm = document.getElementById('filter-form');
+        let currentOfferType = 'prodej'; // Defaultně na prodej
+        const pageCountry = 'bulharsko'; // Tato stránka je pro Bulharsko
         
+        // Reference na DOM elementy
+        const propertiesContainer = document.getElementById('properties-container');
+        const paginationContainer = document.getElementById('pagination-container');
+        const sortSelect = document.getElementById('sort-by');
+        const filterForm = document.getElementById('filter-form');
+        
+        // Funkce pro zobrazení nemovitostí na stránce
         const displayProperties = () => {
             propertiesContainer.innerHTML = "";
             const startIndex = (currentPage - 1) * propertiesPerPage;
             const paginatedProperties = filteredProperties.slice(startIndex, startIndex + propertiesPerPage);
+            
             if (paginatedProperties.length === 0) {
                 propertiesContainer.innerHTML = `<p class="md:col-span-2 xl:col-span-3 text-center text-gray-500">Nebyly nalezeny žádné nemovitosti odpovídající zadaným kritériím.</p>`;
-                setupPagination();
+                setupPagination(); // I když nejsou výsledky, pagination se skryje
                 return;
             }
+
             paginatedProperties.forEach(prop => {
                 const title = prop[`title_${currentLang}`] || prop.title_cz || "No title";
                 const firstImage = prop.images && prop.images.length > 0 ? prop.images[0] : 'https://placehold.co/600x400/e2e8f0/94a3b8?text=Foto';
                 const isFavorite = userFavorites.includes(prop.id);
                 const card = document.createElement('div');
                 card.className = "bg-white rounded-lg shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300 relative";
-                card.dataset.propertyId = prop.id;
+                card.dataset.propertyId = prop.id; // Uložení ID pro oblíbené
                 card.innerHTML = `
                     <i class="fas fa-heart favorite-icon absolute top-4 right-4 text-2xl cursor-pointer ${isFavorite ? 'text-red-500' : 'text-white'} drop-shadow-lg transition-colors"></i>
                     <img src="${firstImage}" alt="Foto: ${title}" class="w-full h-56 object-cover" loading="lazy" width="600" height="400">
@@ -524,16 +545,21 @@
             setupPagination();
         };
 
+        // Funkce pro vytvoření paginace
         const setupPagination = () => {
             paginationContainer.innerHTML = "";
             const pageCount = Math.ceil(filteredProperties.length / propertiesPerPage);
-            if (pageCount <= 1) return;
+            if (pageCount <= 1) return; // Nezobrazuj paginaci pro 1 stránku
+            
+            // Tlačítko zpět
             const prevButton = document.createElement('button');
             prevButton.innerHTML = `<i class="fas fa-chevron-left"></i>`;
             prevButton.className = "px-3 py-1 border rounded-md bg-white disabled:opacity-50 disabled:cursor-not-allowed";
             prevButton.disabled = currentPage === 1;
             prevButton.onclick = () => { if (currentPage > 1) { currentPage--; displayProperties(); } };
             paginationContainer.appendChild(prevButton);
+
+            // Tlačítka stránek
             for (let i = 1; i <= pageCount; i++) {
                 const pageButton = document.createElement('button');
                 pageButton.innerText = i;
@@ -541,6 +567,8 @@
                 pageButton.onclick = () => { currentPage = i; displayProperties(); };
                 paginationContainer.appendChild(pageButton);
             }
+
+            // Tlačítko vpřed
             const nextButton = document.createElement('button');
             nextButton.innerHTML = `<i class="fas fa-chevron-right"></i>`;
             nextButton.className = "px-3 py-1 border rounded-md bg-white disabled:opacity-50 disabled:cursor-not-allowed";
@@ -549,42 +577,50 @@
             paginationContainer.appendChild(nextButton);
         };
 
+        // Funkce pro seřazení nemovitostí
         const sortProperties = () => {
             const [key, direction] = sortSelect.value.split('-');
             filteredProperties.sort((a, b) => {
                 let valA = a[key], valB = b[key];
-                if (key === 'date') {
+                if (key === 'date') { // Speciální řazení podle data
                     valA = a.createdAt?.toMillis() || 0;
                     valB = b.createdAt?.toMillis() || 0;
                 }
                 return direction === 'asc' ? (valA || 0) - (valB || 0) : (valB || 0) - (valA || 0);
             });
-            currentPage = 1;
+            currentPage = 1; // Po seřazení vždy na první stránku
             displayProperties();
         };
 
+        // Funkce pro načtení a filtrování nemovitostí z Firestore
         const fetchAndFilterProperties = async (filters = {}) => {
             propertiesContainer.innerHTML = `<p class="md:col-span-2 xl:col-span-3 text-center text-gray-500">Vyhledávání nemovitostí...</p>`;
             try {
                 const propertiesRef = collection(db, 'properties');
+                // Query podle země a typu nabídky
                 let q = query(propertiesRef, where('country', '==', pageCountry), where('offerType', '==', currentOfferType));
+                
                 const snapshot = await getDocs(q);
                 let results = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+                // Filtrování v JavaScriptu
                 filteredProperties = results.filter(p => {
                     return (!filters.location || p.location === filters.location) &&
                            (!filters.type || p.type === filters.type) &&
                            (!filters.rooms || p.rooms === filters.rooms) &&
                            (!filters.priceFrom || p.price >= filters.priceFrom) &&
                            (!filters.priceTo || p.price <= filters.priceTo) &&
-                           (!filters.offerId || p.offerId == filters.offerId);
+                           (!filters.offerId || p.offerId == filters.offerId); // == pro porovnání čísla z inputu (může být string)
                 });
-                sortProperties();
+                
+                sortProperties(); // Seřadíme a zobrazíme výsledky
             } catch (error) {
                 console.error("Chyba při načítání nemovitostí: ", error);
                 propertiesContainer.innerHTML = `<p class="md:col-span-2 xl:col-span-3 text-center text-red-500">Chyba při načítání dat. Zkuste to prosím později.</p>`;
             }
         };
 
+        // Funkce pro načtení možností filtrů (lokality, typy, dispozice)
         const loadFilterOptions = async () => {
             const selects = {
                 lokalita: document.getElementById('lokalita'),
@@ -592,7 +628,7 @@
                 'dispozice-filter': document.getElementById('dispozice-filter')
             };
             const allOptionText = translations[currentLang]['filter-all'] || 'Všechny';
-            Object.values(selects).forEach(s => s.innerHTML = `<option value="">-- ${allOptionText} --</option>`);
+            Object.values(selects).forEach(s => s.innerHTML = `<option value="">-- ${allOptionText} --</option>`); // Výchozí volba
             
             try {
                 const settingsDoc = await getDoc(doc(db, 'settings', pageCountry));
@@ -600,14 +636,14 @@
                     const { locations = [], types = [], rooms = [] } = settingsDoc.data();
                     
                     const populateSelect = (selectElement, items) => {
-                        items.sort((a, b) => {
+                        items.sort((a, b) => { // Seřadíme podle aktuálního jazyka
                             const nameA = (typeof a === 'object' ? a[`name_${currentLang}`] || a.name_cz : a) || '';
                             const nameB = (typeof b === 'object' ? b[`name_${currentLang}`] || b.name_cz : b) || '';
                             return nameA.localeCompare(nameB, currentLang);
                         }).forEach(item => {
-                            const value = (typeof item === 'object' ? item.name_cz : item) || '';
-                            const text = (typeof item === 'object' ? item[`name_${currentLang}`] || item.name_cz : item) || '';
-                            if (value && text) {
+                            const value = (typeof item === 'object' ? item.name_cz : item) || ''; // Hodnota je vždy CZ název (klíč)
+                            const text = (typeof item === 'object' ? item[`name_${currentLang}`] || item.name_cz : item) || ''; // Text je podle jazyka
+                            if (value && text) { // Přidáme jen pokud máme hodnotu i text
                                 selectElement.add(new Option(text, value));
                             }
                         });
@@ -620,6 +656,7 @@
             } catch (error) { console.error("Error loading filter options: ", error); }
         };
         
+        // Listener pro odeslání filtru
         filterForm.addEventListener('submit', (e) => {
             e.preventDefault();
             const filters = {
@@ -633,22 +670,27 @@
             fetchAndFilterProperties(filters);
         });
 
+        // Listener pro změnu řazení
         sortSelect.addEventListener('change', sortProperties);
 
+        // Listenery pro přepínání typu nabídky (Prodej/Pronájem)
         document.querySelectorAll('.offer-type-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 document.querySelector('.offer-type-btn.active')?.classList.remove('active', 'bg-primary', 'text-white');
                 btn.classList.add('active', 'bg-primary', 'text-white');
                 currentOfferType = btn.dataset.offerType;
-                fetchAndFilterProperties();
+                fetchAndFilterProperties(); // Znovu načteme nemovitosti s novým typem
             });
         });
+        // Aktivujeme výchozí tlačítko
         document.querySelector('.offer-type-btn[data-offer-type="prodej"]').classList.add('active', 'bg-primary', 'text-white');
 
+        // Mobilní menu
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
         mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
 
+        // Modální okna
         const modals = { contact: document.getElementById('contactModal'), auth: document.getElementById('authModal'), favorites: document.getElementById('favoritesModal') };
         const openModal = (modal) => modal.style.display = 'flex';
         const closeModal = (modal) => modal.style.display = 'none';
@@ -656,12 +698,14 @@
         document.getElementById('contactLinkMobile').onclick = (e) => { e.preventDefault(); openModal(modals.contact); mobileMenu.classList.add('hidden'); };
         document.getElementById('loginIcon').onclick = () => openModal(modals.auth);
         document.querySelectorAll('.close-btn').forEach(btn => btn.onclick = () => Object.values(modals).forEach(closeModal));
-        window.onclick = (e) => { if (Object.values(modals).includes(e.target)) Object.values(modals).forEach(closeModal); };
+        window.onclick = (e) => { if (Object.values(modals).includes(e.target)) Object.values(modals).forEach(closeModal); }; // Zavření kliknutím mimo
         
+        // Autentizace
         const loginIconEl = document.getElementById('loginIcon'), userInfoEl = document.getElementById('userInfo'), userEmailSpan = document.getElementById('userEmail'), favoritesIconEl = document.getElementById('favoritesIcon'), loginForm = document.getElementById('loginForm'), registerForm = document.getElementById('registerForm');
         const showError = (el, msg) => { el.textContent = msg; el.style.display = 'block'; };
         const hideError = (el) => el.style.display = 'none';
 
+        // Přepínání mezi Login/Register formulářem
         const setupAuthFormToggle = () => {
             const showRegisterBtn = document.getElementById('showRegister');
             const showLoginBtn = document.getElementById('showLogin');
@@ -681,62 +725,74 @@
             }
         };
         
+        // Listener pro změnu stavu přihlášení
         onAuthStateChanged(auth, async user => {
-            if (user) {
+            if (user) { // Uživatel je přihlášen
                 loginIconEl.style.display = 'none';
                 userInfoEl.style.display = 'flex';
                 userEmailSpan.textContent = user.email;
-                closeModal(modals.auth);
+                closeModal(modals.auth); // Zavřeme auth modal, pokud byl otevřený
+                // Načteme oblíbené pro přihlášeného uživatele
                 const userDoc = await getDoc(doc(db, 'users', user.uid));
                 userFavorites = userDoc.exists() ? userDoc.data().favorites || [] : [];
-            } else {
+            } else { // Uživatel není přihlášen
                 loginIconEl.style.display = 'block';
                 userInfoEl.style.display = 'none';
-                userFavorites = [];
+                userFavorites = []; // Resetujeme oblíbené
             }
+            // Znovu vykreslíme nemovitosti, aby se aktualizovala srdíčka
             if (filteredProperties.length > 0) displayProperties(); 
         });
 
+        // Odeslání přihlašovacího formuláře
         loginForm.addEventListener('submit', (e) => {
             e.preventDefault();
             const email = e.target['login-email'].value, password = e.target['login-password'].value;
             const errorEl = document.getElementById('loginError');
             hideError(errorEl);
-            signInWithEmailAndPassword(auth, email, password).catch(() => showError(errorEl, 'Nesprávný e-mail nebo heslo.'));
+            signInWithEmailAndPassword(auth, email, password)
+                .catch(() => showError(errorEl, 'Nesprávný e-mail nebo heslo.'));
         });
 
+        // Odeslání registračního formuláře
         registerForm.addEventListener('submit', (e) => {
             e.preventDefault();
             const email = e.target['register-email'].value, password = e.target['register-password'].value;
             const errorEl = document.getElementById('registerError');
             hideError(errorEl);
-            createUserWithEmailAndPassword(auth, email, password).catch(err => showError(errorEl, 'Chyba registrace: ' + err.message));
+            createUserWithEmailAndPassword(auth, email, password)
+                .catch(err => showError(errorEl, 'Chyba registrace: ' + err.message));
         });
 
+        // Odhlášení
         document.getElementById('logoutIcon').addEventListener('click', () => signOut(auth));
         
+        // Funkce pro přidání/odebrání oblíbené nemovitosti
         const toggleFavorite = async (userId, propertyId) => {
             const userRef = doc(db, 'users', userId);
             const isFavorite = userFavorites.includes(propertyId);
             const updatedFavorites = isFavorite ? userFavorites.filter(id => id !== propertyId) : [...userFavorites, propertyId];
-            await setDoc(userRef, { favorites: updatedFavorites }, { merge: true });
-            userFavorites = updatedFavorites;
-            return !isFavorite;
+            await setDoc(userRef, { favorites: updatedFavorites }, { merge: true }); // Uložíme do Firestore
+            userFavorites = updatedFavorites; // Aktualizujeme lokální stav
+            return !isFavorite; // Vrací true, pokud byla přidána
         };
         
+        // Listener pro kliknutí na srdíčko na kartě nemovitosti
         propertiesContainer.addEventListener('click', async (e) => {
             if (e.target.classList.contains('favorite-icon')) {
                 const user = auth.currentUser;
-                if (!user) { openModal(modals.auth); return; }
+                if (!user) { openModal(modals.auth); return; } // Pokud není přihlášen, otevři login
                 const card = e.target.closest('[data-property-id]');
-                if (!card) return; 
+                if (!card) return; // Pojistka
                 const propertyId = card.dataset.propertyId;
                 const wasAdded = await toggleFavorite(user.uid, propertyId);
+                // Aktualizujeme vzhled srdíčka
                 e.target.classList.toggle('text-red-500', wasAdded);
                 e.target.classList.toggle('text-white', !wasAdded);
             }
         });
         
+        // Otevření modalu s oblíbenými a načtení dat
         favoritesIconEl.addEventListener('click', async () => {
             const listEl = document.getElementById('favorites-list');
             listEl.innerHTML = '<p>Načítání oblíbených...</p>';
@@ -745,11 +801,14 @@
                 listEl.innerHTML = '<p>Zatím nemáte žádné oblíbené nemovitosti.</p>';
                 return;
             }
+            
+            // Načteme detaily všech oblíbených nemovitostí
             const promises = userFavorites.map(id => getDoc(doc(db, 'properties', id)));
             const favDocs = await Promise.all(promises);
-            listEl.innerHTML = '';
+            
+            listEl.innerHTML = ''; // Vyčistíme seznam
             favDocs.forEach(doc => {
-                if (!doc.exists()) return;
+                if (!doc.exists()) return; // Pokud nemovitost mezitím byla smazána
                 const prop = doc.data();
                 const item = document.createElement('div');
                 item.className = 'favorite-item flex items-center gap-4 py-3 border-b';
@@ -758,7 +817,7 @@
                     <div class="flex-grow">
                         <h4 class="font-bold">${prop[`title_${currentLang}`] || prop.title_cz}</h4>
                         <p class="text-primary font-semibold">€${prop.price.toLocaleString()}</p>
-                        <a href="/detail/?id=${doc.id}&lang=${currentLang}" class="text-sm text-gray-500 hover:underline">Zobrazit detail</a>
+                        <a href="/detail/?id=${doc.id}&lang=${currentLang}" class="text-sm text-gray-500 hover:underline">${translations[currentLang]['cardViewDetail'] || 'Zobrazit detail'}</a>
                     </div>
                     <button class="remove-favorite text-gray-400 hover:text-red-500 text-xl" data-id="${doc.id}"><i class="fas fa-trash-alt"></i></button>
                 `;
@@ -766,14 +825,16 @@
             });
         });
         
+        // Listener pro odebrání oblíbené z modalu
         document.getElementById('favorites-list').addEventListener('click', async (e) => {
             const removeBtn = e.target.closest('.remove-favorite');
             if (removeBtn) {
                 const propertyId = removeBtn.dataset.id;
                 const user = auth.currentUser;
                 if (user) {
-                    await toggleFavorite(user.uid, propertyId);
-                    removeBtn.closest('.favorite-item').remove();
+                    await toggleFavorite(user.uid, propertyId); // Odebereme z DB a lokálního stavu
+                    removeBtn.closest('.favorite-item').remove(); // Odebereme ze seznamu v modalu
+                    // Změníme i srdíčko na kartě, pokud je vidět
                     const cardIcon = propertiesContainer.querySelector(`[data-property-id="${propertyId}"] .favorite-icon`);
                     if (cardIcon) {
                         cardIcon.classList.remove('text-red-500');
@@ -783,40 +844,45 @@
             }
         });
 
+        // Funkce pro načtení nastavení (menu, logo, kontakty)
         const loadSettings = async () => {
             try {
                 let countrySettings = {};
                 let globalSettings = {};
 
+                // Načteme specifická nastavení pro Bulharsko
                 const countrySettingsDoc = await getDoc(doc(db, 'settings', pageCountry));
                 if (countrySettingsDoc.exists()) {
                     countrySettings = countrySettingsDoc.data();
-                    const { infoMenu = [], servicesMenu = [], bulgariaMenu = [] } = countrySettings; // Přidáno bulgariaMenu
+                    const { infoMenu = [], servicesMenu = [], bulgariaMenu = [] } = countrySettings; 
                     
-                    const infoHtml = infoMenu.map(item => `<a href="/page/?slug=${item.slug}&lang=${currentLang}&country=${pageCountry}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">${item.title}</a>`).join('');
-                    const servicesHtml = servicesMenu.map(item => `<a href="/page/?slug=${item.slug}&lang=${currentLang}&country=${pageCountry}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">${item.title}</a>`).join('');
-                    const bulgariaHtml = bulgariaMenu.map(item => `<a href="/page/?slug=${item.slug}&lang=${currentLang}&country=${pageCountry}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">${item.title}</a>`).join('');
+                    // Funkce pro generování HTML menu itemu
+                    const createMenuItem = (item) => `<a href="/page/?slug=${item.slug}&lang=${currentLang}&country=${pageCountry}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">${item.title}</a>`;
+                    const createMobileMenuItem = (item) => `<a href="/page/?slug=${item.slug}&lang=${currentLang}&country=${pageCountry}" class="block py-1 text-gray-700 hover:text-primary">${item.title}</a>`;
 
-                    document.getElementById('info-menu-container-desktop').innerHTML = infoHtml;
-                    document.getElementById('services-menu-container-desktop').innerHTML = servicesHtml;
-                    document.getElementById('obulharsku-menu-container-desktop').innerHTML = bulgariaHtml;
+                    // Generování menu
+                    document.getElementById('info-menu-container-desktop').innerHTML = infoMenu.map(createMenuItem).join('');
+                    document.getElementById('services-menu-container-desktop').innerHTML = servicesMenu.map(createMenuItem).join('');
+                    document.getElementById('obulharsku-menu-container-desktop').innerHTML = bulgariaMenu.map(createMenuItem).join('');
 
-                    document.getElementById('info-menu-container-mobile').innerHTML = infoMenu.map(item => `<a href="/page/?slug=${item.slug}&lang=${currentLang}&country=${pageCountry}" class="block py-1 text-gray-700 hover:text-primary">${item.title}</a>`).join('');
-                    document.getElementById('services-menu-container-mobile').innerHTML = servicesMenu.map(item => `<a href="/page/?slug=${item.slug}&lang=${currentLang}&country=${pageCountry}" class="block py-1 text-gray-700 hover:text-primary">${item.title}</a>`).join('');
-                    document.getElementById('obulharsku-menu-container-mobile').innerHTML = bulgariaMenu.map(item => `<a href="/page/?slug=${item.slug}&lang=${currentLang}&country=${pageCountry}" class="block py-1 text-gray-700 hover:text-primary">${item.title}</a>`).join('');
+                    document.getElementById('info-menu-container-mobile').innerHTML = infoMenu.map(createMobileMenuItem).join('');
+                    document.getElementById('services-menu-container-mobile').innerHTML = servicesMenu.map(createMobileMenuItem).join('');
+                    document.getElementById('obulharsku-menu-container-mobile').innerHTML = bulgariaMenu.map(createMobileMenuItem).join('');
                 }
 
+                // Načteme globální nastavení
                 const globalSettingsDoc = await getDoc(doc(db, 'settings', 'global'));
                 if (globalSettingsDoc.exists()) {
                     globalSettings = globalSettingsDoc.data();
                 }
 
+                // Nastavení textu loga (priorita je nastavení země)
                 const logoText = countrySettings.logoText || globalSettings.logoText || 'HORIZON ESTATES';
                 document.querySelector('header .font-bold.text-gray-800').textContent = logoText;
 
-                // Uvnitř funkce loadSettings
+                // Generování kontaktů v patičce
                 const contactsHTML = [];
-                for (let i = 1; i <= 4; i++) {
+                for (let i = 1; i <= 4; i++) { // Předpokládáme max 4 kontakty
                     if (globalSettings[`contact${i}_name`]) {
                         contactsHTML.push(`
                             <div class="text-center">
@@ -837,6 +903,7 @@
             }
         };
 
+        // Funkce pro načtení globálních SEO tagů
         const loadGlobalTags = async () => {
             try {
                 const globalSettingsDoc = await getDoc(doc(db, 'settings', 'global'));
@@ -845,7 +912,8 @@
                     const globalTags = settings.tags || [];
                     const metaKeywordsTag = document.getElementById('meta-keywords');
                     const existingKeywords = metaKeywordsTag.getAttribute('content').split(',').map(k => k.trim()).filter(Boolean);
-                    const allKeywords = [...new Set([...existingKeywords, ...globalTags])];
+                    // Spojíme existující a globální tagy, odstraníme duplicity
+                    const allKeywords = [...new Set([...existingKeywords, ...globalTags])]; 
                     metaKeywordsTag.setAttribute('content', allKeywords.join(', '));
                 }
             } catch (error) {
@@ -853,26 +921,104 @@
             }
         };
 
+        // ======== START Logika pro ovládání chatu (PŘIDÁNO) ========
+        
+        const chatWindow = document.getElementById('chat-window');
+        const chatToggleBtn = document.getElementById('chat-toggle-btn');
+        const chatMessages = document.getElementById('chat-messages');
+        const chatInputForm = document.getElementById('chat-input-form');
+        const chatInput = document.getElementById('chat-input');
+        
+        // Otevření / zavření okna
+        chatToggleBtn.addEventListener('click', () => {
+            chatWindow.classList.toggle('open');
+        });
+
+        // Odeslání zprávy
+        chatInputForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const userText = chatInput.value.trim();
+            if (userText === '') return;
+
+            // Zobrazíme zprávu uživatele
+            addMessage(userText, 'user');
+            chatInput.value = '';
+
+            // Zobrazíme "načítání"
+            const loadingMessageEl = addMessage('Přemýšlím...', 'bot loading'); // Tento text se nepřekládá, je dočasný
+
+            try {
+                // Zavoláme naši Cloud Function A POSÍLÁME JAZYK
+                const result = await askGemini({ text: userText, lang: currentLang });
+                
+                // Aktualizujeme zprávu bota odpovědí
+                loadingMessageEl.textContent = result.data.text;
+                loadingMessageEl.classList.remove('loading');
+
+            } catch (error) {
+                console.error("Chyba při volání Cloud Function:", error);
+                // Tento text by také mohl být přeložen
+                loadingMessageEl.textContent = "Omlouvám se, něco se pokazilo. Zkuste to prosím znovu.";
+                loadingMessageEl.classList.remove('loading');
+            }
+        });
+
+        // Pomocná funkce pro přidání zprávy do okna
+        function addMessage(text, sender) {
+            const messageEl = document.createElement('div');
+            messageEl.className = `chat-message ${sender}`;
+            messageEl.textContent = text;
+            chatMessages.appendChild(messageEl);
+            
+            // Automaticky scrollujeme dolů
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            return messageEl;
+        }
+        // ======== END Logika pro ovládání chatu (PŘIDÁNO) ========
+
+        // Listener, který se spustí po načtení DOM
         document.addEventListener('DOMContentLoaded', () => {
             setActiveLangLink();
-            translatePage(currentLang);
-            fetchAndFilterProperties();
-            loadFilterOptions();
-            loadSettings();
-            loadGlobalTags();
-            setupAuthFormToggle();
+            translatePage(currentLang); // Tato funkce nyní přeloží i chat
+            fetchAndFilterProperties(); // Načteme nemovitosti
+            loadFilterOptions();      // Načteme možnosti filtrů
+            loadSettings();           // Načteme menu, logo, kontakty
+            loadGlobalTags();         // Načteme SEO tagy
+            setupAuthFormToggle();    // Nastavíme přepínání login/register
         });
         
+        // Listener pro kliknutí na přepínač jazyka
         document.querySelectorAll('#lang-switcher .lang-link').forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
                 const lang = e.currentTarget.dataset.lang;
+                // Změníme jazyk v URL a znovu načteme stránku
                 const url = new URL(window.location);
                 url.searchParams.set('lang', lang);
-                window.location.href = url.toString();
+                window.location.href = url.toString(); 
             });
         });
 
     </script>
+    
+    <!-- HTML kód pro chat widget -->
+    <div id="chat-widget">
+        <div id="chat-window">
+            <div id="chat-header">Horizon Estates Asistent</div>
+            <div id="chat-messages">
+                <div class="chat-message bot">
+                    Dobrý den, jak Vám mohu pomoci s výběrem nemovitosti?
+                </div>
+            </div>
+            <form id="chat-input-form">
+                <input type="text" id="chat-input" placeholder="Zeptejte se mě..." autocomplete="off">
+                <button type="submit" id="chat-send-btn">Odeslat</button>
+            </form>
+        </div>
+        <button id="chat-toggle-btn">
+            &#128172; 
+        </button>
+    </div>
 </body>
 </html>
+
