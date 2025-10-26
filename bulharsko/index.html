@@ -60,10 +60,132 @@
         .offer-type-btn.active {
             color: #ffffff; /* Bílá na tmavém pozadí je v pořádku */
         }
+        /* ... vaše ostatní styly ... */
+        .lang-btn.active {
+            opacity: 1;
+            transform: scale(1.1);
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.9); /* White ring for active language */
+        }
+
+        /* ======== START CSS pro Gemini Chatbota ======== */
+        #chat-widget {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        #chat-toggle-btn {
+            background-color: #4F46E5; /* Indigo */
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+        #chat-toggle-btn:hover {
+            background-color: #4338CA;
+            transform: scale(1.1);
+        }
+        #chat-window {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 350px;
+            height: 500px;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transform: scale(0.9);
+            opacity: 0;
+            visibility: hidden;
+            transform-origin: bottom right;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        #chat-window.open {
+            transform: scale(1);
+            opacity: 1;
+            visibility: visible;
+        }
+        #chat-header {
+            background-color: #4F46E5;
+            color: white;
+            padding: 16px;
+            font-weight: bold;
+            text-align: center;
+        }
+        #chat-messages {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            background-color: #F3F4F6; /* Cool Gray 100 */
+        }
+        .chat-message {
+            padding: 10px 14px;
+            border-radius: 18px;
+            max-width: 80%;
+            line-height: 1.5;
+        }
+        .chat-message.user {
+            background-color: #3B82F6; /* Blue 500 */
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+        }
+        .chat-message.bot {
+            background-color: #E5E7EB; /* Gray 200 */
+            color: #1F2937; /* Gray 800 */
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+        }
+        .chat-message.bot.loading {
+            background-color: #E5E7EB;
+            color: #1F2937;
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+            font-style: italic;
+        }
+        #chat-input-form {
+            display: flex;
+            border-top: 1px solid #D1D5DB; /* Gray 300 */
+        }
+        #chat-input {
+            flex-grow: 1;
+            border: none;
+            padding: 16px;
+            font-size: 14px;
+            color: #1F2937;
+        }
+        #chat-input:focus {
+            outline: none;
+        }
+        #chat-send-btn {
+            background-color: #4F46E5;
+            color: white;
+            border: none;
+            padding: 0 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.2s;
+        }
+        #chat-send-btn:hover {
+            background-color: #4338CA;
+        }
+        /* ======== END CSS pro Gemini Chatbota ======== */
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800 flex flex-col min-h-screen">
 
+    <!-- ... (celý váš kód pro header, main, footer a modální okna zůstává stejný) ... -->
     <header class="bg-white shadow-md sticky top-0 z-50 border-b-4 border-primary">
         <div class="container mx-auto px-4">
             <div class="flex justify-between items-center py-3 border-b">
@@ -135,6 +257,7 @@
     </header>
 
     <div class="flex-grow container mx-auto px-4 py-8">
+        <!-- ... (celý váš obsah <main> a <aside>) ... -->
         <div class="flex flex-col lg:flex-row gap-8">
             <aside class="lg:w-1/4 xl:w-1/5">
                 <div class="bg-white p-6 rounded-lg shadow-md">
@@ -208,6 +331,7 @@
         <div id="site-footer" class="container mx-auto px-4 py-6 flex flex-wrap justify-between items-center text-sm text-gray-600 gap-6"></div>
     </footer>
 
+    <!-- ... (celý váš kód pro modální okna) ... -->
     <div id="contactModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center p-4 modal-fade-in">
         <div class="bg-white rounded-lg shadow-2xl w-full max-w-lg p-8 modal-slide-in">
             <div class="flex justify-between items-center mb-4">
@@ -258,10 +382,13 @@
         </div>
     </div>
 
+    <!-- Zde začíná hlavní blok skriptu -->
     <script type="module" defer>
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
         import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
         import { getFirestore, collection, doc, getDoc, getDocs, query, where, setDoc } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
+        // Import pro Functions je již zde
+        import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-functions.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyAi_ugQSDUjk4y8ne4zpAyTbzNrf96SWDc",
@@ -276,6 +403,11 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
+        // ZDE PŘIDÁVÁME PROMĚNNÉ PRO CHATBOT
+        const functions = getFunctions(app, 'europe-west1'); // Důležité: stejný region jako funkce!
+        const askGemini = httpsCallable(functions, 'askGeminiRAG');
+
+        // Tato proměnná již existuje a použijeme ji
         let currentLang = new URLSearchParams(window.location.search).get('lang') || 'cz';
 
         const translations = {
@@ -327,7 +459,10 @@
                 "cardOfferId": "Č. nabídky",
                 "cardRooms": "Dispozice",
                 "cardArea": "Plocha",
-                "cardViewDetail": "Zobrazit detail"
+                "cardViewDetail": "Zobrazit detail",
+                "chatHeader": "Horizon Estates Asistent", // Přidáno
+                "chatPlaceholder": "Zeptejte se mě...", // Přidáno
+                "chatInitialMessage": "Dobrý den, jak Vám mohu pomoci s výběrem nemovitosti?" // Přidáno
             },
             en: {
                 "nav-spanelsko": "Spain",
@@ -377,7 +512,10 @@
                 "cardOfferId": "Offer No.",
                 "cardRooms": "Layout",
                 "cardArea": "Area",
-                "cardViewDetail": "View Detail"
+                "cardViewDetail": "View Detail",
+                "chatHeader": "Horizon Estates Assistant", // Přidáno
+                "chatPlaceholder": "Ask me anything...", // Přidáno
+                "chatInitialMessage": "Hello! How can I help you with choosing a property?" // Přidáno
             },
             de: {
                 "nav-spanelsko": "Spanien",
@@ -419,15 +557,15 @@
                 "contact-modal-submit": "Nachricht senden",
                 "login-modal-title": "Anmelden",
                 "login-modal-submit": "Anmelden",
-                "login-modal-register-prompt": "Haben Sie kein Konto? <a>Registrieren</a>",
-                "register-modal-title": "Registrieren",
-                "register-modal-submit": "Registrieren",
                 "register-modal-login-prompt": "Haben Sie bereits ein Konto? <a>Anmelden</a>",
                 "favorites-modal-title": "Meine Lieblingsimmobilien",
                 "cardOfferId": "Angebots-Nr.",
                 "cardRooms": "Aufteilung",
                 "cardArea": "Fläche",
-                "cardViewDetail": "Details anzeigen"
+                "cardViewDetail": "Details anzeigen",
+                "chatHeader": "Horizon Estates Assistent", // Přidáno
+                "chatPlaceholder": "Fragen Sie mich etwas...", // Přidáno
+                "chatInitialMessage": "Guten Tag! Wie kann ich Ihnen bei der Auswahl einer Immobilie helfen?" // Přidáno
             }
         };
 
@@ -468,6 +606,15 @@
             document.querySelector('#fact-1 span').textContent = langDict['fact-1'];
             document.querySelector('#fact-2 span').textContent = langDict['fact-2'];
             document.querySelector('#fact-3 span').textContent = langDict['fact-3'];
+            
+            // PŘIDÁNO: Překlad textů chatbota
+            document.getElementById('chat-header').textContent = langDict['chatHeader'] || 'Horizon Estates Assistant';
+            document.getElementById('chat-input').placeholder = langDict['chatPlaceholder'] || 'Ask me anything...';
+            // Překlad úvodní zprávy
+            const initialBotMessage = document.querySelector('#chat-messages .chat-message.bot');
+            if (initialBotMessage) {
+                initialBotMessage.textContent = langDict['chatInitialMessage'] || 'Dobrý den, jak Vám mohu pomoci?';
+            }
 
             setupAuthFormToggle();
         };
@@ -853,9 +1000,64 @@
             }
         };
 
+        // ======== START Logika pro ovládání chatu (PŘIDÁNO) ========
+        
+        const chatWindow = document.getElementById('chat-window');
+        const chatToggleBtn = document.getElementById('chat-toggle-btn');
+        const chatMessages = document.getElementById('chat-messages');
+        const chatInputForm = document.getElementById('chat-input-form');
+        const chatInput = document.getElementById('chat-input');
+        
+        // Otevření / zavření okna
+        chatToggleBtn.addEventListener('click', () => {
+            chatWindow.classList.toggle('open');
+        });
+
+        // Odeslání zprávy
+        chatInputForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const userText = chatInput.value.trim();
+            if (userText === '') return;
+
+            // Zobrazíme zprávu uživatele
+            addMessage(userText, 'user');
+            chatInput.value = '';
+
+            // Zobrazíme "načítání"
+            const loadingMessageEl = addMessage('Přemýšlím...', 'bot loading'); // Tento text se nepřekládá, je dočasný
+
+            try {
+                // Zavoláme naši Cloud Function A POSÍLÁME JAZYK
+                const result = await askGemini({ text: userText, lang: currentLang });
+                
+                // Aktualizujeme zprávu bota odpovědí
+                loadingMessageEl.textContent = result.data.text;
+                loadingMessageEl.classList.remove('loading');
+
+            } catch (error) {
+                console.error("Chyba při volání Cloud Function:", error);
+                // Tento text by také mohl být přeložen
+                loadingMessageEl.textContent = "Omlouvám se, něco se pokazilo. Zkuste to prosím znovu.";
+                loadingMessageEl.classList.remove('loading');
+            }
+        });
+
+        // Pomocná funkce pro přidání zprávy do okna
+        function addMessage(text, sender) {
+            const messageEl = document.createElement('div');
+            messageEl.className = `chat-message ${sender}`;
+            messageEl.textContent = text;
+            chatMessages.appendChild(messageEl);
+            
+            // Automaticky scrollujeme dolů
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            return messageEl;
+        }
+        // ======== END Logika pro ovládání chatu (PŘIDÁNO) ========
+
         document.addEventListener('DOMContentLoaded', () => {
             setActiveLangLink();
-            translatePage(currentLang);
+            translatePage(currentLang); // Tato funkce nyní přeloží i chat
             fetchAndFilterProperties();
             loadFilterOptions();
             loadSettings();
@@ -874,5 +1076,25 @@
         });
 
     </script>
+    
+    <!-- Váš HTML kód pro chat widget (již je přítomen) -->
+    <div id="chat-widget">
+        <div id="chat-window">
+            <div id="chat-header">Horizon Estates Asistent</div>
+            <div id="chat-messages">
+                <div class="chat-message bot">
+                    Dobrý den, jak Vám mohu pomoci s výběrem nemovitosti?
+                </div>
+            </div>
+            <form id="chat-input-form">
+                <input type="text" id="chat-input" placeholder="Zeptejte se mě..." autocomplete="off">
+                <button type="submit" id="chat-send-btn">Odeslat</button>
+            </form>
+        </div>
+        <button id="chat-toggle-btn">
+            &#128172; 
+        </button>
+    </div>
 </body>
 </html>
+
