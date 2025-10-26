@@ -9,25 +9,20 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- Optimalizace písem: Přidáno '&display=swap' -->
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <!-- Optimalizace: Načítání FontAwesome asynchronně -->
     <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript>
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     </noscript>
     
-    <!-- Optimalizace: Přednačtení hlavního obrázku (Hero section) -->
     <link rel="preload" as="image" href="https://images.pexels.com/photos/1732414/pexels-photo-1732414.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2">
 
-    <!-- Optimalizace Tailwind CSS: Zvažte kompilaci pro produkci -->
     <script src="https://cdn.tailwindcss.com"></script>
 
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            /* Optimalizace obrázku na pozadí: Nahraďte optimalizovanou verzí */
             background-image: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)), url('https://images.pexels.com/photos/2227832/pexels-photo-2227832.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');
             background-size: cover;
             background-attachment: fixed;
@@ -65,7 +60,10 @@
             transform: scale(1.1);
             box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.9);
         }
-        /* Kód pro chatbota byl odstraněn */
+        /* Přidáno pro hladké scrollování */
+        html {
+             scroll-behavior: smooth;
+        }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800 flex flex-col min-h-screen">
@@ -184,11 +182,9 @@
                 <!-- Hero Section -->
                 <section class="h-64 md:h-80 rounded-lg bg-cover bg-center flex flex-col justify-center items-center text-white text-center p-4 mb-8 shadow-xl" 
                          style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url(https://images.pexels.com/photos/1732414/pexels-photo-1732414.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2)">
-                    <!-- Optimalizace obrázku v Hero section: Nahraďte optimalizovanou verzí -->
                     <h1 id="main-title" class="text-3xl md:text-5xl font-bold text-shadow">Nemovitosti v Bulharsku</h1>
                     <p id="main-subtitle" class="text-lg md:text-xl mt-2 text-shadow-md">Objevte svůj vysněný apartmán na pobřeží Černého moře.</p>
                 </section>
-                <!-- ... (zbytek obsahu main zůstává stejný) ... -->
                  <!-- Offer Type Buttons -->
                 <div class="flex justify-center mb-6">
                     <div class="inline-flex rounded-md shadow-sm">
@@ -209,7 +205,10 @@
                     </div>
                 </div>
                 <!-- Properties Grid -->
-                <section id="properties-container" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8"></section>
+                <!-- PŘIDÁNO ID 'properties-grid-start' pro cíl scrollování -->
+                <section id="properties-grid-start" class="scroll-mt-20"> <!-- scroll-mt-20 přidá odsazení shora, aby to neskákalo přímo pod header -->
+                   <div id="properties-container" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8"></div>
+                </section>
                 <!-- Pagination -->
                 <div id="pagination-container" class="flex justify-center items-center space-x-2 mt-8"></div>
                 <!-- Interesting Facts Section -->
@@ -285,11 +284,11 @@
 
     <!-- Main Script Block -->
     <script type="module" defer>
-        // Importy Firebase (verze 11.6.1) - Odebrán import pro Functions
+        // Importy Firebase (verze 11.6.1)
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, doc, getDoc, getDocs, query, where, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-        // import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-functions.js"; // ODEBRÁNO
+        // import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-functions.js"; // Již nepotřebujeme
 
         // Firebase konfigurace (zůstává stejná)
         const firebaseConfig = {
@@ -305,13 +304,11 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
-        // const functions = getFunctions(app, 'europe-west1'); // ODEBRÁNO
-        // const askGemini = httpsCallable(functions, 'askGeminiRAG'); // ODEBRÁNO
 
         // Globální proměnná pro jazyk
         let currentLang = new URLSearchParams(window.location.search).get('lang') || 'cz';
 
-        // Překlady (ODEBRÁNY překlady pro chatbota)
+        // Překlady (bez chatbota)
         const translations = {
             cz: {"nav-spanelsko":"Španělsko","nav-bulharsko":"Bulharsko","nav-informace":"Informace","nav-sluzby":"Naše služby","nav-obulharsku":"O Bulharsku","nav-onas":"O nás","contactLink":"Kontakt","filter-title":"Rychlé vyhledávání","filter-location-label":"Lokalita","filter-type-label":"Druh nemovitosti","filter-rooms-label":"Dispozice","filter-offerid-label":"Č. nabídky","filter-price-label":"Cena (€)","filter-submit-btn":"Vyhledat","filter-all":"Všechny","offerIdPlaceholder":"Zadejte číslo","priceFromPlaceholder":"Od","priceToPlaceholder":"Do","main-title":"Nemovitosti v Bulharsku","main-subtitle":"Objevte svůj vysněný apartmán na pobřeží Černého moře.","offer-type-sale":"Na prodej","offer-type-rent":"K pronájmu","sort-by-label":"Seřadit podle:","sort-offer-desc":"Číslo nabídky (sestupně)","sort-price-asc":"Ceny (od nejlevnější)","sort-price-desc":"Ceny (od nejdražší)","sort-date-desc":"Data (od nejnovější)","facts-title":"Zajímavosti o Bulharsku","fact-1":"Bulharsko je jednou z nejstarších zemí v Evropě a jediná, která si od svého založení v roce 681 nezměnila jméno.","fact-2":"Bulharská kuchyně je vynikající a rozmanitá, známá pro svůj jogurt, sýr sirene a tradiční salát šopska.","fact-3":"Země nabízí jak krásné písečné pláže u Černého moře, tak i vysoké hory ideální pro lyžování a turistiku.","contact-modal-title":"Kontaktní formulář","contact-modal-name":"Vaše jméno","contact-modal-email":"Váš e-mail","contact-modal-phone":"Telefon (nepovinné)","contact-modal-message":"Vaše zpráva","contact-modal-submit":"Odeslat zprávu","login-modal-title":"Přihlášení","login-modal-submit":"Přihlásit se","login-modal-register-prompt":"Nemáte účet? <a>Zaregistrujte se</a>","register-modal-title":"Registrace","register-modal-submit":"Zaregistrovat se","register-modal-login-prompt":"Máte již účet? <a>Přihlaste se</a>","favorites-modal-title":"Moje oblíbené nemovitosti","cardOfferId":"Č. nabídky","cardRooms":"Dispozice","cardArea":"Plocha","cardViewDetail":"Zobrazit detail"},
             en: {"nav-spanelsko":"Spain","nav-bulharsko":"Bulgaria","nav-informace":"Information","nav-sluzby":"Our Services","nav-obulharsku":"About Bulgaria","nav-onas":"About Us","contactLink":"Contact","filter-title":"Quick Search","filter-location-label":"Location","filter-type-label":"Property Type","filter-rooms-label":"Layout","filter-offerid-label":"Offer No.","filter-price-label":"Price (€)","filter-submit-btn":"Search","filter-all":"All","offerIdPlaceholder":"Enter number","priceFromPlaceholder":"From","priceToPlaceholder":"To","main-title":"Properties in Bulgaria","main-subtitle":"Discover your dream apartment on the Black Sea coast.","offer-type-sale":"For Sale","offer-type-rent":"For Rent","sort-by-label":"Sort by:","sort-offer-desc":"Offer number (desc)","sort-price-asc":"Price (lowest first)","sort-price-desc":"Price (highest first)","sort-date-desc":"Date (newest first)","facts-title":"Interesting Facts about Bulgaria","fact-1":"Bulgaria is one of the oldest countries in Europe and the only one that has not changed its name since its establishment in 681.","fact-2":"Bulgarian cuisine is excellent and diverse, known for its yogurt, sirene cheese, and traditional Shopska salad.","fact-3":"The country offers beautiful sandy beaches on the Black Sea as well as high mountains ideal for skiing and hiking.","contact-modal-title":"Contact Form","contact-modal-name":"Your Name","contact-modal-email":"Your E-mail","contact-modal-phone":"Phone (optional)","contact-modal-message":"Your Message","contact-modal-submit":"Send Message","login-modal-title":"Login","login-modal-submit":"Log In","login-modal-register-prompt":"Don't have an account? <a>Register</a>","register-modal-title":"Register","register-modal-submit":"Register","register-modal-login-prompt":"Already have an account? <a>Log In</a>","favorites-modal-title":"My Favorite Properties","cardOfferId":"Offer No.","cardRooms":"Layout","cardArea":"Area","cardViewDetail":"View Detail"},
@@ -359,7 +356,7 @@
             setupAuthFormToggle();
         };
 
-        // Ostatní funkce (setLang, setActiveLangLink, displayProperties, setupPagination, sortProperties, fetchAndFilterProperties, loadFilterOptions, Event Listenery, Autentizace, Favorites, loadSettings, loadGlobalTags) zůstávají stejné
+        // Ostatní funkce a proměnné (zůstávají stejné)
          const setLang = (lang) => {
              const url = new URL(window.location.href);
             url.searchParams.set('lang', lang);
@@ -382,7 +379,8 @@
         const paginationContainer = document.getElementById('pagination-container');
         const sortSelect = document.getElementById('sort-by');
         const filterForm = document.getElementById('filter-form');
-        
+        const propertiesGridStart = document.getElementById('properties-grid-start'); // Reference na element nad gridem
+
         const displayProperties = () => {
              propertiesContainer.innerHTML = "";
             const startIndex = (currentPage - 1) * propertiesPerPage;
@@ -422,19 +420,35 @@
             paginationContainer.innerHTML = "";
             const pageCount = Math.ceil(filteredProperties.length / propertiesPerPage);
             if (pageCount <= 1) return; 
+
+            // Funkce pro posun nahoru
+            const scrollToTop = () => {
+                // Posuneme se k elementu nad gridem nemovitostí
+                propertiesGridStart.scrollIntoView({ behavior: 'smooth' }); 
+            };
             
             const prevButton = document.createElement('button');
             prevButton.innerHTML = `<i class="fas fa-chevron-left"></i>`;
             prevButton.className = "px-3 py-1 border rounded-md bg-white disabled:opacity-50 disabled:cursor-not-allowed";
             prevButton.disabled = currentPage === 1;
-            prevButton.onclick = () => { if (currentPage > 1) { currentPage--; displayProperties(); } };
+            prevButton.onclick = () => { 
+                if (currentPage > 1) { 
+                    currentPage--; 
+                    displayProperties(); 
+                    scrollToTop(); // << Přidáno scrollování
+                } 
+            };
             paginationContainer.appendChild(prevButton);
 
             for (let i = 1; i <= pageCount; i++) {
                 const pageButton = document.createElement('button');
                 pageButton.innerText = i;
                 pageButton.className = `px-3 py-1 border rounded-md ${i === currentPage ? 'bg-primary text-white border-primary' : 'bg-white'}`;
-                pageButton.onclick = () => { currentPage = i; displayProperties(); };
+                pageButton.onclick = () => { 
+                    currentPage = i; 
+                    displayProperties(); 
+                    scrollToTop(); // << Přidáno scrollování
+                };
                 paginationContainer.appendChild(pageButton);
             }
 
@@ -442,7 +456,13 @@
             nextButton.innerHTML = `<i class="fas fa-chevron-right"></i>`;
             nextButton.className = "px-3 py-1 border rounded-md bg-white disabled:opacity-50 disabled:cursor-not-allowed";
             nextButton.disabled = currentPage === pageCount;
-            nextButton.onclick = () => { if (currentPage < pageCount) { currentPage++; displayProperties(); } };
+            nextButton.onclick = () => { 
+                if (currentPage < pageCount) { 
+                    currentPage++; 
+                    displayProperties(); 
+                    scrollToTop(); // << Přidáno scrollování
+                } 
+            };
             paginationContainer.appendChild(nextButton);
         };
 
@@ -458,6 +478,7 @@
             });
             currentPage = 1; 
             displayProperties();
+            // Není třeba scrollovat při řazení, protože už jsme na první stránce
         };
 
         const fetchAndFilterProperties = async (filters = {}) => {
@@ -531,6 +552,8 @@
                 offerId: parseInt(e.target['offer-id'].value) || null,
             };
             fetchAndFilterProperties(filters);
+            // Po vyhledávání se také posuneme nahoru
+            propertiesGridStart.scrollIntoView({ behavior: 'smooth' }); 
         });
 
         sortSelect.addEventListener('change', sortProperties);
@@ -541,6 +564,8 @@
                 btn.classList.add('active', 'bg-primary', 'text-white');
                 currentOfferType = btn.dataset.offerType;
                 fetchAndFilterProperties(); 
+                 // Po změně typu nabídky se také posuneme nahoru
+                propertiesGridStart.scrollIntoView({ behavior: 'smooth' }); 
             });
         });
         document.querySelector('.offer-type-btn[data-offer-type="prodej"]').classList.add('active', 'bg-primary', 'text-white');
@@ -755,9 +780,7 @@
             }
         };
 
-        // ODEBRÁNA Logika pro ovládání chatu
-
-        // Spuštění funkcí po načtení DOM (bez kódu pro chatbota)
+        // Spuštění po načtení DOM
         document.addEventListener('DOMContentLoaded', () => {
             setActiveLangLink();
             translatePage(currentLang); 
@@ -768,7 +791,7 @@
             setupAuthFormToggle();    
         });
         
-        // Listener pro přepínání jazyka (zůstává stejný)
+        // Listener pro přepínání jazyka
         document.querySelectorAll('#lang-switcher .lang-link').forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
@@ -779,13 +802,8 @@
             });
         });
 
-        /* Optimalizace: Pro produkční verzi zvažte minifikaci tohoto JavaScript kódu. */
-        /* Optimalizace: Pro lepší cachování nastavte správné HTTP hlavičky pro statické soubory v konfiguraci Firebase Hosting (firebase.json). */
-
     </script>
     
-    <!-- HTML kód pro chat widget ODEBRÁN -->
-
 </body>
 </html>
 
