@@ -248,7 +248,7 @@
                         </div>
                     </div>
 
-                    <!-- AI MODAL WINDOW (UPRAVENO) -->
+                    <!-- AI MODAL WINDOW (UPRAVENO PRO FOTO) -->
                     <div id="ai-modal" class="ai-modal-overlay">
                         <div class="ai-modal-content">
                             <div class="flex justify-between items-center mb-4">
@@ -260,7 +260,7 @@
                                 </button>
                             </div>
                             <p class="text-gray-600 text-sm mb-3">
-                                Vložte text inzerátu nebo nahrajte/vložte (CTRL+V) obrázek inzerátu. Systém přečte data (cena, plocha, lokalita), ale <strong>nevyplní Název ani Popis</strong>.
+                                Vložte text inzerátu nebo nahrajte/vložte (CTRL+V) obrázek inzerátu. Systém rozpozná cenu, plochu a lokalitu. <strong>Název a Popis nebudou vyplněny.</strong>
                             </p>
                             
                             <!-- Oblast pro vložení/nahrání obrázku -->
@@ -2265,6 +2265,76 @@
         setupTabSwitching('property-lang-tabs', 'lang-tab-content');
         setupTabSwitching('page-lang-tabs', 'lang-tab-content');
 
+        // Defining functions like populateFormDropdowns and populateFeatures
+        async function populateFormDropdowns(country, propertyData = {}) {
+            const selects = {
+                location: document.getElementById('property-location'),
+                type: document.getElementById('property-type'),
+                rooms: document.getElementById('property-rooms')
+            };
+            Object.values(selects).forEach(s => s.innerHTML = '<option value="">Načítání...</option>');
+            
+            try {
+                const settingsDocRef = doc(db, 'settings', country);
+                const settingsDocSnap = await getDoc(settingsDocRef);
+                
+                if (!settingsDocSnap.exists()) { 
+                    Object.values(selects).forEach(s => s.innerHTML = '<option value="">Žádná data pro tuto zemi</option>');
+                     return;
+                }
+                const settings = settingsDocSnap.data();
+
+                const populateSelect = (selectElement, items, selectedValue) => {
+                    selectElement.innerHTML = `<option value="">-- Vyberte --</option>`;
+                    
+                    if (!Array.isArray(items)) return;
+
+                    const getName = (item) => (typeof item === 'object' && item !== null) ? item.name_cz : item;
+
+                    items
+                        .filter(item => getName(item))
+                        .sort((a, b) => getName(a).localeCompare(getName(b), 'cs'))
+                        .forEach(item => {
+                            const value = getName(item);
+                            const option = new Option(value, value);
+                            if (value === selectedValue) option.selected = true;
+                            selectElement.add(option);
+                        });
+                };
+                
+                populateSelect(selects.location, settings.locations || [], propertyData.location);
+                populateSelect(selects.type, settings.types || [], propertyData.type);
+                populateSelect(selects.rooms, settings.rooms || [], propertyData.rooms);
+
+            } catch (error) {
+                console.error("Chyba při načítání nastavení pro formulář:", error);
+                Object.values(selects).forEach(s => s.innerHTML = '<option value="">Chyba načítání</option>');
+            }
+        }
+
+        async function populateFeatures(selectedFeatures = []) {
+            const container = document.getElementById('features-container');
+            container.innerHTML = '';
+            try {
+                const settingsDocRef = doc(db, 'settings', 'global');
+                const settingsDocSnap = await getDoc(settingsDocRef);
+                const settings = settingsDocSnap.exists() ? settingsDocSnap.data() : { features: [] };
+                (settings.features || []).sort((a,b) => (a.name_cz || '').localeCompare(b.name_cz || '', 'cs')).forEach(feature => {
+                    const checked = selectedFeatures.includes(feature.key) ? 'checked' : '';
+                    container.innerHTML += `
+                        <div class="feature-item">
+                            <input type="checkbox" id="feature-${feature.key}" value="${feature.key}" ${checked} class="feature-checkbox">
+                            <label for="feature-${feature.key}">${feature.name_cz}</label>
+                        </div>`;
+                });
+            } catch (error) {
+                console.error("Chyba při načítání vlastností:", error);
+                container.innerHTML = '<p>Chyba při načítání vlastností.</p>';
+            }
+        }
+
+        // This ensures the listener for the add button works because openNewPropertyForm uses populateFormDropdowns which is now defined.
+        
     </script>
 </body>
 </html>
