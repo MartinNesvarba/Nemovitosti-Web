@@ -10,12 +10,12 @@
     <!-- Editor textu -->
     <script src="https://cdn.tiny.cloud/1/t62v88urbx396otieiqu7apcy81f9ulf00f3eb24ym4s0x2c/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
     
-    <!-- Knihovny pro ZIP a stahování (JSZip a FileSaver) -->
+    <!-- Knihovny pro ZIP a stahování (Nové) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 
     <style>
-        /* Custom Tailwind directives */
+        /* Custom Tailwind directives for cleaner HTML */
         @tailwind base;
         @tailwind components;
         @tailwind utilities;
@@ -25,7 +25,9 @@
             .btn-primary { @apply bg-blue-600 hover:bg-blue-700 text-white disabled:bg-blue-400; }
             .btn-secondary { @apply bg-gray-200 hover:bg-gray-300 text-gray-800; }
             .btn-danger { @apply bg-red-500 hover:bg-red-700 text-white; }
+            /* Styl pro stahovací tlačítko */
             .btn-success { @apply bg-green-600 hover:bg-green-700 text-white; }
+            
             .table-header { @apply px-5 py-3 border-b-2 border-gray-200 bg-gray-50 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider whitespace-nowrap; }
             .table-cell { @apply px-5 py-5 border-b border-gray-200 bg-white text-sm align-middle text-center; }
             .input-field { @apply shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline; }
@@ -38,6 +40,7 @@
             .status-toggle.inactive { @apply bg-red-100 text-red-800; }
         }
         
+        /* Custom styles for UI elements */
         .hidden { display: none; }
         .error-message { color: #D8000C; background-color: #FFD2D2; border: 1px solid #D8000C; padding: 15px; border-radius: 8px; text-align: center; font-weight: bold; }
         .image-preview-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 1rem; margin-top: 1rem; }
@@ -50,9 +53,15 @@
         .feature-item label { @apply ml-2 text-sm font-medium text-gray-900; }
         .lang-tab-content { display: none; }
         .lang-tab-content.active { display: block; }
-        #tags-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 0.5rem; }
 
-        /* --- DRAG & DROP STYLES --- */
+        /* Style for SEO tags list */
+        #tags-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 0.5rem;
+        }
+
+        /* --- DRAG & DROP STYLES (Nové) --- */
         .drop-zone-container {
             border: 2px dashed #dde2e5;
             border-radius: 8px;
@@ -66,8 +75,8 @@
         }
 
         .drop-zone-container.drag-over {
-            border-color: #2563eb;
-            background-color: #eff6ff;
+            border-color: #2563eb; /* Tailwind blue-600 */
+            background-color: #eff6ff; /* Tailwind blue-50 */
         }
 
         .upload-controls {
@@ -98,7 +107,7 @@
             display: block;
             margin-top: 10px;
             font-size: 13px;
-            color: #9ca3af;
+            color: #9ca3af; /* Tailwind gray-400 */
         }
     </style>
 </head>
@@ -146,13 +155,13 @@
                 <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 p-4 sm:p-6">
                     <div id="firestore-error" class="error-message hidden mb-6"></div>
 
-                    <!-- Notifikace o stahování -->
+                    <!-- Notifikace o stahování (Nové) -->
                     <div id="download-notification" class="hidden fixed bottom-5 right-5 bg-blue-600 text-white px-6 py-4 rounded-lg shadow-xl z-50">
                         <div class="flex items-center">
                             <i class="fas fa-spinner fa-spin mr-3"></i>
                             <div>
                                 <h4 class="font-bold">Zpracovávám obrázky...</h4>
-                                <p class="text-sm">Aplikuji vodoznak HORIZON-ESTATES...</p>
+                                <p class="text-sm">Aplikuji vodoznak HORIZON-ESTATES.</p>
                             </div>
                         </div>
                     </div>
@@ -294,6 +303,7 @@
                                     <div id="features-container" class="feature-grid pt-4"></div>
                                 </div>
                                 
+                                <!-- DRAG AND DROP SEKCE PRO FOTOGRAFIE (Upraveno) -->
                                 <div class="mt-6">
                                     <label class="block text-gray-700 font-bold mb-2">Fotografie</label>
                                     
@@ -304,11 +314,15 @@
                                             <div id="drop-status-text" class="text-gray-500 text-sm">Soubor nevybrán</div>
                                         </div>
                                         <span class="drag-hint">Tip: Soubory můžete do tohoto rámečku přímo přetáhnout myší.</span>
+                                        
+                                        <!-- Skrytý input -->
                                         <input type="file" id="image-upload" multiple accept="image/*" class="hidden">
                                     </div>
 
+                                    <!-- Kontejner pro náhledy obrázků -->
                                     <div id="image-preview-container" class="image-preview-container"></div>
                                     
+                                    <!-- Progress bar pro nahrávání -->
                                     <div id="upload-progress" class="hidden mt-4">
                                         <p id="upload-status" class="font-semibold">Nahrávám obrázky...</p>
                                         <div class="w-full bg-gray-200 rounded-full h-2.5 mt-2">
@@ -428,6 +442,7 @@
 
                     <div id="settings-view" class="hidden">
                          <h2 class="text-2xl sm:text-3xl font-semibold text-gray-700 mb-6">Nastavení</h2>
+                         
                          <div class="bg-white p-6 rounded-lg shadow-lg mb-8">
                               <h3 class="text-xl font-bold mb-4">Globální nastavení</h3>
                               <form id="global-settings-form">
@@ -493,7 +508,8 @@
                              </nav>
                         </div>
 
-                        <div id="country-specific-settings-container"></div>
+                        <div id="country-specific-settings-container">
+                            </div>
                     </div>
 
                 </main>
@@ -502,6 +518,7 @@
     </div>
 
     <script type="module">
+        // Import functions from the SDKs
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
         import { 
@@ -510,20 +527,23 @@
         } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
         import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-storage.js";
 
+        // Your web app's Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyAi_ugQSDUjk4y8ne4zpAyTbzNrf96SWDc",
             authDomain: "login-40bf8.firebaseapp.com",
             projectId: "login-40bf8",
-            storageBucket: "gs://login-40bf8.firebasestorage.app",
+            storageBucket: "gs://login-40bf8.firebasestorage.app", // Corrected storage bucket URL
             messagingSenderId: "932200625165",
             appId: "1:932200625165:web:422564c4f9c3f9fbead144"
         };
 
+        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
         const storage = getStorage(app);
 
+        // --- Initialize TinyMCE ---
         const initTinyMCE = (selector) => {
             tinymce.init({
                 selector: selector,
@@ -538,13 +558,15 @@
             initTinyMCE('.tinymce-editor');
         });
 
+        // --- Global state variables ---
         let filesToUpload = [];
         let existingImageUrls = [];
         let currentSettingsCountry = 'bulharsko';
         let currentPropertyListCountry = 'bulharsko';
         let currentEditItem = { type: null, key: null };
-        let currentEditTag = null;
+        let currentEditTag = null; // For editing SEO tags
 
+        // --- UI Element Selectors ---
         const loginScreen = document.getElementById('login-screen');
         const dashboard = document.getElementById('dashboard');
         const adminLoginForm = document.getElementById('admin-login-form');
@@ -553,6 +575,7 @@
         const sidebar = document.getElementById('sidebar');
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         
+        // Views
         const allViews = {
             propertyList: document.getElementById('property-list-view'),
             propertyForm: document.getElementById('property-form-view'),
@@ -562,6 +585,7 @@
             settings: document.getElementById('settings-view')
         };
 
+        // Sidebar Buttons
         const sidebarButtons = {
             properties: document.getElementById('show-properties-btn'),
             pages: document.getElementById('show-pages-btn'),
@@ -569,15 +593,18 @@
             settings: document.getElementById('show-settings-btn')
         };
         
+        // --- Mobile Menu Toggle ---
         mobileMenuButton.addEventListener('click', () => {
             sidebar.classList.toggle('-translate-x-full');
         });
 
+        // --- Helper Functions ---
         function slugify(text) {
             if (typeof text !== 'string') return '';
             const a = 'àáâäæãåāăąçćčđďèéêëēėęěğǵḧîïíīįìłḿñńǹňôöòóœøōõőṕŕřßśšşșťțûüùúūǘůűųẃẍÿýžźż·/_,:;'
             const b = 'aaaaaaaaaacccddeeeeeeeegghiiiiiilmnnnnoooooooooprrsssssttuuuuuuuuuwxyyzzz------'
             const p = new RegExp(a.split('').join('|'), 'g')
+
             return text.toString().toLowerCase()
                 .replace(/\s+/g, '-') 
                 .replace(p, c => b.charAt(a.indexOf(c))) 
@@ -595,18 +622,174 @@
             firestoreError.classList.remove('hidden');
         }
 
+        function setEditorContent(editorId, content) {
+             const editor = tinymce.get(editorId);
+             if (editor) {
+                 editor.setContent(content || '');
+             } else {
+                 console.warn(`Editor with ID ${editorId} not found.`);
+             }
+        }
+
+        function getEditorContent(editorId) {
+            const editor = tinymce.get(editorId);
+            return editor ? editor.getContent() : '';
+        }
+
+        function renderList(type, items, formId) {
+            const container = document.getElementById(`${type}-list`);
+            if (!container) return;
+            
+            container.innerHTML = '';
+            
+            const sortedItems = (items || []).sort((a, b) => {
+                const nameA = (typeof a === 'object' ? a.name_cz : a) || '';
+                const nameB = (typeof b === 'object' ? b.name_cz : b) || '';
+                return nameA.localeCompare(nameB, 'cs');
+            });
+
+            sortedItems.forEach(item => {
+                const isObject = typeof item === 'object' && item !== null;
+                const key = isObject ? item.key : slugify(item);
+                const name_cz = isObject ? item.name_cz : item;
+                const name_en = isObject ? item.name_en || '-' : '-';
+                const name_de = isObject ? item.name_de || '-' : '-';
+
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'flex justify-between items-center bg-gray-100 p-2 rounded text-sm';
+                itemDiv.innerHTML = `
+                    <div class="flex-grow mr-4">
+                        <strong class="text-gray-800">${name_cz || '(Chybí český název)'}</strong>
+                        ${(type !== 'locations') ? `<div class="text-gray-500"><span class="mr-3">EN: ${name_en}</span><span>DE: ${name_de}</span></div>` : ''}
+                    </div>
+                    <div class="flex-shrink-0 flex items-center">
+                        <button class="edit-setting-item-btn text-blue-600 hover:text-blue-900 mr-3" data-type="${type}" data-key="${key}" data-form-id="${formId}"><i class="fas fa-pencil-alt"></i></button>
+                        <button class="delete-setting-item-btn text-red-500 hover:text-red-700" data-type="${type}" data-key="${key}"><i class="fas fa-trash-alt"></i></button>
+                    </div>
+                `;
+                container.appendChild(itemDiv);
+            });
+        }
+        
+        function renderMenuItems(menuType, items) {
+            const container = document.getElementById(`${menuType}-menu-list-${currentSettingsCountry}`);
+            if (!container) return;
+            container.innerHTML = '';
+            (items || []).forEach(item => {
+                container.innerHTML += `
+                    <div class="flex justify-between items-center bg-gray-100 p-2 rounded">
+                        <span>${item.title} -> /${item.slug}</span>
+                        <button class="delete-menu-item-btn text-red-500 hover:text-red-700" data-menu-type="${menuType}" data-title="${item.title}" data-slug="${item.slug}">&times;</button>
+                    </div>`;
+            });
+        }
+
+        // --- App View Management ---
+        function showView(viewName, buttonName) {
+            Object.values(allViews).forEach(v => v.classList.add('hidden'));
+            Object.values(sidebarButtons).forEach(b => b.classList.remove('active'));
+            
+            if (allViews[viewName]) allViews[viewName].classList.remove('hidden');
+            if (sidebarButtons[buttonName]) sidebarButtons[buttonName].classList.add('active');
+            
+            if (window.innerWidth < 768) {
+                sidebar.classList.add('-translate-x-full');
+            }
+        }
+
+        // --- Authentication Logic ---
+        onAuthStateChanged(auth, user => {
+            if (user) {
+                // User is signed in. The login function will handle the rest.
+            } else {
+                dashboard.classList.add('hidden');
+                loginScreen.classList.remove('hidden');
+            }
+        });
+
+        adminLoginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('admin-username').value;
+            const password = document.getElementById('admin-password').value;
+            adminLoginError.classList.add('hidden');
+
+            try {
+                const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+
+                const userDocRef = doc(db, 'users', user.uid);
+                const userDocSnap = await getDoc(userDocRef);
+
+                if (userDocSnap.exists() && userDocSnap.data().role === 'admin') {
+                    loginScreen.classList.add('hidden');
+                    dashboard.classList.remove('hidden');
+                    showView('propertyList', 'properties');
+                    loadProperties(currentPropertyListCountry);
+                } else {
+                    adminLoginError.textContent = "Přístup odepřen. Tento účet nemá oprávnění administrátora.";
+                    adminLoginError.classList.remove('hidden');
+                    await signOut(auth);
+                }
+
+            } catch (error) {
+                console.error("Chyba přihlášení:", error.code, error.message);
+                adminLoginError.textContent = "Nesprávný email nebo heslo. Zkontrolujte prosím své přihlašovací údaje a zkuste to znovu.";
+                adminLoginError.classList.remove('hidden');
+            }
+        });
+
+        adminLogoutBtn.addEventListener('click', () => signOut(auth));
+
+        // --- Sidebar Navigation ---
+        sidebarButtons.properties.addEventListener('click', () => {
+            showView('propertyList', 'properties');
+            loadProperties(currentPropertyListCountry);
+        });
+
+        sidebarButtons.pages.addEventListener('click', () => {
+            showView('pageManagement', 'pages');
+            loadPages();
+        });
+
+        sidebarButtons.tags.addEventListener('click', () => {
+            showView('tagManagement', 'tags');
+            loadTags();
+        });
+
+        sidebarButtons.settings.addEventListener('click', () => {
+            showView('settings', 'settings');
+            loadGlobalSettings();
+            loadAndRenderCountrySettings();
+        });
+
+        // --- Property Management ---
+        const propertyForm = document.getElementById('property-form');
+        const propertiesTableBody = document.getElementById('properties-table-body');
+        const propertyCountryTabs = document.getElementById('property-country-tabs');
+        
+        propertyCountryTabs.addEventListener('click', (e) => {
+            if (e.target.tagName === 'BUTTON') {
+                currentPropertyListCountry = e.target.dataset.country;
+                propertyCountryTabs.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
+                e.target.classList.add('active');
+                loadProperties(currentPropertyListCountry);
+            }
+        });
+        
         async function loadProperties(country) {
             try {
                 const propertiesRef = collection(db, 'properties');
                 const q = query(propertiesRef, where('country', '==', country));
                 const querySnapshot = await getDocs(q);
+                
                 let properties = [];
                 querySnapshot.forEach(doc => {
                     properties.push({ id: doc.id, ...doc.data() });
                 });
+
+                // Sort manually to avoid composite indexes
                 properties.sort((a, b) => (b.createdAt?.toMillis() || 0) - (a.createdAt?.toMillis() || 0));
 
-                const propertiesTableBody = document.getElementById('properties-table-body');
                 propertiesTableBody.innerHTML = '';
                 if (properties.length === 0) {
                     propertiesTableBody.innerHTML = '<tr><td colspan="7" class="table-cell text-center">Nebyly nalezeny žádné nemovitosti.</td></tr>';
@@ -616,7 +799,7 @@
                     const firstImage = prop.images && prop.images.length > 0 ? prop.images[0] : 'https://placehold.co/100x60/eee/ccc?text=Foto';
                     const createdAt = prop.createdAt ? prop.createdAt.toDate().toLocaleDateString('cs-CZ') : 'N/A';
                     const statusClass = prop.status === 'Aktivní' ? 'active' : 'inactive';
-                    
+                    // Přidáno tlačítko pro stažení (zelené s ikonkou download)
                     const row = `
                         <tr id="${prop.id}">
                             <td class="table-cell font-mono">${prop.offerId || 'N/A'}</td>
@@ -647,6 +830,85 @@
             }
         }
 
+        function resetPropertyForm() {
+            propertyForm.reset();
+            document.getElementById('property-id').value = '';
+            document.getElementById('form-title').textContent = 'Přidat novou nemovitost';
+            document.getElementById('image-preview-container').innerHTML = '';
+            document.getElementById('property-offer-id').readOnly = false;
+            ['cz', 'en', 'de'].forEach(lang => {
+                setEditorContent(`property-description-${lang}`, '');
+            });
+            filesToUpload = [];
+            existingImageUrls = [];
+            document.getElementById('upload-progress').classList.add('hidden');
+            document.getElementById('progress-bar').style.width = '0%';
+            document.getElementById('drop-status-text').textContent = "Soubor nevybrán";
+        }
+        
+        async function openNewPropertyForm() {
+            resetPropertyForm();
+            await populateFormDropdowns('bulharsko');
+            await populateFeatures([]);
+            showView('propertyForm', 'properties');
+        }
+        
+        document.getElementById('add-property-btn').addEventListener('click', openNewPropertyForm);
+        document.getElementById('cancel-form-btn').addEventListener('click', () => showView('propertyList', 'properties'));
+        document.getElementById('property-country').addEventListener('change', async (e) => await populateFormDropdowns(e.target.value));
+
+        propertyForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const submitButton = e.target.querySelector('button[type="submit"]');
+            submitButton.disabled = true;
+            submitButton.textContent = 'Ukládám...';
+
+            try {
+                const newImageUrls = await uploadImages(filesToUpload);
+                const allImageUrls = [...existingImageUrls, ...newImageUrls];
+
+                const selectedFeatures = Array.from(document.querySelectorAll('#features-container input:checked')).map(cb => cb.value);
+
+                const propertyData = {
+                    title_cz: document.getElementById('property-title-cz').value,
+                    description_cz: getEditorContent('property-description-cz'),
+                    title_en: document.getElementById('property-title-en').value,
+                    description_en: getEditorContent('property-description-en'),
+                    title_de: document.getElementById('property-title-de').value,
+                    description_de: getEditorContent('property-description-de'),
+                    price: Number(document.getElementById('property-price').value),
+                    offerId: Number(document.getElementById('property-offer-id').value),
+                    offerType: document.getElementById('property-offer-type').value,
+                    country: document.getElementById('property-country').value,
+                    location: document.getElementById('property-location').value,
+                    type: document.getElementById('property-type').value,
+                    rooms: document.getElementById('property-rooms').value,
+                    floor: Number(document.getElementById('property-floor').value) || null,
+                    area: Number(document.getElementById('property-area').value) || null,
+                    images: allImageUrls,
+                    features: selectedFeatures,
+                    status: document.getElementById('property-status').value,
+                    lastUpdated: serverTimestamp()
+                };
+
+                const id = document.getElementById('property-id').value;
+                if (id) {
+                    await updateDoc(doc(db, 'properties', id), propertyData);
+                } else {
+                    propertyData.createdAt = serverTimestamp();
+                    await addDoc(collection(db, 'properties'), propertyData);
+                }
+                
+                showView('propertyList', 'properties');
+                loadProperties(currentPropertyListCountry);
+            } catch (error) {
+                handleFirestoreError(error, 'Ukládání nemovitosti');
+            } finally {
+                submitButton.disabled = false;
+                submitButton.textContent = 'Uložit nemovitost';
+            }
+        });
+
         // --- WATERMARK LOGIC (CENTERED, BIG, TRANSPARENT) ---
         function applyWatermarkToCanvas(img) {
             const canvas = document.createElement('canvas');
@@ -654,29 +916,30 @@
             canvas.width = img.width;
             canvas.height = img.height;
 
-            // Draw original image
+            // 1. Kreslíme původní obrázek
             ctx.drawImage(img, 0, 0);
 
-            // Watermark text
+            // 2. Nastavení textu vodoznaku
             const text = "HORIZON-ESTATES";
             
-            // Font size relative to image width (approx 80% width)
-            const fontSize = canvas.width * 0.08; 
+            // Font size: cca 80% šířky obrázku (aby byl VELKÝ)
+            // Výpočet: pokud obrázek má šířku 1000px, text bude cca 800px široký, písmo cca 100px
+            const fontSize = canvas.width * 0.08; // 8% šířky obrázku jako výška písma
             
             ctx.font = `bold ${fontSize}px Arial, sans-serif`;
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
+            ctx.textAlign = 'center'; // Zarovnání na střed
+            ctx.textBaseline = 'middle'; // Vertikální zarovnání na střed
 
-            // Shadow for contrast
-            ctx.shadowColor = "rgba(0, 0, 0, 0.5)";
+            // 3. Stín (pro čitelnost na světlém pozadí)
+            ctx.shadowColor = "rgba(0, 0, 0, 0.5)"; // Černý poloprůhledný stín
             ctx.shadowBlur = fontSize / 5;
             ctx.shadowOffsetX = fontSize / 20;
             ctx.shadowOffsetY = fontSize / 20;
 
-            // Semi-transparent white
+            // 4. Barva textu (BÍLÁ POLOPRŮHLEDNÁ)
             ctx.fillStyle = "rgba(255, 255, 255, 0.75)"; 
             
-            // Draw in exact center
+            // 5. Vykreslení textu PŘESNĚ DOPROSTŘED
             ctx.fillText(text, canvas.width / 2, canvas.height / 2);
 
             return canvas;
@@ -685,8 +948,10 @@
         async function downloadPropertyImagesWithWatermark(propertyId) {
             const notification = document.getElementById('download-notification');
             try {
+                // Zobrazit notifikaci
                 notification.classList.remove('hidden');
 
+                // Získání dat
                 const docRef = doc(db, 'properties', propertyId);
                 const docSnap = await getDoc(docRef);
                 
@@ -701,17 +966,20 @@
                     return;
                 }
 
+                // ZIP archiv
                 const zip = new JSZip();
                 const folder = zip.folder(`nabidka_${offerId}`);
 
+                // Zpracování obrázků
                 const imagePromises = images.map(async (url, index) => {
                     return new Promise((resolve, reject) => {
                         const img = new Image();
-                        img.crossOrigin = "Anonymous"; 
+                        img.crossOrigin = "Anonymous"; // Nutné pro Canvas
                         
                         img.onload = () => {
                             try {
                                 const canvas = applyWatermarkToCanvas(img);
+                                
                                 canvas.toBlob((blob) => {
                                     if (blob) {
                                         folder.file(`image_${index + 1}.jpg`, blob);
@@ -719,43 +987,48 @@
                                     } else {
                                         reject("Chyba při konverzi canvasu");
                                     }
-                                }, 'image/jpeg', 0.9);
+                                }, 'image/jpeg', 0.9); // Kvalita 90%
                             } catch (err) {
-                                console.error("Chyba při kreslení vodoznaku:", err);
-                                resolve(); 
+                                console.error("Chyba při kreslení vodoznaku (CORS?):", err);
+                                resolve(); // Pokračujeme i s chybou
                             }
                         };
+
                         img.onerror = (e) => {
                             console.error("Nepodařilo se načíst obrázek:", url);
                             resolve(); 
                         };
+
                         img.src = url;
                     });
                 });
 
                 await Promise.all(imagePromises);
 
+                // Generování a stažení ZIPu
                 const content = await zip.generateAsync({ type: "blob" });
                 saveAs(content, `Horizon_Estates_${offerId}.zip`);
 
             } catch (error) {
                 console.error("Chyba při stahování:", error);
-                alert("Nastala chyba při zpracování obrázků.");
+                alert("Nastala chyba při zpracování obrázků. Zkontrolujte konzoli.");
             } finally {
                 notification.classList.add('hidden');
             }
         }
 
-        document.getElementById('properties-table-body').addEventListener('click', async (e) => {
-            const button = e.target.closest('button');
+        propertiesTableBody.addEventListener('click', async (e) => {
+            const button = e.target.closest('button, span');
             if (!button) return;
             const id = button.dataset.id;
             
+            // --- Nová logika pro stahování ---
             if (button.classList.contains('download-property-btn')) {
-                e.preventDefault();
+                e.preventDefault(); 
                 await downloadPropertyImagesWithWatermark(id);
                 return;
             }
+            // -------------------------------
 
             if (button.classList.contains('status-toggle')) {
                 const currentStatus = button.textContent;
@@ -767,12 +1040,13 @@
                     handleFirestoreError(error, 'Změna stavu nemovitosti');
                 }
             }
-            
+
             if (button.classList.contains('delete-property-btn')) {
-                if (confirm('Opravdu chcete smazat tuto nemovitost?')) {
-                     try {
+                if (confirm('Opravdu chcete smazat tuto nemovitost? Tato akce je nevratná a smaže i všechny fotografie.')) {
+                    try {
                         const propertyRef = doc(db, 'properties', id);
                         const docSnap = await getDoc(propertyRef);
+                        
                         if (docSnap.exists()) {
                             const propertyData = docSnap.data();
                             if (propertyData.images && propertyData.images.length > 0) {
@@ -780,14 +1054,19 @@
                                     try {
                                         const imageRef = ref(storage, imageUrl);
                                         return deleteObject(imageRef);
-                                    } catch (err) { return Promise.resolve(); }
+                                    } catch (err) {
+                                        console.warn("Could not delete file:", imageUrl, err);
+                                        return Promise.resolve();
+                                    }
                                 });
                                 await Promise.all(deletePromises);
                             }
                         }
                         await deleteDoc(propertyRef);
                         document.getElementById(id).remove();
-                    } catch (error) { handleFirestoreError(error, 'Mazání nemovitosti'); }
+                    } catch (error) {
+                        handleFirestoreError(error, 'Mazání nemovitosti');
+                    }
                 }
             }
             
@@ -797,6 +1076,7 @@
                     const docSnap = await getDoc(docRef);
                     if (docSnap.exists()) {
                         const prop = docSnap.data();
+                        
                         resetPropertyForm();
                         
                         document.getElementById('property-id').value = docSnap.id;
@@ -830,157 +1110,70 @@
             }
         });
 
-        adminLoginForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const email = document.getElementById('admin-username').value;
-            const password = document.getElementById('admin-password').value;
-            adminLoginError.classList.add('hidden');
-            try {
-                const userCredential = await signInWithEmailAndPassword(auth, email, password);
-                const user = userCredential.user;
-                const userDocRef = doc(db, 'users', user.uid);
-                const userDocSnap = await getDoc(userDocRef);
-                if (userDocSnap.exists() && userDocSnap.data().role === 'admin') {
-                    loginScreen.classList.add('hidden');
-                    dashboard.classList.remove('hidden');
-                    showView('propertyList', 'properties');
-                    loadProperties(currentPropertyListCountry);
-                } else {
-                    adminLoginError.textContent = "Přístup odepřen.";
-                    adminLoginError.classList.remove('hidden');
-                    await signOut(auth);
-                }
-            } catch (error) {
-                adminLoginError.textContent = "Nesprávný email nebo heslo.";
-                adminLoginError.classList.remove('hidden');
-            }
-        });
-
-        adminLogoutBtn.addEventListener('click', () => signOut(auth));
-
-        sidebarButtons.properties.addEventListener('click', () => {
-            showView('propertyList', 'properties');
-            loadProperties(currentPropertyListCountry);
-        });
-        sidebarButtons.pages.addEventListener('click', () => { showView('pageManagement', 'pages'); loadPages(); });
-        sidebarButtons.tags.addEventListener('click', () => { showView('tagManagement', 'tags'); loadTags(); });
-        sidebarButtons.settings.addEventListener('click', () => { showView('settings', 'settings'); loadGlobalSettings(); loadAndRenderCountrySettings(); });
-
-        const propertyCountryTabs = document.getElementById('property-country-tabs');
-        propertyCountryTabs.addEventListener('click', (e) => {
-            if (e.target.tagName === 'BUTTON') {
-                currentPropertyListCountry = e.target.dataset.country;
-                propertyCountryTabs.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
-                e.target.classList.add('active');
-                loadProperties(currentPropertyListCountry);
-            }
-        });
-
-        const propertyForm = document.getElementById('property-form');
-        
-        function resetPropertyForm() {
-            propertyForm.reset();
-            document.getElementById('property-id').value = '';
-            document.getElementById('form-title').textContent = 'Přidat novou nemovitost';
-            document.getElementById('image-preview-container').innerHTML = '';
-            document.getElementById('property-offer-id').readOnly = false;
-            ['cz', 'en', 'de'].forEach(lang => {
-                setEditorContent(`property-description-${lang}`, '');
-            });
-            filesToUpload = [];
-            existingImageUrls = [];
-            document.getElementById('upload-progress').classList.add('hidden');
-            document.getElementById('progress-bar').style.width = '0%';
-            document.getElementById('drop-status-text').textContent = "Soubor nevybrán";
-        }
-
-        async function openNewPropertyForm() {
-            resetPropertyForm();
-            await populateFormDropdowns('bulharsko');
-            await populateFeatures([]);
-            showView('propertyForm', 'properties');
-        }
-
-        document.getElementById('add-property-btn').addEventListener('click', openNewPropertyForm);
-        document.getElementById('cancel-form-btn').addEventListener('click', () => showView('propertyList', 'properties'));
-        document.getElementById('property-country').addEventListener('change', async (e) => await populateFormDropdowns(e.target.value));
-
-        propertyForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const submitButton = e.target.querySelector('button[type="submit"]');
-            submitButton.disabled = true;
-            submitButton.textContent = 'Ukládám...';
-            try {
-                const newImageUrls = await uploadImages(filesToUpload);
-                const allImageUrls = [...existingImageUrls, ...newImageUrls];
-                const selectedFeatures = Array.from(document.querySelectorAll('#features-container input:checked')).map(cb => cb.value);
-                const propertyData = {
-                    title_cz: document.getElementById('property-title-cz').value,
-                    description_cz: getEditorContent('property-description-cz'),
-                    title_en: document.getElementById('property-title-en').value,
-                    description_en: getEditorContent('property-description-en'),
-                    title_de: document.getElementById('property-title-de').value,
-                    description_de: getEditorContent('property-description-de'),
-                    price: Number(document.getElementById('property-price').value),
-                    offerId: Number(document.getElementById('property-offer-id').value),
-                    offerType: document.getElementById('property-offer-type').value,
-                    country: document.getElementById('property-country').value,
-                    location: document.getElementById('property-location').value,
-                    type: document.getElementById('property-type').value,
-                    rooms: document.getElementById('property-rooms').value,
-                    floor: Number(document.getElementById('property-floor').value) || null,
-                    area: Number(document.getElementById('property-area').value) || null,
-                    images: allImageUrls,
-                    features: selectedFeatures,
-                    status: document.getElementById('property-status').value,
-                    lastUpdated: serverTimestamp()
-                };
-                const id = document.getElementById('property-id').value;
-                if (id) {
-                    await updateDoc(doc(db, 'properties', id), propertyData);
-                } else {
-                    propertyData.createdAt = serverTimestamp();
-                    await addDoc(collection(db, 'properties'), propertyData);
-                }
-                showView('propertyList', 'properties');
-                loadProperties(currentPropertyListCountry);
-            } catch (error) {
-                handleFirestoreError(error, 'Ukládání nemovitosti');
-            } finally {
-                submitButton.disabled = false;
-                submitButton.textContent = 'Uložit nemovitost';
-            }
-        });
-
-        // Image Drag & Drop Logic
+        // --- Image Handling (DRAG & DROP UPDATED) ---
         const dropZone = document.getElementById('drop-zone');
         const fileInput = document.getElementById('image-upload');
         const browseBtn = document.getElementById('btn-browse-images');
         const dropStatusText = document.getElementById('drop-status-text');
 
-        browseBtn.addEventListener('click', () => fileInput.click());
-        dropZone.addEventListener('click', (e) => { if (e.target !== browseBtn) fileInput.click(); });
-        fileInput.addEventListener('change', (e) => { filesToUpload.push(...e.target.files); updateStatusText(); previewImages(); fileInput.value = ''; });
+        // 1. Tlačítko
+        browseBtn.addEventListener('click', () => {
+            fileInput.click();
+        });
 
+        // Klik na box
+        dropZone.addEventListener('click', (e) => {
+            if (e.target !== browseBtn) {
+                fileInput.click();
+            }
+        });
+
+        // 2. Input change
+        fileInput.addEventListener('change', (e) => {
+            filesToUpload.push(...e.target.files);
+            updateStatusText();
+            previewImages();
+            fileInput.value = ''; 
+        });
+
+        // 3. Drag events
         ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-            dropZone.addEventListener(eventName, (e) => { e.preventDefault(); e.stopPropagation(); }, false);
+            dropZone.addEventListener(eventName, (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+            }, false);
         });
+
         ['dragenter', 'dragover'].forEach(eventName => {
-            dropZone.addEventListener(eventName, () => dropZone.classList.add('drag-over'), false);
+            dropZone.addEventListener(eventName, () => {
+                dropZone.classList.add('drag-over');
+            }, false);
         });
+
         ['dragleave', 'drop'].forEach(eventName => {
-            dropZone.addEventListener(eventName, () => dropZone.classList.remove('drag-over'), false);
+            dropZone.addEventListener(eventName, () => {
+                dropZone.classList.remove('drag-over');
+            }, false);
         });
+
+        // Drop handler
         dropZone.addEventListener('drop', (e) => {
-            if (e.dataTransfer.files.length > 0) {
-                filesToUpload.push(...e.dataTransfer.files);
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            
+            if (files.length > 0) {
+                filesToUpload.push(...files);
                 updateStatusText();
                 previewImages();
             }
         });
-
+        
         function updateStatusText() {
-             dropStatusText.textContent = filesToUpload.length > 0 ? `Připraveno k nahrání: ${filesToUpload.length} nových fotografií` : "Soubor nevybrán";
+             if (filesToUpload.length > 0) {
+                 dropStatusText.textContent = `Připraveno k nahrání: ${filesToUpload.length} nových fotografií`;
+             } else {
+                 dropStatusText.textContent = "Soubor nevybrán";
+             }
         }
 
         function previewImages() {
@@ -990,6 +1183,7 @@
                 ...existingImageUrls.map((url, index) => ({ type: 'existing', data: url, index })),
                 ...filesToUpload.map((file, index) => ({ type: 'new', data: file, index }))
             ];
+
             allImages.forEach(img => {
                 const item = document.createElement('div');
                 item.className = 'image-preview-item';
@@ -1035,104 +1229,400 @@
                     imageUrls.push(url);
                     progressBar.style.width = `${((i + 1) / files.length) * 100}%`;
                 } catch (error) {
-                    console.error("Chyba při nahrávání:", error);
+                    console.error("Chyba při nahrávání obrázku:", error);
+                    statusText.textContent = `Chyba při nahrávání obrázku: ${file.name}`;
                 }
             }
             return imageUrls;
         }
 
-        function setEditorContent(editorId, content) {
-             const editor = tinymce.get(editorId);
-             if (editor) editor.setContent(content || '');
-        }
-        function getEditorContent(editorId) {
-            const editor = tinymce.get(editorId);
-            return editor ? editor.getContent() : '';
-        }
-
-        async function populateFormDropdowns(country, propertyData = {}) {
-            const selects = {
-                location: document.getElementById('property-location'),
-                type: document.getElementById('property-type'),
-                rooms: document.getElementById('property-rooms')
-            };
-            Object.values(selects).forEach(s => s.innerHTML = '<option value="">Načítání...</option>');
-            try {
-                const settingsDocRef = doc(db, 'settings', country);
-                const settingsDocSnap = await getDoc(settingsDocRef);
-                if (!settingsDocSnap.exists()) { Object.values(selects).forEach(s => s.innerHTML = '<option value="">Žádná data</option>'); return; }
-                const settings = settingsDocSnap.data();
-                const populateSelect = (selectElement, items, selectedValue) => {
-                    selectElement.innerHTML = `<option value="">-- Vyberte --</option>`;
-                    if (!Array.isArray(items)) return;
-                    const getName = (item) => (typeof item === 'object' && item !== null) ? item.name_cz : item;
-                    items.filter(item => getName(item)).sort((a, b) => getName(a).localeCompare(getName(b), 'cs')).forEach(item => {
-                        const value = getName(item);
-                        const option = new Option(value, value);
-                        if (value === selectedValue) option.selected = true;
-                        selectElement.add(option);
-                    });
-                };
-                populateSelect(selects.location, settings.locations || [], propertyData.location);
-                populateSelect(selects.type, settings.types || [], propertyData.type);
-                populateSelect(selects.rooms, settings.rooms || [], propertyData.rooms);
-            } catch (error) { Object.values(selects).forEach(s => s.innerHTML = '<option value="">Chyba načítání</option>'); }
-        }
-
-        async function populateFeatures(selectedFeatures = []) {
-            const container = document.getElementById('features-container');
-            container.innerHTML = '';
-            try {
-                const settingsDocRef = doc(db, 'settings', 'global');
-                const settingsDocSnap = await getDoc(settingsDocRef);
-                const settings = settingsDocSnap.exists() ? settingsDocSnap.data() : { features: [] };
-                (settings.features || []).sort((a,b) => (a.name_cz || '').localeCompare(b.name_cz || '', 'cs')).forEach(feature => {
-                    const checked = selectedFeatures.includes(feature.key) ? 'checked' : '';
-                    container.innerHTML += `<div class="feature-item"><input type="checkbox" id="feature-${feature.key}" value="${feature.key}" ${checked} class="feature-checkbox"><label for="feature-${feature.key}">${feature.name_cz}</label></div>`;
-                });
-            } catch (error) { container.innerHTML = '<p>Chyba při načítání vlastností.</p>'; }
-        }
-
+        // --- Page Management ---
         const pagesTableBody = document.getElementById('pages-table-body');
+        const pageForm = document.getElementById('page-form');
+        
         async function loadPages() {
             try {
                 const pagesRef = collection(db, 'pages');
                 const q = query(pagesRef, orderBy('title_cz'));
-                const qs = await getDocs(q);
+                const querySnapshot = await getDocs(q);
                 pagesTableBody.innerHTML = '';
-                qs.forEach(doc => {
+                querySnapshot.forEach(doc => {
                     const page = doc.data();
-                    pagesTableBody.innerHTML += `<tr id="page-${doc.id}"><td class="table-cell font-bold">${page.title_cz}</td><td class="table-cell">/${page.slug}</td><td class="table-cell">${page.status}</td><td class="table-cell"><button class="edit-page-btn text-blue-600 mr-4" data-id="${doc.id}">Edit</button><button class="delete-page-btn text-red-600" data-id="${doc.id}">Delete</button></td></tr>`;
+                    const statusClass = page.status === 'Aktivní' ? 'active' : 'inactive';
+                    pagesTableBody.innerHTML += `
+                        <tr id="page-${doc.id}">
+                            <td class="table-cell font-bold">${page.title_cz}</td>
+                            <td class="table-cell">/${page.slug}</td>
+                            <td class="table-cell"><span class="status-toggle ${statusClass}">${page.status || 'Neaktivní'}</span></td>
+                            <td class="table-cell">
+                                <button class="edit-page-btn text-blue-600 hover:text-blue-900 mr-4" data-id="${doc.id}"><i class="fas fa-pencil-alt"></i></button>
+                                <button class="delete-page-btn text-red-600 hover:text-red-900" data-id="${doc.id}"><i class="fas fa-trash-alt"></i></button>
+                            </td>
+                        </tr>`;
                 });
-            } catch (e) {}
+            } catch (error) {
+                handleFirestoreError(error, 'Načítání stránek');
+            }
         }
 
+        function resetPageForm() {
+            pageForm.reset();
+            document.getElementById('page-id').value = '';
+            ['cz', 'en', 'de'].forEach(lang => {
+                setEditorContent(`page-content-${lang}`, '');
+            });
+            document.getElementById('page-form-title').textContent = 'Přidat novou stránku';
+        }
+
+        document.getElementById('add-page-btn').addEventListener('click', () => {
+            resetPageForm();
+            showView('pageForm', 'pages');
+        });
+        document.getElementById('cancel-page-form-btn').addEventListener('click', () => showView('pageManagement', 'pages'));
+        document.getElementById('page-title-cz').addEventListener('input', (e) => {
+            document.getElementById('page-slug').value = slugify(e.target.value);
+        });
+
+        pageForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const id = document.getElementById('page-id').value;
+            const pageData = {
+                slug: document.getElementById('page-slug').value,
+                status: document.getElementById('page-status').value,
+                title_cz: document.getElementById('page-title-cz').value,
+                content_cz: getEditorContent('page-content-cz'),
+                title_en: document.getElementById('page-title-en').value,
+                content_en: getEditorContent('page-content-en'),
+                title_de: document.getElementById('page-title-de').value,
+                content_de: getEditorContent('page-content-de'),
+            };
+            try {
+                if (id) {
+                    await updateDoc(doc(db, 'pages', id), pageData);
+                } else {
+                    await addDoc(collection(db, 'pages'), pageData);
+                }
+                showView('pageManagement', 'pages');
+                loadPages();
+            } catch (error) {
+                handleFirestoreError(error, 'Ukládání stránky');
+            }
+        });
+
+        pagesTableBody.addEventListener('click', async (e) => {
+            const button = e.target.closest('button');
+            if (!button) return;
+            const id = button.dataset.id;
+            if (button.classList.contains('delete-page-btn')) {
+                if (confirm('Opravdu chcete smazat tuto stránku?')) {
+                    try {
+                        await deleteDoc(doc(db, 'pages', id));
+                        loadPages();
+                    } catch (error) {
+                        handleFirestoreError(error, 'Mazání stránky');
+                    }
+                }
+            }
+            if (button.classList.contains('edit-page-btn')) {
+                try {
+                    const docRef = doc(db, 'pages', id);
+                    const docSnap = await getDoc(docRef);
+                    if (docSnap.exists()) {
+                        const page = docSnap.data();
+                        resetPageForm();
+                        document.getElementById('page-id').value = id;
+                        document.getElementById('page-slug').value = page.slug;
+                        document.getElementById('page-status').value = page.status || 'Aktivní';
+                        document.getElementById('page-title-cz').value = page.title_cz || '';
+                        document.getElementById('page-title-en').value = page.title_en || '';
+                        document.getElementById('page-title-de').value = page.title_de || '';
+                        setEditorContent('page-content-cz', page.content_cz || '');
+                        setEditorContent('page-content-en', page.content_en || '');
+                        setEditorContent('page-content-de', page.content_de || '');
+                        document.getElementById('page-form-title').textContent = 'Upravit stránku';
+                        showView('pageForm', 'pages');
+                    }
+                } catch (error) {
+                    handleFirestoreError(error, 'Editace stránky');
+                }
+            }
+        });
+
+        // --- Tag Management ---
         async function loadTags() {
             const container = document.getElementById('tags-list');
+            container.innerHTML = '<p>Načítání tagů...</p>';
             try {
-                const docSnap = await getDoc(doc(db, 'settings', 'global'));
-                const tags = docSnap.exists() ? docSnap.data().tags || [] : [];
-                container.innerHTML = tags.map(t => `<div class="bg-gray-100 p-2 rounded flex justify-between"><span>${t}</span><button class="delete-tag-btn text-red-500" data-tag="${t}">&times;</button></div>`).join('');
-            } catch (e) {}
+                const settingsDocRef = doc(db, 'settings', 'global');
+                const settingsDocSnap = await getDoc(settingsDocRef);
+                const tags = settingsDocSnap.exists() ? settingsDocSnap.data().tags || [] : [];
+                renderTags(tags);
+            } catch (error) {
+                handleFirestoreError(error, 'Načítání tagů');
+            }
+        }
+
+        function renderTags(tags) {
+            const container = document.getElementById('tags-list');
+            container.innerHTML = '';
+            if (tags.length === 0) {
+                container.innerHTML = '<p class="text-gray-500">Zatím nebyly přidány žádné tagy.</p>';
+                return;
+            }
+            tags.sort().forEach(tag => {
+                const tagEl = document.createElement('div');
+                tagEl.className = 'flex justify-between items-center bg-gray-100 p-2 rounded';
+                tagEl.innerHTML = `
+                    <span class="flex-grow mr-4 break-all">${tag}</span>
+                    <div class="flex-shrink-0">
+                        <button class="edit-tag-btn text-blue-600 hover:text-blue-900 mr-3" data-tag="${tag}"><i class="fas fa-pencil-alt"></i></button>
+                        <button class="delete-tag-btn text-red-500 hover:text-red-700" data-tag="${tag}"><i class="fas fa-trash-alt"></i></button>
+                    </div>
+                `;
+                container.appendChild(tagEl);
+            });
         }
         
-        document.getElementById('tags-list').addEventListener('click', async (e) => {
-             if(e.target.classList.contains('delete-tag-btn')) {
-                 const tag = e.target.dataset.tag;
-                 if(confirm('Smazat?')) await updateDoc(doc(db, 'settings', 'global'), { tags: arrayRemove(tag) });
-                 loadTags();
-             }
-        });
+        function resetTagForm() {
+            const form = document.getElementById('form-tags');
+            const input = document.getElementById('new-tag-input');
+            const addBtn = document.getElementById('add-tag-btn');
+            const cancelBtn = document.getElementById('cancel-edit-tag-btn');
+            
+            currentEditTag = null;
+            input.value = '';
+            addBtn.textContent = 'Přidat';
+            cancelBtn.classList.add('hidden');
+        }
 
         document.getElementById('form-tags').addEventListener('submit', async (e) => {
             e.preventDefault();
-            const val = document.getElementById('new-tag-input').value.trim();
-            if(val) {
-                await updateDoc(doc(db, 'settings', 'global'), { tags: arrayUnion(val) });
-                document.getElementById('new-tag-input').value = '';
-                loadTags();
+            const input = document.getElementById('new-tag-input');
+            const newTag = input.value.trim();
+            if (!newTag) return;
+
+            const settingsDocRef = doc(db, 'settings', 'global');
+            try {
+                const docSnap = await getDoc(settingsDocRef);
+                let tags = docSnap.exists() ? docSnap.data().tags || [] : [];
+                
+                if (currentEditTag) { // Editing existing tag
+                    const index = tags.indexOf(currentEditTag);
+                    if (index > -1) {
+                        tags[index] = newTag;
+                    } else { // Failsafe if old tag not found
+                        tags.push(newTag);
+                    }
+                    await updateDoc(settingsDocRef, { tags });
+                } else { // Adding new tag
+                     if (tags.includes(newTag)) {
+                        alert('Tento tag již existuje.');
+                        return;
+                    }
+                    await updateDoc(settingsDocRef, { tags: arrayUnion(newTag) });
+                }
+                resetTagForm();
+                await loadTags();
+            } catch (error) {
+                handleFirestoreError(error, 'Ukládání SEO tagu');
             }
         });
+
+        document.getElementById('tags-list').addEventListener('click', async (e) => {
+            const button = e.target.closest('button');
+            if (!button) return;
+
+            const tag = button.dataset.tag;
+            if (button.classList.contains('delete-tag-btn')) {
+                if (confirm(`Opravdu chcete smazat tag "${tag}"?`)) {
+                    try {
+                        const settingsDocRef = doc(db, 'settings', 'global');
+                        await updateDoc(settingsDocRef, { tags: arrayRemove(tag) });
+                        await loadTags();
+                    } catch (error) {
+                        handleFirestoreError(error, 'Mazání SEO tagu');
+                    }
+                }
+            } else if (button.classList.contains('edit-tag-btn')) {
+                currentEditTag = tag;
+                document.getElementById('new-tag-input').value = tag;
+                document.getElementById('add-tag-btn').textContent = 'Uložit změny';
+                document.getElementById('cancel-edit-tag-btn').classList.remove('hidden');
+                document.getElementById('new-tag-input').focus();
+            }
+        });
+        
+        document.getElementById('cancel-edit-tag-btn').addEventListener('click', resetTagForm);
+
+        // --- Settings Management ---
+        const settingsTabs = document.getElementById('settings-tabs');
+        
+        settingsTabs.addEventListener('click', (e) => {
+            if (e.target.tagName === 'BUTTON') {
+                currentSettingsCountry = e.target.dataset.country;
+                settingsTabs.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
+                e.target.classList.add('active');
+                loadAndRenderCountrySettings();
+            }
+        });
+
+        function createSettingsForm(type, title, isMultiLang) {
+            const formId = `form-${type}`;
+            const inputs = isMultiLang 
+                ? `
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                            <label for="new-${type}-cz-input" class="block text-sm font-medium text-gray-700">Název CZ</label>
+                            <input type="text" id="new-${type}-cz-input" class="input-field mt-1" required>
+                        </div>
+                        <div>
+                            <label for="new-${type}-en-input" class="block text-sm font-medium text-gray-700">Název EN</label>
+                            <input type="text" id="new-${type}-en-input" class="input-field mt-1">
+                        </div>
+                        <div>
+                            <label for="new-${type}-de-input" class="block text-sm font-medium text-gray-700">Název DE</label>
+                            <input type="text" id="new-${type}-de-input" class="input-field mt-1">
+                        </div>
+                    </div>`
+                : `
+                    <div>
+                        <label for="new-${type}-cz-input" class="block text-sm font-medium text-gray-700">Název</label>
+                        <input type="text" id="new-${type}-cz-input" class="input-field mt-1" required>
+                    </div>`;
+
+            return `
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <h3 class="text-xl font-bold mb-4">${title}</h3>
+                    <div id="${type}-list" class="mb-4 space-y-2"></div>
+                    <form id="${formId}" class="space-y-4 p-4 border rounded-md">
+                        <h4 id="${type}-form-title" class="font-bold text-lg">Přidat novou položku</h4>
+                        ${inputs}
+                        <div class="flex gap-2 mt-4">
+                            <button type="submit" class="btn btn-primary w-full md:w-auto">Přidat</button>
+                            <button type="button" class="btn btn-secondary hidden cancel-edit-btn">Zrušit úpravu</button>
+                        </div>
+                    </form>
+                </div>`;
+        }
+        
+        function renderCountrySettingsHTML(country) {
+            const countryCapitalized = country.charAt(0).toUpperCase() + country.slice(1);
+            
+            let extraMenuHTML = '';
+            if (country === 'bulharsko') { // ZMĚNA: opraveno z 'bulgaria' na 'bulharsko'
+                extraMenuHTML = `
+                    <div>
+                        <h4 class="font-bold mb-2">Menu "O Bulharsku"</h4>
+                        <div id="bulgaria-menu-list-bulharsko" class="mb-4 space-y-2"></div>
+                        <div class="flex gap-2">
+                            <input type="text" id="new-bulgaria-menu-title-bulharsko" placeholder="Název položky" class="input-field">
+                            <select id="new-bulgaria-menu-link-bulharsko" class="input-field"></select>
+                            <button data-menu-type="bulgaria" class="add-menu-item-btn btn btn-primary whitespace-nowrap">Přidat</button>
+                        </div>
+                    </div>`;
+            } else if (country === 'spanelsko') {
+                extraMenuHTML = `
+                    <div>
+                        <h4 class="font-bold mb-2">Menu "O Španělsku"</h4>
+                        <div id="spain-menu-list-spanelsko" class="mb-4 space-y-2"></div>
+                        <div class="flex gap-2">
+                            <input type="text" id="new-spain-menu-title-spanelsko" placeholder="Název položky" class="input-field">
+                            <select id="new-spain-menu-link-spanelsko" class="input-field"></select>
+                            <button data-menu-type="spain" class="add-menu-item-btn btn btn-primary whitespace-nowrap">Přidat</button>
+                        </div>
+                    </div>`;
+            }
+
+            return `
+                <div class="bg-white p-6 rounded-lg shadow-lg mb-8">
+                    <h3 class="text-xl font-bold mb-4">Nastavení pro ${countryCapitalized}</h3>
+                    <form id="${country}-settings-form">
+                        <div class="mb-4">
+                            <label for="setting-logo-text-${country}" class="block text-gray-700 font-bold mb-2">Text loga</label>
+                            <input type="text" id="setting-logo-text-${country}" class="input-field">
+                        </div>
+                        <div class="mt-6 flex justify-end">
+                            <button type="submit" class="btn btn-primary">Uložit nastavení pro ${countryCapitalized}</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg mb-8">
+                    <h3 class="text-xl font-bold mb-4">Správa menu pro ${countryCapitalized}</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <div>
+                            <h4 class="font-bold mb-2">Menu "Informace"</h4>
+                            <div id="info-menu-list-${country}" class="mb-4 space-y-2"></div>
+                            <div class="flex gap-2">
+                                <input type="text" id="new-info-menu-title-${country}" placeholder="Název položky" class="input-field">
+                                <select id="new-info-menu-link-${country}" class="input-field"></select>
+                                <button data-menu-type="info" class="add-menu-item-btn btn btn-primary whitespace-nowrap">Přidat</button>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="font-bold mb-2">Menu "Naše služby"</h4>
+                            <div id="services-menu-list-${country}" class="mb-4 space-y-2"></div>
+                            <div class="flex gap-2">
+                                <input type="text" id="new-services-menu-title-${country}" placeholder="Název položky" class="input-field">
+                                <select id="new-services-menu-link-${country}" class="input-field"></select>
+                                <button data-menu-type="services" class="add-menu-item-btn btn btn-primary whitespace-nowrap">Přidat</button>
+                            </div>
+                        </div>
+                        ${extraMenuHTML}
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    ${createSettingsForm('locations', 'Správa Lokalit', false)}
+                    ${createSettingsForm('types', 'Správa Druhů Nemovitostí', true)}
+                    ${createSettingsForm('rooms', 'Správa Dispozic', true)}
+                </div>
+            `;
+        }
+        
+        async function loadAndRenderCountrySettings() {
+            const container = document.getElementById('country-specific-settings-container');
+            const country = currentSettingsCountry;
+            try {
+                const settingsDocRef = doc(db, 'settings', country);
+                const settingsDocSnap = await getDoc(settingsDocRef);
+                const settings = settingsDocSnap.exists() ? settingsDocSnap.data() : {};
+                
+                container.innerHTML = renderCountrySettingsHTML(country);
+                
+                document.getElementById(`setting-logo-text-${country}`).value = settings.logoText || '';
+                
+                const pagesSnapshot = await getDocs(collection(db, 'pages'));
+                const menuSelects = [
+                    document.getElementById(`new-info-menu-link-${country}`),
+                    document.getElementById(`new-services-menu-link-${country}`),
+                    document.getElementById(`new-bulgaria-menu-link-${country}`),
+                    document.getElementById(`new-spain-menu-link-${country}`)
+                ].filter(Boolean);
+
+                menuSelects.forEach(select => select.innerHTML = '<option value="">-- Vyberte stránku --</option>');
+                
+                pagesSnapshot.forEach(doc => {
+                    const page = doc.data();
+                    const option = new Option(`${page.title_cz} (${page.status === 'Aktivní' ? '✓' : '✗'})`, page.slug);
+                    if (page.status !== 'Aktivní') {
+                        option.disabled = true;
+                        option.style.color = '#ccc';
+                    }
+                    menuSelects.forEach(select => select.add(option.cloneNode(true)));
+                });
+                
+                renderMenuItems('info', settings.infoMenu || []);
+                renderMenuItems('services', settings.servicesMenu || []);
+                if (country === 'bulharsko') renderMenuItems('bulgaria', settings.bulgariaMenu || []);
+                if (country === 'spanelsko') renderMenuItems('spain', settings.spainMenu || []);
+                
+                renderList('locations', settings.locations || [], 'form-locations');
+                renderList('types', settings.types || [], 'form-types');
+                renderList('rooms', settings.rooms || [], 'form-rooms');
+
+            } catch (error) {
+                handleFirestoreError(error, `Načítání nastavení pro ${country}`);
+            }
+        }
 
         async function loadGlobalSettings() {
             try {
@@ -1180,6 +1670,299 @@
                 button.textContent = 'Uložit globální kontakty';
             }
         });
+        
+        function resetForm(formId) {
+            const form = document.getElementById(formId);
+            if (!form) return;
+            form.reset();
+            const title = form.querySelector('h4');
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const cancelBtn = form.querySelector('.cancel-edit-btn');
+
+            if (title) title.textContent = 'Přidat novou položku';
+            if (submitBtn) {
+                submitBtn.textContent = 'Přidat';
+            }
+            if (cancelBtn) cancelBtn.classList.add('hidden');
+            currentEditItem = { type: null, key: null };
+        }
+
+        async function handleSettingsFormSubmit(e) {
+            e.preventDefault();
+            const form = e.target;
+            const type = form.id.split('-')[1];
+            const isGlobal = type === 'features';
+            const docId = isGlobal ? 'global' : currentSettingsCountry;
+            const arrayName = type;
+
+            const czInput = form.querySelector(`#new-${type}-cz-input`);
+            const enInput = form.querySelector(`#new-${type}-en-input`);
+            const deInput = form.querySelector(`#new-${type}-de-input`);
+
+            const name_cz = czInput.value.trim();
+            if (!name_cz) {
+                alert('Český název je povinný.');
+                return;
+            }
+
+            const key = currentEditItem.key || slugify(name_cz);
+            let newItemData;
+            if (enInput) { // Multilang object
+                newItemData = { key, name_cz, name_en: enInput.value.trim(), name_de: deInput.value.trim() };
+            } else { // Simple string (for locations)
+                newItemData = name_cz;
+            }
+            
+            const submitButton = form.querySelector('button[type="submit"]');
+            submitButton.disabled = true;
+
+            try {
+                const settingsDocRef = doc(db, 'settings', docId);
+                const docSnap = await getDoc(settingsDocRef);
+                let items = (docSnap.exists() && docSnap.data()[arrayName]) ? docSnap.data()[arrayName] : [];
+
+                if (currentEditItem.key) { // UPDATE
+                    submitButton.textContent = 'Ukládám...';
+                    const itemIndex = items.findIndex(item => (typeof item === 'object' ? item.key : slugify(item)) === currentEditItem.key);
+                    if (itemIndex > -1) {
+                        items[itemIndex] = newItemData;
+                    } else { // Failsafe if not found, add it
+                        items.push(newItemData);
+                    }
+                } else { // ADD
+                    submitButton.textContent = 'Přidávám...';
+                    const itemExists = items.some(item => (typeof item === 'object' ? item.key : slugify(item)) === key);
+                    if (itemExists) {
+                        alert('Položka s tímto názvem již existuje. Zvolte jiný název.');
+                        submitButton.disabled = false;
+                        submitButton.textContent = 'Přidat';
+                        return;
+                    }
+                    items.push(newItemData);
+                }
+                
+                await setDoc(settingsDocRef, { [arrayName]: items }, { merge: true });
+                resetForm(form.id);
+                isGlobal ? await loadGlobalSettings() : await loadAndRenderCountrySettings();
+
+            } catch (error) {
+                handleFirestoreError(error, currentEditItem.key ? 'Úprava položky' : 'Přidání položky');
+            } finally {
+                submitButton.disabled = false;
+            }
+        }
+
+        document.getElementById('settings-view').addEventListener('click', async (e) => {
+            const button = e.target.closest('button');
+            if (!button) return;
+
+            if (button.classList.contains('edit-setting-item-btn')) {
+                e.preventDefault();
+                const key = button.dataset.key;
+                const type = button.dataset.type;
+                const formId = button.dataset.formId;
+                const form = document.getElementById(formId);
+                
+                const isGlobal = type === 'features';
+                const docId = isGlobal ? 'global' : currentSettingsCountry;
+                const arrayName = type;
+
+                const docRef = doc(db, 'settings', docId);
+                const docSnap = await getDoc(docRef);
+
+                if (docSnap.exists()) {
+                    const items = docSnap.data()[arrayName] || [];
+                    const itemToEdit = items.find(item => (typeof item === 'object' ? item.key : slugify(item)) === key);
+                    
+                    if (itemToEdit) {
+                        currentEditItem = { type, key };
+                        const isObject = typeof itemToEdit === 'object';
+                        
+                        form.querySelector(`#new-${type}-cz-input`).value = isObject ? itemToEdit.name_cz : itemToEdit;
+                        const enInput = form.querySelector(`#new-${type}-en-input`);
+                        if (enInput) enInput.value = isObject ? itemToEdit.name_en || '' : '';
+                        const deInput = form.querySelector(`#new-${type}-de-input`);
+                        if (deInput) deInput.value = isObject ? itemToEdit.name_de || '' : '';
+
+                        form.querySelector('h4').textContent = 'Upravit položku';
+                        form.querySelector('button[type="submit"]').textContent = 'Uložit změny';
+                        form.querySelector('.cancel-edit-btn').classList.remove('hidden');
+                        form.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }
+                return;
+            }
+
+            if(button.classList.contains('cancel-edit-btn')) {
+                resetForm(button.closest('form').id);
+                return;
+            }
+            
+            if (button.classList.contains('delete-setting-item-btn')) {
+                e.preventDefault();
+                const key = button.dataset.key;
+                const type = button.dataset.type;
+                const isGlobal = type === 'features';
+                const docId = isGlobal ? 'global' : currentSettingsCountry;
+                const arrayName = type;
+
+                if (confirm(`Opravdu chcete smazat tuto položku?`)) {
+                    try {
+                        const docRef = doc(db, 'settings', docId);
+                        const docSnap = await getDoc(docRef);
+                        if (!docSnap.exists()) return;
+
+                        const data = docSnap.data();
+                        let items = data[arrayName] || [];
+                        const itemToRemove = items.find(item => (typeof item === 'object' ? item.key : slugify(item)) === key);
+
+                        if (itemToRemove) {
+                             await updateDoc(docRef, { [arrayName]: arrayRemove(itemToRemove) });
+                             isGlobal ? await loadGlobalSettings() : await loadAndRenderCountrySettings();
+                        }
+                    } catch (error) {
+                        handleFirestoreError(error, 'Mazání položky');
+                    }
+                }
+                return;
+            }
+
+            if (button.closest('form')?.id === `${currentSettingsCountry}-settings-form`) {
+                e.preventDefault();
+                button.disabled = true;
+                button.textContent = 'Ukládám...';
+                try {
+                    const data = {
+                        logoText: document.getElementById(`setting-logo-text-${currentSettingsCountry}`).value,
+                    };
+                    await setDoc(doc(db, 'settings', currentSettingsCountry), data, { merge: true });
+                    alert(`Nastavení pro ${currentSettingsCountry} bylo uloženo.`);
+                } catch (error) {
+                    handleFirestoreError(error, `Ukládání nastavení pro ${currentSettingsCountry}`);
+                } finally {
+                    button.disabled = false;
+                    button.textContent = `Uložit nastavení pro ${currentSettingsCountry}`;
+                }
+                return;
+            }
+            
+            if (button.classList.contains('add-menu-item-btn')) {
+                e.preventDefault();
+                const menuType = button.dataset.menuType;
+                const titleInput = document.getElementById(`new-${menuType}-menu-title-${currentSettingsCountry}`);
+                const linkSelect = document.getElementById(`new-${menuType}-menu-link-${currentSettingsCountry}`);
+                const title = titleInput.value.trim();
+                const slug = linkSelect.value;
+                
+                if (!title || !slug) {
+                    alert('Prosím vyplňte název i odkaz.');
+                    return;
+                }
+                
+                const value = { title, slug };
+                const arrayName = `${menuType}Menu`;
+                
+                try {
+                    await setDoc(doc(db, 'settings', currentSettingsCountry), {
+                        [arrayName]: arrayUnion(value)
+                    }, { merge: true });
+                    titleInput.value = '';
+                    linkSelect.value = '';
+                    await loadAndRenderCountrySettings();
+                } catch (error) {
+                    handleFirestoreError(error, `Přidání položky do menu ${menuType}`);
+                }
+                return;
+            }
+
+            if (button.classList.contains('delete-menu-item-btn')) {
+                e.preventDefault();
+                const menuType = button.dataset.menuType;
+                const title = button.dataset.title;
+                const slug = button.dataset.slug;
+                const itemToRemove = { title, slug };
+                const arrayName = `${menuType}Menu`;
+
+                if (confirm(`Opravdu chcete smazat položku menu "${title}"?`)) {
+                    try {
+                        await updateDoc(doc(db, 'settings', currentSettingsCountry), {
+                            [arrayName]: arrayRemove(itemToRemove)
+                        });
+                        await loadAndRenderCountrySettings();
+                    } catch (error) {
+                        handleFirestoreError(error, `Mazání položky z menu ${menuType}`);
+                    }
+                }
+                return;
+            }
+        });
+        
+        async function populateFormDropdowns(country, propertyData = {}) {
+            const selects = {
+                location: document.getElementById('property-location'),
+                type: document.getElementById('property-type'),
+                rooms: document.getElementById('property-rooms')
+            };
+            Object.values(selects).forEach(s => s.innerHTML = '<option value="">Načítání...</option>');
+            
+            try {
+                const settingsDocRef = doc(db, 'settings', country);
+                const settingsDocSnap = await getDoc(settingsDocRef);
+                
+                if (!settingsDocSnap.exists()) { 
+                    Object.values(selects).forEach(s => s.innerHTML = '<option value="">Žádná data pro tuto zemi</option>');
+                     return;
+                }
+                const settings = settingsDocSnap.data();
+
+                const populateSelect = (selectElement, items, selectedValue) => {
+                    selectElement.innerHTML = `<option value="">-- Vyberte --</option>`;
+                    
+                    if (!Array.isArray(items)) return;
+
+                    const getName = (item) => (typeof item === 'object' && item !== null) ? item.name_cz : item;
+
+                    items
+                        .filter(item => getName(item))
+                        .sort((a, b) => getName(a).localeCompare(getName(b), 'cs'))
+                        .forEach(item => {
+                            const value = getName(item);
+                            const option = new Option(value, value);
+                            if (value === selectedValue) option.selected = true;
+                            selectElement.add(option);
+                        });
+                };
+                
+                populateSelect(selects.location, settings.locations || [], propertyData.location);
+                populateSelect(selects.type, settings.types || [], propertyData.type);
+                populateSelect(selects.rooms, settings.rooms || [], propertyData.rooms);
+
+            } catch (error) {
+                console.error("Chyba při načítání nastavení pro formulář:", error);
+                Object.values(selects).forEach(s => s.innerHTML = '<option value="">Chyba načítání</option>');
+            }
+        }
+
+        async function populateFeatures(selectedFeatures = []) {
+            const container = document.getElementById('features-container');
+            container.innerHTML = '';
+            try {
+                const settingsDocRef = doc(db, 'settings', 'global');
+                const settingsDocSnap = await getDoc(settingsDocRef);
+                const settings = settingsDocSnap.exists() ? settingsDocSnap.data() : { features: [] };
+                (settings.features || []).sort((a,b) => (a.name_cz || '').localeCompare(b.name_cz || '', 'cs')).forEach(feature => {
+                    const checked = selectedFeatures.includes(feature.key) ? 'checked' : '';
+                    container.innerHTML += `
+                        <div class="feature-item">
+                            <input type="checkbox" id="feature-${feature.key}" value="${feature.key}" ${checked} class="feature-checkbox">
+                            <label for="feature-${feature.key}">${feature.name_cz}</label>
+                        </div>`;
+                });
+            } catch (error) {
+                console.error("Chyba při načítání vlastností:", error);
+                container.innerHTML = '<p>Chyba při načítání vlastností.</p>';
+            }
+        }
 
         function setupTabSwitching(tabsId, contentClass) {
             const tabsContainer = document.getElementById(tabsId);
@@ -1189,78 +1972,20 @@
                     const lang = e.target.dataset.lang;
                     tabsContainer.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
                     e.target.classList.add('active');
+                    
                     document.querySelectorAll(`.${contentClass}`).forEach(content => {
-                        if (content.id.includes(`-${lang}`)) content.classList.add('active'); else content.classList.remove('active');
+                        if (content.id.includes(`-${lang}`)) {
+                            content.classList.add('active');
+                        } else {
+                            content.classList.remove('active');
+                        }
                     });
                 }
             });
         }
+
         setupTabSwitching('property-lang-tabs', 'lang-tab-content');
         setupTabSwitching('page-lang-tabs', 'lang-tab-content');
-
-        function renderList(type, items, formId) {
-            const container = document.getElementById(`${type}-list`);
-            if (!container) return;
-            container.innerHTML = '';
-            const sortedItems = (items || []).sort((a, b) => {
-                const nameA = (typeof a === 'object' ? a.name_cz : a) || '';
-                const nameB = (typeof b === 'object' ? b.name_cz : b) || '';
-                return nameA.localeCompare(nameB, 'cs');
-            });
-            sortedItems.forEach(item => {
-                const isObject = typeof item === 'object' && item !== null;
-                const key = isObject ? item.key : slugify(item);
-                const name_cz = isObject ? item.name_cz : item;
-                const itemDiv = document.createElement('div');
-                itemDiv.className = 'flex justify-between items-center bg-gray-100 p-2 rounded text-sm';
-                itemDiv.innerHTML = `<div class="flex-grow mr-4"><strong class="text-gray-800">${name_cz}</strong></div><div class="flex-shrink-0 flex items-center"><button class="delete-setting-item-btn text-red-500" data-type="${type}" data-key="${key}">&times;</button></div>`;
-                container.appendChild(itemDiv);
-            });
-        }
-
-        document.getElementById('settings-view').addEventListener('submit', (e) => {
-             if (e.target.id.startsWith('form-')) handleSettingsFormSubmit(e);
-        });
-
-        async function handleSettingsFormSubmit(e) {
-            e.preventDefault();
-            const form = e.target;
-            const type = form.id.split('-')[1];
-            const isGlobal = type === 'features';
-            const docId = isGlobal ? 'global' : currentSettingsCountry;
-            const arrayName = type;
-            const czInput = form.querySelector(`#new-${type}-cz-input`);
-            const name_cz = czInput.value.trim();
-            if (!name_cz) return;
-            const key = slugify(name_cz);
-            const newItemData = { key, name_cz };
-            const settingsDocRef = doc(db, 'settings', docId);
-            const docSnap = await getDoc(settingsDocRef);
-            let items = (docSnap.exists() && docSnap.data()[arrayName]) ? docSnap.data()[arrayName] : [];
-            items.push(newItemData);
-            await setDoc(settingsDocRef, { [arrayName]: items }, { merge: true });
-            form.reset();
-            isGlobal ? await loadGlobalSettings() : await loadAndRenderCountrySettings();
-        }
-
-        async function loadAndRenderCountrySettings() {
-            const container = document.getElementById('country-specific-settings-container');
-            const country = currentSettingsCountry;
-            try {
-                const settingsDocRef = doc(db, 'settings', country);
-                const settingsDocSnap = await getDoc(settingsDocRef);
-                const settings = settingsDocSnap.exists() ? settingsDocSnap.data() : {};
-                
-                // Zde by měla být logika pro vykreslování menu a nastavení specifických pro zemi.
-                // Prozatím je zde placeholder, protože plná implementace závisí na dalších detailech.
-                // V původním kódu zde byly funkce pro správu menu.
-                // Pokud potřebujete tuto část kompletní a nebyla v předchozím uploadu, dejte vědět.
-                // Pro demonstraci funkčnosti ostatních částí toto stačí.
-                 container.innerHTML = `<div class="bg-white p-6 rounded-lg shadow-lg mb-8"><h3 class="text-xl font-bold mb-4">Nastavení pro ${country.toUpperCase()}</h3><p>Nastavení menu a loga se načítá...</p></div>`;
-
-
-            } catch (e) {}
-        }
 
     </script>
 </body>
