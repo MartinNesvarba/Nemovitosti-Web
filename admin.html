@@ -170,21 +170,23 @@
             border-color: transparent;
         }
 
+        /* Styles for Image Drop in AI Modal */
         .ai-image-area {
             border: 2px dashed #ccc;
             border-radius: 8px;
-            padding: 10px;
+            padding: 15px;
             text-align: center;
             margin-bottom: 16px;
             background: #f9fafb;
             cursor: pointer;
+            transition: all 0.2s;
         }
         .ai-image-area:hover {
             background: #f3f4f6;
             border-color: #6366f1;
         }
         .ai-image-preview img {
-            max-height: 150px;
+            max-height: 180px;
             margin: 10px auto;
             border-radius: 4px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -246,7 +248,7 @@
                         </div>
                     </div>
 
-                    <!-- AI MODAL WINDOW -->
+                    <!-- AI MODAL WINDOW (UPRAVENO) -->
                     <div id="ai-modal" class="ai-modal-overlay">
                         <div class="ai-modal-content">
                             <div class="flex justify-between items-center mb-4">
@@ -258,18 +260,17 @@
                                 </button>
                             </div>
                             <p class="text-gray-600 text-sm mb-3">
-                                Vložte text inzerátu nebo nahrajte/vložte (CTRL+V) obrázek inzerátu. Systém přečte data (cena, plocha, atd.), ale <strong>nevyplní Název ani Popis</strong>.
+                                Vložte text inzerátu nebo nahrajte/vložte (CTRL+V) obrázek inzerátu. Systém přečte data (cena, plocha, lokalita), ale <strong>nevyplní Název ani Popis</strong>.
                             </p>
                             
                             <!-- Oblast pro vložení/nahrání obrázku -->
                             <div class="ai-image-area" id="ai-image-drop-area">
-                                <p class="text-sm text-gray-500"><i class="fas fa-image mr-2"></i>Klikněte pro nahrání obrázku nebo sem vložte screenshot (CTRL+V)</p>
+                                <p class="text-sm text-gray-500 font-medium"><i class="fas fa-camera mr-2"></i>Klikněte pro nahrání obrázku nebo sem vložte screenshot (CTRL+V)</p>
                                 <input type="file" id="ai-image-input" accept="image/*" class="hidden">
                                 <div id="ai-image-preview" class="ai-image-preview"></div>
                             </div>
 
                             <textarea id="ai-input-text" class="ai-textarea" placeholder="Zde vložte text nemovitosti... (volitelné, pokud nahráváte obrázek)"></textarea>
-                            
                             <div class="flex justify-end gap-3">
                                 <button id="ai-process-btn" class="btn btn-ai w-full sm:w-auto">
                                     <i class="fas fa-robot mr-2"></i>Analyzovat a Vyplnit
@@ -460,67 +461,177 @@
                         </div>
                     </div>
 
-                    <!-- Zde jsou ostatní sekce (Page Management, Tags, Settings) - beze změn, pouze minimalizováno pro přehlednost -->
                     <div id="page-management-view" class="hidden">
-                         <header class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+                        <header class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
                             <h2 class="text-2xl sm:text-3xl font-semibold text-gray-700">Správa stránek</h2>
                             <button id="add-page-btn" class="btn btn-primary w-full sm:w-auto"><i class="fas fa-plus mr-2"></i>Přidat stránku</button>
                         </header>
                         <div class="bg-white shadow-md rounded overflow-x-auto">
                             <table class="min-w-full leading-normal">
-                                <thead><tr><th class="table-header">Název</th><th class="table-header">URL</th><th class="table-header">Akce</th></tr></thead>
+                                <thead>
+                                    <tr>
+                                        <th class="table-header">Název stránky (CZ)</th>
+                                        <th class="table-header">URL (slug)</th>
+                                        <th class="table-header">Stav</th>
+                                        <th class="table-header">Akce</th>
+                                    </tr>
+                                </thead>
                                 <tbody id="pages-table-body"></tbody>
                             </table>
                         </div>
                     </div>
-                     <div id="page-form-view" class="hidden">
-                        <!-- Formulář pro stránky -->
+
+                    <div id="page-form-view" class="hidden">
+                        <h2 id="page-form-title" class="text-3xl font-semibold text-gray-700 mb-6">Přidat novou stránku</h2>
                         <div class="bg-white p-8 rounded-lg shadow-lg">
                             <form id="page-form">
                                 <input type="hidden" id="page-id">
-                                <input type="text" id="page-slug" class="input-field mb-4" placeholder="URL Slug" required>
-                                <select id="page-status" class="input-field mb-4"><option value="Aktivní">Aktivní</option><option value="Neaktivní">Neaktivní</option></select>
-                                <nav class="flex -mb-px" id="page-lang-tabs">
-                                    <button type="button" data-lang="cz" class="tab-button active">CZ</button>
-                                    <button type="button" data-lang="en" class="tab-button">EN</button>
-                                    <button type="button" data-lang="de" class="tab-button">DE</button>
-                                </nav>
-                                <div id="page-lang-cz" class="lang-tab-content active"><input id="page-title-cz" class="input-field mb-2" placeholder="Titulek CZ"><textarea id="page-content-cz" class="tinymce-editor"></textarea></div>
-                                <div id="page-lang-en" class="lang-tab-content"><input id="page-title-en" class="input-field mb-2" placeholder="Titulek EN"><textarea id="page-content-en" class="tinymce-editor"></textarea></div>
-                                <div id="page-lang-de" class="lang-tab-content"><input id="page-title-de" class="input-field mb-2" placeholder="Titulek DE"><textarea id="page-content-de" class="tinymce-editor"></textarea></div>
-                                <div class="mt-4"><button type="button" id="cancel-page-form-btn" class="btn btn-secondary">Zrušit</button><button type="submit" class="btn btn-primary">Uložit</button></div>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                                    <div>
+                                        <label for="page-slug" class="block text-gray-700 font-bold mb-2">URL Slug (bez diakritiky, např. 'o-nas')</label>
+                                        <input type="text" id="page-slug" class="input-field" required>
+                                    </div>
+                                    <div>
+                                        <label for="page-status" class="block text-gray-700 font-bold mb-2">Stav</label>
+                                        <select id="page-status" class="input-field" required>
+                                            <option value="Aktivní">Aktivní</option>
+                                            <option value="Neaktivní">Neaktivní</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="mb-4 border-b border-gray-200">
+                                    <nav class="flex -mb-px" id="page-lang-tabs">
+                                        <button type="button" data-lang="cz" class="tab-button active" style="padding-right: 8px;">Čeština</button>
+                                        <button type="button" data-lang="en" class="tab-button" style="padding-right: 8px;">Angličtina</button>
+                                        <button type="button" data-lang="de" class="tab-button">Němčina</button>
+                                    </nav>
+                                </div>
+                                <div id="page-lang-cz" class="lang-tab-content active space-y-6">
+                                    <div>
+                                        <label for="page-title-cz" class="block text-gray-700 font-bold mb-2">Název stránky (CZ)</label>
+                                        <input type="text" id="page-title-cz" class="input-field" required>
+                                    </div>
+                                    <div>
+                                        <label for="page-content-cz" class="block text-gray-700 font-bold mb-2">Obsah stránky (CZ)</label>
+                                        <textarea id="page-content-cz" class="tinymce-editor"></textarea>
+                                    </div>
+                                </div>
+                                <div id="page-lang-en" class="lang-tab-content space-y-6">
+                                    <div>
+                                        <label for="page-title-en" class="block text-gray-700 font-bold mb-2">Název stránky (EN)</label>
+                                        <input type="text" id="page-title-en" class="input-field">
+                                    </div>
+                                    <div>
+                                        <label for="page-content-en" class="block text-gray-700 font-bold mb-2">Obsah stránky (EN)</label>
+                                        <textarea id="page-content-en" class="tinymce-editor"></textarea>
+                                    </div>
+                                </div>
+                                <div id="page-lang-de" class="lang-tab-content space-y-6">
+                                    <div>
+                                        <label for="page-title-de" class="block text-gray-700 font-bold mb-2">Název stránky (DE)</label>
+                                        <input type="text" id="page-title-de" class="input-field">
+                                    </div>
+                                    <div>
+                                        <label for="page-content-de" class="block text-gray-700 font-bold mb-2">Obsah stránky (DE)</label>
+                                        <textarea id="page-content-de" class="tinymce-editor"></textarea>
+                                    </div>
+                                </div>
+                                <div class="mt-8 flex flex-col sm:flex-row justify-end gap-4">
+                                    <button type="button" id="cancel-page-form-btn" class="btn btn-secondary">Zrušit</button>
+                                    <button type="submit" class="btn btn-primary">Uložit stránku</button>
+                                </div>
                             </form>
                         </div>
                     </div>
+                    
                     <div id="tag-management-view" class="hidden">
-                         <h2 class="text-2xl font-semibold mb-4">SEO Tagy</h2>
-                         <div id="tags-list" class="mb-4"></div>
-                         <form id="form-tags" class="flex gap-2"><input id="new-tag-input" class="input-field"><button type="submit" id="add-tag-btn" class="btn btn-primary">Přidat</button><button type="button" id="cancel-edit-tag-btn" class="btn btn-secondary hidden">Zrušit</button></form>
-                    </div>
-                    <div id="settings-view" class="hidden">
-                         <h2 class="text-2xl font-semibold mb-4">Nastavení</h2>
-                         <div class="mb-4 border-b border-gray-200">
-                            <nav class="flex -mb-px" id="settings-tabs">
-                                <button type="button" data-country="bulharsko" class="tab-button active">Bulharsko</button>
-                                <button type="button" data-country="spanelsko" class="tab-button">Španělsko</button>
-                            </nav>
+                        <header class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+                            <h2 class="text-2xl sm:text-3xl font-semibold text-gray-700">Správa SEO tagů</h2>
+                        </header>
+                        <div class="bg-white p-6 rounded-lg shadow-lg">
+                            <h3 class="text-xl font-bold mb-4">Seznam tagů</h3>
+                            <div id="tags-list" class="mb-4"></div>
+                            <form id="form-tags" class="flex gap-2 items-start">
+                                <div class="flex-grow">
+                                    <input type="text" id="new-tag-input" placeholder="Přidat nebo upravit tag" class="input-field">
+                                </div>
+                                <button id="add-tag-btn" type="submit" class="btn btn-primary whitespace-nowrap">Přidat</button>
+                                <button id="cancel-edit-tag-btn" type="button" class="btn btn-secondary whitespace-nowrap hidden">Zrušit</button>
+                            </form>
+                            <p class="text-sm text-gray-500 mt-4">Tyto tagy se automaticky přidají jako klíčová slova do hlavičky všech stránek pro zlepšení SEO.</p>
                         </div>
-                        <form id="global-settings-form" class="mb-8 p-4 bg-white shadow rounded">
-                            <h3 class="font-bold mb-2">Globální Kontakty</h3>
-                            <input id="setting-contact1-name" class="input-field mb-2" placeholder="Jméno 1">
-                            <input id="setting-contact1-phone" class="input-field mb-2" placeholder="Telefon 1">
-                             <input id="setting-contact1-phone2" class="input-field mb-2" placeholder="Telefon 2">
-                            <input id="setting-contact1-email" class="input-field mb-2" placeholder="Email 1">
-                             <input id="setting-contact2-name" class="input-field mb-2" placeholder="Jméno 2">
-                            <input id="setting-contact2-phone" class="input-field mb-2" placeholder="Telefon 1">
-                             <input id="setting-contact2-phone2" class="input-field mb-2" placeholder="Telefon 2">
-                            <input id="setting-contact2-email" class="input-field mb-2" placeholder="Email 2">
-                            <button type="submit" class="btn btn-primary">Uložit globální</button>
-                        </form>
-                        <div id="features-list" class="grid grid-cols-2 gap-2 mb-4"></div>
-                        <form id="form-features" class="p-4 bg-white shadow rounded mb-4"><input id="new-features-cz-input" class="input-field" placeholder="Vlastnost CZ"><button type="submit" class="btn btn-primary mt-2">Přidat Vlastnost</button></form>
+                    </div>
 
-                        <div id="country-specific-settings-container"></div>
+                    <div id="settings-view" class="hidden">
+                         <h2 class="text-2xl sm:text-3xl font-semibold text-gray-700 mb-6">Nastavení</h2>
+                         
+                         <div class="bg-white p-6 rounded-lg shadow-lg mb-8">
+                             <h3 class="text-xl font-bold mb-4">Globální nastavení</h3>
+                             <form id="global-settings-form">
+                                   <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                            <div>
+                                                <h4 class="text-lg font-semibold text-gray-700 mb-2">Kontakt 1</h4>
+                                                <label for="setting-contact1-name" class="block text-gray-700 font-bold mb-2">Jméno</label>
+                                                <input type="text" id="setting-contact1-name" class="input-field mb-4">
+                                                <label for="setting-contact1-phone" class="block text-gray-700 font-bold mb-2">Telefon 1</label>
+                                                <input type="text" id="setting-contact1-phone" class="input-field mb-4">
+                                                <label for="setting-contact1-phone2" class="block text-gray-700 font-bold mb-2">Telefon 2</label>
+                                                <input type="text" id="setting-contact1-phone2" class="input-field mb-4">
+                                                <label for="setting-contact1-email" class="block text-gray-700 font-bold mb-2">Email</label>
+                                                <input type="text" id="setting-contact1-email" class="input-field">
+                                            </div>
+                                             <div>
+                                                <h4 class="text-lg font-semibold text-gray-700 mb-2">Kontakt 2</h4>
+                                                <label for="setting-contact2-name" class="block text-gray-700 font-bold mb-2">Jméno</label>
+                                                <input type="text" id="setting-contact2-name" class="input-field mb-4">
+                                                <label for="setting-contact2-phone" class="block text-gray-700 font-bold mb-2">Telefon 1</label>
+                                                <input type="text" id="setting-contact2-phone" class="input-field mb-4">
+                                                <label for="setting-contact2-phone2" class="block text-gray-700 font-bold mb-2">Telefon 2</label>
+                                                <input type="text" id="setting-contact2-phone2" class="input-field mb-4">
+                                                <label for="setting-contact2-email" class="block text-gray-700 font-bold mb-2">Email</label>
+                                                <input type="text" id="setting-contact2-email" class="input-field">
+                                            </div>
+                                   </div>
+                                <div class="mt-6 flex justify-end">
+                                    <button type="submit" class="btn btn-primary">Uložit globální kontakty</button>
+                                </div>
+                             </form>
+                             <hr class="my-6">
+                             <h3 class="text-xl font-bold mb-4">Správa Vlastností (globální)</h3>
+                             <p class="text-sm text-gray-500 mb-4">Zde můžete spravovat globální vlastnosti, které se nabízejí u všech nemovitostí. Pořadí zatím nelze měnit.</p>
+                             <div id="features-list" class="mb-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2"></div>
+                             <form id="form-features" class="space-y-4 p-4 border rounded-md">
+                                   <h4 id="features-form-title" class="font-bold text-lg">Přidat novou vlastnost</h4>
+                                   <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                            <div>
+                                                <label for="new-features-cz-input" class="block text-sm font-medium text-gray-700">Název CZ</label>
+                                                <input type="text" id="new-features-cz-input" class="input-field mt-1" required>
+                                            </div>
+                                            <div>
+                                                <label for="new-features-en-input" class="block text-sm font-medium text-gray-700">Název EN</label>
+                                                <input type="text" id="new-features-en-input" class="input-field mt-1">
+                                            </div>
+                                            <div>
+                                                <label for="new-features-de-input" class="block text-sm font-medium text-gray-700">Název DE</label>
+                                                <input type="text" id="new-features-de-input" class="input-field mt-1">
+                                            </div>
+                                   </div>
+                                   <div class="flex gap-2 mt-4">
+                                        <button type="submit" class="btn btn-primary w-full md:w-auto">Přidat</button>
+                                        <button type="button" class="btn btn-secondary hidden cancel-edit-btn">Zrušit úpravu</button>
+                                   </div>
+                             </form>
+                          </div>
+
+                        <div class="mb-4 border-b border-gray-200">
+                             <nav class="flex -mb-px" id="settings-tabs">
+                                 <button type="button" data-country="bulharsko" class="tab-button active" style="padding-right: 15px;">Bulharsko</button>
+                                 <button type="button" data-country="spanelsko" class="tab-button">Španělsko</button>
+                             </nav>
+                        </div>
+
+                        <div id="country-specific-settings-container">
+                            </div>
                     </div>
 
                 </main>
@@ -609,7 +720,7 @@
             sidebar.classList.toggle('-translate-x-full');
         });
 
-        // --- AI GENERÁTOR LOGIKA (UPRAVENÁ PRO FOTKY A VYLOUČENÍ NÁZVU/POPISU) ---
+        // --- AI GENERÁTOR LOGIKA (NOVÉ s OCR a vložením obrázku) ---
         const aiModal = document.getElementById('ai-modal');
         const openAiModalBtn = document.getElementById('open-ai-modal-btn');
         const closeAiModalBtn = document.getElementById('close-ai-modal');
@@ -625,7 +736,7 @@
         openAiModalBtn.addEventListener('click', () => {
             aiModal.classList.add('active');
             aiInputText.focus();
-            // Reset
+            // Reset formuláře AI
             aiInputText.value = '';
             aiImageFile = null;
             aiImagePreview.innerHTML = '';
@@ -644,7 +755,6 @@
         });
 
         // --- LOGIKA PRO OBRÁZKY V AI MODALU ---
-        
         // Klik na drop area otevře dialog
         aiImageDropArea.addEventListener('click', (e) => {
             if(e.target !== aiImageInput) {
@@ -677,12 +787,12 @@
             aiImageFile = file;
             const reader = new FileReader();
             reader.onload = function(e) {
-                aiImagePreview.innerHTML = `<img src="${e.target.result}" alt="Preview" style="max-height: 200px; display:block; margin: 10px auto;">`;
+                aiImagePreview.innerHTML = `<img src="${e.target.result}" alt="Preview">`;
             }
             reader.readAsDataURL(file);
         }
 
-        // HLAVNÍ FUNKCE PRO ANALÝZU (TEXT + OCR)
+        // HLAVNÍ FUNKCE PRO ANALÝZU TEXTU a OCR
         aiProcessBtn.addEventListener('click', async () => {
             const rawText = aiInputText.value.trim();
             
@@ -701,7 +811,7 @@
                 if (aiImageFile) {
                     aiProcessBtn.innerHTML = '<i class="fas fa-eye mr-2"></i>Čtu text z obrázku...';
                     
-                    // Použití Tesseract.js
+                    // Použití Tesseract.js pro OCR
                     const worker = await Tesseract.createWorker('ces'); // čeština
                     const ret = await worker.recognize(aiImageFile);
                     await worker.terminate();
@@ -711,7 +821,7 @@
                 }
 
                 aiProcessBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Analyzuji data...';
-                await new Promise(resolve => setTimeout(resolve, 500)); // Krátká pauza pro UI update
+                await new Promise(resolve => setTimeout(resolve, 500)); // Krátká prodleva
                 
                 analyzeAndFillForm(textToAnalyze);
                 
@@ -728,25 +838,7 @@
         });
 
         function analyzeAndFillForm(text) {
-            // --- UPRAVENO: Název a Popis se NEVYPLŇUJÍ ---
-            /*
-            // Automaticky vygeneruje Titulek
-            const titleInput = document.getElementById('property-title-cz');
-            if (!titleInput.value) {
-                const firstSentence = text.split(/[.!?]/)[0];
-                if (firstSentence.length < 80) {
-                    titleInput.value = firstSentence;
-                } else {
-                    titleInput.value = "Nová nemovitost (automaticky)";
-                }
-            }
-            
-            // Popis
-             const formattedText = text.split('\n').map(para => `<p>${para}</p>`).join('');
-             const czEditor = tinymce.get('property-description-cz');
-             if (czEditor) czEditor.setContent(formattedText);
-            */
-            // ----------------------------------------------
+            // POZNÁMKA: Název a Popis jsou záměrně vynechány z vyplňování
 
             // 1. CENA (Hledá čísla následovaná €, eur, EUR atd.)
             const priceRegex = /(\d[\d\s.,]*)\s*(?:€|Eur|eur|EUR)/;
@@ -785,7 +877,7 @@
                     break; 
                 }
             }
-            // Fallback
+            // Fallback pokud se nenajde přesná shoda
             if (roomsSelect.value === "") {
                  if (roomsTextLower.includes("studio") || roomsTextLower.includes("garson")) {
                       for (let i=0; i<roomsSelect.options.length; i++) {
@@ -796,7 +888,7 @@
                  }
             }
 
-            // 5. LOKALITA
+            // 5. LOKALITA (Porovnává s načtenými lokalitami)
             const locationSelect = document.getElementById('property-location');
             for (let i = 0; i < locationSelect.options.length; i++) {
                 const locName = locationSelect.options[i].text;
@@ -1465,7 +1557,7 @@
             return imageUrls;
         }
 
-        // --- Page Management (Zkráceno - logika beze změn) ---
+        // --- Page Management ---
         const pagesTableBody = document.getElementById('pages-table-body');
         const pageForm = document.getElementById('page-form');
         
@@ -1482,24 +1574,35 @@
                         <tr id="page-${doc.id}">
                             <td class="table-cell font-bold">${page.title_cz}</td>
                             <td class="table-cell">/${page.slug}</td>
+                            <td class="table-cell"><span class="status-toggle ${statusClass}">${page.status || 'Neaktivní'}</span></td>
                             <td class="table-cell">
                                 <button class="edit-page-btn text-blue-600 hover:text-blue-900 mr-4" data-id="${doc.id}"><i class="fas fa-pencil-alt"></i></button>
                                 <button class="delete-page-btn text-red-600 hover:text-red-900" data-id="${doc.id}"><i class="fas fa-trash-alt"></i></button>
                             </td>
                         </tr>`;
                 });
-            } catch (error) { handleFirestoreError(error, 'Načítání stránek'); }
+            } catch (error) {
+                handleFirestoreError(error, 'Načítání stránek');
+            }
         }
 
         function resetPageForm() {
             pageForm.reset();
             document.getElementById('page-id').value = '';
-            ['cz', 'en', 'de'].forEach(lang => { setEditorContent(`page-content-${lang}`, ''); });
+            ['cz', 'en', 'de'].forEach(lang => {
+                setEditorContent(`page-content-${lang}`, '');
+            });
+            document.getElementById('page-form-title').textContent = 'Přidat novou stránku';
         }
 
-        document.getElementById('add-page-btn').addEventListener('click', () => { resetPageForm(); showView('pageForm', 'pages'); });
+        document.getElementById('add-page-btn').addEventListener('click', () => {
+            resetPageForm();
+            showView('pageForm', 'pages');
+        });
         document.getElementById('cancel-page-form-btn').addEventListener('click', () => showView('pageManagement', 'pages'));
-        document.getElementById('page-title-cz').addEventListener('input', (e) => { document.getElementById('page-slug').value = slugify(e.target.value); });
+        document.getElementById('page-title-cz').addEventListener('input', (e) => {
+            document.getElementById('page-slug').value = slugify(e.target.value);
+        });
 
         pageForm.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -1515,22 +1618,34 @@
                 content_de: getEditorContent('page-content-de'),
             };
             try {
-                if (id) { await updateDoc(doc(db, 'pages', id), pageData); } else { await addDoc(collection(db, 'pages'), pageData); }
-                showView('pageManagement', 'pages'); loadPages();
-            } catch (error) { handleFirestoreError(error, 'Ukládání stránky'); }
+                if (id) {
+                    await updateDoc(doc(db, 'pages', id), pageData);
+                } else {
+                    await addDoc(collection(db, 'pages'), pageData);
+                }
+                showView('pageManagement', 'pages');
+                loadPages();
+            } catch (error) {
+                handleFirestoreError(error, 'Ukládání stránky');
+            }
         });
 
         pagesTableBody.addEventListener('click', async (e) => {
-             const button = e.target.closest('button');
+            const button = e.target.closest('button');
             if (!button) return;
             const id = button.dataset.id;
             if (button.classList.contains('delete-page-btn')) {
                 if (confirm('Opravdu chcete smazat tuto stránku?')) {
-                    try { await deleteDoc(doc(db, 'pages', id)); loadPages(); } catch (error) { handleFirestoreError(error, 'Mazání stránky'); }
+                    try {
+                        await deleteDoc(doc(db, 'pages', id));
+                        loadPages();
+                    } catch (error) {
+                        handleFirestoreError(error, 'Mazání stránky');
+                    }
                 }
             }
             if (button.classList.contains('edit-page-btn')) {
-                 try {
+                try {
                     const docRef = doc(db, 'pages', id);
                     const docSnap = await getDoc(docRef);
                     if (docSnap.exists()) {
@@ -1545,65 +1660,124 @@
                         setEditorContent('page-content-cz', page.content_cz || '');
                         setEditorContent('page-content-en', page.content_en || '');
                         setEditorContent('page-content-de', page.content_de || '');
+                        document.getElementById('page-form-title').textContent = 'Upravit stránku';
                         showView('pageForm', 'pages');
                     }
-                } catch (error) { handleFirestoreError(error, 'Editace stránky'); }
+                } catch (error) {
+                    handleFirestoreError(error, 'Editace stránky');
+                }
             }
         });
 
-        // --- Tag Management (Zkráceno - logika beze změn) ---
+        // --- Tag Management ---
         async function loadTags() {
-             const container = document.getElementById('tags-list');
+            const container = document.getElementById('tags-list');
+            container.innerHTML = '<p>Načítání tagů...</p>';
             try {
                 const settingsDocRef = doc(db, 'settings', 'global');
                 const settingsDocSnap = await getDoc(settingsDocRef);
                 const tags = settingsDocSnap.exists() ? settingsDocSnap.data().tags || [] : [];
-                container.innerHTML = '';
-                tags.sort().forEach(tag => {
-                    container.innerHTML += `<div class="flex justify-between items-center bg-gray-100 p-2 rounded"><span class="flex-grow mr-4 break-all">${tag}</span><div><button class="edit-tag-btn text-blue-600 mr-3" data-tag="${tag}"><i class="fas fa-pencil-alt"></i></button><button class="delete-tag-btn text-red-500" data-tag="${tag}"><i class="fas fa-trash-alt"></i></button></div></div>`;
-                });
-            } catch (error) { handleFirestoreError(error, 'Načítání tagů'); }
+                renderTags(tags);
+            } catch (error) {
+                handleFirestoreError(error, 'Načítání tagů');
+            }
         }
+
+        function renderTags(tags) {
+            const container = document.getElementById('tags-list');
+            container.innerHTML = '';
+            if (tags.length === 0) {
+                container.innerHTML = '<p class="text-gray-500">Zatím nebyly přidány žádné tagy.</p>';
+                return;
+            }
+            tags.sort().forEach(tag => {
+                const tagEl = document.createElement('div');
+                tagEl.className = 'flex justify-between items-center bg-gray-100 p-2 rounded';
+                tagEl.innerHTML = `
+                    <span class="flex-grow mr-4 break-all">${tag}</span>
+                    <div class="flex-shrink-0">
+                        <button class="edit-tag-btn text-blue-600 hover:text-blue-900 mr-3" data-tag="${tag}"><i class="fas fa-pencil-alt"></i></button>
+                        <button class="delete-tag-btn text-red-500 hover:text-red-700" data-tag="${tag}"><i class="fas fa-trash-alt"></i></button>
+                    </div>
+                `;
+                container.appendChild(tagEl);
+            });
+        }
+        
+        function resetTagForm() {
+            const form = document.getElementById('form-tags');
+            const input = document.getElementById('new-tag-input');
+            const addBtn = document.getElementById('add-tag-btn');
+            const cancelBtn = document.getElementById('cancel-edit-tag-btn');
+            
+            currentEditTag = null;
+            input.value = '';
+            addBtn.textContent = 'Přidat';
+            cancelBtn.classList.add('hidden');
+        }
+
         document.getElementById('form-tags').addEventListener('submit', async (e) => {
             e.preventDefault();
-            const newTag = document.getElementById('new-tag-input').value.trim();
-            if(!newTag) return;
-             try {
-                 const settingsDocRef = doc(db, 'settings', 'global');
-                 if(currentEditTag) {
-                      const docSnap = await getDoc(settingsDocRef);
-                      let tags = docSnap.exists() ? docSnap.data().tags || [] : [];
-                      const index = tags.indexOf(currentEditTag);
-                      if(index > -1) tags[index] = newTag; else tags.push(newTag);
-                      await updateDoc(settingsDocRef, {tags});
-                 } else {
-                     await updateDoc(settingsDocRef, { tags: arrayUnion(newTag) });
-                 }
-                 document.getElementById('new-tag-input').value = '';
-                 currentEditTag = null;
-                 document.getElementById('add-tag-btn').textContent = 'Přidat';
-                 document.getElementById('cancel-edit-tag-btn').classList.add('hidden');
-                 loadTags();
-             } catch(e){ handleFirestoreError(e, 'Tagy'); }
-        });
-        document.getElementById('tags-list').addEventListener('click', async(e)=>{
-             const btn = e.target.closest('button');
-             if(!btn) return;
-             const tag = btn.dataset.tag;
-             if(btn.classList.contains('delete-tag-btn')){
-                 if(confirm('Smazat?')) { await updateDoc(doc(db,'settings','global'), {tags:arrayRemove(tag)}); loadTags(); }
-             } else if(btn.classList.contains('edit-tag-btn')){
-                 currentEditTag = tag;
-                 document.getElementById('new-tag-input').value = tag;
-                 document.getElementById('add-tag-btn').textContent = 'Uložit';
-                 document.getElementById('cancel-edit-tag-btn').classList.remove('hidden');
-             }
-        });
-        document.getElementById('cancel-edit-tag-btn').addEventListener('click', () => { currentEditTag = null; document.getElementById('new-tag-input').value=''; document.getElementById('add-tag-btn').textContent='Přidat'; document.getElementById('cancel-edit-tag-btn').classList.add('hidden');});
+            const input = document.getElementById('new-tag-input');
+            const newTag = input.value.trim();
+            if (!newTag) return;
 
+            const settingsDocRef = doc(db, 'settings', 'global');
+            try {
+                const docSnap = await getDoc(settingsDocRef);
+                let tags = docSnap.exists() ? docSnap.data().tags || [] : [];
+                
+                if (currentEditTag) { // Editing existing tag
+                    const index = tags.indexOf(currentEditTag);
+                    if (index > -1) {
+                        tags[index] = newTag;
+                    } else { // Failsafe if old tag not found
+                        tags.push(newTag);
+                    }
+                    await updateDoc(settingsDocRef, { tags });
+                } else { // Adding new tag
+                     if (tags.includes(newTag)) {
+                        alert('Tento tag již existuje.');
+                        return;
+                    }
+                    await updateDoc(settingsDocRef, { tags: arrayUnion(newTag) });
+                }
+                resetTagForm();
+                await loadTags();
+            } catch (error) {
+                handleFirestoreError(error, 'Ukládání SEO tagu');
+            }
+        });
 
-        // --- Settings Management (Zkráceno - logika beze změn) ---
+        document.getElementById('tags-list').addEventListener('click', async (e) => {
+            const button = e.target.closest('button');
+            if (!button) return;
+
+            const tag = button.dataset.tag;
+            if (button.classList.contains('delete-tag-btn')) {
+                if (confirm(`Opravdu chcete smazat tag "${tag}"?`)) {
+                    try {
+                        const settingsDocRef = doc(db, 'settings', 'global');
+                        await updateDoc(settingsDocRef, { tags: arrayRemove(tag) });
+                        await loadTags();
+                    } catch (error) {
+                        handleFirestoreError(error, 'Mazání SEO tagu');
+                    }
+                }
+            } else if (button.classList.contains('edit-tag-btn')) {
+                currentEditTag = tag;
+                document.getElementById('new-tag-input').value = tag;
+                document.getElementById('add-tag-btn').textContent = 'Uložit změny';
+                document.getElementById('cancel-edit-tag-btn').classList.remove('hidden');
+                document.getElementById('new-tag-input').focus();
+            }
+        });
+        
+        document.getElementById('cancel-edit-tag-btn').addEventListener('click', resetTagForm);
+
+        // --- Settings Management ---
         const settingsTabs = document.getElementById('settings-tabs');
+        
         settingsTabs.addEventListener('click', (e) => {
             if (e.target.tagName === 'BUTTON') {
                 currentSettingsCountry = e.target.dataset.country;
@@ -1614,87 +1788,391 @@
         });
 
         function createSettingsForm(type, title, isMultiLang) {
-            return `<div class="bg-white p-6 rounded-lg shadow-lg"><h3 class="text-xl font-bold mb-4">${title}</h3><div id="${type}-list" class="mb-4 space-y-2"></div><form id="form-${type}" class="space-y-4 p-4 border rounded-md"><h4 class="font-bold text-lg">Přidat</h4>${isMultiLang ? '<div class="grid grid-cols-3 gap-4"><input id="new-'+type+'-cz-input" class="input-field" placeholder="CZ" required><input id="new-'+type+'-en-input" class="input-field" placeholder="EN"><input id="new-'+type+'-de-input" class="input-field" placeholder="DE"></div>' : '<div><input id="new-'+type+'-cz-input" class="input-field" placeholder="Název" required></div>'}<div class="flex gap-2 mt-4"><button type="submit" class="btn btn-primary">Přidat</button><button type="button" class="btn btn-secondary hidden cancel-edit-btn">Zrušit</button></div></form></div>`;
+            const formId = `form-${type}`;
+            const inputs = isMultiLang 
+                ? `
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                            <label for="new-${type}-cz-input" class="block text-sm font-medium text-gray-700">Název CZ</label>
+                            <input type="text" id="new-${type}-cz-input" class="input-field mt-1" required>
+                        </div>
+                        <div>
+                            <label for="new-${type}-en-input" class="block text-sm font-medium text-gray-700">Název EN</label>
+                            <input type="text" id="new-${type}-en-input" class="input-field mt-1">
+                        </div>
+                        <div>
+                            <label for="new-${type}-de-input" class="block text-sm font-medium text-gray-700">Název DE</label>
+                            <input type="text" id="new-${type}-de-input" class="input-field mt-1">
+                        </div>
+                    </div>`
+                : `
+                    <div>
+                        <label for="new-${type}-cz-input" class="block text-sm font-medium text-gray-700">Název</label>
+                        <input type="text" id="new-${type}-cz-input" class="input-field mt-1" required>
+                    </div>`;
+
+            return `
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <h3 class="text-xl font-bold mb-4">${title}</h3>
+                    <div id="${type}-list" class="mb-4 space-y-2"></div>
+                    <form id="${formId}" class="space-y-4 p-4 border rounded-md">
+                        <h4 id="${type}-form-title" class="font-bold text-lg">Přidat novou položku</h4>
+                        ${inputs}
+                        <div class="flex gap-2 mt-4">
+                            <button type="submit" class="btn btn-primary w-full md:w-auto">Přidat</button>
+                            <button type="button" class="btn btn-secondary hidden cancel-edit-btn">Zrušit úpravu</button>
+                        </div>
+                    </form>
+                </div>`;
+        }
+        
+        function renderCountrySettingsHTML(country) {
+            const countryCapitalized = country.charAt(0).toUpperCase() + country.slice(1);
+            
+            let extraMenuHTML = '';
+            if (country === 'bulharsko') { 
+                extraMenuHTML = `
+                    <div>
+                        <h4 class="font-bold mb-2">Menu "O Bulharsku"</h4>
+                        <div id="bulgaria-menu-list-bulharsko" class="mb-4 space-y-2"></div>
+                        <div class="flex gap-2">
+                            <input type="text" id="new-bulgaria-menu-title-bulharsko" placeholder="Název položky" class="input-field">
+                            <select id="new-bulgaria-menu-link-bulharsko" class="input-field"></select>
+                            <button data-menu-type="bulgaria" class="add-menu-item-btn btn btn-primary whitespace-nowrap">Přidat</button>
+                        </div>
+                    </div>`;
+            } else if (country === 'spanelsko') {
+                extraMenuHTML = `
+                    <div>
+                        <h4 class="font-bold mb-2">Menu "O Španělsku"</h4>
+                        <div id="spain-menu-list-spanelsko" class="mb-4 space-y-2"></div>
+                        <div class="flex gap-2">
+                            <input type="text" id="new-spain-menu-title-spanelsko" placeholder="Název položky" class="input-field">
+                            <select id="new-spain-menu-link-spanelsko" class="input-field"></select>
+                            <button data-menu-type="spain" class="add-menu-item-btn btn btn-primary whitespace-nowrap">Přidat</button>
+                        </div>
+                    </div>`;
+            }
+
+            return `
+                <div class="bg-white p-6 rounded-lg shadow-lg mb-8">
+                    <h3 class="text-xl font-bold mb-4">Nastavení pro ${countryCapitalized}</h3>
+                    <form id="${country}-settings-form">
+                        <div class="mb-4">
+                            <label for="setting-logo-text-${country}" class="block text-gray-700 font-bold mb-2">Text loga</label>
+                            <input type="text" id="setting-logo-text-${country}" class="input-field">
+                        </div>
+                        <div class="mt-6 flex justify-end">
+                            <button type="submit" class="btn btn-primary">Uložit nastavení pro ${countryCapitalized}</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg mb-8">
+                    <h3 class="text-xl font-bold mb-4">Správa menu pro ${countryCapitalized}</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <div>
+                            <h4 class="font-bold mb-2">Menu "Informace"</h4>
+                            <div id="info-menu-list-${country}" class="mb-4 space-y-2"></div>
+                            <div class="flex gap-2">
+                                <input type="text" id="new-info-menu-title-${country}" placeholder="Název položky" class="input-field">
+                                <select id="new-info-menu-link-${country}" class="input-field"></select>
+                                <button data-menu-type="info" class="add-menu-item-btn btn btn-primary whitespace-nowrap">Přidat</button>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="font-bold mb-2">Menu "Naše služby"</h4>
+                            <div id="services-menu-list-${country}" class="mb-4 space-y-2"></div>
+                            <div class="flex gap-2">
+                                <input type="text" id="new-services-menu-title-${country}" placeholder="Název položky" class="input-field">
+                                <select id="new-services-menu-link-${country}" class="input-field"></select>
+                                <button data-menu-type="services" class="add-menu-item-btn btn btn-primary whitespace-nowrap">Přidat</button>
+                            </div>
+                        </div>
+                        ${extraMenuHTML}
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    ${createSettingsForm('locations', 'Správa Lokalit', false)}
+                    ${createSettingsForm('types', 'Správa Druhů Nemovitostí', true)}
+                    ${createSettingsForm('rooms', 'Správa Dispozic', true)}
+                </div>
+            `;
         }
         
         async function loadAndRenderCountrySettings() {
-             const container = document.getElementById('country-specific-settings-container');
-             const country = currentSettingsCountry;
-             const settingsDocRef = doc(db, 'settings', country);
-             const settingsDocSnap = await getDoc(settingsDocRef);
-             const settings = settingsDocSnap.exists() ? settingsDocSnap.data() : {};
-             
-             container.innerHTML = `
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">${createSettingsForm('locations', 'Lokality', false)}${createSettingsForm('types', 'Druhy', true)}${createSettingsForm('rooms', 'Dispozice', true)}</div>
-             `;
-             
-             renderList('locations', settings.locations || [], 'form-locations');
-             renderList('types', settings.types || [], 'form-types');
-             renderList('rooms', settings.rooms || [], 'form-rooms');
-             
-             // Event listener pro odeslání těchto formulářů (jednotná logika)
-             document.querySelectorAll('#form-locations, #form-types, #form-rooms').forEach(form => {
-                 form.addEventListener('submit', handleSettingsFormSubmit);
-             });
-             // Event listeners pro edit/delete
-             document.querySelectorAll('#locations-list, #types-list, #rooms-list').forEach(list => {
-                 list.addEventListener('click', handleSettingsItemClick);
-             });
+            const container = document.getElementById('country-specific-settings-container');
+            const country = currentSettingsCountry;
+            try {
+                const settingsDocRef = doc(db, 'settings', country);
+                const settingsDocSnap = await getDoc(settingsDocRef);
+                const settings = settingsDocSnap.exists() ? settingsDocSnap.data() : {};
+                
+                container.innerHTML = renderCountrySettingsHTML(country);
+                
+                document.getElementById(`setting-logo-text-${country}`).value = settings.logoText || '';
+                
+                const pagesSnapshot = await getDocs(collection(db, 'pages'));
+                const menuSelects = [
+                    document.getElementById(`new-info-menu-link-${country}`),
+                    document.getElementById(`new-services-menu-link-${country}`),
+                    document.getElementById(`new-bulgaria-menu-link-${country}`),
+                    document.getElementById(`new-spain-menu-link-${country}`)
+                ].filter(Boolean);
+
+                menuSelects.forEach(select => select.innerHTML = '<option value="">-- Vyberte stránku --</option>');
+                
+                pagesSnapshot.forEach(doc => {
+                    const page = doc.data();
+                    const option = new Option(`${page.title_cz} (${page.status === 'Aktivní' ? '✓' : '✗'})`, page.slug);
+                    if (page.status !== 'Aktivní') {
+                        option.disabled = true;
+                        option.style.color = '#ccc';
+                    }
+                    menuSelects.forEach(select => select.add(option.cloneNode(true)));
+                });
+                
+                renderMenuItems('info', settings.infoMenu || []);
+                renderMenuItems('services', settings.servicesMenu || []);
+                if (country === 'bulharsko') renderMenuItems('bulgaria', settings.bulgariaMenu || []);
+                if (country === 'spanelsko') renderMenuItems('spain', settings.spainMenu || []);
+                
+                renderList('locations', settings.locations || [], 'form-locations');
+                renderList('types', settings.types || [], 'form-types');
+                renderList('rooms', settings.rooms || [], 'form-rooms');
+
+                // Attach listeners for dynamically created forms
+                document.querySelectorAll('#form-locations, #form-types, #form-rooms').forEach(form => {
+                    form.addEventListener('submit', handleSettingsFormSubmit);
+                });
+                document.querySelectorAll('#locations-list, #types-list, #rooms-list').forEach(list => {
+                    list.addEventListener('click', handleSettingsItemClick);
+                });
+
+            } catch (error) {
+                handleFirestoreError(error, `Načítání nastavení pro ${country}`);
+            }
         }
-        
+
         async function loadGlobalSettings() {
-             const docRef = doc(db, 'settings', 'global');
-             const docSnap = await getDoc(docRef);
-             if(docSnap.exists()){
-                 const data = docSnap.data();
-                 ['contact1_name','contact1_phone','contact1_phone2','contact1_email','contact2_name','contact2_phone','contact2_phone2','contact2_email'].forEach(f => document.getElementById('setting-'+f.replace('_','-')).value = data[f] || '');
-                 renderList('features', data.features || [], 'form-features');
-             }
+            try {
+                const docRef = doc(db, 'settings', 'global');
+                const docSnap = await getDoc(docRef);
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    document.getElementById('setting-contact1-name').value = data.contact1_name || '';
+                    document.getElementById('setting-contact1-phone').value = data.contact1_phone || '';
+                    document.getElementById('setting-contact1-phone2').value = data.contact1_phone2 || '';
+                    document.getElementById('setting-contact1-email').value = data.contact1_email || '';
+                    document.getElementById('setting-contact2-name').value = data.contact2_name || '';
+                    document.getElementById('setting-contact2-phone').value = data.contact2_phone || '';
+                    document.getElementById('setting-contact2-phone2').value = data.contact2_phone2 || '';
+                    document.getElementById('setting-contact2-email').value = data.contact2_email || '';
+                    renderList('features', data.features || [], 'form-features');
+                }
+            } catch (error) {
+                handleFirestoreError(error, 'Načítání globálních nastavení');
+            }
         }
-        document.getElementById('global-settings-form').addEventListener('submit', async(e)=>{
-             e.preventDefault();
-             const data = {};
-             ['contact1_name','contact1_phone','contact1_phone2','contact1_email','contact2_name','contact2_phone','contact2_phone2','contact2_email'].forEach(f => data[f] = document.getElementById('setting-'+f.replace('_','-')).value);
-             await setDoc(doc(db,'settings','global'), data, {merge:true});
-             alert('Uloženo');
+
+        document.getElementById('global-settings-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const button = e.target.querySelector('button[type="submit"]');
+            button.disabled = true;
+            button.textContent = 'Ukládám...';
+            try {
+                const data = {
+                    contact1_name: document.getElementById('setting-contact1-name').value,
+                    contact1_phone: document.getElementById('setting-contact1-phone').value,
+                    contact1_phone2: document.getElementById('setting-contact1-phone2').value,
+                    contact1_email: document.getElementById('setting-contact1-email').value,
+                    contact2_name: document.getElementById('setting-contact2-name').value,
+                    contact2_phone: document.getElementById('setting-contact2-phone').value,
+                    contact2_phone2: document.getElementById('setting-contact2-phone2').value,
+                    contact2_email: document.getElementById('setting-contact2-email').value,
+                };
+                await setDoc(doc(db, 'settings', 'global'), data, { merge: true });
+                alert('Globální kontakty byly uloženy.');
+            } catch (error) {
+                handleFirestoreError(error, 'Ukládání globálních kontaktů');
+            } finally {
+                button.disabled = false;
+                button.textContent = 'Uložit globální kontakty';
+            }
         });
         
-        // --- Obecná logika pro nastavení (lokality, typy...) ---
+        function resetForm(formId) {
+            const form = document.getElementById(formId);
+            if (!form) return;
+            form.reset();
+            const title = form.querySelector('h4');
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const cancelBtn = form.querySelector('.cancel-edit-btn');
+
+            if (title) title.textContent = 'Přidat novou položku';
+            if (submitBtn) {
+                submitBtn.textContent = 'Přidat';
+            }
+            if (cancelBtn) cancelBtn.classList.add('hidden');
+            currentEditItem = { type: null, key: null };
+        }
+
         async function handleSettingsFormSubmit(e) {
             e.preventDefault();
             const form = e.target;
             const type = form.id.split('-')[1];
             const isGlobal = type === 'features';
             const docId = isGlobal ? 'global' : currentSettingsCountry;
-            
+            const arrayName = type;
+
             const czInput = form.querySelector(`#new-${type}-cz-input`);
             const enInput = form.querySelector(`#new-${type}-en-input`);
             const deInput = form.querySelector(`#new-${type}-de-input`);
+
             const name_cz = czInput.value.trim();
-            if(!name_cz) return;
-            
-            const key = currentEditItem.key || slugify(name_cz);
-            let newItem = enInput ? { key, name_cz, name_en: enInput.value, name_de: deInput.value } : name_cz;
-            
-            const docRef = doc(db, 'settings', docId);
-            const docSnap = await getDoc(docRef);
-            let items = (docSnap.exists() && docSnap.data()[type]) ? docSnap.data()[type] : [];
-            
-            if(currentEditItem.key) {
-                 const idx = items.findIndex(i => (typeof i==='object'?i.key:slugify(i)) === currentEditItem.key);
-                 if(idx > -1) items[idx] = newItem; else items.push(newItem);
-            } else {
-                 items.push(newItem);
+            if (!name_cz) {
+                alert('Český název je povinný.');
+                return;
             }
-            await setDoc(docRef, { [type]: items }, {merge:true});
-            form.reset();
-            currentEditItem = {type:null, key:null};
-            form.querySelector('.cancel-edit-btn').classList.add('hidden');
-            form.querySelector('button[type="submit"]').textContent = 'Přidat';
-            isGlobal ? loadGlobalSettings() : loadAndRenderCountrySettings();
+
+            const key = currentEditItem.key || slugify(name_cz);
+            let newItemData;
+            if (enInput) { // Multilang object
+                newItemData = { key, name_cz, name_en: enInput.value.trim(), name_de: deInput.value.trim() };
+            } else { // Simple string (for locations)
+                newItemData = name_cz;
+            }
+            
+            const submitButton = form.querySelector('button[type="submit"]');
+            submitButton.disabled = true;
+
+            try {
+                const settingsDocRef = doc(db, 'settings', docId);
+                const docSnap = await getDoc(settingsDocRef);
+                let items = (docSnap.exists() && docSnap.data()[arrayName]) ? docSnap.data()[arrayName] : [];
+
+                if (currentEditItem.key) { // UPDATE
+                    submitButton.textContent = 'Ukládám...';
+                    const itemIndex = items.findIndex(item => (typeof item === 'object' ? item.key : slugify(item)) === currentEditItem.key);
+                    if (itemIndex > -1) {
+                        items[itemIndex] = newItemData;
+                    } else { // Failsafe if not found, add it
+                        items.push(newItemData);
+                    }
+                } else { // ADD
+                    submitButton.textContent = 'Přidávám...';
+                    const itemExists = items.some(item => (typeof item === 'object' ? item.key : slugify(item)) === key);
+                    if (itemExists) {
+                        alert('Položka s tímto názvem již existuje. Zvolte jiný název.');
+                        submitButton.disabled = false;
+                        submitButton.textContent = 'Přidat';
+                        return;
+                    }
+                    items.push(newItemData);
+                }
+                
+                await setDoc(settingsDocRef, { [arrayName]: items }, { merge: true });
+                resetForm(form.id);
+                isGlobal ? await loadGlobalSettings() : await loadAndRenderCountrySettings();
+
+            } catch (error) {
+                handleFirestoreError(error, currentEditItem.key ? 'Úprava položky' : 'Přidání položky');
+            } finally {
+                submitButton.disabled = false;
+            }
         }
+
+        document.getElementById('settings-view').addEventListener('click', async (e) => {
+            const button = e.target.closest('button');
+            if (!button) return;
+
+            // --- General Edit/Delete Handlers ---
+            if (button.classList.contains('edit-setting-item-btn')) {
+                // This needs to be delegated here because these buttons are created dynamically
+                await handleSettingsItemClick(e);
+                return;
+            }
+            if (button.classList.contains('delete-setting-item-btn')) {
+                await handleSettingsItemClick(e);
+                return;
+            }
+
+            if(button.classList.contains('cancel-edit-btn')) {
+                resetForm(button.closest('form').id);
+                return;
+            }
+            
+            // --- Menu Specific Handlers ---
+            if (button.closest('form')?.id === `${currentSettingsCountry}-settings-form`) {
+                e.preventDefault();
+                button.disabled = true;
+                button.textContent = 'Ukládám...';
+                try {
+                    const data = {
+                        logoText: document.getElementById(`setting-logo-text-${currentSettingsCountry}`).value,
+                    };
+                    await setDoc(doc(db, 'settings', currentSettingsCountry), data, { merge: true });
+                    alert(`Nastavení pro ${currentSettingsCountry} bylo uloženo.`);
+                } catch (error) {
+                    handleFirestoreError(error, `Ukládání nastavení pro ${currentSettingsCountry}`);
+                } finally {
+                    button.disabled = false;
+                    button.textContent = `Uložit nastavení pro ${currentSettingsCountry}`;
+                }
+                return;
+            }
+            
+            if (button.classList.contains('add-menu-item-btn')) {
+                e.preventDefault();
+                const menuType = button.dataset.menuType;
+                const titleInput = document.getElementById(`new-${menuType}-menu-title-${currentSettingsCountry}`);
+                const linkSelect = document.getElementById(`new-${menuType}-menu-link-${currentSettingsCountry}`);
+                const title = titleInput.value.trim();
+                const slug = linkSelect.value;
+                
+                if (!title || !slug) {
+                    alert('Prosím vyplňte název i odkaz.');
+                    return;
+                }
+                
+                const value = { title, slug };
+                const arrayName = `${menuType}Menu`;
+                
+                try {
+                    await setDoc(doc(db, 'settings', currentSettingsCountry), {
+                        [arrayName]: arrayUnion(value)
+                    }, { merge: true });
+                    titleInput.value = '';
+                    linkSelect.value = '';
+                    await loadAndRenderCountrySettings();
+                } catch (error) {
+                    handleFirestoreError(error, `Přidání položky do menu ${menuType}`);
+                }
+                return;
+            }
+
+            if (button.classList.contains('delete-menu-item-btn')) {
+                e.preventDefault();
+                const menuType = button.dataset.menuType;
+                const title = button.dataset.title;
+                const slug = button.dataset.slug;
+                const itemToRemove = { title, slug };
+                const arrayName = `${menuType}Menu`;
+
+                if (confirm(`Opravdu chcete smazat položku menu "${title}"?`)) {
+                    try {
+                        await updateDoc(doc(db, 'settings', currentSettingsCountry), {
+                            [arrayName]: arrayRemove(itemToRemove)
+                        });
+                        await loadAndRenderCountrySettings();
+                    } catch (error) {
+                        handleFirestoreError(error, `Mazání položky z menu ${menuType}`);
+                    }
+                }
+                return;
+            }
+        });
         
-        // Handler pro features (global)
+        // Separate handlers for features because they are static in DOM
         document.getElementById('form-features').addEventListener('submit', handleSettingsFormSubmit);
         document.getElementById('features-list').addEventListener('click', handleSettingsItemClick);
 
@@ -1708,43 +2186,63 @@
              const docRef = doc(db, 'settings', docId);
 
              if(btn.classList.contains('delete-setting-item-btn')) {
-                 if(confirm('Smazat?')) {
-                     const snap = await getDoc(docRef);
-                     let items = snap.data()[type] || [];
-                     const itemToRemove = items.find(i => (typeof i==='object'?i.key:slugify(i)) === key);
-                     if(itemToRemove) {
-                         await updateDoc(docRef, {[type]: arrayRemove(itemToRemove)});
-                         isGlobal ? loadGlobalSettings() : loadAndRenderCountrySettings();
+                 e.preventDefault();
+                 if(confirm('Opravdu chcete smazat tuto položku?')) {
+                     try {
+                         const snap = await getDoc(docRef);
+                         if (!snap.exists()) return;
+                         
+                         const data = snap.data();
+                         let items = data[type] || [];
+                         const itemToRemove = items.find(i => (typeof i==='object'?i.key:slugify(i)) === key);
+                         
+                         if(itemToRemove) {
+                             await updateDoc(docRef, {[type]: arrayRemove(itemToRemove)});
+                             isGlobal ? await loadGlobalSettings() : await loadAndRenderCountrySettings();
+                         }
+                     } catch (error) {
+                         handleFirestoreError(error, 'Mazání položky');
                      }
                  }
              } else if(btn.classList.contains('edit-setting-item-btn')) {
+                 e.preventDefault();
                  const formId = btn.dataset.formId;
                  const form = document.getElementById(formId);
-                 const snap = await getDoc(docRef);
-                 let items = snap.data()[type] || [];
-                 const item = items.find(i => (typeof i==='object'?i.key:slugify(i)) === key);
-                 if(item) {
-                     currentEditItem = {type, key};
-                     form.querySelector(`#new-${type}-cz-input`).value = typeof item==='object' ? item.name_cz : item;
-                     if(typeof item==='object') {
-                         form.querySelector(`#new-${type}-en-input`).value = item.name_en||'';
-                         form.querySelector(`#new-${type}-de-input`).value = item.name_de||'';
+                 
+                 // Scroll to form
+                 form.scrollIntoView({ behavior: 'smooth' });
+
+                 try {
+                     const snap = await getDoc(docRef);
+                     if (!snap.exists()) return;
+                     
+                     let items = snap.data()[type] || [];
+                     const item = items.find(i => (typeof i==='object'?i.key:slugify(i)) === key);
+                     
+                     if(item) {
+                         currentEditItem = {type, key};
+                         form.querySelector(`#new-${type}-cz-input`).value = typeof item==='object' ? item.name_cz : item;
+                         
+                         const enInput = form.querySelector(`#new-${type}-en-input`);
+                         if(enInput && typeof item==='object') enInput.value = item.name_en||'';
+                         
+                         const deInput = form.querySelector(`#new-${type}-de-input`);
+                         if(deInput && typeof item==='object') deInput.value = item.name_de||'';
+                         
+                         const title = form.querySelector('h4');
+                         if (title) title.textContent = 'Upravit položku';
+                         
+                         const submitBtn = form.querySelector('button[type="submit"]');
+                         if(submitBtn) submitBtn.textContent = 'Uložit změny';
+                         
+                         const cancelBtn = form.querySelector('.cancel-edit-btn');
+                         if(cancelBtn) cancelBtn.classList.remove('hidden');
                      }
-                     form.querySelector('button[type="submit"]').textContent = 'Uložit';
-                     form.querySelector('.cancel-edit-btn').classList.remove('hidden');
+                 } catch (error) {
+                     handleFirestoreError(error, 'Načítání položky pro úpravu');
                  }
              }
         }
-        // Cancel tlačítka v settings
-        document.addEventListener('click', (e)=>{
-             if(e.target.classList.contains('cancel-edit-btn')) {
-                 const form = e.target.closest('form');
-                 form.reset();
-                 currentEditItem = {type:null,key:null};
-                 e.target.classList.add('hidden');
-                 form.querySelector('button[type="submit"]').textContent = 'Přidat';
-             }
-        });
 
         function setupTabSwitching(tabsId, contentClass) {
             const tabsContainer = document.getElementById(tabsId);
