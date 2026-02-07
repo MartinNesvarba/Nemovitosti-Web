@@ -7,14 +7,11 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
-    <!-- Editor textu -->
     <script src="https://cdn.tiny.cloud/1/t62v88urbx396otieiqu7apcy81f9ulf00f3eb24ym4s0x2c/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
     
-    <!-- Knihovny pro ZIP a stahování -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 
-    <!-- Tesseract.js pro čtení textu z obrázků (OCR) -->
     <script src='https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js'></script>
 
     <style>
@@ -237,7 +234,6 @@
                 <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 p-4 sm:p-6">
                     <div id="firestore-error" class="error-message hidden mb-6"></div>
 
-                    <!-- Notifikace o stahování -->
                     <div id="download-notification" class="hidden fixed bottom-5 right-5 bg-blue-600 text-white px-6 py-4 rounded-lg shadow-xl z-50">
                         <div class="flex items-center">
                             <i class="fas fa-spinner fa-spin mr-3"></i>
@@ -248,7 +244,6 @@
                         </div>
                     </div>
 
-                    <!-- AI MODAL WINDOW (UPRAVENO PRO FOTO) -->
                     <div id="ai-modal" class="ai-modal-overlay">
                         <div class="ai-modal-content">
                             <div class="flex justify-between items-center mb-4">
@@ -263,7 +258,6 @@
                                 Vložte text inzerátu nebo nahrajte/vložte (CTRL+V) obrázek inzerátu. Systém rozpozná cenu, plochu a lokalitu. <strong>Název a Popis nebudou vyplněny.</strong>
                             </p>
                             
-                            <!-- Oblast pro vložení/nahrání obrázku -->
                             <div class="ai-image-area" id="ai-image-drop-area">
                                 <p class="text-sm text-gray-500 font-medium"><i class="fas fa-camera mr-2"></i>Klikněte pro nahrání obrázku nebo sem vložte screenshot (CTRL+V)</p>
                                 <input type="file" id="ai-image-input" accept="image/*" class="hidden">
@@ -278,8 +272,6 @@
                             </div>
                         </div>
                     </div>
-                    <!-- END AI MODAL -->
-
                     <div id="property-list-view">
                         <header class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
                             <h2 class="text-2xl sm:text-3xl font-semibold text-gray-700">Správa nemovitostí</h2>
@@ -293,6 +285,44 @@
                             </nav>
                         </div>
                         
+                        <div class="bg-white p-4 rounded-lg shadow-sm mb-4 border border-gray-200">
+                            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+                                
+                                <div>
+                                    <label for="filter-offer-id" class="block text-gray-700 text-sm font-bold mb-1">
+                                        <i class="fas fa-hashtag mr-1"></i>Číslo nabídky
+                                    </label>
+                                    <input type="text" id="filter-offer-id" class="input-field text-sm" placeholder="Např. 2398">
+                                </div>
+
+                                <div>
+                                    <label for="filter-date" class="block text-gray-700 text-sm font-bold mb-1">
+                                        <i class="fas fa-calendar-alt mr-1"></i>Datum vydání
+                                    </label>
+                                    <input type="date" id="filter-date" class="input-field text-sm">
+                                </div>
+
+                                <div>
+                                    <label for="sort-order" class="block text-gray-700 text-sm font-bold mb-1">
+                                        <i class="fas fa-sort mr-1"></i>Seřadit podle
+                                    </label>
+                                    <select id="sort-order" class="input-field text-sm">
+                                        <option value="date_desc">Datum vydání (Nejnovější)</option>
+                                        <option value="date_asc">Datum vydání (Nejstarší)</option>
+                                        <option value="id_desc">Číslo nabídky (Nejvyšší)</option>
+                                        <option value="id_asc">Číslo nabídky (Nejnižší)</option>
+                                        <option value="price_asc">Ceny (Nejnižší)</option>
+                                        <option value="price_desc">Ceny (Nejvyšší)</option>
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <button id="reset-filters-btn" class="btn btn-secondary w-full text-sm h-[38px] flex items-center justify-center">
+                                        <i class="fas fa-sync-alt mr-2"></i>Resetovat filtry
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                         <div class="bg-white shadow-md rounded overflow-x-auto">
                             <table class="min-w-full leading-normal">
                                 <thead>
@@ -316,7 +346,6 @@
                         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
                             <h2 id="form-title" class="text-3xl font-semibold text-gray-700">Přidat novou nemovitost</h2>
                             
-                            <!-- TLAČÍTKO AI GENERÁTOR -->
                             <button type="button" id="open-ai-modal-btn" class="btn btn-ai">
                                 <i class="fas fa-sparkles mr-2"></i>AI Generátor
                             </button>
@@ -425,11 +454,9 @@
                                     <div id="features-container" class="feature-grid pt-4"></div>
                                 </div>
                                 
-                                <!-- DRAG AND DROP SEKCE PRO FOTOGRAFIE -->
                                 <div class="mt-6">
                                     <label class="block text-gray-700 font-bold mb-2">Fotografie</label>
                                     
-                                    <!-- Drop Zóna -->
                                     <div id="drop-zone" class="drop-zone-container">
                                         <div class="upload-controls">
                                             <button type="button" class="btn-upload" id="btn-browse-images">Zvolit soubory</button>
@@ -437,14 +464,11 @@
                                         </div>
                                         <span class="drag-hint">Tip: Soubory můžete do tohoto rámečku přímo přetáhnout myší.</span>
                                         
-                                        <!-- Skrytý input -->
                                         <input type="file" id="image-upload" multiple accept="image/*" class="hidden">
                                     </div>
 
-                                    <!-- Kontejner pro náhledy obrázků -->
                                     <div id="image-preview-container" class="image-preview-container"></div>
                                     
-                                    <!-- Progress bar pro nahrávání -->
                                     <div id="upload-progress" class="hidden mt-4">
                                         <p id="upload-status" class="font-semibold">Nahrávám obrázky...</p>
                                         <div class="w-full bg-gray-200 rounded-full h-2.5 mt-2">
@@ -654,7 +678,7 @@
             apiKey: "AIzaSyAi_ugQSDUjk4y8ne4zpAyTbzNrf96SWDc",
             authDomain: "login-40bf8.firebaseapp.com",
             projectId: "login-40bf8",
-            storageBucket: "gs://login-40bf8.firebasestorage.app", // Corrected storage bucket URL
+            storageBucket: "gs://login-40bf8.firebasestorage.app", 
             messagingSenderId: "932200625165",
             appId: "1:932200625165:web:422564c4f9c3f9fbead144"
         };
@@ -686,7 +710,10 @@
         let currentSettingsCountry = 'bulharsko';
         let currentPropertyListCountry = 'bulharsko';
         let currentEditItem = { type: null, key: null };
-        let currentEditTag = null; // For editing SEO tags
+        let currentEditTag = null; 
+        
+        // NOVÁ PROMĚNNÁ PRO FILTROVÁNÍ
+        let allFetchedProperties = []; 
 
         // --- UI Element Selectors ---
         const loginScreen = document.getElementById('login-screen');
@@ -720,14 +747,13 @@
             sidebar.classList.toggle('-translate-x-full');
         });
 
-        // --- AI GENERÁTOR LOGIKA (NOVÉ s OCR a vložením obrázku) ---
+        // --- AI GENERÁTOR LOGIKA ---
         const aiModal = document.getElementById('ai-modal');
         const openAiModalBtn = document.getElementById('open-ai-modal-btn');
         const closeAiModalBtn = document.getElementById('close-ai-modal');
         const aiProcessBtn = document.getElementById('ai-process-btn');
         const aiInputText = document.getElementById('ai-input-text');
         
-        // Nové prvky pro obrázek v AI modalu
         const aiImageInput = document.getElementById('ai-image-input');
         const aiImageDropArea = document.getElementById('ai-image-drop-area');
         const aiImagePreview = document.getElementById('ai-image-preview');
@@ -736,7 +762,6 @@
         openAiModalBtn.addEventListener('click', () => {
             aiModal.classList.add('active');
             aiInputText.focus();
-            // Reset formuláře AI
             aiInputText.value = '';
             aiImageFile = null;
             aiImagePreview.innerHTML = '';
@@ -747,29 +772,24 @@
             aiModal.classList.remove('active');
         });
 
-        // Zavření modalu kliknutím mimo obsah
         aiModal.addEventListener('click', (e) => {
             if (e.target === aiModal) {
                 aiModal.classList.remove('active');
             }
         });
 
-        // --- LOGIKA PRO OBRÁZKY V AI MODALU ---
-        // Klik na drop area otevře dialog
         aiImageDropArea.addEventListener('click', (e) => {
             if(e.target !== aiImageInput) {
                 aiImageInput.click();
             }
         });
 
-        // Změna inputu (výběr souboru)
         aiImageInput.addEventListener('change', (e) => {
             if (e.target.files && e.target.files[0]) {
                 handleAiImage(e.target.files[0]);
             }
         });
 
-        // PASTE (Vložení) obrázku ze schránky (CTRL+V)
         window.addEventListener('paste', (e) => {
             if (!aiModal.classList.contains('active')) return;
 
@@ -792,7 +812,6 @@
             reader.readAsDataURL(file);
         }
 
-        // HLAVNÍ FUNKCE PRO ANALÝZU TEXTU a OCR
         aiProcessBtn.addEventListener('click', async () => {
             const rawText = aiInputText.value.trim();
             
@@ -807,21 +826,16 @@
             try {
                 let textToAnalyze = rawText;
 
-                // 1. Pokud je obrázek, provedeme OCR
                 if (aiImageFile) {
                     aiProcessBtn.innerHTML = '<i class="fas fa-eye mr-2"></i>Čtu text z obrázku...';
-                    
-                    // Použití Tesseract.js pro OCR
-                    const worker = await Tesseract.createWorker('ces'); // čeština
+                    const worker = await Tesseract.createWorker('ces'); 
                     const ret = await worker.recognize(aiImageFile);
                     await worker.terminate();
-                    
-                    console.log("OCR Result:", ret.data.text);
                     textToAnalyze += "\n" + ret.data.text;
                 }
 
                 aiProcessBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Analyzuji data...';
-                await new Promise(resolve => setTimeout(resolve, 500)); // Krátká prodleva
+                await new Promise(resolve => setTimeout(resolve, 500)); 
                 
                 analyzeAndFillForm(textToAnalyze);
                 
@@ -838,9 +852,6 @@
         });
 
         function analyzeAndFillForm(text) {
-            // POZNÁMKA: Název a Popis jsou záměrně vynechány z vyplňování
-
-            // 1. CENA (Hledá čísla následovaná €, eur, EUR atd.)
             const priceRegex = /(\d[\d\s.,]*)\s*(?:€|Eur|eur|EUR)/;
             const priceMatch = text.match(priceRegex);
             if (priceMatch) {
@@ -850,7 +861,6 @@
                 }
             }
 
-            // 2. PLOCHA (Hledá m2, m², metrů)
             const areaRegex = /(\d[\d\s.,]*)\s*(?:m2|m²|metrů|sqm)/i;
             const areaMatch = text.match(areaRegex);
             if (areaMatch) {
@@ -860,14 +870,12 @@
                 }
             }
 
-            // 3. PODLAŽÍ (Hledá "x. patro", "x. NP")
             const floorRegex = /(\d+)\.?\s*(?:patro|np|podlaží)/i;
             const floorMatch = text.match(floorRegex);
             if (floorMatch) {
                 document.getElementById('property-floor').value = floorMatch[1];
             }
 
-            // 4. DISPOZICE (Pokus o matchnutí s select boxem)
             const roomsSelect = document.getElementById('property-rooms');
             const roomsTextLower = text.toLowerCase();
             for (let i = 0; i < roomsSelect.options.length; i++) {
@@ -877,7 +885,6 @@
                     break; 
                 }
             }
-            // Fallback pokud se nenajde přesná shoda
             if (roomsSelect.value === "") {
                  if (roomsTextLower.includes("studio") || roomsTextLower.includes("garson")) {
                       for (let i=0; i<roomsSelect.options.length; i++) {
@@ -888,7 +895,6 @@
                  }
             }
 
-            // 5. LOKALITA (Porovnává s načtenými lokalitami)
             const locationSelect = document.getElementById('property-location');
             for (let i = 0; i < locationSelect.options.length; i++) {
                 const locName = locationSelect.options[i].text;
@@ -898,7 +904,6 @@
                 }
             }
 
-            // 6. DRUH NEMOVITOSTI
             const typeSelect = document.getElementById('property-type');
             const typeTextLower = text.toLowerCase();
             for (let i = 0; i < typeSelect.options.length; i++) {
@@ -909,7 +914,6 @@
                 }
             }
 
-            // 7. CHECKBOXY VLASTNOSTÍ
             const featureCheckboxes = document.querySelectorAll('#features-container input[type="checkbox"]');
             const lowerText = text.toLowerCase();
             featureCheckboxes.forEach(cb => {
@@ -928,7 +932,6 @@
             const a = 'àáâäæãåāăąçćčđďèéêëēėęěğǵḧîïíīįìłḿñńǹňôöòóœøōõőṕŕřßśšşșťțûüùúūǘůűųẃẍÿýžźż·/_,:;'
             const b = 'aaaaaaaaaacccddeeeeeeeegghiiiiiilmnnnnoooooooooprrsssssttuuuuuuuuuwxyyzzz------'
             const p = new RegExp(a.split('').join('|'), 'g')
-
             return text.toString().toLowerCase()
                 .replace(/\s+/g, '-') 
                 .replace(p, c => b.charAt(a.indexOf(c))) 
@@ -963,7 +966,6 @@
         function renderList(type, items, formId) {
             const container = document.getElementById(`${type}-list`);
             if (!container) return;
-            
             container.innerHTML = '';
             
             const sortedItems = (items || []).sort((a, b) => {
@@ -1024,7 +1026,7 @@
         // --- Authentication Logic ---
         onAuthStateChanged(auth, user => {
             if (user) {
-                // User is signed in. The login function will handle the rest.
+                // User is signed in.
             } else {
                 dashboard.classList.add('hidden');
                 loginScreen.classList.remove('hidden');
@@ -1057,7 +1059,7 @@
 
             } catch (error) {
                 console.error("Chyba přihlášení:", error.code, error.message);
-                adminLoginError.textContent = "Nesprávný email nebo heslo. Zkontrolujte prosím své přihlašovací údaje a zkuste to znovu.";
+                adminLoginError.textContent = "Nesprávný email nebo heslo.";
                 adminLoginError.classList.remove('hidden');
             }
         });
@@ -1086,7 +1088,7 @@
             loadAndRenderCountrySettings();
         });
 
-        // --- Property Management ---
+        // --- Property Management (UPRAVENO PRO FILTRY) ---
         const propertyForm = document.getElementById('property-form');
         const propertiesTableBody = document.getElementById('properties-table-body');
         const propertyCountryTabs = document.getElementById('property-country-tabs');
@@ -1100,59 +1102,122 @@
             }
         });
         
+        // --- UPDATED LOAD PROPERTIES WITH FILTERING SUPPORT ---
         async function loadProperties(country) {
+            propertiesTableBody.innerHTML = '<tr><td colspan="7" class="table-cell text-center"><i class="fas fa-spinner fa-spin mr-2"></i>Načítám nemovitosti...</td></tr>';
+
             try {
                 const propertiesRef = collection(db, 'properties');
                 const q = query(propertiesRef, where('country', '==', country));
                 const querySnapshot = await getDocs(q);
                 
-                let properties = [];
+                // Uložíme data do globální proměnné
+                allFetchedProperties = [];
                 querySnapshot.forEach(doc => {
-                    properties.push({ id: doc.id, ...doc.data() });
+                    allFetchedProperties.push({ id: doc.id, ...doc.data() });
                 });
 
-                // Sort manually to avoid composite indexes
-                properties.sort((a, b) => (b.createdAt?.toMillis() || 0) - (a.createdAt?.toMillis() || 0));
+                // Aplikujeme filtry a vykreslíme
+                applyFiltersAndRender();
 
-                propertiesTableBody.innerHTML = '';
-                if (properties.length === 0) {
-                    propertiesTableBody.innerHTML = '<tr><td colspan="7" class="table-cell text-center">Nebyly nalezeny žádné nemovitosti.</td></tr>';
-                    return;
-                }
-                properties.forEach(prop => {
-                    const firstImage = prop.images && prop.images.length > 0 ? prop.images[0] : 'https://placehold.co/100x60/eee/ccc?text=Foto';
-                    const createdAt = prop.createdAt ? prop.createdAt.toDate().toLocaleDateString('cs-CZ') : 'N/A';
-                    const statusClass = prop.status === 'Aktivní' ? 'active' : 'inactive';
-                    
-                    const row = `
-                        <tr id="${prop.id}">
-                            <td class="table-cell font-mono">${prop.offerId || 'N/A'}</td>
-                            <td class="table-cell"><img src="${firstImage}" alt="Foto nemovitosti" class="w-24 h-16 object-cover rounded mx-auto"></td>
-                            <td class="table-cell">
-                                <p class="text-gray-900 whitespace-no-wrap font-bold">${prop.title_cz || prop.title}</p>
-                                <p class="text-gray-600 whitespace-no-wrap">${prop.location}, ${prop.country}</p>
-                            </td>
-                            <td class="table-cell text-red-600 font-bold">€${Number(prop.price).toLocaleString('de-DE')}</td>
-                            <td class="table-cell">${createdAt}</td>
-                            <td class="table-cell">
-                                <span class="status-toggle ${statusClass}" data-id="${prop.id}">${prop.status || 'Neaktivní'}</span>
-                            </td>
-                            <td class="table-cell">
-                                <div class="flex justify-center space-x-2">
-                                    <button class="download-property-btn text-green-600 hover:text-green-800" title="Stáhnout fotky s vodoznakem" data-id="${prop.id}">
-                                        <i class="fas fa-download"></i>
-                                    </button>
-                                    <button class="edit-property-btn text-blue-600 hover:text-blue-900" data-id="${prop.id}"><i class="fas fa-pencil-alt"></i></button>
-                                    <button class="delete-property-btn text-red-600 hover:text-red-900" data-id="${prop.id}"><i class="fas fa-trash-alt"></i></button>
-                                </div>
-                            </td>
-                        </tr>`;
-                    propertiesTableBody.innerHTML += row;
-                });
             } catch (error) {
                 handleFirestoreError(error, 'Načítání nemovitostí');
             }
         }
+
+        // --- FILTER LOGIC ---
+        function applyFiltersAndRender() {
+            const idFilter = document.getElementById('filter-offer-id').value.trim().toLowerCase();
+            const dateFilter = document.getElementById('filter-date').value; 
+            const sortOrder = document.getElementById('sort-order').value;
+
+            // Filtrování
+            let filtered = allFetchedProperties.filter(prop => {
+                const offerIdStr = (prop.offerId || '').toString();
+                if (idFilter && !offerIdStr.includes(idFilter)) {
+                    return false;
+                }
+                if (dateFilter) {
+                    if (!prop.createdAt) return false;
+                    const propDate = prop.createdAt.toDate().toISOString().split('T')[0]; 
+                    if (propDate !== dateFilter) return false;
+                }
+                return true;
+            });
+
+            // Řazení
+            filtered.sort((a, b) => {
+                const timeA = a.createdAt?.toMillis() || 0;
+                const timeB = b.createdAt?.toMillis() || 0;
+                const idA = Number(a.offerId) || 0;
+                const idB = Number(b.offerId) || 0;
+                const priceA = Number(a.price) || 0;
+                const priceB = Number(b.price) || 0;
+
+                switch (sortOrder) {
+                    case 'date_asc': return timeA - timeB;
+                    case 'date_desc': return timeB - timeA;
+                    case 'id_asc': return idA - idB;
+                    case 'id_desc': return idB - idA;
+                    case 'price_asc': return priceA - priceB;
+                    case 'price_desc': return priceB - priceA;
+                    default: return timeB - timeA;
+                }
+            });
+
+            renderPropertiesTable(filtered);
+        }
+
+        function renderPropertiesTable(properties) {
+            propertiesTableBody.innerHTML = '';
+
+            if (properties.length === 0) {
+                propertiesTableBody.innerHTML = '<tr><td colspan="7" class="table-cell text-center text-gray-500 py-8">Nebyly nalezeny žádné nemovitosti odpovídající filtrům.</td></tr>';
+                return;
+            }
+
+            properties.forEach(prop => {
+                const firstImage = prop.images && prop.images.length > 0 ? prop.images[0] : 'https://placehold.co/100x60/eee/ccc?text=Foto';
+                const createdAt = prop.createdAt ? prop.createdAt.toDate().toLocaleDateString('cs-CZ') : 'N/A';
+                const statusClass = prop.status === 'Aktivní' ? 'active' : 'inactive';
+                
+                const row = `
+                    <tr id="${prop.id}">
+                        <td class="table-cell font-mono font-bold text-blue-600">${prop.offerId || 'N/A'}</td>
+                        <td class="table-cell"><img src="${firstImage}" alt="Foto nemovitosti" class="w-24 h-16 object-cover rounded mx-auto border border-gray-200"></td>
+                        <td class="table-cell">
+                            <p class="text-gray-900 whitespace-no-wrap font-bold">${prop.title_cz || prop.title}</p>
+                            <p class="text-gray-600 whitespace-no-wrap">${prop.location}, ${prop.country}</p>
+                        </td>
+                        <td class="table-cell text-red-600 font-bold">€${Number(prop.price).toLocaleString('de-DE')}</td>
+                        <td class="table-cell">${createdAt}</td>
+                        <td class="table-cell">
+                            <span class="status-toggle ${statusClass}" data-id="${prop.id}">${prop.status || 'Neaktivní'}</span>
+                        </td>
+                        <td class="table-cell">
+                            <div class="flex justify-center space-x-2">
+                                <button class="download-property-btn text-green-600 hover:text-green-800" title="Stáhnout fotky s vodoznakem" data-id="${prop.id}">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                                <button class="edit-property-btn text-blue-600 hover:text-blue-900" data-id="${prop.id}"><i class="fas fa-pencil-alt"></i></button>
+                                <button class="delete-property-btn text-red-600 hover:text-red-900" data-id="${prop.id}"><i class="fas fa-trash-alt"></i></button>
+                            </div>
+                        </td>
+                    </tr>`;
+                propertiesTableBody.innerHTML += row;
+            });
+        }
+
+        // Event listeners pro filtry
+        document.getElementById('filter-offer-id').addEventListener('input', applyFiltersAndRender);
+        document.getElementById('filter-date').addEventListener('change', applyFiltersAndRender);
+        document.getElementById('sort-order').addEventListener('change', applyFiltersAndRender);
+        document.getElementById('reset-filters-btn').addEventListener('click', () => {
+            document.getElementById('filter-offer-id').value = '';
+            document.getElementById('filter-date').value = '';
+            document.getElementById('sort-order').value = 'date_desc';
+            applyFiltersAndRender();
+        });
 
         function resetPropertyForm() {
             propertyForm.reset();
@@ -1240,29 +1305,22 @@
             canvas.width = img.width;
             canvas.height = img.height;
 
-            // 1. Kreslíme původní obrázek
             ctx.drawImage(img, 0, 0);
 
-            // 2. Nastavení textu vodoznaku
             const text = "HORIZON-ESTATES";
-            
-            // Font size: cca 80% šířky obrázku (aby byl VELKÝ)
             const fontSize = canvas.width * 0.08; 
             
             ctx.font = `bold ${fontSize}px Arial, sans-serif`;
-            ctx.textAlign = 'center'; // Zarovnání na střed
-            ctx.textBaseline = 'middle'; // Vertikální zarovnání na střed
+            ctx.textAlign = 'center'; 
+            ctx.textBaseline = 'middle'; 
 
-            // 3. Stín (pro čitelnost na světlém pozadí)
-            ctx.shadowColor = "rgba(0, 0, 0, 0.5)"; // Černý poloprůhledný stín
+            ctx.shadowColor = "rgba(0, 0, 0, 0.5)"; 
             ctx.shadowBlur = fontSize / 5;
             ctx.shadowOffsetX = fontSize / 20;
             ctx.shadowOffsetY = fontSize / 20;
 
-            // 4. Barva textu (BÍLÁ POLOPRŮHLEDNÁ)
             ctx.fillStyle = "rgba(255, 255, 255, 0.75)"; 
             
-            // 5. Vykreslení textu PŘESNĚ DOPROSTŘED
             ctx.fillText(text, canvas.width / 2, canvas.height / 2);
 
             return canvas;
@@ -1271,10 +1329,8 @@
         async function downloadPropertyImagesWithWatermark(propertyId) {
             const notification = document.getElementById('download-notification');
             try {
-                // Zobrazit notifikaci
                 notification.classList.remove('hidden');
 
-                // Získání dat
                 const docRef = doc(db, 'properties', propertyId);
                 const docSnap = await getDoc(docRef);
                 
@@ -1289,15 +1345,13 @@
                     return;
                 }
 
-                // ZIP archiv
                 const zip = new JSZip();
                 const folder = zip.folder(`nabidka_${offerId}`);
 
-                // Zpracování obrázků
                 const imagePromises = images.map(async (url, index) => {
                     return new Promise((resolve, reject) => {
                         const img = new Image();
-                        img.crossOrigin = "Anonymous"; // Nutné pro Canvas
+                        img.crossOrigin = "Anonymous"; 
                         
                         img.onload = () => {
                             try {
@@ -1310,10 +1364,10 @@
                                     } else {
                                         reject("Chyba při konverzi canvasu");
                                     }
-                                }, 'image/jpeg', 0.9); // Kvalita 90%
+                                }, 'image/jpeg', 0.9); 
                             } catch (err) {
                                 console.error("Chyba při kreslení vodoznaku (CORS?):", err);
-                                resolve(); // Pokračujeme i s chybou
+                                resolve(); 
                             }
                         };
 
@@ -1328,7 +1382,6 @@
 
                 await Promise.all(imagePromises);
 
-                // Generování a stažení ZIPu
                 const content = await zip.generateAsync({ type: "blob" });
                 saveAs(content, `Horizon_Estates_${offerId}.zip`);
 
@@ -1431,25 +1484,22 @@
             }
         });
 
-        // --- Image Handling (DRAG & DROP UPDATED) ---
+        // --- Image Handling ---
         const dropZone = document.getElementById('drop-zone');
         const fileInput = document.getElementById('image-upload');
         const browseBtn = document.getElementById('btn-browse-images');
         const dropStatusText = document.getElementById('drop-status-text');
 
-        // 1. Tlačítko
         browseBtn.addEventListener('click', () => {
             fileInput.click();
         });
 
-        // Klik na box
         dropZone.addEventListener('click', (e) => {
             if (e.target !== browseBtn) {
                 fileInput.click();
             }
         });
 
-        // 2. Input change
         fileInput.addEventListener('change', (e) => {
             filesToUpload.push(...e.target.files);
             updateStatusText();
@@ -1457,7 +1507,6 @@
             fileInput.value = ''; 
         });
 
-        // 3. Drag events
         ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
             dropZone.addEventListener(eventName, (e) => {
                 e.preventDefault();
@@ -1477,7 +1526,6 @@
             }, false);
         });
 
-        // Drop handler
         dropZone.addEventListener('drop', (e) => {
             const dt = e.dataTransfer;
             const files = dt.files;
@@ -1727,15 +1775,15 @@
                 const docSnap = await getDoc(settingsDocRef);
                 let tags = docSnap.exists() ? docSnap.data().tags || [] : [];
                 
-                if (currentEditTag) { // Editing existing tag
+                if (currentEditTag) { 
                     const index = tags.indexOf(currentEditTag);
                     if (index > -1) {
                         tags[index] = newTag;
-                    } else { // Failsafe if old tag not found
+                    } else { 
                         tags.push(newTag);
                     }
                     await updateDoc(settingsDocRef, { tags });
-                } else { // Adding new tag
+                } else { 
                      if (tags.includes(newTag)) {
                         alert('Tento tag již existuje.');
                         return;
@@ -1940,7 +1988,6 @@
                 renderList('types', settings.types || [], 'form-types');
                 renderList('rooms', settings.rooms || [], 'form-rooms');
 
-                // Attach listeners for dynamically created forms
                 document.querySelectorAll('#form-locations, #form-types, #form-rooms').forEach(form => {
                     form.addEventListener('submit', handleSettingsFormSubmit);
                 });
@@ -2036,9 +2083,9 @@
 
             const key = currentEditItem.key || slugify(name_cz);
             let newItemData;
-            if (enInput) { // Multilang object
+            if (enInput) { 
                 newItemData = { key, name_cz, name_en: enInput.value.trim(), name_de: deInput.value.trim() };
-            } else { // Simple string (for locations)
+            } else { 
                 newItemData = name_cz;
             }
             
@@ -2050,15 +2097,15 @@
                 const docSnap = await getDoc(settingsDocRef);
                 let items = (docSnap.exists() && docSnap.data()[arrayName]) ? docSnap.data()[arrayName] : [];
 
-                if (currentEditItem.key) { // UPDATE
+                if (currentEditItem.key) { 
                     submitButton.textContent = 'Ukládám...';
                     const itemIndex = items.findIndex(item => (typeof item === 'object' ? item.key : slugify(item)) === currentEditItem.key);
                     if (itemIndex > -1) {
                         items[itemIndex] = newItemData;
-                    } else { // Failsafe if not found, add it
+                    } else { 
                         items.push(newItemData);
                     }
-                } else { // ADD
+                } else { 
                     submitButton.textContent = 'Přidávám...';
                     const itemExists = items.some(item => (typeof item === 'object' ? item.key : slugify(item)) === key);
                     if (itemExists) {
@@ -2085,9 +2132,7 @@
             const button = e.target.closest('button');
             if (!button) return;
 
-            // --- General Edit/Delete Handlers ---
             if (button.classList.contains('edit-setting-item-btn')) {
-                // This needs to be delegated here because these buttons are created dynamically
                 await handleSettingsItemClick(e);
                 return;
             }
@@ -2101,7 +2146,6 @@
                 return;
             }
             
-            // --- Menu Specific Handlers ---
             if (button.closest('form')?.id === `${currentSettingsCountry}-settings-form`) {
                 e.preventDefault();
                 button.disabled = true;
@@ -2172,7 +2216,6 @@
             }
         });
         
-        // Separate handlers for features because they are static in DOM
         document.getElementById('form-features').addEventListener('submit', handleSettingsFormSubmit);
         document.getElementById('features-list').addEventListener('click', handleSettingsItemClick);
 
@@ -2209,7 +2252,6 @@
                  const formId = btn.dataset.formId;
                  const form = document.getElementById(formId);
                  
-                 // Scroll to form
                  form.scrollIntoView({ behavior: 'smooth' });
 
                  try {
@@ -2265,7 +2307,6 @@
         setupTabSwitching('property-lang-tabs', 'lang-tab-content');
         setupTabSwitching('page-lang-tabs', 'lang-tab-content');
 
-        // Defining functions like populateFormDropdowns and populateFeatures
         async function populateFormDropdowns(country, propertyData = {}) {
             const selects = {
                 location: document.getElementById('property-location'),
@@ -2332,8 +2373,6 @@
                 container.innerHTML = '<p>Chyba při načítání vlastností.</p>';
             }
         }
-
-        // This ensures the listener for the add button works because openNewPropertyForm uses populateFormDropdowns which is now defined.
         
     </script>
 </body>
